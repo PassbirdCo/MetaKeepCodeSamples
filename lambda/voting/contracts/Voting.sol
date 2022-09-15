@@ -1,6 +1,8 @@
 pragma solidity ^0.8.0;
 
-contract Voting {
+import "./MetaKeepLambda.sol";
+
+contract Voting is MetaKeepLambda {
 
     address private Owner;
 
@@ -10,7 +12,7 @@ contract Voting {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == Owner, "Only owner can call this function.");
+        require(_msgSender() == Owner, "Only owner can call this function.");
         _;
     }
   
@@ -19,7 +21,7 @@ contract Voting {
   mapping(address => bool) private voters;
 
   // Initialize all the contestants
-  constructor(address owner) {
+  constructor(address owner, address lambdaOwner, string memory lambdaName) MetaKeepLambda(lambdaOwner, lambdaName) {
     Owner = owner;
   }
 
@@ -31,10 +33,10 @@ contract Voting {
 
     function voteForCandidate(bytes32 id) public {
         require(candidates[id].candidate_address != address(0), "Candidate does not exist.");
-        require(candidates[id].candidate_address != msg.sender, "You cannot vote for yourself.");
-        require(!voters[msg.sender], "You have already voted.");
+        require(candidates[id].candidate_address != _msgSender(), "You cannot vote for yourself.");
+        require(!voters[_msgSender()], "You have already voted.");
         Candidate storage candidate = candidates[id];
-        voters[msg.sender] = true;
+        voters[_msgSender()] = true;
         candidate.votes += 1;
     }
 
