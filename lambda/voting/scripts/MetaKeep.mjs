@@ -61,12 +61,12 @@ const data = JSON.parse(
 
 const web3 = new Web3(process.env.RPC_ENDPOINT);
 const contract = new web3.eth.Contract(data["abi"]);
-//const developer_address = await getDeveloperWallet();
+const developer_address = await getDeveloperWallet();
 
 const creationSignature = contract.deploy({
     data: data["bytecode"],
     arguments: [
-      "0xaae8421d5B6866D55539bb50105acC3F427131Fa",
+      developer_address,
       "Voting"
     ]
 }).encodeABI();
