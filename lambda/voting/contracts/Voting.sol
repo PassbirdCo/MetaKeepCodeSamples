@@ -4,28 +4,23 @@ import "./MetaKeepLambda.sol";
 
 contract Voting is MetaKeepLambda {
 
-    address private Owner;
-
     struct Candidate {
         address candidate_address;
         uint256 votes;
     }
 
-    modifier onlyOwner() {
-        require(_msgSender() == Owner, "Only owner can call this function.");
-        _;
+    function _msgSender() internal view override returns (address sender) {
+        return MetaKeepLambdaSender.msgSender();
     }
   
   
   mapping(bytes32 => Candidate) private candidates;
   mapping(address => bool) private voters;
 
-  // Initialize all the contestants
-  constructor(address owner, address lambdaOwner, string memory lambdaName) MetaKeepLambda(lambdaOwner, lambdaName) {
-    Owner = owner;
+  constructor(address lambdaOwner, string memory lambdaName) MetaKeepLambda(lambdaOwner, lambdaName) {
   }
 
-  function registerCandidate(address candidate_address) public onlyOwner {
+  function registerCandidate(address candidate_address) public onlyMetaKeepLambdaAdmin() {
     Candidate storage candidate = candidates[keccak256(abi.encodePacked(candidate_address))];
     candidate.candidate_address = candidate_address;
     candidate.votes = 0;
@@ -40,7 +35,7 @@ contract Voting is MetaKeepLambda {
         candidate.votes += 1;
     }
 
-    function getWinner(bytes32[] memory ids) public view onlyOwner returns (address) {
+    function getWinner(bytes32[] memory ids) public view onlyMetaKeepLambdaAdmin() returns (address) {
         uint256 max_votes = 0;
         address winner;
         for (uint256 i = 0; i < ids.length; i++) {
@@ -55,10 +50,6 @@ contract Voting is MetaKeepLambda {
   function totalVotesFor(bytes32 id) view public returns (uint256) {
     require(candidates[id].candidate_address != address(0), "Candidate does not exist.");
     return candidates[id].votes;
-  }
-
-  function getOwner() view public returns (address) {
-    return Owner;
   }
 
   function getCandidate(bytes32 id) view public returns (address, uint256) {

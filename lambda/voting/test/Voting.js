@@ -13,23 +13,13 @@ describe("Voting contract", function () {
     [owner, addr1, addr2] = await ethers.getSigners();
 
 
-    votingContract = await Voting.deploy(owner.address);
+    votingContract = await Voting.deploy(owner.address, "voting");
 
     await votingContract.deployed();
   });
 
   // You can nest describe calls to create subsections.
   describe("Voting Functions", function () {
-
-    it("Should set the right owner", async function () {
-
-      // Expect receives a value and wraps it in an assertion object. These
-      // objects have a lot of utility methods to assert values.
-
-      // This test expects the owner variable stored in the contract to be
-      // equal to our Signer's owner.
-      expect(await votingContract.getOwner()).to.equal(owner.address);
-    });
 
     it("Owner should be able to register the candidate", async function () {
 

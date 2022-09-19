@@ -20,17 +20,11 @@ cd lambda/voting
 npm install
 ```
 
-Once installed, let's run Hardhat's testing network:
-
-```sh
-npx hardhat node
-```
-
 Then, on a new terminal, go to the repository's root folder and run this to
 deploy your contract:
 
 ```sh
-npm run scripts/deploy.js
+npm run deploy
 ```
 
 ## User Guide
@@ -42,7 +36,7 @@ For a complete introduction to MetaKeep Lambda, refer to [this guide](https://do
 
 ## Troubleshooting
 
-- `Idempotency Key Replayed` errors: if you are seeing this error while calling the API, ensure that you generate a new random Idempotency key. For more information on Idempotency Key, refer to [this guide](https://docs.metakeep.xyz/reference/idempotency-key)
+- `Idempotency Key Mismatched` errors: if you are seeing this error while calling the API, ensure that you generate a new random Idempotency key. For more information on Idempotency Key, refer to [this guide](https://docs.metakeep.xyz/reference/idempotency-key)
 
 ## Getting help and updates
 
