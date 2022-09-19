@@ -4,12 +4,10 @@ import fs from 'fs';
 import env from 'dotenv';
 
 async function getDeveloperWallet() {
-  env.config();
   const url = "https://api.dev.metakeep.xyz/v3/getDeveloperWallet";
   const request_body = {
     "user": {"developer_email": process.env.DEVELOPER_EMAIL}
   }
-  console.log(process.env.DEVELOPER_EMAIL)
   const headers = {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -30,7 +28,6 @@ async function sleep(ms) {
 }
 
 async function getTransactionStatus(transaction_id) {
-  env.config();
   const url = "https://api.dev.metakeep.xyz/v2/app/transaction/status";
   const request_body = {
     "transaction_id": transaction_id
@@ -46,7 +43,6 @@ async function getTransactionStatus(transaction_id) {
     body : JSON.stringify(request_body)
   };
   const result = await fetch(url, options);
-  console.log(result)
   return result.json().then(json => console.log(json));
 
 }
@@ -100,12 +96,8 @@ await result.json().then(json => {
   console.log(json)
   transaction_id = json.transactionId
 });
-
-async function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-sleep(20000).then(() => {
+console.log("Waiting for transaction to be mined...");
+sleep(30000).then(() => {
   getTransactionStatus(transaction_id);
 }
 );
