@@ -4,14 +4,16 @@ import fs from 'fs';
 import env from 'dotenv';
 
 async function getDeveloperWallet() {
+  env.config();
   const url = "https://api.dev.metakeep.xyz/v3/getDeveloperWallet";
   const request_body = {
     "user": {"developer_email": process.env.DEVELOPER_EMAIL}
   }
+  console.log(process.env.DEVELOPER_EMAIL)
   const headers = {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "x-api-key": process.env.METAKEEP_API_KEY
+    "x-api-key": process.env.API_KEY
   };
   const options = {
     method: 'POST',
@@ -20,10 +22,15 @@ async function getDeveloperWallet() {
   };
   const result = await fetch(url, options);
   console.log("getting wallet...")
-  return result.json().then(json => json.wallet.ethAddress);
+  return result.json().then(json => {console.log(json); return json.wallet.ethAddress});
+}
+
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function getTransactionStatus(transaction_id) {
+  env.config();
   const url = "https://api.dev.metakeep.xyz/v2/app/transaction/status";
   const request_body = {
     "transaction_id": transaction_id
@@ -31,7 +38,7 @@ async function getTransactionStatus(transaction_id) {
   const headers = {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "x-api-key": process.env.METAKEEP_API_KEY
+    "x-api-key": process.env.API_KEY
   };
   const options = {
     method: 'POST',
@@ -41,6 +48,7 @@ async function getTransactionStatus(transaction_id) {
   const result = await fetch(url, options);
   console.log(result)
   return result.json().then(json => console.log(json));
+
 }
 
 async function main() {
@@ -93,8 +101,14 @@ await result.json().then(json => {
   transaction_id = json.transactionId
 });
 
-await getTransactionStatus(transaction_id);
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
+sleep(20000).then(() => {
+  getTransactionStatus(transaction_id);
+}
+);
 }
 
 main();
