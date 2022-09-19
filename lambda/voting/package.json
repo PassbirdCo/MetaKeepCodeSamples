@@ -4,7 +4,7 @@
   "description": "A boilerplate repository to get you started with MetaKeep-Lambda development",
   "scripts": {
     "test": "hardhat test",
-    "deploy": "node scripts/MetaKeep.js"
+    "deploy": "node scripts/MetaKeep.mjs"
   },
   "repository": {
     "type": "git",

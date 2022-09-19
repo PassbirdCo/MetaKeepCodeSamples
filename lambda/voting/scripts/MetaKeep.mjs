@@ -56,17 +56,17 @@ const headers = {
 
 const data = JSON.parse(
     fs.readFileSync(
-        "../artifacts/contracts/Voting.sol/Voting.json",
+        "artifacts/contracts/Voting.sol/Voting.json",
 ));
 
 const web3 = new Web3(process.env.RPC_ENDPOINT);
 const contract = new web3.eth.Contract(data["abi"]);
-const developer_address = await getDeveloperWallet();
+//const developer_address = await getDeveloperWallet();
 
 const creationSignature = contract.deploy({
     data: data["bytecode"],
     arguments: [
-      developer_address,
+      "0xaae8421d5B6866D55539bb50105acC3F427131Fa",
       "Voting"
     ]
 }).encodeABI();
@@ -86,7 +86,7 @@ const options = {
 };
 console.log("Lambda creation in process...");
 
-const result = await fetch(url, options);
+const result = await fetch(url, options).catch(err => console.log(err));
 let transaction_id;
 await result.json().then(json => {
   console.log(json)
