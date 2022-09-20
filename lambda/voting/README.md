@@ -4,7 +4,7 @@ This repository contains a sample project that you can use as the starting point
 for using MetaKeep's Lambda Infrastructure.
 
 This project is intended to be used with the
-[MetaKeep Lambda Creation and Invocation Tutorial](https://hardhat.org/tutorial), but you should be
+[MetaKeep Lambda Creation and Invocation Tutorial](https://docs.metakeep.xyz/reference/lambda-101), but you should be
 able to follow it by yourself by reading the README and exploring its
 `contracts`, `tests`, and `scripts` directories.
 
@@ -28,9 +28,9 @@ npm run deploy
 
 ## User Guide
 
-You can find detailed instructions on using this repository and many tips in [its documentation](http://docs.metakeep.xyz).
+You can find detailed instructions on using this repository and many tips in [its documentation](https://docs.metakeep.xyz/reference/lambda-101).
 
-For a complete introduction to MetaKeep Lambda, refer to [this guide](https://docs.metakeep.xyz).
+For a complete introduction to MetaKeep Lambda, refer to [this guide](https://docs.metakeep.xyz/reference/lambda-101).
 
 ## Troubleshooting
 
@@ -38,7 +38,7 @@ For a complete introduction to MetaKeep Lambda, refer to [this guide](https://do
 
 ## Getting help and updates
 
-If you need help with this project, or with MetaKeep APIs in general, please read [this guide](https://docs.metakeep.xyz) to learn where and how to get it.
+If you need help with this project, or with MetaKeep APIs in general, please read [this guide](https://docs.metakeep.xyz/) to learn where and how to get it.
 
 For the latest news about MetaKeep, [follow us on Twitter](https://twitter.com/PassbirdCo), and don't forget to star [our GitHub repository](https://github.com/PassbirdCo/MetaKeepCodeSamples.git)!
 
