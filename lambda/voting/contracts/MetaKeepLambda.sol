@@ -574,7 +574,7 @@ contract MetaKeepLambdaACL is AccessControl {
         _setRoleAdmin(METAKEEP_LAMBDA_ADMIN_ROLE, METAKEEP_LAMBDA_ADMIN_ROLE);
     }
 
-    modifier onlyMetaKeepLambdaAdmin() {
+    modifier onlyMetaKeepLambdaOwner() {
         require(
             hasRole(
                 METAKEEP_LAMBDA_ADMIN_ROLE,

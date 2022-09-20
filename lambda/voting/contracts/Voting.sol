@@ -20,7 +20,7 @@ contract Voting is MetaKeepLambda {
   constructor(address lambdaOwner, string memory lambdaName) MetaKeepLambda(lambdaOwner, lambdaName) {
   }
 
-  function registerCandidate(address candidate_address) public onlyMetaKeepLambdaAdmin() {
+  function registerCandidate(address candidate_address) public onlyMetaKeepLambdaOwner() {
     Candidate storage candidate = candidates[keccak256(abi.encodePacked(candidate_address))];
     candidate.candidate_address = candidate_address;
     candidate.votes = 0;
@@ -35,7 +35,7 @@ contract Voting is MetaKeepLambda {
         candidate.votes += 1;
     }
 
-    function getWinner(bytes32[] memory ids) public view onlyMetaKeepLambdaAdmin() returns (address) {
+    function getWinner(bytes32[] memory ids) public view onlyMetaKeepLambdaOwner() returns (address) {
         uint256 max_votes = 0;
         address winner;
         for (uint256 i = 0; i < ids.length; i++) {

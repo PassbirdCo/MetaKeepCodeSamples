@@ -5,9 +5,6 @@ import env from 'dotenv';
 
 async function getDeveloperWallet() {
   const url = "https://api.dev.metakeep.xyz/v3/getDeveloperWallet";
-  const request_body = {
-    "user": {"developer_email": process.env.DEVELOPER_EMAIL}
-  }
   const headers = {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -16,7 +13,6 @@ async function getDeveloperWallet() {
   const options = {
     method: 'POST',
     headers: headers,
-    body : JSON.stringify(request_body)
   };
   const result = await fetch(url, options);
   console.log("getting wallet...")
@@ -90,7 +86,7 @@ const options = {
 };
 console.log("Lambda creation in process...");
 
-const result = await fetch(url, options).catch(err => console.log(err));
+const result = await fetch(url, options).catch(err => {console.log(err); return err;});
 let transaction_id;
 await result.json().then(json => {
   console.log(json)
