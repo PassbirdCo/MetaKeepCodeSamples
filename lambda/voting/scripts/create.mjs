@@ -25,7 +25,7 @@ async function sleep(ms) {
 
 async function getTransactionStatus(transaction_id) {
   const url = "https://api.dev.metakeep.xyz/v2/app/transaction/status";
-  const request_body = {
+  const requestBody = {
     "transaction_id": transaction_id
 }
   const headers = {
@@ -36,10 +36,10 @@ async function getTransactionStatus(transaction_id) {
   const options = {
     method: 'POST',
     headers: headers,
-    body : JSON.stringify(request_body)
+    body : JSON.stringify(requestBody)
   };
   const result = await fetch(url, options);
-  return result.json().then(json => console.log(json));
+  return result.json().then(json => {return json});
 
 }
 
@@ -73,7 +73,7 @@ const creationSignature = contract.deploy({
 
 
 
-const request_body = {
+const requestBody = {
     "creationSignature" : creationSignature,
     "abi" : data["abi"],
     "bytecode" : data["bytecode"],
@@ -82,21 +82,27 @@ const request_body = {
 const options = {
   method: 'POST',
   headers: headers,
-  body: JSON.stringify(request_body)
+  body: JSON.stringify(requestBody)
 };
 console.log("Lambda creation in process...");
 
 const result = await fetch(url, options).catch(err => {console.log(err); return err;});
-let transaction_id;
+let transactionId;
 await result.json().then(json => {
   console.log(json)
-  transaction_id = json.transactionId
+  transactionId = json.transactionId
 });
 console.log("Waiting for transaction to be mined...");
-sleep(30000).then(() => {
-  getTransactionStatus(transaction_id);
+let transactionStatus;
+for(let i = 0; i < 10; i++) {
+  await sleep(5000);
+  transactionStatus = await getTransactionStatus(transactionId);
+  console.log(transactionStatus)
+  if(transactionStatus.status == "COMPLETED") {
+      console.log("Lambda created successfully");
+      break;
+    }
 }
-);
 }
 
 main();
