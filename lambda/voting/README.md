@@ -30,7 +30,6 @@ npm run deploy
 
 You can find detailed instructions on using this repository and many tips in [its documentation](http://docs.metakeep.xyz).
 
-
 For a complete introduction to MetaKeep Lambda, refer to [this guide](https://docs.metakeep.xyz).
 
 ## Troubleshooting

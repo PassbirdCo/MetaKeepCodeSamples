@@ -4,7 +4,8 @@
   "description": "A boilerplate repository to get you started with MetaKeep-Lambda development",
   "scripts": {
     "test": "hardhat test",
-    "deploy": "node scripts/create.mjs"
+    "deploy": "node scripts/create.mjs",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -28,12 +29,12 @@
     "ethers": "^5.4.7",
     "hardhat": "^2.11.0",
     "hardhat-gas-reporter": "^1.0.8",
+    "prettier": "2.7.1",
     "solidity-coverage": "^0.7.21"
   },
   "dependencies": {
     "dotenv": "^16.0.2",
     "node-fetch": "^3.2.10",
-    "prettier": "^2.7.1",
     "web3": "^1.8.0"
   },
   "type": "commonjs"
