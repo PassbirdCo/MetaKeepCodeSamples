@@ -62,7 +62,7 @@ async function main() {
     fs.readFileSync("artifacts/contracts/Voting.sol/Voting.json")
   );
 
-  const web3 = new Web3(process.env.RPC_ENDPOINT);
+  const web3 = new Web3();
   const contract = new web3.eth.Contract(data["abi"]);
   const developer_address = await getDeveloperWallet();
 
@@ -99,7 +99,6 @@ async function main() {
   for (let i = 0; i < 10; i++) {
     await sleep(5000);
     transactionStatus = await getTransactionStatus(transactionId);
-    console.log(transactionStatus);
     if (transactionStatus.status == "COMPLETED") {
       console.log("Lambda created successfully");
       break;
