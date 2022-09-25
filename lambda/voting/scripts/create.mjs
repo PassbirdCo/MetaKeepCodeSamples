@@ -1,3 +1,4 @@
+// Script to deploy Smart contract using Metakeep Lambda and REST API.
 import fetch from "node-fetch";
 import fs from "fs";
 import env from "dotenv";
@@ -82,14 +83,15 @@ async function main() {
   });
 
   let transactionId;
-<<<<<<< HEAD:lambda/voting/scripts/create.mjs
 
   await result.json().then(async (json) => {
     // fetches the transaction status, if the lambda creation transaction is Queued.
     if (json.status == "QUEUED") {
       console.log("Lambda creation queued");
       transactionId = json.transactionId;
+      // Logs the queued transaction object
       console.log(json)
+
       console.log("Waiting for transaction to be mined...");
 
       let transactionStatus;
@@ -107,26 +109,6 @@ async function main() {
       console.log("Lambda creation failed");
     }
   });
-=======
-  await result.json().then((json) => {
-    console.log(json);
-    transactionId = json.transactionId;
-  });
-
-  console.log("Waiting for transaction to be mined...");
-  let transactionStatus;
-  for (let i = 0; i < 10; i++) {
-    await sleep(5000);
-    transactionStatus = await getTransactionStatus(transactionId);
-    if (transactionStatus.status == "COMPLETED") {
-      console.log("Lambda created successfully");
-      break;
-      exit(0);
-    }
-console.log("Timed out waiting for transaction to be mined.")
-console.log("You can track transaction status here: " + url)
-  }
->>>>>>> 3c01fbaf02651eec96e08bedb07fb79ceccbfc60:lambda/voting/scripts/create.js
 }
 
 main();
