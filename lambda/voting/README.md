@@ -34,7 +34,28 @@ For a complete introduction to MetaKeep Lambda, refer to [this guide](https://do
 
 ## Troubleshooting
 
-- `Idempotency Key Mismatched` errors: if you are seeing this error while calling the API, ensure that you generate a new random Idempotency key. For more information on Idempotency Key, refer to [this guide](https://docs.metakeep.xyz/reference/idempotency-key)
+- `FORBIDDEN` (403) error: API key is not valid
+
+
+- `INVALID REQUEST` (400) error: Request is not valid e.g if request json has un supported fields.
+
+
+- `INVALID_NAME` (400) error: Lambda name is either empty or too long. Lambda name currently has a character limit of 20.
+
+
+- `INVALID_OWNER` (400) error: Lambda owner is not the same as the developer wallet address.
+
+Make sure you are initializing the lambda by passing in your developer account eth address as the lambda owner.
+
+
+- `IDEMPOTENCY_KEY_MISSING` (400) error: Request without Idempotency key, refer to [this guide](https://docs.metakeep.xyz/reference/idempotency-key)
+
+
+- `IDEMPOTENCY_PARAMS_MISMATCH` (409) error: Another Request with same Idempotency key, refer to [this guide](https://docs.metakeep.xyz/reference/idempotency-key)
+
+
+- `SOMETHING_WENT_WRONG` (500) error: Unknown error occurred.
+Please get in touch with us if you continue seeing this error.
 
 ## Getting help and updates
 
