@@ -94,6 +94,7 @@ async function main() {
     console.log(json);
     transactionId = json.transactionId;
   });
+
   console.log("Waiting for transaction to be mined...");
   let transactionStatus;
   for (let i = 0; i < 10; i++) {
