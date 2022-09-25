@@ -99,6 +99,8 @@ async function main() {
       console.log("Waiting for transaction to be mined...");
 
       let transactionStatus;
+
+      // Waits for 5 seconds and checks the transaction status for 10 times.
       for (let i = 0; i < 10; i++) {
         await sleep(5000);
         transactionStatus = await getTransactionStatus(transactionId);
@@ -107,13 +109,12 @@ async function main() {
           exit(0);
         }
       }
+      console.log("Transaction taking more time than expected to confirm.");
       // if the lambda creation transaction is not Queued, logs the error and exits the program.
     } else {
       console.log(json);
       console.log("Lambda creation failed");
     }
-  }).setTimeout(10000, () => {
-    console.log("Lambda creation timed out");
   });
 }
 
