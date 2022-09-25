@@ -565,22 +565,22 @@ library MetaKeepLambdaSender {
 
 
 contract MetaKeepLambdaACL is AccessControl {
-    // Create a new role identifier for the admin role
-    bytes32 public constant METAKEEP_LAMBDA_ADMIN_ROLE =
-        keccak256("METAKEEP_LAMBDA_ADMIN_ROLE");
+    // Create a new role identifier for the owner role
+    bytes32 public constant METAKEEP_LAMBDA_OWNER_ROLE =
+        keccak256("METAKEEP_LAMBDA_OWNER_ROLE");
 
     constructor(address lambdaOwner) {
-        _setupRole(METAKEEP_LAMBDA_ADMIN_ROLE, lambdaOwner);
-        _setRoleAdmin(METAKEEP_LAMBDA_ADMIN_ROLE, METAKEEP_LAMBDA_ADMIN_ROLE);
+        _setupRole(METAKEEP_LAMBDA_OWNER_ROLE, lambdaOwner);
+        _setRoleAdmin(METAKEEP_LAMBDA_OWNER_ROLE, METAKEEP_LAMBDA_OWNER_ROLE);
     }
 
     modifier onlyMetaKeepLambdaOwner() {
         require(
             hasRole(
-                METAKEEP_LAMBDA_ADMIN_ROLE,
+                METAKEEP_LAMBDA_OWNER_ROLE,
                 MetaKeepLambdaSender.msgSender()
             ),
-            "MetaKeepLambda: Not admin"
+            "MetaKeepLambda: Not owner"
         );
         _;
     }
