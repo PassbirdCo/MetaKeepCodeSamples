@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./MetaKeepLambda.sol";
+import "./imports/MetaKeepLambda.sol";
 
 contract Voting is MetaKeepLambda {
 
