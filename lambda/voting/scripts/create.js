@@ -104,6 +104,8 @@ async function main() {
       break;
       exit(0);
     }
+console.log("Timed out waiting for transaction to be mined.")
+console.log("You can track transaction status here: " + url)
   }
 }
 
