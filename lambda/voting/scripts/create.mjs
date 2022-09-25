@@ -103,8 +103,8 @@ async function main() {
           exit(0);
         }
       }
+    // if the lambda creation transaction is not Queued, logs the error and exits the program.
     } else {
-      // logs the error and exits the program.
       console.log(json);
       console.log("Lambda creation failed");
     }
