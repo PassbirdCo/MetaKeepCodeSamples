@@ -90,7 +90,7 @@ async function main() {
       console.log("Lambda creation queued");
       transactionId = json.transactionId;
       // Logs the queued transaction object
-      console.log(json)
+      console.log(json);
 
       console.log("Waiting for transaction to be mined...");
 
@@ -103,7 +103,7 @@ async function main() {
           exit(0);
         }
       }
-    // if the lambda creation transaction is not Queued, logs the error and exits the program.
+      // if the lambda creation transaction is not Queued, logs the error and exits the program.
     } else {
       console.log(json);
       console.log("Lambda creation failed");
