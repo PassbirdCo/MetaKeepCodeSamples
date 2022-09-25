@@ -1,10 +1,14 @@
 import fetch from "node-fetch";
-import Web3 from "web3";
 import fs from "fs";
 import env from "dotenv";
+import { exit } from "process";
+
+async function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 async function getDeveloperWallet() {
-  const url = "https://api.dev.metakeep.xyz/v3/getDeveloperWallet";
+  const url = "https://api.metakeep.xyz/v3/getDeveloperWallet";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -22,14 +26,10 @@ async function getDeveloperWallet() {
   });
 }
 
-async function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function getTransactionStatus(transaction_id) {
-  const url = "https://api.dev.metakeep.xyz/v2/app/transaction/status";
+async function getTransactionStatus(transactionId) {
+  const url = "https://api.metakeep.xyz/v2/app/transaction/status";
   const requestBody = {
-    transaction_id: transaction_id,
+    transactionId: transactionId,
   };
   const headers = {
     "Content-Type": "application/json",
@@ -49,7 +49,7 @@ async function getTransactionStatus(transaction_id) {
 
 async function main() {
   env.config();
-  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/create";
+  const url = "https://api.metakeep.xyz/v2/app/lambda/create";
 
   const headers = {
     Accept: "application/json",
@@ -61,20 +61,12 @@ async function main() {
   const data = JSON.parse(
     fs.readFileSync("artifacts/contracts/Voting.sol/Voting.json")
   );
-
-  const web3 = new Web3();
-  const contract = new web3.eth.Contract(data["abi"]);
   const developer_address = await getDeveloperWallet();
 
-  const creationSignature = contract
-    .deploy({
-      data: data["bytecode"],
-      arguments: [developer_address, "Voting"],
-    })
-    .encodeABI();
-
   const requestBody = {
-    creationSignature: creationSignature,
+    constructor: {
+      args: [developer_address, "lambda_name"],
+    },
     abi: data["abi"],
     bytecode: data["bytecode"],
   };
@@ -85,25 +77,35 @@ async function main() {
   };
   console.log("Lambda creation in process...");
 
-  const result = await fetch(url, options).catch((err) => {
-    console.log(err);
-    return err;
+  const result = await fetch(url, options).catch(() => {
+    exit(1);
   });
+
   let transactionId;
-  await result.json().then((json) => {
-    console.log(json);
-    transactionId = json.transactionId;
-  });
-  console.log("Waiting for transaction to be mined...");
-  let transactionStatus;
-  for (let i = 0; i < 10; i++) {
-    await sleep(5000);
-    transactionStatus = await getTransactionStatus(transactionId);
-    if (transactionStatus.status == "COMPLETED") {
-      console.log("Lambda created successfully");
-      break;
+
+  await result.json().then(async (json) => {
+    // fetches the transaction status, if the lambda creation transaction is Queued.
+    if (json.status == "QUEUED") {
+      console.log("Lambda creation queued");
+      transactionId = json.transactionId;
+      console.log(json)
+      console.log("Waiting for transaction to be mined...");
+
+      let transactionStatus;
+      for (let i = 0; i < 10; i++) {
+        await sleep(5000);
+        transactionStatus = await getTransactionStatus(transactionId);
+        if (transactionStatus.status == "COMPLETED") {
+          console.log("Lambda created successfully");
+          exit(0);
+        }
+      }
+    } else {
+      // logs the error and exits the program.
+      console.log(json);
+      console.log("Lambda creation failed");
     }
-  }
+  });
 }
 
 main();
