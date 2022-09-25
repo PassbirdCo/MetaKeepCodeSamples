@@ -50,6 +50,12 @@ async function getTransactionStatus(transactionId) {
 
 async function main() {
   env.config();
+
+  if (process.env.API_KEY == "") {
+    console.log("Please set API_KEY in .env file");
+    exit(1);
+  }
+
   const url = "https://api.metakeep.xyz/v2/app/lambda/create";
 
   const headers = {
@@ -62,11 +68,11 @@ async function main() {
   const data = JSON.parse(
     fs.readFileSync("artifacts/contracts/Voting.sol/Voting.json")
   );
-  const developer_address = await getDeveloperWallet();
+  const developerAddress = await getDeveloperWallet();
 
   const requestBody = {
     constructor: {
-      args: [developer_address, "lambda_name"],
+      args: [developerAddress, "lambda_name"],
     },
     abi: data["abi"],
     bytecode: data["bytecode"],
@@ -78,9 +84,7 @@ async function main() {
   };
   console.log("Lambda creation in process...");
 
-  const result = await fetch(url, options).catch(() => {
-    exit(1);
-  });
+  const result = await fetch(url, options);
 
   let transactionId;
 
@@ -108,6 +112,8 @@ async function main() {
       console.log(json);
       console.log("Lambda creation failed");
     }
+  }).setTimeout(10000, () => {
+    console.log("Lambda creation timed out");
   });
 }
 

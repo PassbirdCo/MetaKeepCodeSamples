@@ -1,5 +1,3 @@
 /cache
 /node_modules
-/artifacts/contracts/Voting.sol/Voting.dbg.json
-/artifacts/build-info
-/artifacts/contracts/imports
+/artifacts
