@@ -1,7 +1,7 @@
 {
   "name": "MetaKeep Lambda",
   "version": "1.0.0",
-  "description": "A boilerplate repository to get you started with MetaKeep-Lambda development",
+  "description": "A boilerplate repository to get you started with MetaKeep Lambda development",
   "main": "scripts/create.js",
   "scripts": {
     "test": "hardhat test",
