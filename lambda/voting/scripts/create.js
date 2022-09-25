@@ -102,6 +102,7 @@ async function main() {
     if (transactionStatus.status == "COMPLETED") {
       console.log("Lambda created successfully");
       break;
+      exit(0);
     }
   }
 }
