@@ -42,4 +42,4 @@ If you need help with this project, or with MetaKeep APIs in general, please rea
 
 For the latest news about MetaKeep, [follow us on Twitter](https://twitter.com/metakeep), and don't forget to star [our GitHub repository](https://github.com/PassbirdCo/MetaKeepCodeSamples.git)!
 
-**Happy_building_!**
+**Happy*building*!**
