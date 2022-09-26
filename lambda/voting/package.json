@@ -6,7 +6,7 @@
   "scripts": {
     "test": "hardhat test",
     "deploy": "npx hardhat compile && node --experimental-modules scripts/create.mjs",
-    "invoke": "node --experimental-modules scripts/invoke.mjs",
+    "invoke": "node --experimental-modules scripts/registerAndVote.mjs",
     "format": "prettier --write ."
   },
   "repository": {

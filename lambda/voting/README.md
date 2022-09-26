@@ -20,10 +20,16 @@ npm install
 ```
 
 Then, on a new terminal, go to the repository's lambda/voting folder and run this to
-deploy your contract:
+deploy your voting contract:
 
 ```sh
 npm run deploy
+```
+
+invoke registerCandidate and voteForUser methods from voting contract deployed:
+
+```sh
+npm run invoke
 ```
 
 ## User Guide
