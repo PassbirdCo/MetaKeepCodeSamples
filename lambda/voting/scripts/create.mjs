@@ -9,6 +9,8 @@ async function sleep(ms) {
 }
 
 async function getDeveloperWallet() {
+  console.log("Getting developer wallet...");
+
   const url = "https://api.metakeep.xyz/v3/getDeveloperWallet";
   const headers = {
     "Content-Type": "application/json",
@@ -20,11 +22,20 @@ async function getDeveloperWallet() {
     headers: headers,
   };
   const result = await fetch(url, options);
-  console.log("getting wallet...");
-  return result.json().then((json) => {
-    console.log(json);
-    return json.wallet.ethAddress;
-  });
+  const resultJson = await result.json();
+
+  console.log("getDeveloperWallet response:");
+  console.log(resultJson);
+
+  if (!result.ok) {
+    console.log(
+      "Error getting developer wallet. HTTP status code: " + result.status
+    );
+    exit(1);
+  }
+
+  console.log("\n");
+  return resultJson.wallet.ethAddress;
 }
 
 async function getTransactionStatus(transactionId) {
@@ -43,9 +54,19 @@ async function getTransactionStatus(transactionId) {
     body: JSON.stringify(requestBody),
   };
   const result = await fetch(url, options);
-  return result.json().then((json) => {
-    return json;
-  });
+  const resultJson = await result.json();
+
+  console.log("getTransactionStatus response: ");
+  console.log(resultJson);
+
+  if (!result.ok) {
+    console.log("Error getting transaction status");
+    exit(1);
+  }
+
+  console.log("\n");
+
+  return resultJson;
 }
 
 async function main() {
@@ -85,37 +106,42 @@ async function main() {
   console.log("Lambda creation in process...");
 
   const result = await fetch(url, options);
+  const resultJson = await result.json();
+
+  console.log("Lambda creation response:");
+  console.log(resultJson);
 
   let transactionId;
 
-  await result.json().then(async (json) => {
-    // fetches the transaction status, if the lambda creation transaction is Queued.
-    if (json.status == "QUEUED") {
-      console.log("Lambda creation queued");
-      transactionId = json.transactionId;
-      // Logs the queued transaction object
-      console.log(json);
+  if (resultJson.status != "QUEUED") {
+    // if the lambda creation transaction is not Queued, logs the error and exits the program.
+    console.log("Lambda creation failed");
+  }
 
-      console.log("Waiting for transaction to be mined...");
+  console.log("Lambda creation queued\n");
+  transactionId = resultJson.transactionId;
 
-      let transactionStatus;
+  console.log("Waiting for transaction to be mined...");
 
-      // Waits for 5 seconds and checks the transaction status for 10 times.
-      for (let i = 0; i < 10; i++) {
-        await sleep(5000);
-        transactionStatus = await getTransactionStatus(transactionId);
-        if (transactionStatus.status == "COMPLETED") {
-          console.log("Lambda created successfully");
-          exit(0);
-        }
-      }
-      console.log("Transaction taking more time than expected to confirm.");
-      // if the lambda creation transaction is not Queued, logs the error and exits the program.
-    } else {
-      console.log(json);
-      console.log("Lambda creation failed");
+  let transactionStatus;
+
+  // Waits for 5 seconds and checks the transaction status for 10 times.
+  for (let i = 0; i < 10; i++) {
+    await sleep(5000);
+    transactionStatus = await getTransactionStatus(transactionId);
+    if (transactionStatus.status == "COMPLETED") {
+      console.log(
+        "Lambda created successfully at address: " + resultJson.lambda
+      );
+      exit(0);
     }
-  });
+  }
+
+  console.log("Transaction taking more time than expected to confirm.");
+  console.log(
+    "Please check transaction status at this link:" +
+      resultJson.transactionChainScanUrl
+  );
 }
 
 main();
