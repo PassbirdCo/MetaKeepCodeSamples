@@ -5,7 +5,7 @@
   "main": "scripts/create.js",
   "scripts": {
     "test": "hardhat test",
-    "deploy": "node --experimental-modules scripts/create.mjs",
+    "deploy": "npx hardhat compile && node --experimental-modules scripts/create.mjs",
     "format": "prettier --write ."
   },
   "repository": {

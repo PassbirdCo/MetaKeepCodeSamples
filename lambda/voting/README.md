@@ -18,11 +18,6 @@ git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 cd lambda/voting
 npm install
 ```
-Compile the smart contracts
-
-```sh
-npx hardhat compile
-```
 
 Then, on a new terminal, go to the repository's lambda/voting folder and run this to
 deploy your contract:
