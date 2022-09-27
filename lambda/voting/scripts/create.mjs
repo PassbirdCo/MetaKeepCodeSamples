@@ -7,7 +7,7 @@ import getDeveloperWallet, {
   getTransactionStatus,
   sleep,
   checkAPIKey,
-} from "./utils.mjs";
+} from "../../../helpers/utils.mjs";
 
 async function main() {
   env.config();
