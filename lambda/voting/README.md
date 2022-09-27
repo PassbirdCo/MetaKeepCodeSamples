@@ -19,11 +19,18 @@ cd lambda/voting
 npm install
 ```
 
-Then, on a new terminal, go to the repository's lambda/voting folder and run this to
-deploy your contract:
+Then, on a new terminal, go to the repository's `lambda/voting` folder and run this to
+deploy your voting contract:
 
 ```sh
 npm run deploy
+```
+
+Once the contract has been deployed, invoke `registerCandidate` and `voteForUser` methods
+from the voting contract:
+
+```sh
+npm run invoke
 ```
 
 ## User Guide
@@ -42,4 +49,4 @@ If you need help with this project, or with MetaKeep APIs in general, please rea
 
 For the latest news about MetaKeep, [follow us on Twitter](https://twitter.com/metakeep), and don't forget to star [our GitHub repository](https://github.com/PassbirdCo/MetaKeepCodeSamples.git)!
 
-**Happy_building_!**
+**Happy*building*!**

@@ -3,79 +3,17 @@ import fetch from "node-fetch";
 import fs from "fs";
 import env from "dotenv";
 import { exit } from "process";
-
-async function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function getDeveloperWallet() {
-  console.log("Getting developer wallet...");
-
-  const url = "https://api.metakeep.xyz/v3/getDeveloperWallet";
-  const headers = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "x-api-key": process.env.API_KEY,
-  };
-  const options = {
-    method: "POST",
-    headers: headers,
-  };
-  const result = await fetch(url, options);
-  const resultJson = await result.json();
-
-  console.log("getDeveloperWallet response:");
-  console.log(resultJson);
-
-  if (!result.ok) {
-    console.log(
-      "Error getting developer wallet. HTTP status code: " + result.status
-    );
-    exit(1);
-  }
-
-  console.log("\n");
-  return resultJson.wallet.ethAddress;
-}
-
-async function getTransactionStatus(transactionId) {
-  const url = "https://api.metakeep.xyz/v2/app/transaction/status";
-  const requestBody = {
-    transactionId: transactionId,
-  };
-  const headers = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "x-api-key": process.env.API_KEY,
-  };
-  const options = {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(requestBody),
-  };
-  const result = await fetch(url, options);
-  const resultJson = await result.json();
-
-  console.log("getTransactionStatus response: ");
-  console.log(resultJson);
-
-  if (!result.ok) {
-    console.log("Error getting transaction status");
-    exit(1);
-  }
-
-  console.log("\n");
-
-  return resultJson;
-}
+import getDeveloperWallet, {
+  getTransactionStatus,
+  sleep,
+  checkAPIKey,
+} from "./utils.mjs";
 
 async function main() {
   env.config();
 
-  if (process.env.API_KEY == "") {
-    console.log("Please set API_KEY in .env file");
-    exit(1);
-  }
+  // Checks if the API_KEY is set in the .env file.
+  checkAPIKey();
 
   const url = "https://api.metakeep.xyz/v2/app/lambda/create";
 
