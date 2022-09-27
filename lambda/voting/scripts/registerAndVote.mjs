@@ -37,13 +37,14 @@ async function invoke(functionName, functionArgs) {
   const result = await fetch(url, options);
   const resultJson = await result.json();
 
+  console.log(resultJson);
+
   if (!result.ok) {
     console.log(
       "Error while invoking method. HTTP status code: " + result.status
     );
     exit(1);
   }
-  console.log(resultJson);
   return resultJson;
 }
 
@@ -54,7 +55,7 @@ async function main() {
   checkAPIKey();
 
   // Gets the user Address to register as Candidate in Voting contract.
-  const userAddress = await getUserWallet(process.env.EMAIL);
+  const userAddress = await getUserWallet(process.env.REGISTER_CANDIDATE_EMAIL);
 
   /* *************************************************************** Register Candidate *************************************************************** */
   console.log(
