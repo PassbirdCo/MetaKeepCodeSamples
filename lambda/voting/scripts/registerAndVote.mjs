@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import env from "dotenv";
+import { exit } from "process";
 
 import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
@@ -35,6 +36,13 @@ async function invoke(functionName, functionArgs) {
 
   const result = await fetch(url, options);
   const resultJson = await result.json();
+
+  if (!result.ok) {
+    console.log(
+      "Error while invoking method. HTTP status code: " + result.status
+    );
+    exit(1);
+  }
   console.log(resultJson);
   return resultJson;
 }

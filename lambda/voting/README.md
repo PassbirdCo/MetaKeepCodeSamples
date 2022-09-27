@@ -26,7 +26,7 @@ deploy your voting contract:
 npm run deploy
 ```
 
-Once the contract has been deployed, invoke `registerCandidate` and `voteForUser` methods 
+Once the contract has been deployed, invoke `registerCandidate` and `voteForUser` methods
 from the voting contract:
 
 ```sh
