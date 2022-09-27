@@ -21,8 +21,6 @@ async function createCollection() {
 
   const developerAddress = await getDeveloperWallet();
 
-  console.log(developerAddress);
-
   const requestBody = {
     nft: {
       name: "Metakeep_NFT",
@@ -135,8 +133,8 @@ async function main() {
   // Waits for the transaction to be mined
   await waitUntilTransactionMined(resultJson);
   console.log(
-    "NFT Collection created successfully! Transaction Hash: " +
-      resultJson.transactionHash +
+    "NFT Collection created successfully! Collection Address: " +
+      resultJson.collection +
       "\n"
   );
 
@@ -164,6 +162,9 @@ async function main() {
   console.log(
     "NFT minted successfully! Transaction Hash: " +
       resultJson.transactionHash +
+      "\n" +
+      "NFT Token Id:" +
+      resultJson2.token +
       "\n"
   );
 }
