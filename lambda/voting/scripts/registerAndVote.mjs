@@ -1,15 +1,15 @@
 import fetch from "node-fetch";
 import env from "dotenv";
-import { exit } from "process";
 
 import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
-  getTransactionStatus,
+  waitUntilTransactionMined,
   getUserWallet,
   sleep,
   checkAPIKey,
 } from "./utils.mjs";
 
+// Invokes the lambda function.
 async function invoke(functionName, functionArgs) {
   const url = "https://api.metakeep.xyz/v2/app/lambda/invoke";
 
@@ -39,38 +39,6 @@ async function invoke(functionName, functionArgs) {
   return resultJson;
 }
 
-async function waitUntilTransactionMined(resultJson) {
-  let transactionStatus;
-
-  console.log("Waiting for transaction to be mined...\n");
-
-  // Waits for 5 seconds and checks the transaction status for 10 times.
-  for (let i = 0; i < 10; i++) {
-    await sleep(5000);
-    transactionStatus = await getTransactionStatus(resultJson.transactionId);
-    if (transactionStatus.status == "COMPLETED") {
-      console.log("Lambda invocation completed: " + resultJson.transactionHash);
-      break;
-    } else if (transactionStatus.status == "FAILED") {
-      console.log(
-        "Lambda invocation failed, Pls check here for more details: " +
-          resultJson.transactionChainScanUrl +
-          "\n"
-      );
-      exit(0);
-    }
-  }
-  // If the transaction is not mined after 10 checks, then it is taking more time than expected.
-  if (transactionStatus.status == "QUEUED") {
-    console.log("Transaction taking more time than expected to confirm.");
-    console.log(
-      "Please check transaction status at this link:" +
-        resultJson.transactionChainScanUrl
-    );
-    exit(1);
-  }
-}
-
 async function main() {
   env.config();
 
@@ -78,7 +46,7 @@ async function main() {
   checkAPIKey();
 
   // Gets the user Address to register as Candidate in Voting contract.
-  const userAddress = await getUserWallet("adityadhir97@gmail.com");
+  const userAddress = await getUserWallet(process.env.EMAIL);
 
   /* *************************************************************** Register Candidate *************************************************************** */
   console.log(

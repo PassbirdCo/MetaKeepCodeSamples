@@ -101,6 +101,38 @@ export const getTransactionStatus = async (transactionId) => {
   return resultJson;
 };
 
+// Waits for the transaction to be mined.
+export const waitUntilTransactionMined = async (resultJson) => {
+  let transactionStatus;
+
+  console.log("Waiting for transaction to be mined...\n");
+
+  // Waits for 5 seconds and checks the transaction status for 10 times.
+  for (let i = 0; i < 10; i++) {
+    await sleep(5000);
+    transactionStatus = await getTransactionStatus(resultJson.transactionId);
+    if (transactionStatus.status == "COMPLETED") {
+      break;
+    } else if (transactionStatus.status == "FAILED") {
+      console.log(
+        "Lambda invocation failed, Pls check here for more details: " +
+          resultJson.transactionChainScanUrl +
+          "\n"
+      );
+      exit(0);
+    }
+  }
+  // If the transaction is not mined after 10 checks, then it is taking more time than expected.
+  if (transactionStatus.status == "QUEUED") {
+    console.log("Transaction taking more time than expected to confirm.");
+    console.log(
+      "Please check transaction status at this link:" +
+        resultJson.transactionChainScanUrl
+    );
+    exit(1);
+  }
+};
+
 export const sleep = async (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
