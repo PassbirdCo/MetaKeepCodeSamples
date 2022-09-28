@@ -5,6 +5,7 @@
   "main": "scripts/index.js",
   "scripts": {
     "createCollectionAndMintToken": "node scripts/createCollectionAndMintToken.js",
+    "lockUnlockToken": "node scripts/lockUnlockToken.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write ."
   },
