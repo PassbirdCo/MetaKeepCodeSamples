@@ -49,7 +49,7 @@ async function lockUnlockToken(is_lock_or_unlock) {
 
   if (!result.ok) {
     // if the token lock transaction is not Queued, logs the error and exits the program.
-    console.log("Token lock failed. HTTP Status Code: " + resultJson.status);
+    console.log("Token" + type + "failed. HTTP Status Code: " + resultJson.status);
     exit(1);
   }
 
