@@ -153,7 +153,7 @@ async function main() {
 
   const resultJson2 = await mintNFT(collection);
 
-  console.log("NFT minted successfully!");
+  console.log("NFT mint in progress....");
 
   // Waits for the transaction to be mined
 
