@@ -171,7 +171,7 @@ async function main() {
       "/" +
       mintResultJson.token +
       "\n" +
-      "OpenSea Link (PRODUCTION): https://.opensea.io/assets/matic/" +
+      "OpenSea Link (PRODUCTION): https://opensea.io/assets/matic/" +
       collection +
       "/" +
       mintResultJson.token +
