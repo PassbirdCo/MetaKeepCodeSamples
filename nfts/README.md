@@ -21,6 +21,12 @@ deploy NFT contract and mint token:
 npm run createCollectionAndMintToken
 ```
 
+to Lock and unlock token, you can run the following command on the new terminal.
+
+```sh
+npm run lockUnlockToken
+```
+
 ## User Guide
 
 You can find detailed instructions on using this repository and many tips in [its documentation](https://docs.metakeep.xyz/reference/nft-101).
