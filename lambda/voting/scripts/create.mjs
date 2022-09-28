@@ -4,9 +4,8 @@ import fs from "fs";
 import env from "dotenv";
 import { exit } from "process";
 import getDeveloperWallet, {
-  getTransactionStatus,
-  sleep,
   checkAPIKey,
+  waitUntilTransactionMined,
 } from "../../../helpers/utils.mjs";
 
 async function main() {
@@ -49,36 +48,19 @@ async function main() {
   console.log("Lambda creation response:");
   console.log(resultJson);
 
-  let transactionId;
-
-  if (resultJson.status != "QUEUED") {
-    // if the lambda creation transaction is not Queued, logs the error and exits the program.
-    console.log("Lambda creation failed");
+  if (!result.ok) {
+    console.log(
+      "Error while creating lambda. HTTP status code: " + result.status
+    );
+    exit(1);
   }
 
-  console.log("Lambda creation queued\n");
-  transactionId = resultJson.transactionId;
+  //Waits for the transaction to be mined.
 
-  console.log("Waiting for transaction to be mined...");
+  await waitUntilTransactionMined(resultJson);
 
-  let transactionStatus;
-
-  // Waits for 5 seconds and checks the transaction status for 10 times.
-  for (let i = 0; i < 10; i++) {
-    await sleep(5000);
-    transactionStatus = await getTransactionStatus(transactionId);
-    if (transactionStatus.status == "COMPLETED") {
-      console.log(
-        "Lambda created successfully at address: " + resultJson.lambda
-      );
-      exit(0);
-    }
-  }
-
-  console.log("Transaction taking more time than expected to confirm.");
   console.log(
-    "Please check transaction status at this link:" +
-      resultJson.transactionChainScanUrl
+    "Lambda created successfully. Lambda address: " + resultJson.lambda
   );
 }
 

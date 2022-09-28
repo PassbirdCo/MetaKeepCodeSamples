@@ -128,7 +128,7 @@ async function main() {
   // Creates a New Collection
   console.log("Creating a new collection...");
   const resultJson = await createCollection();
-  console.log("Collection created successfully!");
+  console.log("Collection creation in progress...");
 
   // Waits for the transaction to be mined
   await waitUntilTransactionMined(resultJson);
@@ -151,21 +151,30 @@ async function main() {
 
   const collection = resultJson.collection;
 
-  const resultJson2 = await mintNFT(collection);
+  const mintResultJson = await mintNFT(collection);
 
-  console.log("NFT minted successfully!");
+  console.log("NFT mint in progress....");
 
   // Waits for the transaction to be mined
 
-  await waitUntilTransactionMined(resultJson2);
+  await waitUntilTransactionMined(mintResultJson);
 
   console.log(
     "NFT minted successfully! Transaction Hash: " +
-      resultJson.transactionHash +
-      "\n" +
-      "NFT Token Id:" +
-      resultJson2.token +
-      "\n"
+      mintResultJson.transactionHash
+  );
+  console.log("NFT Token Id:" + mintResultJson.token);
+  console.log(
+    "OpenSea Link (DEVELOPMENT): https://testnets.opensea.io/assets/mumbai/" +
+      collection +
+      "/" +
+      mintResultJson.token
+  );
+  console.log(
+    "OpenSea Link (PRODUCTION): https://opensea.io/assets/matic/" +
+      collection +
+      "/" +
+      mintResultJson.token
   );
 }
 
