@@ -128,7 +128,7 @@ async function main() {
   // Creates a New Collection
   console.log("Creating a new collection...");
   const resultJson = await createCollection();
-  console.log("Collection created successfully!");
+  console.log("Collection creation in progress...");
 
   // Waits for the transaction to be mined
   await waitUntilTransactionMined(resultJson);
