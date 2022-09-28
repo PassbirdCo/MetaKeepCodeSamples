@@ -166,7 +166,12 @@ async function main() {
       "NFT Token Id:" +
       mintResultJson.token +
       "\n" +
-      "OpenSea Link: https://testnets.opensea.io/assets/mumbai/" +
+      "OpenSea Link (DEVELOPMENT): https://testnets.opensea.io/assets/mumbai/" +
+      collection +
+      "/" +
+      mintResultJson.token +
+      "\n" +
+      "OpenSea Link (PRODUCTION): https://.opensea.io/assets/matic/" +
       collection +
       "/" +
       mintResultJson.token +
