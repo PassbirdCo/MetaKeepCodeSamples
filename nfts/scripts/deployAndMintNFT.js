@@ -151,7 +151,7 @@ async function main() {
 
   const collection = resultJson.collection;
 
-  const resultJson2 = await mintNFT(collection);
+  const mintResultJson = await mintNFT(collection);
 
   console.log("NFT mint in progress....");
 
