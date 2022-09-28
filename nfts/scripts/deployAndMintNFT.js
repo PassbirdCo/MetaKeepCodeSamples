@@ -157,14 +157,19 @@ async function main() {
 
   // Waits for the transaction to be mined
 
-  await waitUntilTransactionMined(resultJson2);
+  await waitUntilTransactionMined(mintResultJson);
 
   console.log(
     "NFT minted successfully! Transaction Hash: " +
-      resultJson.transactionHash +
+      mintResultJson.transactionHash +
       "\n" +
       "NFT Token Id:" +
-      resultJson2.token +
+      mintResultJson.token +
+      "\n" +
+      "OpenSea Link: https://testnets.opensea.io/assets/mumbai/" +
+      collection +
+      "/" +
+      mintResultJson.token +
       "\n"
   );
 }
