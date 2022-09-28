@@ -4,7 +4,7 @@
   "description": "End to End tutorials for NFT deployment and minting",
   "main": "scripts/index.js",
   "scripts": {
-    "deployAndMint": "node scripts/deployAndMintNFT.js",
+    "createCollectionAndMintToken": "node scripts/createCollectionAndMintToken.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write ."
   },

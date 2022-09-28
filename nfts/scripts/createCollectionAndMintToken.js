@@ -161,21 +161,20 @@ async function main() {
 
   console.log(
     "NFT minted successfully! Transaction Hash: " +
-      mintResultJson.transactionHash +
-      "\n" +
-      "NFT Token Id:" +
-      mintResultJson.token +
-      "\n" +
-      "OpenSea Link (DEVELOPMENT): https://testnets.opensea.io/assets/mumbai/" +
+      mintResultJson.transactionHash
+  );
+  console.log("NFT Token Id:" + mintResultJson.token);
+  console.log(
+    "OpenSea Link (DEVELOPMENT): https://testnets.opensea.io/assets/mumbai/" +
       collection +
       "/" +
-      mintResultJson.token +
-      "\n" +
-      "OpenSea Link (PRODUCTION): https://opensea.io/assets/matic/" +
+      mintResultJson.token
+  );
+  console.log(
+    "OpenSea Link (PRODUCTION): https://opensea.io/assets/matic/" +
       collection +
       "/" +
-      mintResultJson.token +
-      "\n"
+      mintResultJson.token
   );
 }
 
