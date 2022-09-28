@@ -18,7 +18,7 @@ Then, on a new terminal, go to the repository's `nft` folder and run this to
 deploy NFT contract and mint token:
 
 ```sh
-npm run deployAndMint
+npm run createCollectionAndMintToken
 ```
 
 ## User Guide
