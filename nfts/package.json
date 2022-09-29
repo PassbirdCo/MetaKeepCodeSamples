@@ -1,0 +1,19 @@
+{
+  "name": "nfts",
+  "version": "1.0.0",
+  "description": "End to End tutorials for NFT deployment and minting",
+  "main": "scripts/index.js",
+  "scripts": {
+    "createCollectionAndMintToken": "node scripts/createCollectionAndMintToken.js",
+    "lockUnlockToken": "node scripts/lockUnlockToken.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write ."
+  },
+  "author": "Passbird Research",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "prettier": "^2.7.1"
+  }
+}
