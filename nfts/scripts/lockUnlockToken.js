@@ -9,13 +9,16 @@ import getDeveloperWallet, {
   checkAPIKey,
 } from "../../helpers/utils.mjs";
 
-async function lockUnlockToken(is_lock_or_unlock) {
-  let url = "https://api.metakeep.xyz/v2/app/nft/lock";
-
-  const type = is_lock_or_unlock; // lock or unlock
+async function lockUnlockToken(
+  // lock or unlock
+  type
+) {
+  let url;
 
   if (type == "unlock") {
     url = "https://api.metakeep.xyz/v2/app/nft/unlock";
+  } else if (type == "lock") {
+    url = "https://api.metakeep.xyz/v2/app/nft/lock";
   }
 
   const headers = {
@@ -49,7 +52,9 @@ async function lockUnlockToken(is_lock_or_unlock) {
 
   if (!result.ok) {
     // if the token lock transaction is not Queued, logs the error and exits the program.
-    console.log("Token" + type + "failed. HTTP Status Code: " + resultJson.status);
+    console.log(
+      "Token " + type + " failed. HTTP Status Code: " + resultJson.status
+    );
     exit(1);
   }
 
