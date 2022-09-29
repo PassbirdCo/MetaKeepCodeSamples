@@ -176,6 +176,9 @@ async function main() {
       "/" +
       mintResultJson.token
   );
+  console.log(
+    "Note that OpenSea can take upto a minute to show the newly minted NFTs."
+  );
 }
 
 main();
