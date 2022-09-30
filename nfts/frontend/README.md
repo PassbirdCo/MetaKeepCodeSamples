@@ -42,5 +42,3 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 ## Learn More
 
 You can learn more in the [MetaKeep REST API documentation](https://docs.metakeep.xyz).
-
-
