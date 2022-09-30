@@ -2,8 +2,11 @@ import express from "express";
 import fetch from "node-fetch";
 import bodyParser from "body-parser";
 import cors from "cors";
+import env from "dotenv";
 
 const app = express();
+
+env.config();
 
 const port = 3001;
 
@@ -42,11 +45,11 @@ app.listen(port, () => {
 
 async function TransferNFTService(collection, tokenId, toEmail, fromEmail) {
     console.log("Transferring NFT...");
-    const url = "https://api.metakeep.xyz/v2/app/nft/transfer/";
+    const url = "https://api.dev.metakeep.xyz/v2/app/nft/transfer/";
     const headers = {
         "Content-Type": "application/json",
         Accept: "application/json",
-        "x-api-key": "AxGzas/Biyb8b3rgB6lCOrwcg44hf/i8shNJsw6t6WX3",
+        "x-api-key": process.env.API_KEY,
         "Idempotency-Key": "Idempotency-Key" + Math.random().toString()
     };
     const requestBody = {
