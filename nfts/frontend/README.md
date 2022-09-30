@@ -1,6 +1,6 @@
-# Getting Started with MetaKeep SDK tutorial
+# NFT frontend
 
-This project is complete end to end tutorial for the Developers who want to leverage Metakeep SDK for asset transfers and Lambda Invocation.
+This project is the nft frontend website. The users can see list of the tokens they own.
 
 ## Available Scripts
 
