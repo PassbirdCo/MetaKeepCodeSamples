@@ -5,7 +5,7 @@ const Navbar = () => {
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <Link className="navbar-brand" to="/">
-          Metakeep
+          MetaKeep
         </Link>
         <button
           className="navbar-toggler"
