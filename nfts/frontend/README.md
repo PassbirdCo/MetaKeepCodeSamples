@@ -10,15 +10,15 @@ This project is the nft frontend website. The users can see list of the tokens t
 
 Run the following command to start the backend server
 
-```node index.js```
+`node index.js`
 
-This will start serving a server at localhost:3001. 
+This will start serving a server at localhost:3001.
 
 **Open a new terminal and go to the `nfts/frontend` directory**
 
 Run the following command to start the frontend application
 
-```npm start```
+`npm start`
 
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
