@@ -1,10 +1,5 @@
 import fetch from "node-fetch";
-export default async function TransferNFTService(
-  collection,
-  tokenId,
-  toEmail,
-  fromEmail
-) {
+export default async function TransferNFTService(tokenId, toEmail, fromEmail) {
   console.log("Transferring NFT...");
   const url = "http://localhost:3001/getConsentToken";
   const headers = {
@@ -13,9 +8,6 @@ export default async function TransferNFTService(
     "Access-Control-Allow-Origin": "*",
   };
   const requestBody = {
-    nft: {
-      collection: collection,
-    },
     token: tokenId,
     to: {
       email: toEmail,

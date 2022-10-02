@@ -31,7 +31,6 @@ app.get("/", (_, res) => {
 app.post("/getConsentToken", async (req, res) => {
   console.log("getConsentToken");
   const result = await TransferNFTService(
-    req.body.nft.collection,
     req.body.token,
     req.body.to.email,
     req.body.from.email
@@ -44,7 +43,7 @@ app.listen(port, () => {
 
 // Utility function to transfer NFT
 
-async function TransferNFTService(collection, tokenId, toEmail, fromEmail) {
+async function TransferNFTService(tokenId, toEmail, fromEmail) {
   console.log("Transferring NFT...");
   const url = "https://api.dev.metakeep.xyz/v2/app/nft/transfer/";
   const headers = {
@@ -55,7 +54,7 @@ async function TransferNFTService(collection, tokenId, toEmail, fromEmail) {
   };
   const requestBody = {
     nft: {
-      collection: collection,
+      collection: process.env.COLLECTION_ADDRESS,
     },
     token: tokenId,
     to: {

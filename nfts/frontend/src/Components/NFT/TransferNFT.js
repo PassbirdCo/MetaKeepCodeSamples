@@ -3,7 +3,6 @@ import TransferNFTService from "../../utils/transferNft";
 import "./TransferNFT.css";
 
 export const TransferNFT = ({ sdk }) => {
-  const [collection, setCollection] = useState("");
   const [tokenId, setTokenId] = useState("");
   const [to, setTo] = useState("");
   const [from, setFrom] = useState("");
@@ -13,7 +12,7 @@ export const TransferNFT = ({ sdk }) => {
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await TransferNFTService(collection, tokenId, to, from);
+      const result = await TransferNFTService(tokenId, to, from);
       if (result.status == "USER_CONSENT_NEEDED") {
         const consentToken = result.consentToken;
         const consent = await sdk.getConsent(consentToken);
@@ -32,14 +31,6 @@ export const TransferNFT = ({ sdk }) => {
   return !result ? (
     <div className="transferNFT">
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          id="collection"
-          placeholder="Collection"
-          value={collection}
-          onChange={(e) => setCollection(e.target.value)}
-          required={true}
-        />
         <input
           type="text"
           id="tokenId"
