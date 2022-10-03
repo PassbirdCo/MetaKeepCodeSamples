@@ -44,7 +44,7 @@ app.listen(port, () => {
 // Utility function to transfer NFT
 
 async function TransferNFTService(tokenId, toEmail, fromEmail) {
-  console.log("Transferring NFT...");
+  console.log("Get transfer NFT consent token...");
   const url = "https://api.metakeep.xyz/v2/app/nft/transfer/";
   const headers = {
     "Content-Type": "application/json",
