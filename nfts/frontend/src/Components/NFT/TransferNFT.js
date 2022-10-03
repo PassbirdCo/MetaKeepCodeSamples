@@ -41,18 +41,18 @@ export const TransferNFT = ({ sdk }) => {
         />
         <input
           type="text"
+          id="from"
+          placeholder="From"
+          value={from}
+          onChange={(e) => setFrom(e.target.value)}
+        />
+        <input
+          type="text"
           id="to"
           placeholder="To"
           value={to}
           onChange={(e) => setTo(e.target.value)}
           required={true}
-        />
-        <input
-          type="text"
-          id="from"
-          placeholder="From"
-          value={from}
-          onChange={(e) => setFrom(e.target.value)}
         />
         <button id="button" type="submit">
           Transfer NFT
