@@ -38,7 +38,7 @@ app.post("/getConsentToken", async (req, res) => {
   res.send(result);
 });
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`NFT transfer mock server listening at http://localhost:${port}`);
 });
 
 // Utility function to transfer NFT
