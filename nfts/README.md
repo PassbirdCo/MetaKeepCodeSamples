@@ -1,4 +1,4 @@
-## NFT Deployment and Token Mint End to End Tutorial.
+## NFT Deployment - Token Mint And Transfer End to End Tutorial.
 
 This directory contains a sample project that you can use as a starting point for using the NFT Rest API by MetaKeep.
 
@@ -15,6 +15,7 @@ cd nfts
 
 npm install
 ```
+
 ### Run createCollectionAndMintToken and lockUnlockToken scripts
 
 Then, on a new terminal, go to the repository's `nfts/backend` folder and run this to
@@ -34,7 +35,7 @@ npm run lockUnlockToken
 
 If you want to check the complete end to end working on Peer to Peer NFT transfer. Follow the following commands.
 
-Open a new terminal and go to the repository's `nfts/backend` folder and run the  `npm run mockServer` to start the local server at port number `3001`
+Open a new terminal and go to the repository's `nfts/backend` folder and run the `npm run mockServer` to start the local server at port number `3001`
 
 Open a second terminal session and go to the repository's `nfts/frontend` folder and run `npm start`.
 
