@@ -10,11 +10,14 @@ The first thing, you need to do is clone this repository and download the depend
 
 ```sh
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
+
 cd nfts
+
 npm install
 ```
+### Run createCollectionAndMintToken and lockUnlockToken scripts
 
-Then, on a new terminal, go to the repository's `nft` folder and run this to
+Then, on a new terminal, go to the repository's `nfts/backend` folder and run this to
 deploy NFT contract and mint token:
 
 ```sh
@@ -26,6 +29,16 @@ After minting a new token, you can `Lock` and `Unlock` token by running the foll
 ```sh
 npm run lockUnlockToken
 ```
+
+### Transfer NFT Demo
+
+If you want to check the complete end to end working on Peer to Peer NFT transfer. Follow the following commands.
+
+Open a new terminal and go to the repository's `nfts/backend` folder and run the  `npm run mockServer` to start the local server at port number `3001`
+
+Open a second terminal session and go to the repository's `nfts/frontend` folder and run `npm start`.
+
+This will open the frontend application on the default browser of your system. Enter the details like `token Id`, `from email id`, `to email id` for successful nft token transfer.
 
 ## User Guide
 

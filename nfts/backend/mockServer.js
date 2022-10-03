@@ -54,7 +54,7 @@ async function TransferNFTService(tokenId, toEmail, fromEmail) {
   };
   const requestBody = {
     nft: {
-      collection: process.env.COLLECTION_ADDRESS,
+      collection: process.env.COLLECTION,
     },
     token: tokenId,
     to: {

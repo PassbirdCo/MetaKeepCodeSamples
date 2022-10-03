@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "mockServer": "node mockServer.js",
+    "createCollectionAndMintToken": "node createCollectionAndMintToken.js",
+    "lockUnlockToken": "node lockUnlockToken.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write ."
   },
   "author": "Passbird Research",
   "license": "ISC",
@@ -12,7 +16,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
-    "node-fetch": "^3.2.10"
+    "node-fetch": "^3.2.10",
+    "prettier": "^2.7.1"
   },
   "type": "module"
 }
