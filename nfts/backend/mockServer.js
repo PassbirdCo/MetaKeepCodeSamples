@@ -45,7 +45,7 @@ app.listen(port, () => {
 
 async function TransferNFTService(tokenId, toEmail, fromEmail) {
   console.log("Transferring NFT...");
-  const url = "https://api.dev.metakeep.xyz/v2/app/nft/transfer/";
+  const url = "https://api.metakeep.xyz/v2/app/nft/transfer/";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
