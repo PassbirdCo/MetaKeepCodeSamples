@@ -1,6 +1,6 @@
-## NFT Deployment - Token Mint And Transfer End to End Tutorial.
+## NFT Deployment - Collection Creation, Token Mint And Transfer End to End Tutorial.
 
-This directory contains a sample project that you can use as a starting point for using the NFT Rest API by MetaKeep.
+This directory contains a sample project that you can use as a starting point for using the NFT Rest APIs by MetaKeep.
 
 This Project is intended to be used with the [NFT Deployment and Token Mint Tutorial](https://docs.metakeep.xyz/docs/create-your-first-nft-collection-and-mint-tokens), but you should also be able to follow this by reading the README and exploring its `scripts` directories.
 
@@ -22,6 +22,8 @@ Then, on a new terminal, go to the repository's `nfts/backend/scripts` folder an
 deploy NFT contract and mint token:
 
 ```sh
+npm install
+
 npm run createCollectionAndMintToken
 ```
 
@@ -33,25 +35,41 @@ npm run lockUnlockToken
 
 ### Transfer NFT Demo
 
+**Note** : Ensure that you have created the collection and minted the token that you want to transfer in the above mentioned steps.
+
 If you want to check the complete end to end working on Peer to Peer NFT transfer. Follow the following commands.
 
-Open a new terminal and go to the repository's `nfts/backend` folder and run the `npm run mockServer` to start the local server at port number `3001`
+Open a new terminal and go to the repository's `nfts/backend` folder and run the
 
-Open a second terminal session and go to the repository's `nfts/frontend` folder and run `npm start`.
+```sh
+npm install
+
+npm run mockServer
+```
+
+to start the local server at port number `3001`
+
+Open a second terminal session and go to the repository's `nfts/frontend` folder and run
+
+```sh
+npm install
+
+npm start
+```
 
 This will open the frontend application on the default browser of your system. Enter the details like `token Id`, `from email id`, `to email id` for successful nft token transfer.
 
 ## Directory Structure
 
-- [backend/](./nfts/backend)
-- [frontend/](./nfts/frontend)
-- [scripts/](./nfts/scripts)
+- [backend/](./backend)
+- [frontend/](./frontend)
+- [scripts/](./scripts)
 
-**backend** : Contains the Mock Server for getting the Consent from the user for NFT transfer.
+**backend** : Mock Server for getting the Consent from the user for NFT transfer.
 
-**frontend** : Contains the code for demo application for P2P NFT transfer
+**frontend** : Code for demo application for P2P NFT transfer
 
-**scripts** : Contains Code to deploy a new NFT collection, Mint tokens, lock and unlock tokens.
+**scripts** : Code to deploy a new NFT collection, Mint tokens, lock and unlock tokens.
 
 ## User Guide
 
