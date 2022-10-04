@@ -43,7 +43,6 @@ This will open the frontend application on the default browser of your system. E
 
 ## Directory Structure
 
-- [nfts/](./nfts)
 - [backend/](./nfts/backend)
 - [frontend/](./nfts/frontend)
 - [scripts/](./nfts/scripts)
