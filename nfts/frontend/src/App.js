@@ -10,8 +10,7 @@ function App() {
     () =>
       new MetaKeep({
         environment: "prod",
-      }),
-    [env]
+      })
   );
   return (
     <div className="App">

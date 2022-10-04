@@ -12,16 +12,16 @@ export const TransferNFT = ({ sdk }) => {
     e.preventDefault();
     try {
       const result = await TransferNFTService(tokenId, to, from);
-      if (result.status == "USER_CONSENT_NEEDED") {
+      if (result.status === "USER_CONSENT_NEEDED") {
         const consentToken = result.consentToken;
         const consent = await sdk.getConsent(consentToken);
-        if (consent.status == "QUEUED") {
+        if (consent.status === "QUEUED") {
           setResult(consent);
           console.log(result);
         } else {
           alert(consent.status);
         }
-      } else if (result.status !== "USER_CONSENT_NEEDED") {
+      } else {
         alert(result.status);
       }
     } catch (error) {
@@ -59,10 +59,7 @@ export const TransferNFT = ({ sdk }) => {
           Transfer NFT
         </button>
       </form>
-      <div className="outcome">
-        {result && <pre>{result}</pre>}
-        {errors && <pre>{errors}</pre>}
-      </div>
+      <div className="outcome">{result && <pre>{result}</pre>}</div>
     </div>
   ) : (
     <div className="container">
