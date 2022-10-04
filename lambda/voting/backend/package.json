@@ -1,22 +1,23 @@
 {
-  "name": "backend",
+  "name": "Backend Mock Server for fetching Lambda Invocation Consent Token",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "mockServer": "node mockServer.js",
+    "createCollectionAndMintToken": "node scripts/createCollectionAndMintToken.js",
+    "lockUnlockToken": "node scripts/lockUnlockToken.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "node create.js",
-    "invoke": "node registerAndVote.js",
     "format": "prettier --write ."
   },
-  "author": "",
+  "author": "Passbird Research",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.0.2",
-    "ethers": "^5.7.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
     "node-fetch": "^3.2.10",
-    "prettier": "2.7.1",
-    "web3": "^1.8.0"
+    "prettier": "^2.7.1"
   },
   "type": "module"
 }
