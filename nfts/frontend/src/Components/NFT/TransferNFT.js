@@ -28,7 +28,7 @@ export const TransferNFT = ({ sdk }) => {
       }
     } catch (error) {
       consent === null
-        ? alert("User Declined Consent")
+        ? alert("Error transferring NFT")
         : alert("Error: " + error);
     }
   };
