@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TransferNFTService from "../../utils/transferNft";
+import getNftTransferConsentToken from "../../utils/transferNft";
 import "./TransferNFT.css";
 
 export const TransferNFT = ({ sdk }) => {
@@ -7,29 +7,40 @@ export const TransferNFT = ({ sdk }) => {
   const [to, setTo] = useState("");
   const [from, setFrom] = useState("");
   const [result, setResult] = useState(null);
-  const [consent, setConsent] = useState(null);
 
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const outcome = await TransferNFTService(tokenId, to, from);
-      if (outcome.status === "USER_CONSENT_NEEDED") {
-        const consentToken = outcome.consentToken;
-        const consent = await sdk.getConsent(consentToken);
-        setConsent(consent);
-        if (consent.status === "QUEUED") {
-          setResult(consent);
-        } else {
-          console.log(consent.status);
-          alert(consent.status);
-        }
-      } else {
-        alert(result.status);
+      const getConsentTokenResponse = await getNftTransferConsentToken(
+        tokenId,
+        to,
+        from
+      );
+
+      if (getConsentTokenResponse.status !== "USER_CONSENT_NEEDED") {
+        alert(
+          "Error generating consent token: " +
+            JSON.stringify(getConsentTokenResponse)
+        );
+        return;
       }
+
+      const consentToken = getConsentTokenResponse.consentToken;
+      const getUserConsentResponse = await sdk.getConsent(consentToken);
+
+      if (getUserConsentResponse.status !== "QUEUED") {
+        console.log(getUserConsentResponse);
+        alert(
+          "Error transferring NFT: " + JSON.stringify(getUserConsentResponse)
+        );
+      }
+
+      setResult(getUserConsentResponse);
     } catch (error) {
-      consent === null
-        ? alert("Error transferring NFT")
-        : alert("Error: " + error);
+      alert(
+        "Error transferring NFT: " +
+          (error.message ? error.message : JSON.stringify(error))
+      );
     }
   };
 
@@ -67,31 +78,31 @@ export const TransferNFT = ({ sdk }) => {
     </div>
   ) : (
     <div className="container">
-      <div class="row">
-        <div class="col-sm-6">
+      <div className="row">
+        <div className="col-sm-6">
           <h1>Transaction Details</h1>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Transaction ID</h5>
-              <p class="card-text">{result.transactionId}</p>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Transaction ID</h5>
+              <p className="card-text">{result.transactionId}</p>
             </div>
           </div>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Status</h5>
-              <p class="card-text">{result.status}</p>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Status</h5>
+              <p className="card-text">{result.status}</p>
             </div>
             <div>
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Transaction Hash</h5>
-                  <p class="card-text">{result.transactionHash}</p>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">Transaction Hash</h5>
+                  <p className="card-text">{result.transactionHash}</p>
                 </div>
               </div>
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Transaction ChainScan URL</h5>
-                  <p class="card-text">
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">Transaction ChainScan URL</h5>
+                  <p className="card-text">
                     <a href={result.transactionChainScanUrl}>
                       {result.transactionChainScanUrl}
                     </a>

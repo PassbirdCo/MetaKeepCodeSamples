@@ -1,10 +1,10 @@
 import fetch from "node-fetch";
-export default async function getNftTransferConsent(
+export default async function getNftTransferConsentToken(
   tokenId,
   toEmail,
   fromEmail
 ) {
-  console.log("Transferring NFT...");
+  console.log("Getting NFT transfer consent token from backend...");
   const url = "http://localhost:3001/getConsentToken";
   const headers = {
     "Content-Type": "application/json",
@@ -27,10 +27,10 @@ export default async function getNftTransferConsent(
   };
   const result = await fetch(url, options);
   const resultJson = await result.json();
-  console.log("TransferNFT response: ");
+  console.log("getNftTransferConsentToken response: ");
   console.log(resultJson);
   if (!result.ok) {
-    console.log("Error transferring NFT");
+    console.log("Error generating consent token for NFT transfer");
   }
   console.log("\n");
   return resultJson;
