@@ -3,11 +3,10 @@
 import fetch from "node-fetch";
 import env from "dotenv";
 import { exit } from "process";
-import getDeveloperWallet, {
-  sleep,
+import {
   waitUntilTransactionMined,
   checkAPIKey,
-} from "../../../helpers/utils.mjs";
+} from "../../helpers/utils.mjs";
 
 async function lockUnlockToken(
   // lock or unlock

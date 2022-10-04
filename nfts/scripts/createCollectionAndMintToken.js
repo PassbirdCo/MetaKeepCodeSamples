@@ -7,7 +7,7 @@ import getDeveloperWallet, {
   sleep,
   waitUntilTransactionMined,
   checkAPIKey,
-} from "../../../helpers/utils.mjs";
+} from "../../helpers/utils.mjs";
 
 async function createCollection() {
   const url = "https://api.metakeep.xyz/v2/app/nft/createCollection";
