@@ -1,7 +1,7 @@
 {
   "name": "scripts",
   "version": "1.0.0",
-  "description": "Scripts of NFT Collection deployment and token Mint, Lock and Unlock NFT tokens.",
+  "description": "Scripts of NFT collection deployment and token mint, lock and unlock NFT tokens.",
   "main": "createCollectionAndMintToken.js",
   "scripts": {
     "createCollectionAndMintToken": "node createCollectionAndMintToken.js",
