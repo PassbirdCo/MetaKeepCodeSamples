@@ -3,15 +3,11 @@ import Navbar from "./Components/Navbar/Navbar";
 import { MetaKeep } from "metakeep";
 import { TransferNFT } from "./Components/NFT/TransferNFT";
 import "./App.css";
-import { useMemo } from "react";
 
 function App() {
-  const sdk = useMemo(
-    () =>
-      new MetaKeep({
-        environment: "prod",
-      })
-  );
+  const sdk = new MetaKeep({
+    environment: "prod",
+  });
   return (
     <div className="App">
       <Router>
