@@ -43,11 +43,10 @@ This will open the frontend application on the default browser of your system. E
 
 ## Directory Structure
 
-.
-└── nfts/
-├── backend
-├── frontend
-└── scripts
+- [nfts/](./nfts)
+- [backend/](./nfts/backend)
+- [frontend/](./nfts/frontend)
+- [scripts/](./nfts/scripts)
 
 **backend** : Contains the Mock Server for getting the Consent from the user for NFT transfer.
 
