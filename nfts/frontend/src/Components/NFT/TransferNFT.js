@@ -7,7 +7,6 @@ export const TransferNFT = ({ sdk }) => {
   const [to, setTo] = useState("");
   const [from, setFrom] = useState("");
   const [result, setResult] = useState(null);
-  const [errors, setErrors] = useState(null);
 
   let handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +19,7 @@ export const TransferNFT = ({ sdk }) => {
           setResult(consent);
           console.log(result);
         } else {
-          setErrors(consent.status);
+          alert(consent.status);
         }
       } else if (result.status !== "USER_CONSENT_NEEDED") {
         alert(result.status);
