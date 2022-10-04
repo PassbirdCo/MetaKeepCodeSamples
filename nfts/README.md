@@ -1,8 +1,17 @@
-## NFT Deployment - Collection Creation, Token Mint And Transfer End to End Tutorial.
+## NFT - Collection Creation, Token Mint, And P2P Transfer End to End Tutorial.
 
 This directory contains a sample project that you can use as a starting point for using the NFT Rest APIs by MetaKeep.
 
-This Project is intended to be used with the [NFT Deployment and Token Mint Tutorial Series](https://docs.metakeep.xyz/docs/create-your-first-nft-collection-and-mint-tokens), but you should also be able to follow this by reading the README and exploring its `scripts` directories.
+This Project is intended to be used with the [NFT Deployment and Token Mint Tutorial Series](https://docs.metakeep.xyz/docs/create-your-first-nft-collection-and-mint-tokens), but you should also be able to follow by reading this README.
+
+## Directory Structure
+
+The project is organized as follows:
+
+- [scripts](./scripts): Contains the scripts to deploy a new NFT collection, mint tokens, lock and unlock tokens.
+- [backend](./backend): Contains the backend code for server to generate consent token for P2P NFT transfer.
+- [frontend](./frontend): Contains the frontend code and server for the P2P NFT transfer.
+
 
 ## Quick start
 
@@ -10,20 +19,20 @@ The first thing, you need to do is clone this repository and download the depend
 
 ```sh
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
-
-cd nfts
 ```
 
-### Run createCollectionAndMintToken and lockUnlockToken scripts
+### Create a new NFT collection and mint tokens
 
-Then, on a new terminal, go to the repository's `nfts/backend/scripts` folder and run this to
-deploy NFT contract and mint token:
+Go to the repository's `nfts/scripts` folder and run this to create a NFT collection and mint token:
 
 ```sh
 npm install
-
 npm run createCollectionAndMintToken
 ```
+
+You will see the collection address and token id in the output of the script.
+
+### Lock and Unlock Tokens
 
 After minting a new token, you can `Lock` and `Unlock` token by running the following command:
 
@@ -31,43 +40,30 @@ After minting a new token, you can `Lock` and `Unlock` token by running the foll
 npm run lockUnlockToken
 ```
 
-### Transfer NFT Demo
+### P2P NFT Transfer
 
-**Note** : Ensure that you have created the collection and minted the token that you want to transfer in the above mentioned steps.
+**Note**: Ensure that you have created the collection and minted the token that you want to transfer by following the [steps above](#create-a-new-nft-collection-and-mint-tokens).
 
-If you want to check the complete end to end working on Peer to Peer NFT transfer. Follow the following commands.
 
-Open a new terminal and go to the repository's `nfts/backend` folder and run the
-
-```sh
-npm install
-
-npm run mockServer
-```
-
-to start the local server at port number `3001`
-
-Open a second terminal session and go to the repository's `nfts/frontend` folder and run
+First start the backend server to generate the consent token. Go to the repository's `nfts/backend` folder and run:
 
 ```sh
 npm install
-
-npm start
+npm run start
 ```
 
-This will open the frontend application on the default browser of your system. Enter the details like `token Id`, `from email id`, `to email id` for successful nft token transfer.
+This will start a local server at port `3001`
 
-## Directory Structure
+Now, start the frontend server. Open a second terminal session and go to the repository's `nfts/frontend` folder and run
 
-- [backend/](./backend)
-- [frontend/](./frontend)
-- [scripts/](./scripts)
+```sh
+npm install
+npm run start
+```
 
-**backend** : Mock Server for getting the Consent from the user for NFT transfer.
+This will open the frontend application on the default browser of your system. Enter the  `token Id`, `from email id`, and `to email id`. A consent token will be generated and the frontend will ask the user for the approval to transfer the token. Once the user approves the transfer, the token will be transferred to the `to email id`.
 
-**frontend** : Code for demo application for P2P NFT transfer
-
-**scripts** : Code to deploy a new NFT collection, Mint tokens, lock and unlock tokens.
+For details about the consent token, refer to [Get Consent](https://docs.metakeep.xyz/reference/get-consent) guide.
 
 ## User Guide
 
@@ -77,7 +73,7 @@ For a complete introduction to NFT APIs by MetaKeep, refer to [this guide](https
 
 ## Troubleshooting
 
-You can find detailed list of the errors [here](https://docs.metakeep.xyz/reference/api-error-status) that would help you to troubleshoot.
+You can find a detailed list of the errors [here](https://docs.metakeep.xyz/reference/api-error-status) that would help you to troubleshoot.
 
 ## Getting help and updates
 
