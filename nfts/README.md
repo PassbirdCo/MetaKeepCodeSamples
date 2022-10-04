@@ -12,7 +12,6 @@ The project is organized as follows:
 - [backend](./backend): Contains the backend code for server to generate consent token for P2P NFT transfer.
 - [frontend](./frontend): Contains the frontend code and server for the P2P NFT transfer.
 
-
 ## Quick start
 
 The first thing, you need to do is clone this repository and download the dependencies.
@@ -44,7 +43,6 @@ npm run lockUnlockToken
 
 **Note**: Ensure that you have created the collection and minted the token that you want to transfer by following the [steps above](#create-a-new-nft-collection-and-mint-tokens).
 
-
 First start the backend server to generate the consent token. Go to the repository's `nfts/backend` folder and run:
 
 ```sh
@@ -61,7 +59,7 @@ npm install
 npm run start
 ```
 
-This will open the frontend application on the default browser of your system. Enter the  `token Id`, `from email id`, and `to email id`. A consent token will be generated and the frontend will ask the user for the approval to transfer the token. Once the user approves the transfer, the token will be transferred to the `to email id`.
+This will open the frontend application on the default browser of your system. Enter the `Token ID`, `From email`, and `To email`. A consent token will be generated and the frontend will ask the user for the approval to transfer the token. Once the user approves the transfer, the token will be transferred to the `to email id`.
 
 For details about the consent token, refer to [Get Consent](https://docs.metakeep.xyz/reference/get-consent) guide.
 
