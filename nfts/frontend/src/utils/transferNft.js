@@ -1,5 +1,9 @@
 import fetch from "node-fetch";
-export default async function TransferNFTService(tokenId, toEmail, fromEmail) {
+export default async function getNftTransferConsent(
+  tokenId,
+  toEmail,
+  fromEmail
+) {
   console.log("Transferring NFT...");
   const url = "http://localhost:3001/getConsentToken";
   const headers = {

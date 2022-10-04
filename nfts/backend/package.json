@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "mockServer": "node mockServer.js",
-    "createCollectionAndMintToken": "node createCollectionAndMintToken.js",
-    "lockUnlockToken": "node lockUnlockToken.js",
+    "createCollectionAndMintToken": "node scripts/createCollectionAndMintToken.js",
+    "lockUnlockToken": "node scripts/lockUnlockToken.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write ."
   },

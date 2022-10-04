@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 import bodyParser from "body-parser";
 import cors from "cors";
 import env from "dotenv";
+import { checkAPIKey } from "../../helpers/utils.mjs";
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.get("/", (_, res) => {
 });
 
 app.post("/getConsentToken", async (req, res) => {
+  checkAPIKey();
   console.log("getConsentToken");
   const result = await TransferNFTService(
     req.body.token,
@@ -45,7 +47,7 @@ app.listen(port, () => {
 
 async function TransferNFTService(tokenId, toEmail, fromEmail) {
   console.log("Transferring NFT...");
-  const url = "https://api.metakeep.xyz/v2/app/nft/transfer/";
+  const url = "https://api.dev.metakeep.xyz/v2/app/nft/transfer/";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",

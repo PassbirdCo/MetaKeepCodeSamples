@@ -22,9 +22,11 @@ export const TransferNFT = ({ sdk }) => {
         } else {
           setErrors(consent.status);
         }
+      } else if (result.status !== "USER_CONSENT_NEEDED") {
+        alert(result.status);
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 

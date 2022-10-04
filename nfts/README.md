@@ -18,7 +18,7 @@ npm install
 
 ### Run createCollectionAndMintToken and lockUnlockToken scripts
 
-Then, on a new terminal, go to the repository's `nfts/backend` folder and run this to
+Then, on a new terminal, go to the repository's `nfts/backend/scripts` folder and run this to
 deploy NFT contract and mint token:
 
 ```sh

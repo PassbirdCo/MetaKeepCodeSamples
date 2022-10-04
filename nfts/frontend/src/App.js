@@ -6,16 +6,14 @@ import "./App.css";
 import { useMemo, useState } from "react";
 
 function App() {
-  const [env, setEnv] = useState("dev");
-  const [apiKey, setApiKey] = useState("");
+  const [env, _] = useState("prod");
 
   const sdk = useMemo(
     () =>
       new MetaKeep({
         environment: env,
-        apiId: apiKey,
       }),
-    [env, apiKey]
+    [env]
   );
   return (
     <div className="App">

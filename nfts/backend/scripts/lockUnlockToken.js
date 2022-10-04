@@ -7,7 +7,7 @@ import getDeveloperWallet, {
   sleep,
   waitUntilTransactionMined,
   checkAPIKey,
-} from "../../helpers/utils.mjs";
+} from "../../../helpers/utils.mjs";
 
 async function lockUnlockToken(
   // lock or unlock
