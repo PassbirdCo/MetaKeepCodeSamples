@@ -51,7 +51,7 @@ async function getNftTransferConsentToken(tokenId, toEmail, fromEmail) {
   const url = "https://api.metakeep.xyz/v2/app/nft/transfer/";
   const headers = {
     "Content-Type": "application/json",
-    Accept: "application/json",
+    "Accept": "application/json",
     "x-api-key": process.env.API_KEY,
     "Idempotency-Key": "Idempotency-Key" + Math.random().toString(),
   };
