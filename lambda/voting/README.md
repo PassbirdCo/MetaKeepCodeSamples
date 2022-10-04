@@ -60,15 +60,6 @@ npm run mockServer
 
 This will start a server at port number `3001`.
 
-Open the frontend application by running the following command in the `lambda/voting/frontend` directory
-
-```sh
-
-npm install
-
-npm start
-```
-
 ## User Guide
 
 You can find detailed instructions on using this repository and many tips in [its documentation](https://docs.metakeep.xyz/reference/lambda-101).
