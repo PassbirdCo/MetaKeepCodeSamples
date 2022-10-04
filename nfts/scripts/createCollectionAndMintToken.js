@@ -29,7 +29,8 @@ async function createCollection() {
     metadata: {
       name: "Metakeep_NFT",
       description: "Metakeep_NFT",
-      image: "https://metakeep.xyz/images/MetaKeep-1.png",
+      image:
+        "https://cdn.pixabay.com/photo/2022/02/19/17/59/nft-7023209_960_720.jpg",
       external_link: "https://metakeep.xyz",
       seller_fee_basis_points: 1000,
       fee_recipient: developerAddress,
@@ -80,7 +81,8 @@ async function mintNFT(collection) {
     metadata: {
       name: "Metakeep Tutorial NFT",
       description: "Metakeep Tutorial NFT",
-      image: "https://metakeep.xyz/images/MetaKeep-1.png",
+      image:
+        "https://cdn.pixabay.com/photo/2022/02/19/17/59/nft-7023209_960_720.jpg",
       external_url: "https://metakeep.xyz",
       attributes: [
         {

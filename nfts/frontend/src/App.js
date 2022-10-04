@@ -1,10 +1,21 @@
-import logo from "./logo.svg";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./Components/Navbar/Navbar";
+import { MetaKeep } from "metakeep";
+import { TransferNFT } from "./Components/NFT/TransferNFT";
 import "./App.css";
 
 function App() {
+  const sdk = new MetaKeep({
+    environment: "prod",
+  });
   return (
     <div className="App">
-      <header className="App-header">MetaKeep SDK tutorial</header>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<TransferNFT sdk={sdk} />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

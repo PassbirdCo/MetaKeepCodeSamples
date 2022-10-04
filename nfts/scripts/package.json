@@ -1,0 +1,20 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "Scripts of NFT collection deployment and token mint, lock and unlock NFT tokens.",
+  "main": "createCollectionAndMintToken.js",
+  "scripts": {
+    "createCollectionAndMintToken": "node createCollectionAndMintToken.js",
+    "lockUnlockToken": "node lockUnlockToken.js",
+    "format": "prettier --write .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Passbird Research",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-fetch": "^3.2.10",
+    "prettier": "^2.7.1"
+  },
+  "type": "module"
+}
