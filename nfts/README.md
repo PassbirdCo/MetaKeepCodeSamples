@@ -2,7 +2,7 @@
 
 This directory contains a sample project that you can use as a starting point for using the NFT Rest APIs by MetaKeep.
 
-This Project is intended to be used with the [NFT Deployment and Token Mint Tutorial](https://docs.metakeep.xyz/docs/create-your-first-nft-collection-and-mint-tokens), but you should also be able to follow this by reading the README and exploring its `scripts` directories.
+This Project is intended to be used with the [NFT Deployment and Token Mint Tutorial Series](https://docs.metakeep.xyz/docs/create-your-first-nft-collection-and-mint-tokens), but you should also be able to follow this by reading the README and exploring its `scripts` directories.
 
 ## Quick start
 
