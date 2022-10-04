@@ -1,7 +1,7 @@
 {
-  "name": "Backend Mock Server for fetching Lambda Invocation Consent Token",
+  "name": "Backend Mock Server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend Mock Server to get the consent Token for the Lambda Invocation Request",
   "main": "index.js",
   "scripts": {
     "mockServer": "node mockServer.js",
