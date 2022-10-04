@@ -41,6 +41,20 @@ Open a second terminal session and go to the repository's `nfts/frontend` folder
 
 This will open the frontend application on the default browser of your system. Enter the details like `token Id`, `from email id`, `to email id` for successful nft token transfer.
 
+## Directory Structure
+
+.
+└── nfts/
+├── backend
+├── frontend
+└── scripts
+
+**backend** : Contains the Mock Server for getting the Consent from the user for NFT transfer.
+
+**frontend** : Contains the code for demo application for P2P NFT transfer
+
+**scripts** : Contains Code to deploy a new NFT collection, Mint tokens, lock and unlock tokens.
+
 ## User Guide
 
 You can find detailed instructions on using this repository and many tips in [its documentation](https://docs.metakeep.xyz/reference/nft-101).
