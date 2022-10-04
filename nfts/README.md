@@ -12,8 +12,6 @@ The first thing, you need to do is clone this repository and download the depend
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 
 cd nfts
-
-npm install
 ```
 
 ### Run createCollectionAndMintToken and lockUnlockToken scripts
