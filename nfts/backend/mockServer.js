@@ -32,7 +32,7 @@ app.get("/", (_, res) => {
 app.post("/getConsentToken", async (req, res) => {
   checkAPIKey();
   console.log("getConsentToken");
-  const result = await TransferNFTService(
+  const result = await getNftTransferConsentToken(
     req.body.token,
     req.body.to.email,
     req.body.from.email
@@ -40,14 +40,14 @@ app.post("/getConsentToken", async (req, res) => {
   res.send(result);
 });
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`NFT transfer mock server listening at http://localhost:${port}`);
 });
 
 // Utility function to transfer NFT
 
-async function TransferNFTService(tokenId, toEmail, fromEmail) {
-  console.log("Transferring NFT...");
-  const url = "https://api.dev.metakeep.xyz/v2/app/nft/transfer/";
+async function getNftTransferConsentToken(tokenId, toEmail, fromEmail) {
+  console.log("Get transfer NFT consent token...");
+  const url = "https://api.metakeep.xyz/v2/app/nft/transfer/";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
