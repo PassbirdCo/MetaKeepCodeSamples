@@ -7,25 +7,29 @@ export const TransferNFT = ({ sdk }) => {
   const [to, setTo] = useState("");
   const [from, setFrom] = useState("");
   const [result, setResult] = useState(null);
+  const [consent, setConsent] = useState(null);
 
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await TransferNFTService(tokenId, to, from);
-      if (result.status === "USER_CONSENT_NEEDED") {
-        const consentToken = result.consentToken;
+      const outcome = await TransferNFTService(tokenId, to, from);
+      if (outcome.status === "USER_CONSENT_NEEDED") {
+        const consentToken = outcome.consentToken;
         const consent = await sdk.getConsent(consentToken);
+        setConsent(consent);
         if (consent.status === "QUEUED") {
           setResult(consent);
-          console.log(result);
         } else {
+          console.log(consent.status);
           alert(consent.status);
         }
       } else {
         alert(result.status);
       }
     } catch (error) {
-      alert(error);
+      consent === null
+        ? alert("User Declined Consent")
+        : alert("Error: " + error);
     }
   };
 
