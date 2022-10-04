@@ -4,9 +4,9 @@ This repository contains a sample project that you can use as the starting point
 for using MetaKeep's Lambda Infrastructure.
 
 This project is intended to be used with the
-[MetaKeep Lambda Creation and Invocation Tutorial](https://docs.metakeep.xyz/reference/lambda-101), but you should be
+[MetaKeep Lambda Creation and Invocation Tutorial Series](https://docs.metakeep.xyz/reference/lambda-101), but you should be
 able to follow it by yourself by reading the README and exploring its
-`contracts`, `tests`, and `scripts` directories.
+`smart-contracts`, `backend`, and `scripts` directories.
 
 ## Quick start
 
@@ -19,18 +19,54 @@ cd lambda/voting
 npm install
 ```
 
-Then, on a new terminal, go to the repository's `lambda/voting` folder and run this to
-deploy your voting contract:
+Then, on a new terminal, go to the repository's `lambda/voting/smart-contracts` folder and run this to
+compile your smart contract:
 
 ```sh
-npm run deploy
+npm install
+
+npx hardhat compile
 ```
 
-Once the contract has been deployed, invoke `registerCandidate` and `voteForUser` methods
-from the voting contract:
+Once the contract has been deployed, go to the repository's `lambda/voting/scripts` folder and run the following commands
+to create Lambda and call the voting method directly as developer.
 
 ```sh
+npm install
+
+npm run create
+```
+
+After you have created the lambda, you can invoke a method by running the following command.
+
+```sh
+
 npm run invoke
+
+```
+
+# How to invoke a Lambda Method on behalf of users by getting their consent.
+
+If you want to invoke a lambda method on behalf of user, you need their consent. To get a consent you need to use METAKEEP SDK. Run the following commands for end to end tutorial for Lambda Invocation through user.
+
+Start a Mock Server by running the following command in the `lambda/voting/backend` directory.
+
+```sh
+
+npm install
+
+npm run mockServer
+```
+
+This will start a server at port number `3001`.
+
+Open the frontend application by running the following command in the `lambda/voting/frontend` directory
+
+```sh
+
+npm install
+
+npm start
 ```
 
 ## User Guide

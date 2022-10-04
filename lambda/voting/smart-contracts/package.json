@@ -2,9 +2,9 @@
   "name": "MetaKeep Lambda",
   "version": "1.0.0",
   "description": "A boilerplate repository to get you started with MetaKeep Lambda development",
-  "main": "scripts/create.js",
   "scripts": {
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,8 @@
     "ethers": "^5.4.7",
     "hardhat": "^2.11.0",
     "hardhat-gas-reporter": "^1.0.8",
-    "solidity-coverage": "^0.8.2"
+    "solidity-coverage": "^0.8.2",
+    "prettier": "^2.3.2"
   },
   "dependencies": {
     "dotenv": "^16.0.2",

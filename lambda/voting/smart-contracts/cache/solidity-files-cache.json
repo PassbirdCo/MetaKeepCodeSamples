@@ -1,0 +1,75 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/home/aditya/Desktop/passbird/MetaKeepCodeSamples/lambda/voting/smart-contracts/contracts/Voting.sol": {
+      "lastModificationDate": 1664873959489,
+      "contentHash": "61e27a25c64dd717263dd36b8d3e31b6",
+      "sourceName": "contracts/Voting.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": ["ast"]
+            }
+          }
+        }
+      },
+      "imports": ["./imports/MetaKeepLambda.sol"],
+      "versionPragmas": ["^0.8.0"],
+      "artifacts": ["Voting"]
+    },
+    "/home/aditya/Desktop/passbird/MetaKeepCodeSamples/lambda/voting/smart-contracts/contracts/imports/MetaKeepLambda.sol": {
+      "lastModificationDate": 1664873959489,
+      "contentHash": "0508e1ecb270711632f78c8f6fc24937",
+      "sourceName": "contracts/imports/MetaKeepLambda.sol",
+      "solcConfig": {
+        "version": "0.8.9",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": ["ast"]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": ["^0.8.0"],
+      "artifacts": [
+        "AccessControl",
+        "Context",
+        "ERC165",
+        "IAccessControl",
+        "IERC165",
+        "MetaKeepLambda",
+        "MetaKeepLambdaACL",
+        "MetaKeepLambdaEIP712Base",
+        "MetaKeepLambdaSender",
+        "MetaKeepLambdaStructs",
+        "Strings"
+      ]
+    }
+  }
+}
