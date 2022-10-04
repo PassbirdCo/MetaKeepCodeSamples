@@ -3,7 +3,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import { MetaKeep } from "metakeep";
 import { TransferNFT } from "./Components/NFT/TransferNFT";
 import "./App.css";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 function App() {
   const sdk = useMemo(
