@@ -6,12 +6,10 @@ import "./App.css";
 import { useMemo, useState } from "react";
 
 function App() {
-  const [env, _] = useState("prod");
-
   const sdk = useMemo(
     () =>
       new MetaKeep({
-        environment: env,
+        environment: "prod",
       }),
     [env]
   );
