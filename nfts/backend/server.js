@@ -9,6 +9,8 @@ const app = express();
 
 env.config();
 
+checkAPIKey();
+
 const port = 3001;
 
 app.use(
@@ -30,7 +32,6 @@ app.get("/", (_, res) => {
 });
 
 app.post("/getConsentToken", async (req, res) => {
-  checkAPIKey();
   console.log("getConsentToken");
   const result = await getNftTransferConsentToken(
     req.body.token,
