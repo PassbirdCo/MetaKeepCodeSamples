@@ -81,7 +81,8 @@ async function mintNFT(collection) {
     metadata: {
       name: "Metakeep Tutorial NFT",
       description: "Metakeep Tutorial NFT",
-      image: "https://metakeep.xyz/images/MetaKeep-1.png",
+      image:
+        "https://cdn.pixabay.com/photo/2022/02/19/17/59/nft-7023209_960_720.jpg",
       external_url: "https://metakeep.xyz",
       attributes: [
         {
