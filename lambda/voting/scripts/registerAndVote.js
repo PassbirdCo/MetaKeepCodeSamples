@@ -8,7 +8,7 @@ import {
   getUserWallet,
   sleep,
   checkAPIKey,
-} from "./utils.mjs";
+} from "../../../helpers/utils.mjs";
 
 // Invokes the lambda function.
 async function invoke(functionName, functionArgs) {

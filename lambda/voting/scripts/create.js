@@ -24,7 +24,9 @@ async function main() {
   };
 
   const data = JSON.parse(
-    fs.readFileSync("artifacts/contracts/Voting.sol/Voting.json")
+    fs.readFileSync(
+      "../smart-contracts/artifacts/contracts/Voting.sol/Voting.json"
+    )
   );
   const developerAddress = await getDeveloperWallet();
 

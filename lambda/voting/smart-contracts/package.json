@@ -2,11 +2,8 @@
   "name": "MetaKeep Lambda",
   "version": "1.0.0",
   "description": "A boilerplate repository to get you started with MetaKeep Lambda development",
-  "main": "scripts/create.js",
   "scripts": {
     "test": "hardhat test",
-    "deploy": "npx hardhat compile && node --experimental-modules scripts/create.mjs",
-    "invoke": "node --experimental-modules scripts/registerAndVote.mjs",
     "format": "prettier --write ."
   },
   "repository": {
@@ -31,8 +28,8 @@
     "ethers": "^5.4.7",
     "hardhat": "^2.11.0",
     "hardhat-gas-reporter": "^1.0.8",
-    "prettier": "2.7.1",
-    "solidity-coverage": "^0.8.2"
+    "solidity-coverage": "^0.8.2",
+    "prettier": "^2.7.1"
   },
   "dependencies": {
     "dotenv": "^16.0.2",
