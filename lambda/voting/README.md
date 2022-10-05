@@ -56,7 +56,7 @@ npm run invoke
 
 # How to invoke a Lambda Method on behalf of users by getting their consent.
 
-If you want to invoke a lambda method on behalf of user, you need their consent. To get a consent you need to use METAKEEP SDK. Run the following commands for end to end tutorial for Lambda Invocation through user.
+If you want invoke lambda function using user's wallet then, you need their consent. To get a consent you need to use METAKEEP SDK. Run the following commands for end to end tutorial for Lambda Invocation through user.
 
 Start a Mock Server by running the following command in the `lambda/voting/backend` directory.
 
