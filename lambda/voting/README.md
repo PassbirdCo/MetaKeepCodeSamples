@@ -1,12 +1,21 @@
-# Lambda Example
+# Lambda Example - Simple Voting Application
 
-This repository contains a sample project that you can use as the starting point
+This repository contains a simple Voting Application that you can use as the starting point
 for using MetaKeep's Lambda Infrastructure.
 
 This project is intended to be used with the
 [MetaKeep Lambda Creation and Invocation Tutorial Series](https://docs.metakeep.xyz/reference/lambda-101), but you should be
 able to follow it by yourself by reading the README and exploring its
-`smart-contracts`, `backend`, and `scripts` directories.
+`smart-contracts`, `backend`, `scripts` and `frontend` directories.
+
+## Directory Structure
+
+The project is organized as follows:
+
+- [scripts](./scripts): Contains the scripts to deploy a new lambda smart contract and invoke lambda methods.
+- [backend](./backend): Contains the backend code for server to generate consent token for Voting a Candidate and Registering a Candidate.
+- [frontend](./frontend): Contains the frontend code and server for the Registration and Vote For Candidate.
+- [smart-contracts](./smart-contracts): Contains the Smart Contract for the Voting.
 
 ## Quick start
 
@@ -59,6 +68,17 @@ npm run mockServer
 ```
 
 This will start a server at port number `3001`.
+
+Open the Demo Application by running the following command in the `lambda/voting/frontend` directory.
+
+```sh
+
+npm install
+
+npm run mockServer
+```
+
+The demo Application allows you to register and vote for the candidate.
 
 ## User Guide
 
