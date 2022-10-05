@@ -36,7 +36,7 @@ npm install
 npx hardhat compile
 ```
 
-Once the contract has been deployed, go to the repository's `lambda/voting/scripts` folder and run the following commands
+Once the contract has been compiled, go to the repository's `lambda/voting/scripts` folder and run the following commands
 to create Lambda and call the voting method directly as developer.
 
 ```sh
