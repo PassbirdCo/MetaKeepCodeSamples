@@ -25,7 +25,6 @@ dependencies:
 ```sh
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 cd lambda/voting
-npm install
 ```
 
 Then, on a new terminal, go to the repository's `lambda/voting/smart-contracts` folder and run this to
