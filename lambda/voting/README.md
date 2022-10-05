@@ -64,7 +64,7 @@ Start a Mock Server by running the following command in the `lambda/voting/backe
 
 npm install
 
-npm run mockServer
+npm run start
 ```
 
 This will start a server at port number `3001`.
@@ -75,7 +75,7 @@ Open the Demo Application by running the following command in the `lambda/voting
 
 npm install
 
-npm run mockServer
+npm run start
 ```
 
 The demo Application allows you to register and vote for the candidate.
