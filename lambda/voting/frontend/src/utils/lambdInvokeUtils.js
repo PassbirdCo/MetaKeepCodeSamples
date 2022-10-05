@@ -6,7 +6,7 @@ export default async function getLambdaVotingConsentToken(
   asEmail
 ) {
   console.log("Getting Lambda Consent token from backend...");
-  const url = "http://localhost:3001/getConsentToken";
+  const url = "http://localhost:3001/voteCandidate";
   const headers = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
