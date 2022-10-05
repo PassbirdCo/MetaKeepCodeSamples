@@ -67,7 +67,7 @@ export const getUserWallet = async (email) => {
       "Error getting user wallet. Response: " + JSON.stringify(resultJson)
     );
   }
-  console.log("\n");
+
   console.log("\n");
   return resultJson.wallet.ethAddress;
 };
