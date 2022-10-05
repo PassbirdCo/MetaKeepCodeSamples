@@ -25,7 +25,6 @@ dependencies:
 ```sh
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 cd lambda/voting
-npm install
 ```
 
 Then, on a new terminal, go to the repository's `lambda/voting/smart-contracts` folder and run this to
@@ -37,7 +36,7 @@ npm install
 npx hardhat compile
 ```
 
-Once the contract has been deployed, go to the repository's `lambda/voting/scripts` folder and run the following commands
+Once the contract has been compiled, go to the repository's `lambda/voting/scripts` folder and run the following commands
 to create Lambda and call the voting method directly as developer.
 
 ```sh
@@ -64,7 +63,7 @@ Start a Mock Server by running the following command in the `lambda/voting/backe
 
 npm install
 
-npm run mockServer
+npm run start
 ```
 
 This will start a server at port number `3001`.
@@ -75,7 +74,7 @@ Open the Demo Application by running the following command in the `lambda/voting
 
 npm install
 
-npm run mockServer
+npm run start
 ```
 
 The demo Application allows you to register and vote for the candidate.
