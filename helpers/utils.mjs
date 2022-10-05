@@ -63,9 +63,11 @@ export const getUserWallet = async (email) => {
     console.log(
       "Error getting user wallet. HTTP status code: " + result.status
     );
-    throw new Error("Error getting user wallet. Response: " + JSON.stringify(resultJson));
+    throw new Error(
+      "Error getting user wallet. Response: " + JSON.stringify(resultJson)
+    );
   }
-
+  console.log("\n");
   console.log("\n");
   return resultJson.wallet.ethAddress;
 };
