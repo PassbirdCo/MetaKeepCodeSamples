@@ -40,19 +40,32 @@ app.get("/", (_, res) => {
 
 app.post("/voteCandidate", async (req, res) => {
   console.log("getConsentToken");
-  const result = await voteForCandidate(
-    req.body.candidateEmail,
-    req.body.asEmail
-  );
-  res.send(result);
+  try {
+    const result = await voteForCandidate(
+      req.body.candidateEmail,
+      req.body.asEmail
+    );
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({
+      error: error.message ? error.message : JSON.stringify(error),
+    });
+  }
 });
 
 /* ************************************************************************* Register Candidate API Endpoint ************************************************************************* */
 
 app.post("/registerCandidature", async (req, res) => {
   console.log("registerCandidature");
-  const result = await registerCandidate(req.body.candidateEmail, "voting");
-  res.send(result);
+
+  try {
+    const result = await registerCandidate(req.body.candidateEmail, "voting");
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({
+      error: error.message ? error.message : JSON.stringify(error),
+    });
+  }
 });
 
 /* ************************************************************************* Start Server ************************************************************************* */
