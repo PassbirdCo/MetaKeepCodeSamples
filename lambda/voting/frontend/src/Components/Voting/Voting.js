@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import getLambdaVotingConsentToken from "../../utils/lambdInvokeUtils";
+import getLambdaVotingConsentToken from "../../utils/lambdaInvokeUtils";
 import "./Voting.css";
 
 export const Voting = ({ sdk }) => {
