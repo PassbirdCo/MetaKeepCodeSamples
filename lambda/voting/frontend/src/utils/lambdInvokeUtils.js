@@ -9,8 +9,8 @@ export default async function getLambdaVotingConsentToken(
   const url = "http://localhost:3001/voteCandidate";
   const headers = {
     "Content-Type": "application/json",
+    Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
   };
   const body = JSON.stringify({
     candidateEmail: candidateEmail,
@@ -40,8 +40,8 @@ export const registerCandidature = async (candidateEmail) => {
   const url = "http://localhost:3001/registerCandidature";
   const headers = {
     "Content-Type": "application/json",
+    Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
   };
 
   const body = JSON.stringify({
