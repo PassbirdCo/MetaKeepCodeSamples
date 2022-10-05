@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Navbar.css";
 const Navbar = () => {
   return (
     <div>
@@ -27,7 +28,7 @@ const Navbar = () => {
             </li>
             <li className="nav-item active">
               <Link className="nav-link" to="/voteCandidate">
-                VoteCandidate<span className="sr-only"></span>
+                Vote Candidate<span className="sr-only"></span>
               </Link>
             </li>
           </ul>
