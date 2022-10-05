@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-// This is the helper function to get the consent token by making request to the mock server.
+// This is the helper function to get the consent token by making request to the backend server.
 export default async function getLambdaVotingConsentToken(
   candidateEmail,
   asEmail
@@ -34,7 +34,7 @@ export default async function getLambdaVotingConsentToken(
   return data;
 }
 
-// This is the helper function to register a candidate by making request to the mock server.
+// This is the helper function to register a candidate by making request to the backend server.
 export const registerCandidature = async (candidateEmail) => {
   console.log("Registering Candidature for candidate: " + candidateEmail);
   const url = "http://localhost:3001/registerCandidature";

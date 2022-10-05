@@ -28,7 +28,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.get("/", (_, res) => {
-  res.send("MetaKeep Tutorial Mock Server!");
+  res.send("MetaKeep Tutorial Backend Server!");
 });
 
 app.post("/getConsentToken", async (req, res) => {

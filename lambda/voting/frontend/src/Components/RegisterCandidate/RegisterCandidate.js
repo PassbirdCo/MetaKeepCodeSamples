@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { registerCandidature } from "../../utils/lambdInvokeUtils";
+import { registerCandidature } from "../../utils/lambdaInvokeUtils";
 import "./RegisterCandidate.css";
 
 export const RegisterCandidate = () => {

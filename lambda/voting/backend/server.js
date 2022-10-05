@@ -33,7 +33,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.get("/", (_, res) => {
-  res.send("MetaKeep Tutorial Mock Server!");
+  res.send("MetaKeep Tutorial Backend Server!");
 });
 
 /* ************************************************************************* Vote Candidate API EndPoint ************************************************************************* */
@@ -59,7 +59,7 @@ app.post("/registerCandidature", async (req, res) => {
 
 app.listen(port, () => {
   console.log(
-    `Lambda Invocation mock server listening at http://localhost:${port}`
+    `Lambda Invocation server listening at http://localhost:${port}`
   );
 });
 
