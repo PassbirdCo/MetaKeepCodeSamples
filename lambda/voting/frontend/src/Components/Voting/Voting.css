@@ -44,3 +44,22 @@
   padding: 0 20px;
   box-sizing: border-box;
 }
+
+#loader {
+  border: 16px solid #ffffff;
+  border-radius: 50%;
+  border-top: 16px solid #000000;
+}
+
+#voteButton {
+  margin: 0.75em;
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: rgb(0, 0, 0);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 1em;
+  font-weight: 400;
+  width: 100%;
+  max-width: 300px;
+}

@@ -6,16 +6,18 @@ export const Voting = ({ sdk }) => {
   const [voterId, setVoterId] = useState("");
   const [asEmail, setAsEmail] = useState("");
   const [result, setResult] = useState("");
+  const [loading, setLoading] = useState(false);
 
   let handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      setLoading(true);
       const getVotingConsentTokenResponse = await getLambdaVotingConsentToken(
         voterId,
         asEmail,
         "Voting"
       );
-
+      setLoading(false);
       if (getVotingConsentTokenResponse.status !== "USER_CONSENT_NEEDED") {
         alert(
           "Error getting consent token: " +
@@ -41,6 +43,7 @@ export const Voting = ({ sdk }) => {
 
       setResult(consentApproval);
     } catch (error) {
+      setLoading(false);
       alert(
         "Error Invoking Voting Method:" +
           (error.message ? error.message : JSON.stringify(error))
@@ -74,9 +77,17 @@ export const Voting = ({ sdk }) => {
             onChange={(e) => setAsEmail(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Vote
-        </button>
+        {loading === true ? (
+          <div
+            className="spinner-border text-primary"
+            id="loader"
+            role="status"
+          ></div>
+        ) : (
+          <button type="submit" className="btn btn-primary" id="voteButton">
+            Vote
+          </button>
+        )}
       </form>
     </div>
   ) : (

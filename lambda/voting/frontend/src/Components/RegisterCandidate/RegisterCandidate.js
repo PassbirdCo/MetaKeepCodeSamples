@@ -1,32 +1,36 @@
 import React, { useState } from "react";
-import getLambdaVotingConsentToken, {
-  registerCandidature,
-} from "../../utils/lambdInvokeUtils";
+import { registerCandidature } from "../../utils/lambdInvokeUtils";
 import "./RegisterCandidate.css";
 
 export const RegisterCandidate = () => {
   const [candidateEmail, setCandidateEmail] = useState("");
   const [result, setResult] = useState("");
+  const [loading, setLoading] = useState(false);
 
   let handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const getRegistrationResponse = await registerCandidature(candidateEmail);
+      setLoading(true);
+      const registerCandidatureResponse = await registerCandidature(
+        candidateEmail
+      );
 
-      if (getRegistrationResponse.status !== "QUEUED") {
+      setLoading(false);
+      if (registerCandidatureResponse.status !== "QUEUED") {
         console.log(
           "Error registering Candidate: " +
-            JSON.stringify(getRegistrationResponse)
+            JSON.stringify(registerCandidatureResponse)
         );
         alert(
           "Error registering Candidate: " +
-            JSON.stringify(getRegistrationResponse)
+            JSON.stringify(registerCandidatureResponse)
         );
         return;
       }
 
-      setResult(getRegistrationResponse);
+      setResult(registerCandidatureResponse);
     } catch (error) {
+      setLoading(false);
       alert(
         "Error Invoking Registration Method:" +
           (error.message ? error.message : JSON.stringify(error))
@@ -49,9 +53,18 @@ export const RegisterCandidate = () => {
             onChange={(e) => setCandidateEmail(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Register
-        </button>
+
+        {loading === true ? (
+          <div
+            className="spinner-border text-primary"
+            id="loader"
+            role="status"
+          ></div>
+        ) : (
+          <button type="submit" className="btn btn-primary" id="voteButton">
+            Register
+          </button>
+        )}
       </form>
     </div>
   ) : (
