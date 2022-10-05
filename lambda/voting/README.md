@@ -63,7 +63,6 @@ This will start a server at port number `3001`.
 
 Start the frontend server by running the following command in the `lambda/voting/frontend` directory.
 
-
 ```sh
 npm install
 npm run start

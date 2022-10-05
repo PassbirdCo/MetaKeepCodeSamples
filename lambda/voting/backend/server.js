@@ -58,9 +58,7 @@ app.post("/registerCandidature", async (req, res) => {
 /* ************************************************************************* Start Server ************************************************************************* */
 
 app.listen(port, () => {
-  console.log(
-    `Lambda Invocation server listening at http://localhost:${port}`
-  );
+  console.log(`Lambda Invocation server listening at http://localhost:${port}`);
 });
 
 /* ************************************************************************** Utility functions *************************************************************** */
