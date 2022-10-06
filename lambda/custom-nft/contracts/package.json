@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A custom ERC721 Contract",
   "scripts": {
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
