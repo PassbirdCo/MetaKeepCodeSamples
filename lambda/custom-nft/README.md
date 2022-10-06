@@ -1,6 +1,6 @@
-# MetaKeep Lambda - Simple Voting Application
+# MetaKeep Lambda - Custom ERC721
 
-This repository contains a simple Voting Application that you can use as the starting point
+This repository contains a Custom ERC721 Application that you can use as the starting point
 for using MetaKeep's Lambda Infrastructure.
 
 This project is intended to be used with the
@@ -29,43 +29,11 @@ compile your smart contract:
 npm install
 npx hardhat compile
 ```
-
-Once the contract has been compiled, go to the repository's `lambda/voting/scripts` folder and run the following commands to create a new Lambda and call the voting method directly as a developer.
-
-```sh
-npm install
-npm run create
-```
-
-After you have created the Lambda, you can invoke a method by running the following command.
+If you want to test smart contract run the following command.
 
 ```sh
-npm run invoke
+npx hardhat test
 ```
-
-This will register a new candidate and vote for the candidate as developer(you).
-
-# How to invoke a Lambda method on behalf of users by getting their consent.
-
-If you want to invoke the Lambda function using end-user's wallet, you need their consent. To get consent you need to use the MetaKeep SDK. Run the following commands for an end-to-end demo for Lambda Invocation for the end-user.
-
-Start the backend server by running the following command in the `lambda/voting/backend` directory.
-
-```sh
-npm install
-npm run start
-```
-
-This will start a server at port number `3001`.
-
-Start the frontend server by running the following command in the `lambda/voting/frontend` directory.
-
-```sh
-npm install
-npm run start
-```
-
-The demo application allows you to register and vote for the candidate.
 
 ## User Guide
 
