@@ -7,10 +7,11 @@ pragma solidity ^0.8.9;
 // We import this library to be able to use console.log
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "metakeep-lambda/ethereum/contracts/MetaKeepLambda.sol";
 
 
 // This is the main building block for smart contracts.
-contract MetaKeepCertificates is ERC721 {
+contract MetaKeepCertificates is ERC721, MetaKeepLambda {
 
     struct CertificateHolder {
         string name;
@@ -24,13 +25,16 @@ contract MetaKeepCertificates is ERC721 {
     mapping(uint256 => CertificateHolder) public certificateHolders;
     // This is the constructor whose code is
     // run only when the contract is created.
-    constructor(string memory name, string memory symbol) ERC721(name, symbol) {
-        owner = msg.sender;
-        console.log("Deploying a Token contract");
+    constructor(string memory name, string memory symbol, address lambdaOwner) ERC721(name, symbol) MetaKeepLambda(lambdaOwner, name) {
+        owner = _msgSender();
+        console.log("Deploying a MetaKeep Certificate contract");
     }
 
-    function mint(address to, uint256 tokenId, string memory name, string memory email) public {
-        require(msg.sender == owner, "Only owner can mint");
+    function _msgSender() internal view override returns (address sender) {
+        return MetaKeepLambdaSender.msgSender();
+    }
+
+    function mint(address to, uint256 tokenId, string memory name, string memory email) onlyMetaKeepLambdaOwner() public {
         CertificateHolder storage certificateHolder = certificateHolders[tokenId];
         certificateHolder.certificateId = tokenId;
         certificateHolder.name = name;
@@ -39,8 +43,7 @@ contract MetaKeepCertificates is ERC721 {
     }
 
     // A function to destroy certificate if the reciever looses the wallet.
-    function destroy(uint256 tokenId) public {
-        require(msg.sender == owner, "Only owner can burn");
+    function destroy(uint256 tokenId) onlyMetaKeepLambdaOwner() public {
         delete certificateHolders[tokenId];
         _burn(tokenId);
 
@@ -57,5 +60,25 @@ contract MetaKeepCertificates is ERC721 {
 
     function getCertificate(uint256 tokenId) public view returns (CertificateHolder memory) {
         return certificateHolders[tokenId];
+    }
+
+    /**
+     * @dev See {IERC165-supportsInterface}.
+     */
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(AccessControl, ERC721)
+        returns (bool)
+    {
+        /**
+         * https://solidity-by-example.org/inheritance/
+         * When a function is called that is defined multiple times in
+         * different contracts, parent contracts are searched from
+         * right to left, and in depth-first manner.
+         */
+
+        return super.supportsInterface(interfaceId);
     }
 }

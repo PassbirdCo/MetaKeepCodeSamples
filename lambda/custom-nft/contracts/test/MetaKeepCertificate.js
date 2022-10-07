@@ -1,8 +1,7 @@
-const { expect, assert } = require("chai");
+const { expect } = require("chai");
 const { ethers } = require("hardhat");
-const { BigNumber } = require("ethers");
 
-describe("Token", function () {
+describe("MetaKeep Certificate", function () {
   let MetaKeepCertificate;
   let certificate;
   let owner;
@@ -14,8 +13,12 @@ describe("Token", function () {
     MetaKeepCertificate = await ethers.getContractFactory(
       "MetaKeepCertificates"
     );
-    certificate = await MetaKeepCertificate.deploy("Test Token", "TT");
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
+    certificate = await MetaKeepCertificate.deploy(
+      "Test Token",
+      "TT",
+      owner.address
+    );
   });
   describe("Deployment", function () {
     it("Should set the right owner", async function () {
