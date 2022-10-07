@@ -29,6 +29,7 @@ compile your smart contract:
 npm install
 npx hardhat compile
 ```
+
 If you want to test smart contract run the following command.
 
 ```sh
