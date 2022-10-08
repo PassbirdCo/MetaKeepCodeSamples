@@ -1,5 +1,5 @@
 import env from "dotenv";
-import {invoke} from "../../lambdaUtils.mjs";
+import { invoke } from "../../lambdaUtils.mjs";
 import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
   waitUntilTransactionMined,
