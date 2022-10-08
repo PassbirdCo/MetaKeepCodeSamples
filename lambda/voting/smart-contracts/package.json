@@ -28,11 +28,13 @@
     "ethers": "^5.4.7",
     "hardhat": "^2.11.0",
     "hardhat-gas-reporter": "^1.0.8",
-    "solidity-coverage": "^0.8.2",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "solidity-coverage": "^0.8.2"
   },
   "dependencies": {
     "dotenv": "^16.0.2",
+    "install": "^0.13.0",
+    "metakeep-lambda": "^2.0.1",
     "node-fetch": "^3.2.10",
     "web3": "^1.8.0"
   }
