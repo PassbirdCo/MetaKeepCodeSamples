@@ -1,7 +1,5 @@
-import fetch from "node-fetch";
 import env from "dotenv";
-import { exit } from "process";
-
+import invoke from "../../lambdaUtils.mjs";
 import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
   waitUntilTransactionMined,
@@ -9,44 +7,6 @@ import {
   sleep,
   checkAPIKey,
 } from "../../../helpers/utils.mjs";
-
-// Invokes the lambda function.
-async function invoke(functionName, functionArgs) {
-  const url = "https://api.metakeep.xyz/v2/app/lambda/invoke";
-
-  const headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "x-api-key": process.env.API_KEY,
-    "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
-  };
-  const requestBody = {
-    lambda: process.env.LAMBDA_ADDRESS,
-    function: {
-      name: functionName,
-      args: functionArgs,
-    },
-    reason: "vote",
-  };
-  const options = {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(requestBody),
-  };
-
-  const result = await fetch(url, options);
-  const resultJson = await result.json();
-
-  console.log(resultJson);
-
-  if (!result.ok) {
-    console.log(
-      "Error while invoking method. HTTP status code: " + result.status
-    );
-    exit(1);
-  }
-  return resultJson;
-}
 
 async function main() {
   env.config();
@@ -63,7 +23,11 @@ async function main() {
   );
   // Invokes the lambda function to register the user as candidate.
   console.log("Invoking lambda function to register candidate...\n");
-  const resultJson = await invoke("registerCandidate", [userAddress]);
+  const resultJson = await invoke(
+    "registerCandidate",
+    [userAddress],
+    "register"
+  );
   console.log("Lambda invocation for registering user initiated: \n");
 
   // Waits for the transaction to be mined.
@@ -87,7 +51,7 @@ async function main() {
 
   // Invokes the lambda function to vote for the candidate.
   console.log("Invoking lambda function to vote for candidate...\n");
-  const resultJson2 = await invoke("voteForCandidate", [candidateId]);
+  const resultJson2 = await invoke("voteForCandidate", [candidateId], "vote");
   console.log("Lambda invocation for voting initiated: ");
 
   // Waits for the transaction to be mined.

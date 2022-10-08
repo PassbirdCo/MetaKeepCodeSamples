@@ -1,8 +1,7 @@
 // Script to deploy Smart contract using Metakeep Lambda and REST API.
-import fetch from "node-fetch";
 import fs from "fs";
 import env from "dotenv";
-import { exit } from "process";
+import { create } from "../../lambdaUtils.mjs";
 import getDeveloperWallet, {
   checkAPIKey,
   waitUntilTransactionMined,
@@ -30,32 +29,12 @@ async function main() {
   );
   const developerAddress = await getDeveloperWallet();
 
-  const requestBody = {
-    constructor: {
-      args: [developerAddress, "lambda_name"],
-    },
-    abi: data["abi"],
-    bytecode: data["bytecode"],
-  };
-  const options = {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(requestBody),
-  };
-  console.log("Lambda creation in process...");
-
-  const result = await fetch(url, options);
-  const resultJson = await result.json();
-
-  console.log("Lambda creation response:");
-  console.log(resultJson);
-
-  if (!result.ok) {
-    console.log(
-      "Error while creating lambda. HTTP status code: " + result.status
-    );
-    exit(1);
-  }
+  const resultJson = await create(
+    [developerAddress, "Voting"],
+    data.abi,
+    data.bytecode,
+    headers
+  );
 
   //Waits for the transaction to be mined.
 

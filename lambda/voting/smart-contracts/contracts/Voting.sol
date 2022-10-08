@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./imports/MetaKeepLambda.sol";
+import "metakeep-lambda/ethereum/contracts/MetaKeepLambda.sol";
 
 contract Voting is MetaKeepLambda {
 
