@@ -1,5 +1,5 @@
 import env from "dotenv";
-import invoke from "../../lambdaUtils.mjs";
+import { invoke } from "../../lambdaUtils.mjs";
 import {
   waitUntilTransactionMined,
   getUserWallet,
