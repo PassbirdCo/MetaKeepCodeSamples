@@ -13,15 +13,6 @@ async function main() {
   // Checks if the API_KEY is set in the .env file.
   checkAPIKey();
 
-  const url = "https://api.metakeep.xyz/v2/app/lambda/create";
-
-  const headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "x-api-key": process.env.API_KEY,
-    "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
-  };
-
   const data = JSON.parse(
     fs.readFileSync(
       "../contracts/artifacts/contracts/MetaKeepCertificate.sol/MetaKeepCertificates.json"
@@ -32,8 +23,7 @@ async function main() {
   const resultJson = await create(
     ["MTKP", developerAddress, "MetaKeepCertificates"],
     data.abi,
-    data.bytecode,
-    headers
+    data.bytecode
   );
 
   //Waits for the transaction to be mined.
