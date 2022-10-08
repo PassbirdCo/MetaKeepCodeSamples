@@ -23,7 +23,7 @@ async function main() {
   const resultJson = await create(
     [developerAddress, "Voting"],
     data.abi,
-    data.bytecode
+    data.bytecode,
   );
 
   //Waits for the transaction to be mined.
