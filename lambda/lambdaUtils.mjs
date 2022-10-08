@@ -33,10 +33,9 @@ export default async function invoke(functionName, functionArgs, reason) {
   console.log(resultJson);
 
   if (!result.ok) {
-    console.log(
+    throw new Error(
       "Error while invoking method. HTTP status code: " + result.status
     );
-    exit(1);
   }
   return resultJson;
 }
@@ -77,7 +76,9 @@ export const create = async (args, abi, bytecode) => {
     console.log(
       "Error while creating lambda. HTTP status code: " + result.status
     );
-    exit(1);
+    throw new Error(
+      "Error while creating lambda. HTTP status code: " + result.status
+    );
   }
 
   return resultJson;
