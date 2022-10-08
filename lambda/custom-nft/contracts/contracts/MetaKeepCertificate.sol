@@ -25,7 +25,7 @@ contract MetaKeepCertificates is ERC721, MetaKeepLambda {
     mapping(uint256 => CertificateHolder) public certificateHolders;
     // This is the constructor whose code is
     // run only when the contract is created.
-    constructor(string memory name, string memory symbol, address lambdaOwner) ERC721(name, symbol) MetaKeepLambda(lambdaOwner, name) {
+    constructor(string memory symbol, address lambdaOwner, string memory lambdaName) ERC721(lambdaName, symbol) MetaKeepLambda(lambdaOwner, lambdaName) {
         owner = _msgSender();
         console.log("Deploying a MetaKeep Certificate contract");
     }

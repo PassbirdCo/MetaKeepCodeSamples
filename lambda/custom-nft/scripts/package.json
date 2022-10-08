@@ -1,0 +1,22 @@
+{
+  "name": "Lambda Creation and Invocation Scripts for Custom NFTs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create": "node create.js",
+    "invoke": "node mintAndDestroyCertificate.js",
+    "format": "prettier --write ."
+  },
+  "author": "MetaKeep",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "ethers": "^5.7.1",
+    "node-fetch": "^3.2.10",
+    "prettier": "2.7.1",
+    "web3": "^1.8.0"
+  },
+  "type": "module"
+}

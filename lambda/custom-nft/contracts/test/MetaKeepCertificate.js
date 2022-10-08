@@ -15,9 +15,9 @@ describe("MetaKeep Certificate", function () {
     );
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
     certificate = await MetaKeepCertificate.deploy(
-      "Test Token",
       "TT",
-      owner.address
+      owner.address,
+      "Test Token"
     );
   });
   describe("Deployment", function () {
