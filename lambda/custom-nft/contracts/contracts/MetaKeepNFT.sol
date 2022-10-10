@@ -7,25 +7,27 @@ pragma solidity ^0.8.9;
 // We import this library to be able to use console.log
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "metakeep-lambda/ethereum/contracts/MetaKeepLambda.sol";
 
 
 // This is the main building block for smart contracts.
-contract MetaKeepCertificates is ERC721, MetaKeepLambda {
+contract MetaKeepNFT is ERC721, MetaKeepLambda {
 
-    struct CertificateHolder {
-        string name;
-        string email;
-        uint256 certificateId; // this is the id of the certificate ie token Id
+    struct NFTSaleInfo {
+        address seller;
+        uint256 sale_time;
+        uint256 cost; // this is the id of the certificate ie token Id
     }
 
     address public owner;
-    uint256 public certificateCount = 0;
+    ERC20 public token;
 
-    mapping(uint256 => CertificateHolder) public certificateHolders;
+    mapping(uint256 => NFTSaleInfo) public nftsForSale;
     // This is the constructor whose code is
     // run only when the contract is created.
-    constructor(string memory symbol, address lambdaOwner, string memory lambdaName) ERC721(lambdaName, symbol) MetaKeepLambda(lambdaOwner, lambdaName) {
+    constructor(string memory symbol, address lambdaOwner, string memory lambdaName, address erc20Token) ERC721(lambdaName, symbol) MetaKeepLambda(lambdaOwner, lambdaName) {
+        token = ERC20(erc20Token);
         owner = _msgSender();
         console.log("Deploying a MetaKeep Certificate contract");
     }
@@ -34,17 +36,13 @@ contract MetaKeepCertificates is ERC721, MetaKeepLambda {
         return MetaKeepLambdaSender.msgSender();
     }
 
-    function mint(address to, uint256 tokenId, string memory name, string memory email) onlyMetaKeepLambdaOwner() public {
-        CertificateHolder storage certificateHolder = certificateHolders[tokenId];
-        certificateHolder.certificateId = tokenId;
-        certificateHolder.name = name;
-        certificateHolder.email = email;
+    function mint(address to, uint256 tokenId) onlyMetaKeepLambdaOwner() public {
         _mint(to, tokenId);
     }
 
     // A function to destroy certificate if the reciever looses the wallet.
     function destroy(uint256 tokenId) onlyMetaKeepLambdaOwner() public {
-        delete certificateHolders[tokenId];
+        delete nftsForSale[tokenId];
         _burn(tokenId);
 
     }
@@ -53,13 +51,26 @@ contract MetaKeepCertificates is ERC721, MetaKeepLambda {
         return "https://api.example.com/";
     }
 
-    // A certificate cannot be transferred to any one.
-    function _transfer(address from, address to, uint256 tokenId) internal override(ERC721) {
-        revert("Cannot transfer");
+    function addForSale(uint256 tokenId, uint256 tokenAmount) external onlyMetaKeepLambdaOwner() {
+        require(_exists(tokenId), "nonexistent token");
+        require(tokenAmount >= 1000000000, "token amount must be greater than 1 Gwei");
+        nftsForSale[tokenId] = NFTSaleInfo({
+            seller: ownerOf(tokenId),
+            sale_time: block.timestamp + 1 days,
+            cost: tokenAmount
+        });
     }
 
-    function getCertificate(uint256 tokenId) public view returns (CertificateHolder memory) {
-        return certificateHolders[tokenId];
+    function buy(uint256 tokenId) external {
+        require(nftsForSale[tokenId].seller != address(0), "ERC721: token is not for sale");
+        //require(token.balanceOf(address(this)) >= nftsForSale[tokenId].cost, "ERC20: transfer amount exceeds balance");
+        //token.transferFrom(address(this), nftsForSale[tokenId].seller, nftsForSale[tokenId].cost);
+        _transfer(nftsForSale[tokenId].seller, _msgSender(), tokenId);
+        delete nftsForSale[tokenId];
+    }
+
+    function getNFTSaleInfo(uint256 tokenId) public view returns (NFTSaleInfo memory) {
+        return nftsForSale[tokenId];
     }
 
     /**
