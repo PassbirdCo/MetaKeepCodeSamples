@@ -42,6 +42,7 @@ contract MetaKeepNFT is ERC721, MetaKeepLambda {
 
     // A function to destroy certificate if the reciever looses the wallet.
     function destroy(uint256 tokenId) onlyMetaKeepLambdaOwner() public {
+        require(nftsForSale[tokenId].seller == address(0), "NFT is for sale");
         delete nftsForSale[tokenId];
         _burn(tokenId);
 
@@ -53,6 +54,7 @@ contract MetaKeepNFT is ERC721, MetaKeepLambda {
 
     function addForSale(uint256 tokenId, uint256 tokenAmount) external onlyMetaKeepLambdaOwner() {
         require(_exists(tokenId), "nonexistent token");
+        require(nftsForSale[tokenId].seller == address(0), "NFT is for sale already");
         require(tokenAmount >= 1000000000, "token amount must be greater than 1 Gwei");
         nftsForSale[tokenId] = NFTSaleInfo({
             seller: ownerOf(tokenId),
@@ -62,10 +64,27 @@ contract MetaKeepNFT is ERC721, MetaKeepLambda {
     }
 
     function buy(uint256 tokenId) external {
+        // check if the token is for sale
         require(nftsForSale[tokenId].seller != address(0), "ERC721: token is not for sale");
-        //require(token.balanceOf(address(this)) >= nftsForSale[tokenId].cost, "ERC20: transfer amount exceeds balance");
-        //token.transferFrom(address(this), nftsForSale[tokenId].seller, nftsForSale[tokenId].cost);
+        // check if the sale time is over
+        require(nftsForSale[tokenId].sale_time > block.timestamp, "ERC721: token sale has expired");
+        // check if the buyer has enough token
+        require(token.balanceOf(_msgSender()) >= nftsForSale[tokenId].cost, "ERC20: token cost is greater than your balance");
+        
+        // calculate the token amount to be transferred to the seller
+        uint256 cost = nftsForSale[tokenId].cost;
+        // calculate the token amount to be transferred to the smart-contract
+        uint256 commission = (cost * 20) / 100;
+
+        // transfer the amount excluding commission to the seller
+        token.transferFrom(_msgSender(), nftsForSale[tokenId].seller, cost - commission);
+        // transfer the commission to the smart-contract
+        token.transferFrom(_msgSender(), address(this), commission);    
+
+        // transfer the NFT to the buyer
         _transfer(nftsForSale[tokenId].seller, _msgSender(), tokenId);
+
+        // delete the NFT from the sale list
         delete nftsForSale[tokenId];
     }
 
