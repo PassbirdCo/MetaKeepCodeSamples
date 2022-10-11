@@ -15,13 +15,18 @@ async function main() {
 
   const data = JSON.parse(
     fs.readFileSync(
-      "../contracts/artifacts/contracts/MetaKeepCertificate.sol/MetaKeepCertificates.json"
+      "../contracts/artifacts/contracts/MetaKeepNFT.sol/MetaKeepNFT.json"
     )
   );
   const developerAddress = await getDeveloperWallet();
-
+  console.log(developerAddress);
   const resultJson = await create(
-    ["MTKP", developerAddress, "MetaKeepCertificates"],
+    [
+      "MTKP",
+      developerAddress,
+      "metakeepnft",
+      process.env.METAKEEP_ERC20_CONTRACT_ADDRESS,
+    ],
     data.abi,
     data.bytecode
   );

@@ -20,8 +20,6 @@ async function createCurrency() {
     "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
   };
 
-  const developerAddress = await getDeveloperWallet();
-
   const requestBody = {
     coin: {
       name: "Metakeep_ERC20",
@@ -63,14 +61,16 @@ async function mintCoins(currency) {
     "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
   };
 
+  const developerAddress = await getDeveloperWallet();
+
   const requestBody = {
     coin: {
       currency: currency,
     },
     to: {
-      email: process.env.USER_EMAIL_ADDRESS,
+      ethAddress: developerAddress,
     },
-    amount: "100",
+    amount: "100000",
   };
 
   const options = {
