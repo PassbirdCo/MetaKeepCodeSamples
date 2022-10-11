@@ -43,17 +43,38 @@ After you have compiled and tested the contracts, open a new terminal window and
 
 _Install the `node_modules` if you havent by running the `npm install` command._
 
+The custom NFT contract in the `custom-nft/contracts` directory `MetaKeepNFT.sol` has a additional feature, which allows
+users to directly buy and sell NFTs without using any NFT marketplace.
+
+To drive the buy and sell the transactions, we have integrated MetaKeep ERC20 contract, which will be used to buy NFTs.
+
+So, the very first step is to deploy the MetaKeep ERC20 contract using the `app/coin/createCurrency` API. We have created a script called `createAndMintERC20.js`. This will allow you to create currency and mint tokens to the buyer account.
+
+Once you have got the currency smart contract address paste it in the `.env` file against `METAKEEP_ERC20_CONTRACT_ADDRESS`
+
+Now you are ready to deploy the custom NFT contract. Run to following command to deploy to NFT using `app/lambda/create` API.
+
+``
+
 ```sh
-npm run create
+npm run createCustomNFT
 ```
 
-## Invoke Mint and Burn Methods from the Custom NFT token
+After the successful call to the script you will get the custom NFT contract Address. Paste it in the `env` file against `LAMBDA_ADDRESS`
 
-Followed to the successful deployment of the custom NFT in the previous step, you can invoke the methods in the deployed contract by running the following commands.
+## MINT NFT Token and Place it for Sale.
+
+After the sucessful deployment of the Custom NFT contract, you need to add the `SELLER_ADDRESS` in the `.env` file.
+
+Now you can run the script `mintAndSellMetaKeepNFT.js` using the following command.
 
 ```sh
 npm run invoke
 ```
+
+After successful Invocation, your NFT would be placed for sale.
+
+In the upcoming tutorial we will discuss, how to buy NFT Token placed on sale using the MetaKeep Lambda Invocation API with consent token. 
 
 ## User Guide
 
