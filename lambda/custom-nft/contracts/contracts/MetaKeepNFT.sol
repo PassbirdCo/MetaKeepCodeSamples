@@ -5,9 +5,8 @@
 pragma solidity ^0.8.9;
 
 // We import this library to be able to use console.log
-import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "metakeep-lambda/ethereum/contracts/MetaKeepLambda.sol";
 
 
@@ -20,16 +19,13 @@ contract MetaKeepNFT is ERC721, MetaKeepLambda {
         uint256 cost; // this is the id of the certificate ie token Id
     }
 
-    address public owner;
-    ERC20 public token;
+    IERC20 public token;
 
     mapping(uint256 => NFTSaleInfo) public nftsForSale;
     // This is the constructor whose code is
     // run only when the contract is created.
     constructor(string memory symbol, address lambdaOwner, string memory lambdaName, address erc20Token) ERC721(lambdaName, symbol) MetaKeepLambda(lambdaOwner, lambdaName) {
-        token = ERC20(erc20Token);
-        owner = _msgSender();
-        console.log("Deploying a MetaKeep Certificate contract");
+        token = IERC20(erc20Token);
     }
 
     function _msgSender() internal view override returns (address sender) {

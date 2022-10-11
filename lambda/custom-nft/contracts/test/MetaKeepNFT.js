@@ -33,11 +33,6 @@ describe("MetaKeep NFT", function () {
       .connect(addr2)
       .approve(mtkpnft.address, ethers.utils.parseEther("1000"));
   });
-  describe("Deployment", function () {
-    it("Should set the right owner", async function () {
-      expect(await mtkpnft.owner()).to.equal(owner.address);
-    });
-  });
   describe("Mint And Destroy NFT", function () {
     it("Should mint NFT", async function () {
       await mtkpnft.mint(addr1.address, 100);
