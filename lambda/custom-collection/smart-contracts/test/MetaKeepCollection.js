@@ -13,17 +13,14 @@ describe("MetaKeepCollection contract", function () {
 
     metakeepCollection = await MetaKeepCollection.deploy(
       "MetaKeep Originals",
-      "MTKP"
+      "MTKP",
+      owner.address
     );
 
     await metakeepCollection.deployed();
   });
 
   describe("Deployment", function () {
-    it("Should set the right owner", async function () {
-      expect(await metakeepCollection.owner()).to.equal(owner.address);
-    });
-
     it("Should set the right name", async function () {
       expect(await metakeepCollection.name()).to.equal("MetaKeep Originals");
     });
