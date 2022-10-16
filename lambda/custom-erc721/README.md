@@ -25,7 +25,7 @@ The first thing you need to do is clone this repository:
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
 
-Then, on a new terminal, go to the repository's `lambda/custom-collection/smart-contracts` directory and run this to
+Then, on a new terminal, go to the repository's `lambda/custom-erc721/smart-contracts` directory and run this to
 compile your smart contract:
 
 ```sh
@@ -41,11 +41,11 @@ npx hardhat test
 
 ## Create your Custom NFT token
 
-After you have compiled and tested the contracts, open a new terminal window and run the following command in the `lambda/custom-collection/scripts` directory.
+After you have compiled and tested the contracts, open a new terminal window and run the following command in the `lambda/custom-erc721/scripts` directory.
 
 _Install the `node_modules` if you havent by running the `npm install` command._
 
-The custom NFT contract in the `custom-collection/smart-contracts` directory `MetaKeepCollection.sol` has a additional feature, which allows developers to whitelist users and mint NFTs to them only.
+The custom NFT contract in the `custom-erc721/smart-contracts` directory `CustomERC721.sol` has a additional feature, which allows developers to whitelist users and mint NFTs to them only.
 
 To deploy the custom NFT contract. Run to following command to deploy to NFT using `app/lambda/create` API.
 
