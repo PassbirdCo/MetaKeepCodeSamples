@@ -70,7 +70,7 @@ async function main() {
   // Waits for the transaction to be mined.
   await waitUntilTransactionMined(resultJson2);
   console.log(
-    "Lambda invocation for minting token to the user is completed: " +
+    "Lambda invocation for minting ERC20 token to the user is completed: " +
       resultJson2.transactionHash +
       "\n"
   );
