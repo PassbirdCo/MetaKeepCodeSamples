@@ -3,7 +3,7 @@
 This repository contains a Custom ERC721 Application that you can use as the starting point
 for using MetaKeep's Lambda Infrastructure.
 
-In the project, we have implemented a functionality, where developers can whitelist specific users and mint tokens to them only.
+In the custom nft smart-contract, we have implemented a functionality, where developers can whitelist specific users and mint tokens to them only.
 
 This project is intended to be used with the
 [MetaKeep Lambda Creation and Invocation Tutorial Series](https://docs.metakeep.xyz/docs/create-your-first-lambda), but you should be
