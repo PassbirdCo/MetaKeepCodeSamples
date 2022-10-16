@@ -32,7 +32,7 @@ describe("CustomERC1155 contract", function () {
       expect(await customERC1155.balanceOf(addr1.address, tokenId)).to.equal(1);
     });
 
-    it("Should mint if a erc20 token", async function () {
+    it("Should mint an erc20 token", async function () {
       const tokenId = 1224;
       await customERC1155.mint(
         addr1.address,
