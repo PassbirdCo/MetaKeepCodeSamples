@@ -1,6 +1,6 @@
 # MetaKeep Lambda - Custom ERC721
 
-MetaKeep NFT APIs provide limitless possibilities to support your NFT use case. If you have a unique NFT use case not supported by MetaKeep NFT APIs, you can write your own NFT(ERC721) contract and run it on MetaKeep's Lambda infrastructure. 
+MetaKeep NFT APIs provide limitless possibilities to support your NFT use case. If you have a unique NFT use case not supported by MetaKeep NFT APIs, you can write your own NFT(ERC721) contract and run it on MetaKeep's Lambda infrastructure.
 
 This repository contains a custom ERC721 smart contract that runs on MetaKeep's Lambda Infrastructure.
 The custom contract only allows minting to whitelisted users and will only mint at most one token to a user.
@@ -40,13 +40,12 @@ npx hardhat test
 
 After you have compiled and tested the contract, go to the repository's `lambda/custom-erc721/scripts` directory and run the following command to deploy your contract:
 
-
 ```sh
 npm install
 npm run create
 ```
 
-After the successful call, you will get the custom ERC721 lambda address in the output. Paste it in the `env` file against `LAMBDA_ADDRESS`
+After the successful call, you will get the custom ERC721 lambda address in the output. Paste it in the `.env` file against `LAMBDA_ADDRESS`
 
 ## Whitelist User and Mint NFT token.
 
