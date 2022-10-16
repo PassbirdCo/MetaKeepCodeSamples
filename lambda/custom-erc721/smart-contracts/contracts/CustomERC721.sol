@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "metakeep-lambda/ethereum/contracts/MetaKeepLambda.sol";
 
-contract MetaKeepCollection is ERC721, MetaKeepLambda {
+contract CustomERC721 is ERC721, MetaKeepLambda {
     mapping(address => bool) public isWhitelisted;
     mapping(address => bool) public ownsToken;
 
