@@ -1,7 +1,7 @@
 {
-  "name": "MetaKeep Collection",
+  "name": "MetaKeep ERC1155",
   "version": "1.0.0",
-  "description": "A Demo application for developers to get started with custom NFT deployement using MetaKeep Lambda",
+  "description": "A Demo application for developers to get started with custom ERC1155 deployement using MetaKeep Lambda",
   "scripts": {
     "test": "hardhat test",
     "format": "prettier --write .",
