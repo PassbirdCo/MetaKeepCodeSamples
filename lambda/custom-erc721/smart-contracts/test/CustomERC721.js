@@ -33,24 +33,20 @@ describe("CustomERC721 contract", function () {
   describe("Whitelist", function () {
     it("Should add an address to the whitelist", async function () {
       await customERC721.addToWhitelist(addr1.address);
-      expect(await customERC721.isWhitelisted(addr1.address)).to.equal(
-        true
-      );
+      expect(await customERC721.isWhitelisted(addr1.address)).to.equal(true);
     });
 
     it("Should remove an address from the whitelist", async function () {
       await customERC721.removeFromWhitelist(addr1.address);
-      expect(await customERC721.isWhitelisted(addr1.address)).to.equal(
-        false
-      );
+      expect(await customERC721.isWhitelisted(addr1.address)).to.equal(false);
     });
   });
 
   describe("Minting", function () {
     it("Should not mint if the address is not whitelisted", async function () {
-      await expect(
-        customERC721.mint(addr1.address, 123)
-      ).to.be.revertedWith("Address is not whitelisted.");
+      await expect(customERC721.mint(addr1.address, 123)).to.be.revertedWith(
+        "Address is not whitelisted."
+      );
     });
     it("Should mint a token", async function () {
       const tokenId = solidityKeccak256(
@@ -64,9 +60,9 @@ describe("CustomERC721 contract", function () {
     });
 
     it("Should not mint if the address has already minted", async function () {
-      await expect(
-        customERC721.mint(addr1.address, 123)
-      ).to.be.revertedWith("Address already owns a token.");
+      await expect(customERC721.mint(addr1.address, 123)).to.be.revertedWith(
+        "Address already owns a token."
+      );
     });
   });
 
