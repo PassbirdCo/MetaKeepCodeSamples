@@ -45,4 +45,14 @@ contract CustomERC1155 is ERC1155, MetaKeepLambda {
     ) public {
         _safeTransferFrom(from, to, id, amount, data);
     }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(ERC1155, AccessControl)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
+    }
 }

@@ -12,7 +12,9 @@ describe("CustomERC1155 contract", function () {
     [owner, addr1, addr2] = await ethers.getSigners();
 
     customERC1155 = await CustomERC1155.deploy(
-      "" // Add a custom URI
+      "", // Add a custom URI
+      owner.address, // Owner of Lambda Contract
+      "Custom ERC1155" // Name of Lambda Contract
     );
 
     await customERC1155.deployed();
