@@ -6,7 +6,7 @@ for using MetaKeep's Lambda Infrastructure.
 In the custom nft smart-contract, we have implemented a functionality, where developers can whitelist specific users and mint tokens to them only.
 
 This project is intended to be used with the
-[MetaKeep Lambda Creation and Invocation Tutorial Series](https://docs.metakeep.xyz/docs/create-your-first-lambda), but you should be
+[MetaKeep Lambda Creation and Invocation Tutorial Series](https://docs.metakeep.xyz/docs/custom-erc721), but you should be
 able to follow it by yourself by reading the README and exploring its
 `contracts` and `scripts` directories.
 
