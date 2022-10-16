@@ -61,7 +61,7 @@ async function main() {
   const resultJson2 = await invoke(
     "mint",
     [userAddress, tokenId, quantity, data],
-    "mint token"
+    ""Mint ERC20 token to User""
   );
   console.log(
     "Lambda invocation for minting ERC20 token to user is initiated: "
