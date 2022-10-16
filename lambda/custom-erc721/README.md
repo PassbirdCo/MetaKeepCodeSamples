@@ -6,7 +6,7 @@ for using MetaKeep's Lambda Infrastructure.
 In the custom nft smart-contract, we have implemented a functionality, where developers can whitelist specific users and mint tokens to them only.
 
 This project is intended to be used with the
-[MetaKeep Lambda Creation and Invocation Tutorial Series](https://docs.metakeep.xyz/docs/create-your-first-lambda), but you should be
+[MetaKeep Lambda Creation and Invocation Tutorial Series](https://docs.metakeep.xyz/docs/custom-erc721), but you should be
 able to follow it by yourself by reading the README and exploring its
 `contracts` and `scripts` directories.
 
@@ -39,11 +39,11 @@ If you want to test smart contract run the following command.
 npx hardhat test
 ```
 
-## Create your Custom NFT token
+## Create your Custom ERC721 token
 
 After you have compiled and tested the contracts, open a new terminal window and run the following command in the `lambda/custom-erc721/scripts` directory.
 
-_Install the `node_modules` if you havent by running the `npm install` command._
+_Install the `node_modules` if you have not by running the `npm install` command._
 
 The custom NFT contract in the `custom-erc721/smart-contracts` directory `CustomERC721.sol` has a additional feature, which allows developers to whitelist users and mint NFTs to them only.
 
