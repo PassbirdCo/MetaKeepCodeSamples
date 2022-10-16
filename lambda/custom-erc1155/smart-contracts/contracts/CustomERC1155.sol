@@ -1,21 +1,21 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "metakeep-lambda/ethereum/contracts/MetaKeepLambda.sol";
 import "hardhat/console.sol";
 
-contract CustomERC1155 is ERC1155 {
-    address public owner;
-
-    modifier onlyOwner() {
-        require(
-            owner == _msgSender(),
-            "Only Owner can access the specific method"
-        );
-        _;
+contract CustomERC1155 is ERC1155, MetaKeepLambda {
+    // override the  _msgSender() method to support MetaKeep Lambda transactions.
+    function _msgSender() internal view override returns (address sender) {
+        return MetaKeepLambdaSender.msgSender();
     }
 
-    constructor(string memory uri_) ERC1155(uri_) {
-        owner = _msgSender();
+    //MetaKeep Lambda takes two constructor arguments, lambdaOwner and lambdaName.
+    constructor(
+        string memory uri_,
+        address lambdaOwner,
+        string memory lambdaName
+    ) ERC1155(uri_) MetaKeepLambda(lambdaOwner, lambdaName) {
         console.log("Deployed ERC1155");
     }
 
@@ -24,7 +24,7 @@ contract CustomERC1155 is ERC1155 {
         uint256 id,
         uint256 amount,
         bytes memory data
-    ) public onlyOwner {
+    ) public onlyMetaKeepLambdaOwner {
         _mint(to, id, amount, data);
     }
 
@@ -32,7 +32,7 @@ contract CustomERC1155 is ERC1155 {
         address from,
         uint256 id,
         uint256 amount
-    ) public onlyOwner {
+    ) public onlyMetaKeepLambdaOwner {
         _burn(from, id, amount);
     }
 
