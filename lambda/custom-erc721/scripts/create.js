@@ -15,7 +15,7 @@ async function main() {
 
   const data = JSON.parse(
     fs.readFileSync(
-      "../smart-contracts/artifacts/contracts/MetaKeepCollection.sol/MetaKeepCollection.json"
+      "../smart-contracts/artifacts/contracts/CustomERC721.sol/CustomERC721.json"
     )
   );
   const developerAddress = await getDeveloperWallet();
