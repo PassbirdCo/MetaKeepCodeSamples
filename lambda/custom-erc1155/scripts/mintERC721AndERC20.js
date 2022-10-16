@@ -21,7 +21,7 @@ async function main() {
   console.log(
     "******************** Mint a NFT token to User ********************"
   );
-  // Invokes the lambda function to whitelist the user.
+  // Invokes the lambda function to mint NFT to the user.
   console.log("Invoking lambda function to mint NFT user...\n");
   let nftId = 256;
   let nftData =
