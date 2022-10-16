@@ -51,4 +51,3 @@ jobs:
           npm ci
           npx hardhat compile
           npx hardhat test
-
