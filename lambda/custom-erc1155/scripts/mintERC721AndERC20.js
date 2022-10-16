@@ -14,7 +14,7 @@ async function main() {
   // Checks if the API_KEY is set in the .env file.
   checkAPIKey();
 
-  // Gets the user Address to whitelist in NFT collection contract.
+  // Gets the user Address to mint tokens.
   const userAddress = await getUserWallet(process.env.USER_EMAIL);
 
   /* ******************** Mint a NFT token to User ******************** */
