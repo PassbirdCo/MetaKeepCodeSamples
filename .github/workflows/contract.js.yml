@@ -1,4 +1,4 @@
-name: Check JavaScript for conformance with Prettier
+name: Compile and Test smart contracts
 
 on:
   pull_request:
