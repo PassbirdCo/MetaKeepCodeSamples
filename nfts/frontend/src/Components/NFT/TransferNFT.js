@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import getNftTransferConsentToken from "../../utils/transferNft";
+import getNftTransferConsentToken from "../../utils/nftUtils";
 import "./TransferNFT.css";
 
 export const TransferNFT = ({ sdk }) => {

@@ -1,0 +1,15 @@
+.Card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.Card.Body {
+  padding: 1rem;
+}
