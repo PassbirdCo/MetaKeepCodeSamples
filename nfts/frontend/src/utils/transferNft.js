@@ -35,3 +35,4 @@ export default async function getNftTransferConsentToken(
   console.log("\n");
   return resultJson;
 }
+
