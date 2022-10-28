@@ -40,6 +40,13 @@ app.post("/getConsentToken", async (req, res) => {
   );
   res.send(result);
 });
+
+app.post("/getNftTokenList", async (req, res) => {
+  console.log("getNftTokenList");
+  const result = await getNftTokenList(req.body.of.email);
+  res.send(result);
+});
+
 app.listen(port, () => {
   console.log(`NFT transfer server listening at http://localhost:${port}`);
 });
@@ -48,7 +55,7 @@ app.listen(port, () => {
 
 async function getNftTransferConsentToken(tokenId, toEmail, fromEmail) {
   console.log("Get transfer NFT consent token...");
-  const url = "https://api.metakeep.xyz/v2/app/nft/transfer/";
+  const url = "https://api.dev.metakeep.xyz/v2/app/nft/transfer/";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -78,6 +85,44 @@ async function getNftTransferConsentToken(tokenId, toEmail, fromEmail) {
   console.log(resultJson);
   if (!result.ok) {
     console.log("Error transferring NFT");
+  }
+  console.log("\n");
+  return resultJson;
+}
+
+// Utility function to get NFT token list
+
+async function getNftTokenList(email) {
+  console.log("Get NFT token list...");
+  const url = "https://api.dev.metakeep.xyz/v2/app/nft/listTokens/";
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "x-api-key": process.env.API_KEY,
+  };
+
+  const requestBody = {
+    nft: {
+      collection: process.env.COLLECTION,
+    },
+    of: {
+      email: email,
+    },
+  };
+
+  console.log(requestBody);
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+  console.log("GetNFTTokenList response: ");
+  console.log(resultJson);
+  if (!result.ok) {
+    console.log("Error getting NFT token list");
   }
   console.log("\n");
   return resultJson;
