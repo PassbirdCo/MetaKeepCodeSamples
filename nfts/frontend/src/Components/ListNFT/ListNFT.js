@@ -114,6 +114,7 @@ export const ListNFT = ({ sdk }) => {
               <Card.Img
                 variant="top"
                 src={nftToken.metadata ? nftToken.metadata.image : "Undefined"}
+                style={{ width: "250px", height: "200px" }}
               />
               <Card.Text>
                 {nftToken.metadata
@@ -205,6 +206,23 @@ export const ListNFT = ({ sdk }) => {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <button
+          style={{
+            margin: "10px",
+            display: "inline-block",
+            width: "100px",
+            height: "50px",
+            fontSize: "20px",
+            backgroundColor: "white",
+            border: "1px solid black",
+            borderRadius: "5px",
+          }}
+          onClick={() => setTransactionStatus(null)}
+        >
+          Back
+        </button>
       </div>
     </div>
   );
