@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
-import { json } from "react-router-dom";
 import { getNftTokenList } from "../../utils/nftUtils";
 import getNftTransferConsentToken from "../../utils/nftUtils";
 
@@ -23,7 +22,7 @@ export const ListNFT = ({ sdk }) => {
       }
       if (
         getNftTokenListResponse.status === "SUCCESS" &&
-        getNftTokenListResponse.tokens.length == 0
+        getNftTokenListResponse.tokens.length === 0
       ) {
         alert("No NFTs found for this email");
       }
@@ -72,6 +71,13 @@ export const ListNFT = ({ sdk }) => {
 
   return !result ? (
     <div className="listNFT">
+      <h2
+        style={{
+          textAlign: "center",
+        }}
+      >
+        Login by Entering your Email
+      </h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -80,8 +86,31 @@ export const ListNFT = ({ sdk }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required={true}
+          style={{
+            width: "300px",
+            height: "30px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+            padding: "0 10px",
+            margin: "10px 0",
+          }}
         />
-        <button type="submit">List NFT</button>
+        <button
+          type="submit"
+          style={{
+            width: "200px",
+            height: "30px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+            padding: "0 10px",
+            margin: "10px 0",
+            backgroundColor: "black",
+            color: "white",
+            cursor: "pointer",
+          }}
+        >
+          List NFT
+        </button>
       </form>
     </div>
   ) : !transactionStatus ? (
