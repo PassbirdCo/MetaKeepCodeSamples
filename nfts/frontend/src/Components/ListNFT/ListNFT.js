@@ -7,6 +7,7 @@ import getNftTransferConsentToken from "../../utils/nftUtils";
 export const ListNFT = ({ sdk }) => {
   const [email, setEmail] = useState("");
   const [result, setResult] = useState(null);
+  const [transactionStatus, setTransactionStatus] = useState(null);
 
   let handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,6 +61,7 @@ export const ListNFT = ({ sdk }) => {
           "Error transferring NFT: " + JSON.stringify(getUserConsentResponse)
         );
       }
+      setTransactionStatus(getUserConsentResponse);
     } catch (error) {
       alert(
         "Error transferring NFT: " +
@@ -82,7 +84,7 @@ export const ListNFT = ({ sdk }) => {
         <button type="submit">List NFT</button>
       </form>
     </div>
-  ) : (
+  ) : !transactionStatus ? (
     <div>
       <div className="listNFT">
         <h1
@@ -164,6 +166,46 @@ export const ListNFT = ({ sdk }) => {
       >
         Back
       </button>
+    </div>
+  ) : (
+    <div className="container">
+      <div className="row">
+        <div className="col-sm-6">
+          <h1>Transaction Details</h1>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Transaction ID</h5>
+              <p className="card-text">{transactionStatus.transactionId}</p>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Status</h5>
+              <p className="card-text">{transactionStatus.status}</p>
+            </div>
+            <div>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">Transaction Hash</h5>
+                  <p className="card-text">
+                    {transactionStatus.transactionHash}
+                  </p>
+                </div>
+              </div>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">Transaction ChainScan URL</h5>
+                  <p className="card-text">
+                    <a href={transactionStatus.transactionChainScanUrl}>
+                      {transactionStatus.transactionChainScanUrl}
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

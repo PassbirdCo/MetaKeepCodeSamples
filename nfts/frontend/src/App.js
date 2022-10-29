@@ -7,7 +7,7 @@ import "./App.css";
 
 function App() {
   const sdk = new MetaKeep({
-    environment: "dev",
+    environment: "prod",
   });
   return (
     <div className="App">
