@@ -9,8 +9,8 @@ This Project is intended to be used with the [NFT Deployment and Token Mint Tuto
 The project is organized as follows:
 
 - [scripts](./scripts): Contains the scripts to deploy a new NFT collection, mint tokens, lock and unlock tokens.
-- [backend](./backend): Contains the backend code for server to generate consent token for P2P NFT transfer.
-- [frontend](./frontend): Contains the frontend code and server for the P2P NFT transfer.
+- [backend](./backend): Contains the backend code for server to list NFTs and Transfer Tokens.
+- [frontend](./frontend): Contains the frontend code for the NFT Token List and P2P NFT transfer.
 
 ## Quick start
 
