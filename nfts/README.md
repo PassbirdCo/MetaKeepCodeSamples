@@ -39,6 +39,20 @@ After minting a new token, you can `Lock` and `Unlock` token by running the foll
 npm run lockUnlockToken
 ```
 
+### Get the List of your NFT tokens.
+
+Once you have minted the tokens to your wallet or the developer wallet, you follow the given steps below to get the complete list of NFTs you own.
+
+Step 1 : Start the Backend Server by running `npm run start` in `nfts/backend` directory.
+
+Step 2 : Open a new terminal window, and go to `nfts/frontend` directory, and run `npm run start`.
+
+Step 3 : Once the webpage is open in your browser, you can click on the `Get NFT List`.
+
+Step 4 : Enter your email Id in the form and click `List NFT`. It will show a complete list of your NFTs.
+
+**_Note : _** In case you dont have the NFTs, it will revert with error, No NFTs found for this email.
+
 ### P2P NFT Transfer
 
 **Note**: Ensure that you have created the collection and minted the token that you want to transfer by following the [steps above](#create-a-new-nft-collection-and-mint-tokens).
