@@ -69,7 +69,7 @@ Once you have minted the tokens to the user's wallet, enter the user's email in 
 
 You will see the list of NFTs owned by the user along with the NFT name, description, image, and token id.
 
-**Note:** In case you don't have the NFTs, UI will show an error.
+**Note:** In case you don't have any NFTs, UI will show an error.
 
 #### Gasless P2P NFT Transfer
 
