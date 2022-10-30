@@ -14,8 +14,8 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<TransferNFT sdk={sdk} />} />
-          <Route path="/nftList" element={<ListNFT sdk={sdk} />} />
+          <Route path="/transferNft" element={<TransferNFT sdk={sdk} />} />
+          <Route path="/" element={<ListNFT sdk={sdk} />} />
         </Routes>
       </Router>
     </div>
