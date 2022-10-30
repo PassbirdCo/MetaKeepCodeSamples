@@ -25,11 +25,6 @@ const Navbar = () => {
                 Get NFT List<span className="sr-only"></span>
               </Link>
             </li>
-            <li className="nav-item active">
-              <Link className="nav-link" to="/transferNft">
-                Transfer NFT<span className="sr-only"></span>
-              </Link>
-            </li>
           </ul>
         </div>
       </nav>
