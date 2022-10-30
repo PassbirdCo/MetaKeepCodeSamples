@@ -5,7 +5,7 @@ import getNftTransferConsentToken from "../../utils/nftUtils";
 
 export const ListNFT = ({ sdk }) => {
   const [email, setEmail] = useState("");
-  const [result, setResult] = useState(null);
+  const [nftList, setNftList] = useState(null);
   const [transactionStatus, setTransactionStatus] = useState(null);
 
   let handleSubmit = async (e) => {
@@ -26,7 +26,7 @@ export const ListNFT = ({ sdk }) => {
       ) {
         alert("No NFTs found for this email");
       }
-      setResult(getNftTokenListResponse);
+      setNftList(getNftTokenListResponse);
     } catch (error) {
       alert(
         "Error fetching the Nft Token List: " +
@@ -69,135 +69,148 @@ export const ListNFT = ({ sdk }) => {
     }
   };
 
-  return !result ? (
-    <div className="listNFT">
-      <h2
-        style={{
-          textAlign: "center",
-        }}
-      >
-        Login by Entering your Email
-      </h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          id="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required={true}
-          style={{
-            width: "300px",
-            height: "30px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-            padding: "0 10px",
-            margin: "10px 0",
-          }}
-        />
-        <button
-          type="submit"
-          style={{
-            width: "200px",
-            height: "30px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-            padding: "0 10px",
-            margin: "10px 0",
-            backgroundColor: "black",
-            color: "white",
-            cursor: "pointer",
-          }}
-        >
-          List NFT
-        </button>
-      </form>
-    </div>
-  ) : !transactionStatus ? (
-    <div>
+  if (!nftList) {
+    return (
       <div className="listNFT">
-        <h1
+        <h2
           style={{
             textAlign: "center",
-            color: "black",
-            fontSize: "30px",
-            fontWeight: "bold",
-            marginBottom: "20px",
           }}
         >
-          Nfts You Own
-        </h1>
-        {result.tokens.map((nftToken) => (
-          <Card
+          Login by Entering your Email
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            id="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required={true}
             style={{
-              width: "18rem",
-              margin: "10px",
-              display: "inline-block",
+              width: "300px",
+              height: "30px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              padding: "0 10px",
+              margin: "10px 0",
+            }}
+          />
+          <button
+            type="submit"
+            style={{
+              width: "200px",
+              height: "30px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              padding: "0 10px",
+              margin: "10px 0",
+              backgroundColor: "black",
+              color: "white",
+              cursor: "pointer",
             }}
           >
-            <Card.Body>
-              <Card.Title>{nftToken.token}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
-                {nftToken.metadata ? nftToken.metadata.name : "Undefined"}
-              </Card.Subtitle>
-              <Card.Img
-                variant="top"
-                src={nftToken.metadata ? nftToken.metadata.image : "Undefined"}
-                style={{ width: "250px", height: "200px" }}
-              />
-              <Card.Text>
-                {nftToken.metadata
-                  ? nftToken.metadata.description
-                  : "No Description Found"}
-              </Card.Text>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleTransfer(nftToken.token, e.target.elements["to"].value);
-                }}
-              >
-                <input type="text" id="to" placeholder="To" required={true} />
-                <button
-                  style={{
-                    margin: "10px",
-                    display: "inline-block",
-                    width: "100px",
-                    height: "30px",
-                    backgroundColor: "black",
-                    color: "white",
-                    borderRadius: "5px",
-                  }}
-                  type="submit"
-                >
-                  Transfer
-                </button>
-              </form>
-              <Card.Link href="#">
-                {nftToken.metadata
-                  ? nftToken.metadata.external_url
-                  : "https://metakeep.xyz"}
-              </Card.Link>
-            </Card.Body>
-          </Card>
-        ))}
+            List NFT
+          </button>
+        </form>
       </div>
-      <button
-        style={{
-          margin: "10px",
-          display: "inline-block",
-          width: "100px",
-          height: "50px",
-          fontSize: "20px",
-          backgroundColor: "white",
-          border: "1px solid black",
-          borderRadius: "5px",
-        }}
-        onClick={() => setResult(null)}
-      >
-        Back
-      </button>
-    </div>
-  ) : (
+    );
+  }
+
+  if (!transactionStatus) {
+    return (
+      <div>
+        <div className="listNFT">
+          <h1
+            style={{
+              textAlign: "center",
+              color: "black",
+              fontSize: "30px",
+              fontWeight: "bold",
+              marginBottom: "20px",
+            }}
+          >
+            Nfts You Own
+          </h1>
+          {nftList.tokens.map((nftToken) => (
+            <Card
+              style={{
+                width: "18rem",
+                margin: "10px",
+                display: "inline-block",
+              }}
+            >
+              <Card.Body>
+                <Card.Title>{nftToken.token}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  {nftToken.metadata ? nftToken.metadata.name : "Undefined"}
+                </Card.Subtitle>
+                <Card.Img
+                  variant="top"
+                  src={
+                    nftToken.metadata ? nftToken.metadata.image : "Undefined"
+                  }
+                  style={{ width: "250px", height: "200px" }}
+                />
+                <Card.Text>
+                  {nftToken.metadata
+                    ? nftToken.metadata.description
+                    : "No Description Found"}
+                </Card.Text>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleTransfer(
+                      nftToken.token,
+                      e.target.elements["to"].value
+                    );
+                  }}
+                >
+                  <input type="text" id="to" placeholder="To" required={true} />
+                  <button
+                    style={{
+                      margin: "10px",
+                      display: "inline-block",
+                      width: "100px",
+                      height: "30px",
+                      backgroundColor: "black",
+                      color: "white",
+                      borderRadius: "5px",
+                    }}
+                    type="submit"
+                  >
+                    Transfer
+                  </button>
+                </form>
+                <Card.Link href="#">
+                  {nftToken.metadata
+                    ? nftToken.metadata.external_url
+                    : "https://metakeep.xyz"}
+                </Card.Link>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
+        <button
+          style={{
+            margin: "10px",
+            display: "inline-block",
+            width: "100px",
+            height: "50px",
+            fontSize: "20px",
+            backgroundColor: "white",
+            border: "1px solid black",
+            borderRadius: "5px",
+          }}
+          onClick={() => setNftList(null)}
+        >
+          Back
+        </button>
+      </div>
+    );
+  }
+
+  return (
     <div className="container">
       <div className="row">
         <div className="col-sm-6">

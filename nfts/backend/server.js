@@ -48,7 +48,7 @@ app.post("/getNftTokenList", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`NFT transfer/List server listening at http://localhost:${port}`);
+  console.log(`NFT transfer/list server listening at http://localhost:${port}`);
 });
 
 // Utility function to transfer NFT
