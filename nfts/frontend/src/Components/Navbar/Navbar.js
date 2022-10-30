@@ -22,7 +22,7 @@ const Navbar = () => {
           <ul className="navbar-nav">
             <li className="nav-item active">
               <Link className="nav-link" to="/">
-                Transfer NFT<span className="sr-only"></span>
+                Get NFT List<span className="sr-only"></span>
               </Link>
             </li>
           </ul>

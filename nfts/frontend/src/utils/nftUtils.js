@@ -35,3 +35,32 @@ export default async function getNftTransferConsentToken(
   console.log("\n");
   return resultJson;
 }
+
+export const getNftTokenList = async (email) => {
+  console.log("Getting NFT tokens list from backend...");
+  const url = "http://localhost:3001/getNftTokenList";
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "Access-Control-Allow-Origin": "*",
+  };
+  const requestBody = {
+    of: {
+      email: email,
+    },
+  };
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+  console.log("getNftTokensList response: ");
+  console.log(resultJson);
+  if (!result.ok) {
+    console.log("Error getting NFT tokens list");
+  }
+  console.log("\n");
+  return resultJson;
+};
