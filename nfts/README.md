@@ -1,4 +1,4 @@
-## NFT - Collection Creation, Token Mint, And P2P Transfer End to End Tutorial.
+## NFT - Collection Creation, Token Mint, And P2P Transfer End-to-End Tutorial.
 
 This directory contains a sample project that you can use as a starting point for using the NFT Rest APIs by MetaKeep.
 
@@ -9,8 +9,8 @@ This Project is intended to be used with the [NFT Deployment and Token Mint Tuto
 The project is organized as follows:
 
 - [scripts](./scripts): Contains the scripts to deploy a new NFT collection, mint tokens, lock and unlock tokens.
-- [backend](./backend): Contains the backend code for server to list NFTs and Transfer Tokens.
-- [frontend](./frontend): Contains the frontend code for the NFT Token List and P2P NFT transfer.
+- [backend](./backend): Contains the backend code to list NFTs and P2P Transfer.
+- [frontend](./frontend): Contains the frontend code to show NFTs and P2P transfer.
 
 ## Quick start
 
@@ -22,7 +22,7 @@ git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 
 ### Create a new NFT collection and mint tokens
 
-Go to the repository's `nfts/scripts` folder and run this to create a NFT collection and mint token:
+Go to the repository's `nfts/scripts` folder and run this to create an NFT collection and mint token:
 
 ```sh
 npm install
@@ -39,23 +39,11 @@ After minting a new token, you can `Lock` and `Unlock` token by running the foll
 npm run lockUnlockToken
 ```
 
-### Get the List of your NFT tokens
+### Start backend and frontend server
 
-Once you have minted the tokens to your wallet or the developer wallet, you follow the given steps below to get the complete list of NFTs you own.
+Now we will start the backend and frontend servers to list the NFTs and transfer them.
 
-Step 1 : Start the Backend Server by running `npm run start` in `nfts/backend` directory.
-
-Step 2 : Open a new terminal window, and go to `nfts/frontend` directory, and run `npm run start`.
-
-Step 3 : Once the webpage is open in your browser, Enter your email Id in the form and click `List NFT`. It will show a complete list of your NFTs.
-
-**_Note : _** In case you dont have the NFTs, it will alert with error, `No NFTs found for this email`.
-
-### P2P NFT Transfer
-
-**Note**: Ensure that you have created the collection and minted the token that you want to transfer by following the [steps above](#create-a-new-nft-collection-and-mint-tokens).
-
-First start the backend server to generate the consent token. Go to the repository's `nfts/backend` folder and run:
+First, start the backend server to generate the consent token. Go to the repository's `nfts/backend` folder and run:
 
 ```sh
 npm install
@@ -71,7 +59,22 @@ npm install
 npm run start
 ```
 
-This will open the frontend application on the default browser of your system. Enter the email associated with your wallet. A consent token will be generated and the frontend will ask the user for the approval to transfer the token. Once the user approves the transfer, the token will be transferred to the `to email id`.
+This will open the frontend application on the default browser of your system.
+
+**Note**: Before proceeding, ensure that you have created the collection and minted the token that you want to transfer by following the [steps above](#create-a-new-nft-collection-and-mint-tokens).
+
+#### Get the List of your NFT tokens.
+
+Once you have minted the tokens to the user's wallet, enter the user's email in the frontend application and click `List NFT`.
+
+You will see the list of NFTs owned by the user along with the NFT name, description, image, and token id.
+
+**Note:** In case you don't have the NFTs, UI will show an error.
+
+#### Gasless P2P NFT Transfer
+
+In the list of NFTs, enter the email of the user to whom you want to transfer the NFT and click `Transfer`.
+A consent token will be generated and the front end will ask the user for approval to transfer the token. Once the user approves the transfer, the token will be transferred to the new `email`.
 
 For details about the consent token, refer to [Get Consent](https://docs.metakeep.xyz/reference/get-consent) guide.
 
