@@ -47,9 +47,7 @@ Step 1 : Start the Backend Server by running `npm run start` in `nfts/backend` d
 
 Step 2 : Open a new terminal window, and go to `nfts/frontend` directory, and run `npm run start`.
 
-Step 3 : Once the webpage is open in your browser, you can click on the `Get NFT List`.
-
-Step 4 : Enter your email Id in the form and click `List NFT`. It will show a complete list of your NFTs.
+Step 3 : Once the webpage is open in your browser, Enter your email Id in the form and click `List NFT`. It will show a complete list of your NFTs.
 
 **_Note : _** In case you dont have the NFTs, it will alert with error, `No NFTs found for this email`.
 
