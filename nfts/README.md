@@ -9,8 +9,8 @@ This Project is intended to be used with the [NFT Deployment and Token Mint Tuto
 The project is organized as follows:
 
 - [scripts](./scripts): Contains the scripts to deploy a new NFT collection, mint tokens, lock and unlock tokens.
-- [backend](./backend): Contains the backend code for server to generate consent token for P2P NFT transfer.
-- [frontend](./frontend): Contains the frontend code and server for the P2P NFT transfer.
+- [backend](./backend): Contains the backend code for server to list NFTs and Transfer Tokens.
+- [frontend](./frontend): Contains the frontend code for the NFT Token List and P2P NFT transfer.
 
 ## Quick start
 
@@ -39,7 +39,7 @@ After minting a new token, you can `Lock` and `Unlock` token by running the foll
 npm run lockUnlockToken
 ```
 
-### Get the List of your NFT tokens.
+### Get the List of your NFT tokens
 
 Once you have minted the tokens to your wallet or the developer wallet, you follow the given steps below to get the complete list of NFTs you own.
 
@@ -51,7 +51,7 @@ Step 3 : Once the webpage is open in your browser, you can click on the `Get NFT
 
 Step 4 : Enter your email Id in the form and click `List NFT`. It will show a complete list of your NFTs.
 
-**_Note : _** In case you dont have the NFTs, it will revert with error, No NFTs found for this email.
+**_Note : _** In case you dont have the NFTs, it will alert with error, `No NFTs found for this email`.
 
 ### P2P NFT Transfer
 
