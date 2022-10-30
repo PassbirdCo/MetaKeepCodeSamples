@@ -73,7 +73,7 @@ npm install
 npm run start
 ```
 
-This will open the frontend application on the default browser of your system. Enter the `Token ID`, `From email`, and `To email`. A consent token will be generated and the frontend will ask the user for the approval to transfer the token. Once the user approves the transfer, the token will be transferred to the `to email id`.
+This will open the frontend application on the default browser of your system. Enter the email associated with your wallet. A consent token will be generated and the frontend will ask the user for the approval to transfer the token. Once the user approves the transfer, the token will be transferred to the `to email id`.
 
 For details about the consent token, refer to [Get Consent](https://docs.metakeep.xyz/reference/get-consent) guide.
 
