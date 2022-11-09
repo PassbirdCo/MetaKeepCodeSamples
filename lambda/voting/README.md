@@ -70,6 +70,16 @@ npm run start
 
 The demo application allows you to register and vote for the candidate.
 
+# Get Candidate Details
+
+Once the user is registered as a candidate, you can click on the `Vote Candidate`. This will open a new page.
+
+Enter the Email ID of the registered Candidate
+
+Click Submit. Once you click on Submit, the candidate's wallet Address and total number of votes will be displayed.
+
+**Note:** In case of non registered Candidate, the UI will show an error.
+
 ## User Guide
 
 You can find detailed instructions on using this repository and many tips in [its documentation](https://docs.metakeep.xyz/reference/lambda-101).
