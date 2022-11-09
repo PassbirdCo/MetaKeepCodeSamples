@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 //Helper functions for the MetaKeep APIs
 
 // Creates a Lambda.
@@ -62,6 +63,42 @@ export const invoke = async (functionName, functionArgs, reason) => {
       args: functionArgs,
     },
     reason: reason,
+  };
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+
+  console.log(resultJson);
+
+  if (!result.ok) {
+    throw new Error(
+      "Error while invoking method. HTTP status code: " + result.status
+    );
+  }
+  return resultJson;
+};
+
+// Invokes the lambda function.
+export const read = async (functionName, functionArgs) => {
+  const url = "https://api.metakeep.xyz/v2/app/lambda/read";
+
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-api-key": process.env.API_KEY,
+    "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
+  };
+  const requestBody = {
+    lambda: process.env.LAMBDA_ADDRESS,
+    function: {
+      name: functionName,
+      args: functionArgs,
+    },
   };
   const options = {
     method: "POST",
