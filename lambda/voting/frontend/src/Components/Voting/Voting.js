@@ -60,6 +60,13 @@ export const Voting = ({ sdk }) => {
       setLoading(true);
       const getCandidateDetailsResponse = await getCandidature(voterId);
       setLoading(false);
+      if (getCandidateDetailsResponse.status === "FUNCTION_FAILURE") {
+        alert(
+          "Error getting candidate details: " +
+            getCandidateDetailsResponse.failure_reason
+        );
+        return;
+      }
       if (getCandidateDetailsResponse.status !== "SUCCESS") {
         alert(
           "Error getting candidate details: " +
@@ -90,7 +97,7 @@ export const Voting = ({ sdk }) => {
               onChange={(e) => setVoterId(e.target.value)}
             />
           </label>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Get Candidate" />
         </form>
       </div>
     );
@@ -124,7 +131,7 @@ export const Voting = ({ sdk }) => {
               onChange={(e) => setAsEmail(e.target.value)}
             />
           </label>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Vote" />
         </form>
       </div>
     );

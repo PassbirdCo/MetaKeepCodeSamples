@@ -141,11 +141,10 @@ async function voteForCandidate(candidateEmail, asEmail) {
   return outcome;
 }
 
-// Utility function to vote for candidate using Lambda Invocation consent token.
-
+// Utility function to get candidate using Lambda Read API.
 async function getCandidateDetails(candidateEmail) {
   console.log("Getting the details for the candidate ...");
-  /* since the voteForCandidate Method takes the Candidate ID as an argument 
+  /* since the getCandidate Method takes the Candidate ID as an argument 
   which is the hash of the candidate's ethereum address, 
   we need to get the wallet associated with the candidateEmail 
   and then hash it to get the candidate ID */
