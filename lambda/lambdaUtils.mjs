@@ -1,7 +1,5 @@
 //Helper functions for the MetaKeep APIs
 
-import fetch from "node-fetch";
-
 // Creates a Lambda.
 export const create = async (args, abi, bytecode) => {
   const url = "https://api.metakeep.xyz/v2/app/lambda/create";

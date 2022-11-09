@@ -8,6 +8,7 @@ import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
   REGISTRATION_FUNCTION_NAME,
   VOTING_FUNCTION_NAME,
+  GET_CANDIDATE_FUNCTION_NAME,
 } from "./constants.js";
 
 const app = express();
@@ -60,6 +61,21 @@ app.post("/registerCandidature", async (req, res) => {
 
   try {
     const result = await registerCandidate(req.body.candidateEmail, "voting");
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({
+      error: error.message ? error.message : JSON.stringify(error),
+    });
+  }
+});
+
+/* ************************************************************************* Register Candidate API Endpoint ************************************************************************* */
+
+app.post("/getCandidature", async (req, res) => {
+  console.log("getCandidature");
+
+  try {
+    const result = await getCandidateDetails(req.body.candidateEmail);
     res.send(result);
   } catch (error) {
     res.status(500).send({
@@ -125,10 +141,63 @@ async function voteForCandidate(candidateEmail, asEmail) {
   return outcome;
 }
 
+// Utility function to vote for candidate using Lambda Invocation consent token.
+
+async function getCandidateDetails(candidateEmail) {
+  console.log("Getting the details for the candidate ...");
+  /* since the voteForCandidate Method takes the Candidate ID as an argument 
+  which is the hash of the candidate's ethereum address, 
+  we need to get the wallet associated with the candidateEmail 
+  and then hash it to get the candidate ID */
+
+  const candidateWallet = await getUserWallet(candidateEmail);
+  const candidateId = solidityKeccak256(["address"], [candidateWallet]);
+
+  const requestBody = {
+    function: {
+      name: GET_CANDIDATE_FUNCTION_NAME,
+      args: [candidateId],
+    },
+    lambda: process.env.VOTING_LAMBDA_ADDRESS,
+  };
+
+  const outcome = await readLambdaFunction(requestBody);
+  return outcome;
+}
+
 // Utility function to invoke Lambda Function through MetaKeep Lambda Invocation API.
 
 async function invokeLambdaFunction(requestBody) {
   const url = "https://api.metakeep.xyz/v2/app/lambda/invoke/";
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "x-api-key": process.env.API_KEY,
+    "Idempotency-Key": "Idempotency-Key" + Math.random().toString(),
+  };
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+  console.log("Lambda Invocation response: ");
+  console.log(resultJson);
+  if (!result.ok) {
+    console.log(
+      "Error invoking Lambda Function. HTTP status code: " + result.status
+    );
+  }
+  console.log("\n");
+  return resultJson;
+}
+
+// Utility function to read from Lambda Function through MetaKeep Lambda Read API.
+
+async function readLambdaFunction(requestBody) {
+  const url = "https://api.metakeep.xyz/v2/app/lambda/read/";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
