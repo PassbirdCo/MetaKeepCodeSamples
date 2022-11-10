@@ -107,7 +107,18 @@ export const Voting = ({ sdk }) => {
     return (
       <div className="voting">
         <h1>Vote Candidature</h1>
-        <div className="Card">
+        <div className="Row" style={
+          {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            marginBottom: "20px"
+          }
+        }>
+          <div className="Column">
+            <div className="Card">
           <div className="CardHeader">
             <h2>Candidate Details</h2>
           </div>
@@ -122,6 +133,8 @@ export const Voting = ({ sdk }) => {
             </div>
           </div>
         </div>
+          </div>
+          <div className="Column">
         <form onSubmit={handleSubmit}>
           <label>
             Voter Email:
@@ -133,6 +146,8 @@ export const Voting = ({ sdk }) => {
           </label>
           <input type="submit" value="Vote" />
         </form>
+      </div>
+      </div>
       </div>
     );
   }
