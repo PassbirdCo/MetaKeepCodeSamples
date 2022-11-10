@@ -63,7 +63,7 @@ export const Voting = ({ sdk }) => {
       if (getCandidateDetailsResponse.status === "FUNCTION_FAILURE") {
         alert(
           "Error getting candidate details: " +
-            getCandidateDetailsResponse.failure_reason
+            getCandidateDetailsResponse.failureReason
         );
         return;
       }
