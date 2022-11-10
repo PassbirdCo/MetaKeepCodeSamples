@@ -1,5 +1,6 @@
-import fetch from "node-fetch";
 //Helper functions for the MetaKeep APIs
+
+import fetch from "node-fetch";
 
 // Creates a Lambda.
 export const create = async (args, abi, bytecode) => {
