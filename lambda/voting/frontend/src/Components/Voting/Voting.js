@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import getLambdaVotingConsentToken from "../../utils/lambdaInvokeUtils";
+import getLambdaVotingConsentToken, {
+  getCandidature,
+} from "../../utils/lambdaInvokeUtils";
 import "./Voting.css";
 
 export const Voting = ({ sdk }) => {
   const [voterId, setVoterId] = useState("");
   const [asEmail, setAsEmail] = useState("");
   const [result, setResult] = useState("");
+  const [candidateDetails, setCandidateDetails] = useState("");
   const [loading, setLoading] = useState(false);
 
   let handleSubmit = async (event) => {
@@ -51,46 +54,140 @@ export const Voting = ({ sdk }) => {
     }
   };
 
-  return !result ? (
-    <div className="voting">
-      <h1>Vote for Your Favourite Candidate!</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="voterId">Candidate Email Id</label>
-          <input
-            type="text"
-            className="form-control"
-            id="voterId"
-            placeholder="Enter Voter Email"
-            value={voterId}
-            onChange={(e) => setVoterId(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="asEmail">Your Email</label>
-          <input
-            type="text"
-            className="form-control"
-            id="asEmail"
-            placeholder="Enter Your Email"
-            value={asEmail}
-            onChange={(e) => setAsEmail(e.target.value)}
-          />
-        </div>
-        {loading === true ? (
+  let getCandidateDetails = async (event) => {
+    event.preventDefault();
+    try {
+      setLoading(true);
+      const getCandidateDetailsResponse = await getCandidature(voterId);
+      setLoading(false);
+      if (getCandidateDetailsResponse.status === "FUNCTION_FAILURE") {
+        alert(
+          "Error getting candidate details: " +
+            getCandidateDetailsResponse.failureReason
+        );
+        return;
+      }
+      if (getCandidateDetailsResponse.status !== "SUCCESS") {
+        alert(
+          "Error getting candidate details: " +
+            JSON.stringify(getCandidateDetailsResponse)
+        );
+        return;
+      }
+      setCandidateDetails(getCandidateDetailsResponse);
+    } catch (error) {
+      setLoading(false);
+      alert(
+        "Error getting Candidate Details:" +
+          (error.message ? error.message : JSON.stringify(error))
+      );
+    }
+  };
+
+  if (!candidateDetails) {
+    return loading === false ? (
+      <div className="voting">
+        <h1>Vote Candidature</h1>
+        <form onSubmit={getCandidateDetails}>
+          <label>
+            Candidate Email:
+            <input
+              type="text"
+              value={voterId}
+              onChange={(e) => setVoterId(e.target.value)}
+            />
+          </label>
+          <input type="submit" value="Get Candidate" />
+        </form>
+      </div>
+    ) : (
+      <div
+        className="spinner-border text-primary"
+        id="loader"
+        role="status"
+      ></div>
+    );
+  }
+
+  if (!result) {
+    return (
+      <div className="voting">
+        <h1>Vote Candidature</h1>
+        <div
+          className="Row"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            marginBottom: "20px",
+          }}
+        >
+          <div className="Column">
+            <div className="Card">
+              <div className="CardHeader">
+                <h3>Candidate Details</h3>
+              </div>
+              <div className="CardBody">
+                <div className="CardRow">
+                  <div
+                    className="CardRowLabel"
+                    style={{
+                      textEmphasis: "bold",
+                    }}
+                  >
+                    Candidate Wallet Address:
+                  </div>
+                  <div className="CardRowValue">{candidateDetails.data[0]}</div>
+                </div>
+                <div className="CardRow">
+                  <div
+                    className="CardRowLabel"
+                    style={{
+                      textEmphasis: "bold",
+                    }}
+                  >
+                    Candidate Total Votes:
+                  </div>
+                  <div className="CardRowValue">{candidateDetails.data[1]}</div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div
-            className="spinner-border text-primary"
-            id="loader"
-            role="status"
-          ></div>
-        ) : (
-          <button type="submit" className="btn btn-primary" id="voteButton">
-            Vote
-          </button>
-        )}
-      </form>
-    </div>
-  ) : (
+            className="Column"
+            style={{
+              marginLeft: "50px",
+            }}
+          >
+            <form onSubmit={handleSubmit}>
+              <label>
+                <h4 style={{ align: "center" }}>Voter Email</h4>
+                <input
+                  style={{ width: "300px" }}
+                  type="text"
+                  value={asEmail}
+                  onChange={(e) => setAsEmail(e.target.value)}
+                />
+              </label>
+              {loading === false ? (
+                <input type="submit" value="Vote" />
+              ) : (
+                <div
+                  className="spinner-border text-primary"
+                  id="loader"
+                  role="status"
+                ></div>
+              )}
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
     <div className="container">
       <div className="row">
         <div className="col-sm-6">
@@ -126,6 +223,26 @@ export const Voting = ({ sdk }) => {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <button
+          style={{
+            margin: "10px",
+            display: "inline-block",
+            width: "100px",
+            height: "50px",
+            fontSize: "20px",
+            backgroundColor: "white",
+            border: "1px solid black",
+            borderRadius: "5px",
+          }}
+          onClick={() => {
+            setResult(null);
+            setCandidateDetails(null);
+          }}
+        >
+          Back
+        </button>
       </div>
     </div>
   );
