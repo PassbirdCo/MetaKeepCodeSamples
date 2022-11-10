@@ -107,47 +107,62 @@ export const Voting = ({ sdk }) => {
     return (
       <div className="voting">
         <h1>Vote Candidature</h1>
-        <div className="Row" style={
-          {
+        <div
+          className="Row"
+          style={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            marginBottom: "20px"
-          }
-        }>
+            marginBottom: "20px",
+          }}
+        >
           <div className="Column">
             <div className="Card">
-          <div className="CardHeader">
-            <h2>Candidate Details</h2>
-          </div>
-          <div className="CardBody">
-            <div className="CardRow">
-              <div className="CardRowLabel">Candidate Wallet Address:</div>
-              <div className="CardRowValue">{candidateDetails.data[0]}</div>
+              <div className="CardHeader">
+                <h3>Candidate Details</h3>
+              </div>
+              <div className="CardBody">
+                <div className="CardRow">
+                  <div
+                    className="CardRowLabel"
+                    style={{
+                      textEmphasis: "bold",
+                    }}
+                  >
+                    Candidate Wallet Address:
+                  </div>
+                  <div className="CardRowValue">{candidateDetails.data[0]}</div>
+                </div>
+                <div className="CardRow">
+                  <div
+                    className="CardRowLabel"
+                    style={{
+                      textEmphasis: "bold",
+                    }}
+                  >
+                    Candidate Total Votes:
+                  </div>
+                  <div className="CardRowValue">{candidateDetails.data[1]}</div>
+                </div>
+              </div>
             </div>
-            <div className="CardRow">
-              <div className="CardRowLabel">Candidate Total Votes:</div>
-              <div className="CardRowValue">{candidateDetails.data[1]}</div>
-            </div>
-          </div>
-        </div>
           </div>
           <div className="Column">
-        <form onSubmit={handleSubmit}>
-          <label>
-            Voter Email:
-            <input
-              type="text"
-              value={asEmail}
-              onChange={(e) => setAsEmail(e.target.value)}
-            />
-          </label>
-          <input type="submit" value="Vote" />
-        </form>
-      </div>
-      </div>
+            <form onSubmit={handleSubmit}>
+              <label>
+                <h3>Voter Email:</h3>
+                <input
+                  type="text"
+                  value={asEmail}
+                  onChange={(e) => setAsEmail(e.target.value)}
+                />
+              </label>
+              <input type="submit" value="Vote" />
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
