@@ -110,7 +110,7 @@ export const Voting = ({ sdk }) => {
   }
 
   if (!result) {
-    return loading === false ? (
+    return (
       <div className="voting">
         <h1>Vote Candidature</h1>
         <div
@@ -171,17 +171,19 @@ export const Voting = ({ sdk }) => {
                   onChange={(e) => setAsEmail(e.target.value)}
                 />
               </label>
-              <input type="submit" value="Vote" />
+              {loading === false ? (
+                <input type="submit" value="Vote" />
+              ) : (
+                <div
+                  className="spinner-border text-primary"
+                  id="loader"
+                  role="status"
+                ></div>
+              )}
             </form>
           </div>
         </div>
       </div>
-    ) : (
-      <div
-        className="spinner-border text-primary"
-        id="loader"
-        role="status"
-      ></div>
     );
   }
 
