@@ -85,7 +85,7 @@ export const Voting = ({ sdk }) => {
   };
 
   if (!candidateDetails) {
-    return (
+    return loading === false ? (
       <div className="voting">
         <h1>Vote Candidature</h1>
         <form onSubmit={getCandidateDetails}>
@@ -100,11 +100,17 @@ export const Voting = ({ sdk }) => {
           <input type="submit" value="Get Candidate" />
         </form>
       </div>
+    ) : (
+      <div
+        className="spinner-border text-primary"
+        id="loader"
+        role="status"
+      ></div>
     );
   }
 
   if (!result) {
-    return (
+    return loading === false ? (
       <div className="voting">
         <h1>Vote Candidature</h1>
         <div
@@ -149,11 +155,17 @@ export const Voting = ({ sdk }) => {
               </div>
             </div>
           </div>
-          <div className="Column">
+          <div
+            className="Column"
+            style={{
+              marginLeft: "50px",
+            }}
+          >
             <form onSubmit={handleSubmit}>
               <label>
-                <h3>Voter Email:</h3>
+                <h4 style={{ align: "center" }}>Voter Email</h4>
                 <input
+                  style={{ width: "300px" }}
                   type="text"
                   value={asEmail}
                   onChange={(e) => setAsEmail(e.target.value)}
@@ -164,6 +176,12 @@ export const Voting = ({ sdk }) => {
           </div>
         </div>
       </div>
+    ) : (
+      <div
+        className="spinner-border text-primary"
+        id="loader"
+        role="status"
+      ></div>
     );
   }
 
