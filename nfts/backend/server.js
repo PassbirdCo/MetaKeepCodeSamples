@@ -103,7 +103,7 @@ async function getNftTokenList(email) {
 
   const requestBody = {
     nft: {
-      collection: process.env.COLLECTION,
+      collections: [process.env.COLLECTION],
     },
     of: {
       email: email,

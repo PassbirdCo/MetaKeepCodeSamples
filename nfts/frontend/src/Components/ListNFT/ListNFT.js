@@ -22,7 +22,7 @@ export const ListNFT = ({ sdk }) => {
       }
       if (
         getNftTokenListResponse.status === "SUCCESS" &&
-        getNftTokenListResponse.tokens.length === 0
+        getNftTokenListResponse.totalCount === "0"
       ) {
         alert("No NFTs found for this email");
       }
@@ -143,18 +143,22 @@ export const ListNFT = ({ sdk }) => {
               <Card.Body>
                 <Card.Title>{nftToken.token}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
-                  {nftToken.metadata ? nftToken.metadata.name : "Undefined"}
+                  {nftToken.tokenMetadata
+                    ? nftToken.tokenMetadata.name
+                    : "Undefined"}
                 </Card.Subtitle>
                 <Card.Img
                   variant="top"
                   src={
-                    nftToken.metadata ? nftToken.metadata.image : "Undefined"
+                    nftToken.tokenMetadata
+                      ? nftToken.tokenMetadata.image
+                      : "Undefined"
                   }
                   style={{ width: "250px", height: "200px" }}
                 />
                 <Card.Text>
-                  {nftToken.metadata
-                    ? nftToken.metadata.description
+                  {nftToken.tokenMetadata
+                    ? nftToken.tokenMetadata.description
                     : "No Description Found"}
                 </Card.Text>
                 <form
@@ -183,8 +187,8 @@ export const ListNFT = ({ sdk }) => {
                   </button>
                 </form>
                 <Card.Link href="#">
-                  {nftToken.metadata
-                    ? nftToken.metadata.external_url
+                  {nftToken.tokenMetadata
+                    ? nftToken.tokenMetadata.external_url
                     : "https://metakeep.xyz"}
                 </Card.Link>
               </Card.Body>
