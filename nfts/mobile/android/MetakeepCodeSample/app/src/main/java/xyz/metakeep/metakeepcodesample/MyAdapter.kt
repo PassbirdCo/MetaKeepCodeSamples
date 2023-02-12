@@ -28,7 +28,7 @@ class MyAdapter(private val nftList: ArrayList<Nfts>): RecyclerView.Adapter<MyAd
         Glide.with(holder.itemView.context).load(metadata.getString("image")).into(holder.titleImage)
         holder.button.setOnClickListener {
             val intent = Intent(holder.itemView.context, CallSdkActivity::class.java)
-            intent.putExtra("from_email", currentItem.nftOwner)
+            intent.putExtra("fromEmail", currentItem.nftOwner)
             intent.putExtra("nftTitle", currentItem.nftTitle)
             intent.putExtra("metadata", currentItem.metadata.toString())
             holder.itemView.context.startActivity(intent)

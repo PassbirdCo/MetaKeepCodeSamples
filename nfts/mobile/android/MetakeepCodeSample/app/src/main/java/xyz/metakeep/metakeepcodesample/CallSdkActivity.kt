@@ -62,7 +62,7 @@ class CallSdkActivity : AppCompatActivity() {
         val client = OkHttpClient()
 
         val requestBody = """
-    {"token": "$tokenId", "to": {"email": "$email"}, "from": {"email": "${intent.getStringExtra("from_email")}"}}
+    {"token": "$tokenId", "to": {"email": "$email"}, "from": {"email": "${intent.getStringExtra("fromEmail")}"}}
 """.trimIndent().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
 
         val request = Request.Builder()
