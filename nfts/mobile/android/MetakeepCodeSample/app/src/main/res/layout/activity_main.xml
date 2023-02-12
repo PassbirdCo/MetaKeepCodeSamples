@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MetaKeep"
+        android:textSize="75dp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:layout_marginBottom="200px"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get NFT of the user"
+        android:textColor="@color/black"
+        android:textSize="100px"
+        android:layout_gravity="center"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginBottom="100px"
+        />
+    <EditText
+        android:id="@+id/getNft"
+        android:layout_weight="1"
+        android:hint="Enter the Email of the User"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100px"
+        android:inputType="text"
+        android:text="" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/fetchNft"
+        android:layout_width="1000px"
+        android:layout_height="200px"
+        android:layout_margin="10dp"
+        android:shadowColor="@color/black"
+        android:text="Get NFT"
+        android:textColorHighlight="@color/black"
+        android:textSize="10dp" />
+
+
+</LinearLayout>
