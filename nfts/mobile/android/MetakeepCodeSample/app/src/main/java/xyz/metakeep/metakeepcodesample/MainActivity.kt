@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
-import androidx.appcompat.app.AppCompatActivity
-import android.widget.EditText
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -29,11 +29,9 @@ class MainActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             val email = emailEditText.text.toString()
-            if(isValidEmail(email))
-            {
+            if (isValidEmail(email)) {
                 makeApiCall(this@MainActivity, email)
-            }
-            else {
+            } else {
                 Toast.makeText(this, "Invalid Email ID", Toast.LENGTH_SHORT).show()
             }
         }
@@ -48,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         val requestBody = """
     {"of": {"email": "$nftOwner"}}
-""".trimIndent().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        """.trimIndent().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val request = Request.Builder()
             .url("http://10.0.2.2:3001/getNftTokenList")
             .post(requestBody)
@@ -60,10 +58,9 @@ class MainActivity : AppCompatActivity() {
 
                 Log.d("INFO", e.message.toString())
                 runOnUiThread {
-                    Toast.makeText(context, "Error: ${e.message.toString()}", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT)
                         .show()
                 }
-
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -84,10 +81,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
-
     }
     /*
 
      */
-
 }

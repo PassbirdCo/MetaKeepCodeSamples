@@ -11,8 +11,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 import org.json.JSONObject
 
-class MyAdapter(private val nftList: ArrayList<Nfts>): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
-
+class MyAdapter(private val nftList: ArrayList<Nfts>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
@@ -23,7 +22,7 @@ class MyAdapter(private val nftList: ArrayList<Nfts>): RecyclerView.Adapter<MyAd
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = nftList[position]
-        holder.nftTitle.text = currentItem.nftTitle.substring(0,20) + "..."
+        holder.nftTitle.text = currentItem.nftTitle.substring(0, 20) + "..."
         val metadata = currentItem.metadata as JSONObject
         Glide.with(holder.itemView.context).load(metadata.getString("image")).into(holder.titleImage)
         holder.button.setOnClickListener {
@@ -39,17 +38,10 @@ class MyAdapter(private val nftList: ArrayList<Nfts>): RecyclerView.Adapter<MyAd
         return nftList.size
     }
 
-
-
-
-
-    class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var titleImage: ShapeableImageView = itemView.findViewById(R.id.nftImage)
-        var nftTitle: TextView= itemView.findViewById(R.id.nftId)
+        var nftTitle: TextView = itemView.findViewById(R.id.nftId)
         var button: Button = itemView.findViewById(R.id.nftTransfer)
-
     }
-
-
 }

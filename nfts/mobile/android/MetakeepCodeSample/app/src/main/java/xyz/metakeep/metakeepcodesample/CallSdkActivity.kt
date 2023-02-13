@@ -20,10 +20,9 @@ import xyz.metakeep.sdk.Environment
 import xyz.metakeep.sdk.MetaKeep
 import java.io.IOException
 
-
 class CallSdkActivity : AppCompatActivity() {
 
-    private lateinit var metakeepsdk : MetaKeep
+    private lateinit var metakeepsdk: MetaKeep
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,17 +40,15 @@ class CallSdkActivity : AppCompatActivity() {
 
         confirmTransfer.setOnClickListener {
 
-            if(isValidEmail(email.toString())) {
+            if (isValidEmail(email.toString())) {
                 transferNft(
                     email.toString(),
                     intent.getStringExtra("nftTitle").toString()
                 )
-            }
-            else {
+            } else {
                 Toast.makeText(this, "Invalid Reciever Email ID", Toast.LENGTH_SHORT).show()
             }
-            }
-
+        }
     }
 
     private fun isValidEmail(email: String): Boolean {
@@ -63,7 +60,7 @@ class CallSdkActivity : AppCompatActivity() {
 
         val requestBody = """
     {"token": "$tokenId", "to": {"email": "$email"}, "from": {"email": "${intent.getStringExtra("fromEmail")}"}}
-""".trimIndent().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        """.trimIndent().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
 
         val request = Request.Builder()
             .url("http://10.0.2.2:3001/getConsentToken")
@@ -77,8 +74,6 @@ class CallSdkActivity : AppCompatActivity() {
             override fun onFailure(call: Call, e: IOException) {
 
                 Log.d("INFO", e.message.toString())
-
-
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -88,22 +83,20 @@ class CallSdkActivity : AppCompatActivity() {
                     return
                 }
                 val jsonObject = JSONObject(response.body?.string() ?: "{}")
-                if(jsonObject.get("status") == "USER_CONSENT_NEEDED")
-                {
+                if (jsonObject.get("status") == "USER_CONSENT_NEEDED") {
                     metakeepsdk.getConsent(
                         jsonObject.get("consentToken").toString(),
                         xyz.metakeep.sdk.Callback(
-                            onFailure = {finish()},
+                            onFailure = { finish() },
                             onSuccess = {
                                 val intent = Intent(this@CallSdkActivity, MainActivity::class.java)
                                 startActivity(intent)
-                                finish()},
+                                finish()
+                            },
                         ),
                     )
                 }
             }
-
         })
-
     }
 }

@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import org.json.JSONArray
 import org.json.JSONObject
 
-
 class ResultActivity : AppCompatActivity() {
 
-    private lateinit var newRecyclerview : RecyclerView
-    private lateinit var newArrayList : ArrayList<Nfts>
+    private lateinit var newRecyclerview: RecyclerView
+    private lateinit var newArrayList: ArrayList<Nfts>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,20 +22,16 @@ class ResultActivity : AppCompatActivity() {
 
         newArrayList = arrayListOf<Nfts>()
         val result = intent.getStringExtra("result")
-        if(JSONArray(result).length() == 0)
-        {
+        if (JSONArray(result).length() == 0) {
             Toast.makeText(this, "No NFTs Found", Toast.LENGTH_SHORT).show()
             finish()
-        }
-        else {
+        } else {
             getUserData(JSONArray(result))
         }
-
-
     }
 
     private fun getUserData(result: JSONArray) {
-        for(i in 0 until result.length()) {
+        for (i in 0 until result.length()) {
             val nft = result[i] as JSONObject
             val token = Nfts(nft.getString("collection"), nft.getString("token"), nft.getJSONObject("tokenMetadata"), intent.getStringExtra("nftOwner").toString())
             newArrayList.add(token)
@@ -44,5 +39,4 @@ class ResultActivity : AppCompatActivity() {
 
         newRecyclerview.adapter = MyAdapter(newArrayList)
     }
-
 }
