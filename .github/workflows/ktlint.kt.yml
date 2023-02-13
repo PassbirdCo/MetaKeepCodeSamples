@@ -1,0 +1,16 @@
+name: ktlint
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ktlint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Run ktlint
+      working-directory: nfts/mobile/android/MetakeepCodeSample
+      run: ./gradlew ktLintCheck
