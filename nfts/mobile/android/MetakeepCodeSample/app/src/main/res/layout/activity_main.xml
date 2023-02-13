@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MetaKeep"
+        android:text="@string/metakeep"
         android:textSize="75dp"
         android:textColor="@color/black"
         android:layout_gravity="center"
@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get NFT of the user"
+        android:text="@string/get_nft_of_the_user"
         android:textColor="@color/black"
         android:textSize="100px"
         android:layout_gravity="center"
@@ -26,7 +26,8 @@
     <EditText
         android:id="@+id/getNft"
         android:layout_weight="1"
-        android:hint="Enter the Email of the User"
+        android:autofillHints="emailAddress"
+        android:hint="@string/enter_the_user_email"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100px"
@@ -42,7 +43,7 @@
         android:layout_height="200px"
         android:layout_margin="10dp"
         android:shadowColor="@color/black"
-        android:text="Get NFT"
+        android:text="@string/get_nft"
         android:textColorHighlight="@color/black"
         android:textSize="10dp" />
 
