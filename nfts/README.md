@@ -65,6 +65,7 @@ This will open the frontend application on the default browser of your system.
 **Note**: Before proceeding, ensure that you have created the collection and minted the token that you want to transfer by following the [steps above](#create-a-new-nft-collection-and-mint-tokens).
 
 ### Test mobile(Android/iOS) applications
+
 You can now test the mobile applications in the `nfts/mobile` folder. The mobile applications will use the same backend server started in the previous step.
 
 #### Get the List of your NFT tokens.
