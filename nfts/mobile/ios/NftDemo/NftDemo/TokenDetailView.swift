@@ -93,8 +93,8 @@ struct TokenDetailView: View {
                     showToast = true
                     toastMessage = "Invalid Email"
                 }
-                self.transferNft()}) 
-            //swiftlint:disable:next multiple_closures_with_trailing_closure
+                self.transferNft()})
+            // swiftlint:disable:next multiple_closures_with_trailing_closure
             {    Text("Transfer")
             }.padding()
                 .frame(width: 170)
@@ -124,14 +124,12 @@ struct TokenDetailView: View {
         request.httpBody = jsonData
 
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error 
-            {
+            if let error = error {
                 toastMessage = "Error: \(error)"
                 showToast = true
                 return
             }
-            guard let data = data, let httpResponse = response as? HTTPURLResponse else 
-            {
+            guard let data = data, let httpResponse = response as? HTTPURLResponse else {
                 return
             }
 

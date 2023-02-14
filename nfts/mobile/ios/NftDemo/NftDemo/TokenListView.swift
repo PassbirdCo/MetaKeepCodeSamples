@@ -45,7 +45,7 @@ func formatTokenId(tokenID: String) -> String {
     return("\(firstFive)...\(lastFive)")
 }
 struct CardView_Previews: PreviewProvider {
-    //swiftlint:disable:next line_length
+    // swiftlint:disable:next line_length
     static var previews: some View { CardView(token: Token(collection: "0x8adfbd3fb44baafb8e55db0ba4d5811450651b5f", name: "Hello", symbol: "MTKP", token: "48921598017819282871051754605790182343529368677935464088860073070808968327529", tokenMetadata: TokenMetadata(image: "https://cdn.pixabay.com/photo/2022/02/19/17/59/nft-7023209_960_720.jpg") ))
     }
 }

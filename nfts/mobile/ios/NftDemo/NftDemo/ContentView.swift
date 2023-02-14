@@ -60,8 +60,8 @@ struct ContentView: View {
                     } else {
                         showToast = true
                         toastMessage = "Something went wrong"}
-                    }) 
-                //swiftlint:disable:next multiple_closures_with_trailing_closure
+                    })
+                // swiftlint:disable:next multiple_closures_with_trailing_closure
                 { Text("Submit")
                 }.padding()
                     .background(Color(.black))
@@ -90,16 +90,13 @@ struct ContentView: View {
 
         request.httpBody = jsonData
 
-        URLSession.shared.dataTask(with: request) 
-        {   (data, response, error) in
-            if let error = error 
-            {
+        URLSession.shared.dataTask(with: request) {   (data, response, error) in
+            if let error = error {
                 toastMessage = "Error: \(error)"
                 showToast = true
                 return
             }
-            guard let data = data, let httpResponse = response as? HTTPURLResponse else 
-            {
+            guard let data = data, let httpResponse = response as? HTTPURLResponse else {
                 return
             }
 
