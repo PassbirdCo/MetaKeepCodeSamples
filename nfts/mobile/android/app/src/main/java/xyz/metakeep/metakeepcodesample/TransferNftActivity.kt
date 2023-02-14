@@ -14,6 +14,8 @@ import org.json.JSONObject
 import xyz.metakeep.sdk.AppContext
 import xyz.metakeep.sdk.MetaKeep
 import java.io.IOException
+import java.util.*
+import kotlin.concurrent.schedule
 
 class TransferNftActivity : AppCompatActivity() {
 
@@ -90,21 +92,30 @@ class TransferNftActivity : AppCompatActivity() {
                                 Log.e(tag, "Error: $it")
 
                                 Toast.makeText(
-                                    this@TransferNftActivity, "Error: $it", Toast.LENGTH_SHORT
+                                    this@TransferNftActivity, "Error: $it", Toast.LENGTH_LONG
                                 ).show()
                             },
                             onSuccess = {
+                                Log.d(tag, "Success: $it")
+
                                 Toast.makeText(
                                     this@TransferNftActivity,
-                                    "NFT transferred successfully",
-                                    Toast.LENGTH_SHORT
+                                    "NFT transferred successfully. Navigating to home in 3 seconds",
+                                    Toast.LENGTH_LONG
                                 ).show()
 
-                                // Redirect to home page
+                                // Redirect to home page and destroy all activities on the stack
+
                                 val intent =
                                     Intent(this@TransferNftActivity, MainActivity::class.java)
-                                startActivity(intent)
-                                finish()
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+                                // Wait for 3 seconds before redirecting
+                                Timer().schedule(3000) {
+                                    startActivity(intent)
+                                    finish()
+                                }
                             },
                         ),
                     )
