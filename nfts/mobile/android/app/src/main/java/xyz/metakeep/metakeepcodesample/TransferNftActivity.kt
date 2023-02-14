@@ -20,7 +20,7 @@ import xyz.metakeep.sdk.Environment
 import xyz.metakeep.sdk.MetaKeep
 import java.io.IOException
 
-class CallSdkActivity : AppCompatActivity() {
+class TransferNftActivity : AppCompatActivity() {
 
     private lateinit var metakeepsdk: MetaKeep
 
@@ -89,7 +89,7 @@ class CallSdkActivity : AppCompatActivity() {
                         xyz.metakeep.sdk.Callback(
                             onFailure = { finish() },
                             onSuccess = {
-                                val intent = Intent(this@CallSdkActivity, MainActivity::class.java)
+                                val intent = Intent(this@TransferNftActivity, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             },

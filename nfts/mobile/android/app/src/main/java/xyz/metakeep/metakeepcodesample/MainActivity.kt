@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
                 val jsonObject = JSONObject(response.body?.string() ?: "{}")
                 val tokens = jsonObject.get("tokens").toString()
-                val intent = Intent(context, ResultActivity::class.java)
+                val intent = Intent(context, NftListActivity::class.java)
                 intent.putExtra("result", tokens)
                 intent.putExtra("nftOwner", nftOwner)
                 startActivity(intent)

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CallSdkActivity">
+    tools:context=".TransferNftActivity">
 
     <ImageView
         android:id="@+id/iv_card_image"

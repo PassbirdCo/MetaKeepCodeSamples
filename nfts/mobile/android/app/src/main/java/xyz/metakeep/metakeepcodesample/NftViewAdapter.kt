@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 import org.json.JSONObject
 
-class MyAdapter(private val nftList: ArrayList<Nfts>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class NftViewAdapter(private val nftList: ArrayList<Nft>) : RecyclerView.Adapter<NftViewAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
@@ -26,7 +26,7 @@ class MyAdapter(private val nftList: ArrayList<Nfts>) : RecyclerView.Adapter<MyA
         val metadata = currentItem.metadata as JSONObject
         Glide.with(holder.itemView.context).load(metadata.getString("image")).into(holder.titleImage)
         holder.button.setOnClickListener {
-            val intent = Intent(holder.itemView.context, CallSdkActivity::class.java)
+            val intent = Intent(holder.itemView.context, TransferNftActivity::class.java)
             intent.putExtra("fromEmail", currentItem.nftOwner)
             intent.putExtra("nftTitle", currentItem.nftTitle)
             intent.putExtra("metadata", currentItem.metadata.toString())
