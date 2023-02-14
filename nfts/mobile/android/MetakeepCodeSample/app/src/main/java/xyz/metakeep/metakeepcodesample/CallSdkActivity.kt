@@ -11,8 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import okhttp3.* // ktlint-disable no-wildcard-imports
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import xyz.metakeep.sdk.AppContext
@@ -29,7 +29,7 @@ class CallSdkActivity : AppCompatActivity() {
         setContentView(R.layout.activity_call_sdk)
         metakeepsdk = MetaKeep(appId = "5430bdc0-ece6-45bd-8025-21dbfe0329c5", AppContext(this))
         metakeepsdk.environment = Environment.PRODUCTION
-        val metadata = JSONObject(intent.getStringExtra("metadata"))
+        val metadata = JSONObject(intent.getStringExtra("metadata").toString())
         val nftName = findViewById<TextView>(R.id.tv_card_name)
         val image = findViewById<ImageView>(R.id.iv_card_image)
         val email = findViewById<EditText>(R.id.recieverEmail).text

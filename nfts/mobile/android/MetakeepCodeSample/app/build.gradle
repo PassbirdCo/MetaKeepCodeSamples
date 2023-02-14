@@ -18,6 +18,17 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildscript {
+        repositories {
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
+        }
+        dependencies {
+            classpath "org.jlleitschuh.gradle:ktlint-gradle:11.1.0"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -49,7 +60,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.1'
     implementation "xyz.metakeep.sdk:lib:2.0.0-beta.2"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    implementation "org.jlleitschuh.gradle:ktlint-gradle:11.1.0"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 }
