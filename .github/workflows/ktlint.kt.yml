@@ -10,5 +10,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Run ktlint
-      working-directory: nfts/mobile/android/MetakeepCodeSample
-      run: ./gradlew ktLintCheck
+      run: |
+        cd nfts/mobile/adnroid/MetakeepCodeSample
+        ./gradlew ktlint
+
