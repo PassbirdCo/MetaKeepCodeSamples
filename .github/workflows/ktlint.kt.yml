@@ -12,5 +12,5 @@ jobs:
     - name: Run ktlint
       run: |
         cd nfts/mobile/android/MetakeepCodeSample
-        ./gradlew ktlint
+        ./gradlew ktlintCheck
 
