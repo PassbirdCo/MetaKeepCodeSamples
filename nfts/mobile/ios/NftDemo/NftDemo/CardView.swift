@@ -20,7 +20,7 @@ struct CardView: View {
     }
 }
 
-struct CardView_Preview_Poreviews: PreviewProvider {
+struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         CardView(token: token1)
             .previewLayout(.sizeThatFits)

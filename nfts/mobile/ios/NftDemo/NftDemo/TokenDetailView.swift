@@ -34,12 +34,12 @@ struct ConsentTokenResponse: Codable {
 struct ConsentTokenRequest: Encodable {
     let token: String
     let from: [String: String]
-    let to: [String: String]
+    let to: [String: String] // swiftlint:disable:this identifier_name
 
     enum CodingKeys: String, CodingKey {
         case token
         case from
-        case to
+        case to // swiftlint:disable:this identifier_name
     }
 
     func encode(to encoder: Encoder) throws {
@@ -93,9 +93,9 @@ struct TokenDetailView: View {
                     showToast = true
                     toastMessage = "Invalid Email"
                 }
-                self.transferNft()
-            }) {
-                Text("Transfer")
+                self.transferNft()}) 
+            //swiftlint:disable:next multiple_closures_with_trailing_closure
+            {    Text("Transfer")
             }.padding()
                 .frame(width: 170)
                 .background(Color.black)
@@ -118,18 +118,20 @@ struct TokenDetailView: View {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let jsonData = try! JSONEncoder().encode(ConsentTokenRequest(token: self.token.token, from: ["email": self.owner], to: ["email": self.email]))
+        // swiftlint:disable:next force_try
+        let jsonData = try! JSONEncoder().encode(ConsentTokenRequest(token: self.token.token, from: ["email": self.owner], to: ["email": self.email])) // swiftlint:disable:this line_length
 
         request.httpBody = jsonData
 
-        URLSession.shared.dataTask(with: request) {
-            (data, response, error) in
-            if let error = error {
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error 
+            {
                 toastMessage = "Error: \(error)"
                 showToast = true
                 return
             }
-            guard let data = data, let httpResponse = response as? HTTPURLResponse else {
+            guard let data = data, let httpResponse = response as? HTTPURLResponse else 
+            {
                 return
             }
 
@@ -168,11 +170,11 @@ struct TokenDetailView: View {
             showToast = true
         }
     }.resume()
-}
-}
+}}
 
 struct TokenDetailView_Previews: PreviewProvider {
     static var previews: some View {
+        // swiftlint:disable line_length
         TokenDetailView(token: Token(collection: "0x8adfbd3fb44baafb8e55db0ba4d5811450651b5f", name: "Hello", symbol: "MTKP", token: "48921598017819282871051754605790182343529368677935464088860073070808968327529", tokenMetadata: TokenMetadata(image: "https://cdn.pixabay.com/photo/2022/02/19/17/59/nft-7023209_960_720.jpg") ), owner: "adityadhir97@gmail.com")
     }
 }

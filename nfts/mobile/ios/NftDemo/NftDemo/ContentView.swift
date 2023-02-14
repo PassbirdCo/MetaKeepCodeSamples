@@ -57,11 +57,12 @@ struct ContentView: View {
                     } else if tokens.isEmpty {
                         showToast = true
                         toastMessage = "No Tokens Found"
-                    }
-
-                }) {
-
-                    Text("Submit")
+                    } else {
+                        showToast = true
+                        toastMessage = "Something went wrong"}
+                    }) 
+                //swiftlint:disable:next multiple_closures_with_trailing_closure
+                { Text("Submit")
                 }.padding()
                     .background(Color(.black))
                     .cornerRadius(5.0)
@@ -84,18 +85,21 @@ struct ContentView: View {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
+        // swiftlint:disable force_try
         let jsonData = try! JSONEncoder().encode(["of": ["email": self.name]])
 
         request.httpBody = jsonData
 
-        URLSession.shared.dataTask(with: request) {
-            (data, response, error) in
-            if let error = error {
+        URLSession.shared.dataTask(with: request) 
+        {   (data, response, error) in
+            if let error = error 
+            {
                 toastMessage = "Error: \(error)"
                 showToast = true
                 return
             }
-            guard let data = data, let httpResponse = response as? HTTPURLResponse else {
+            guard let data = data, let httpResponse = response as? HTTPURLResponse else 
+            {
                 return
             }
 
