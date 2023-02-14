@@ -15,7 +15,7 @@ class NftListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_result)
+        setContentView(R.layout.activity_nft_list)
 
         newRecyclerview = findViewById((R.id.result_recyle_view))
         newRecyclerview.layoutManager = LinearLayoutManager(this)

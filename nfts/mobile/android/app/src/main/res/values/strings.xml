@@ -1,14 +1,14 @@
 <resources>
 
     <string name="see_details">See Details</string>
-    <string name="get_nft">Get Nft</string>
+    <string name="get_nft">Get NFTs</string>
     <string name="hello_world">Hello World</string>
     <string name="metakeep">MetaKeep</string>
     <string name="transfer">Transfer</string>
     <string name="hello">Hello</string>
-    <string name="enter_reciever_email">Enter the reciever email</string>
-    <string name="get_nft_of_the_user">Get NFT of the user</string>
-    <string name="enter_the_user_email">Enter the Email of the User</string>
+    <string name="enter_reciever_email">Enter the receiver email</string>
+    <string name="get_nft_of_the_user">Get NFTs of the user</string>
+    <string name="enter_the_user_email">Enter email</string>
     <string name="action_settings">Action Settings</string>
     <string name="first_fragment_label">First Fragment Label</string>
     <string name="second_fragment_label">Second Fragment Label</string>

@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TransferNftActivity">
+    tools:context=".TransferNftActivity"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
 
     <ImageView
-        android:id="@+id/iv_card_image"
+        android:id="@+id/nft_image"
         android:layout_width="wrap_content"
         android:contentDescription="@string/get_nft_of_the_user"
         android:layout_height="wrap_content"
@@ -16,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_card_name"
+        android:id="@+id/nft_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -25,16 +27,16 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_card_image" />
+        app:layout_constraintTop_toBottomOf="@id/nft_image" />
 
     <EditText
-        android:id="@+id/recieverEmail"
+        android:id="@+id/receiverEmail"
         android:layout_width="match_parent"
         android:inputType="textEmailAddress"
         android:layout_height="wrap_content"
         android:layout_margin="30px"
         android:autofillHints="emailAddress"
-        app:layout_constraintTop_toBottomOf="@id/tv_card_name"
+        app:layout_constraintTop_toBottomOf="@id/nft_name"
         android:hint="@string/enter_reciever_email"
         />
 
@@ -47,6 +49,6 @@
         android:layout_marginTop="20px"
         android:id="@+id/confirm_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recieverEmail" />
+        app:layout_constraintTop_toBottomOf="@id/receiverEmail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

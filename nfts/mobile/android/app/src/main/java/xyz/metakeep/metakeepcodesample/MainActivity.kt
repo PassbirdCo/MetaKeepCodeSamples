@@ -7,6 +7,7 @@ import android.util.Log
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import okhttp3.* // ktlint-disable no-wildcard-imports
@@ -17,24 +18,28 @@ import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var emailEditText: EditText
+    private lateinit var emailInput: EditText
     private lateinit var submitButton: Button
+    private val tag = "MainActivity"
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        emailEditText = findViewById(R.id.getNft)
+        emailInput = findViewById(R.id.email_input)
         submitButton = findViewById(R.id.fetchNft)
 
         submitButton.setOnClickListener {
-            val email = emailEditText.text.toString()
+            val email = emailInput.text.toString()
             if (isValidEmail(email)) {
                 makeApiCall(this@MainActivity, email)
             } else {
                 Toast.makeText(this, "Invalid Email ID", Toast.LENGTH_SHORT).show()
             }
         }
+
+        progressBar = findViewById(R.id.progressBar)
     }
 
     private fun isValidEmail(email: String): Boolean {
@@ -45,27 +50,32 @@ class MainActivity : AppCompatActivity() {
         val client = OkHttpClient()
 
         val requestBody = """
-    {"of": {"email": "$nftOwner"}}
+        {
+            "of": 
+                {
+                    "email": "$nftOwner"
+                }
+        }
         """.trimIndent().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        val request = Request.Builder()
-            .url("http://10.0.2.2:3001/getNftTokenList")
-            .post(requestBody)
-            .header("x-App-Id", "18976e60-7afb-4424-ab37-0bd05fb260d7")
-            .build()
+
+        val request =
+            Request.Builder().url("http://10.0.2.2:3001/getNftTokenList").post(requestBody).build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
+                progressBar.visibility = ProgressBar.INVISIBLE
 
-                Log.d("INFO", e.message.toString())
+                Log.e(tag, e.message.toString())
                 runOnUiThread {
-                    Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onResponse(call: Call, response: Response) {
+                progressBar.visibility = ProgressBar.INVISIBLE
+
                 if (!response.isSuccessful) {
-                    Log.d("INFO", response.toString())
+                    Log.e(tag, response.toString())
                     runOnUiThread {
                         Toast.makeText(context, "Error: ${response.message}", Toast.LENGTH_SHORT)
                             .show()
@@ -81,8 +91,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
-    }
-    /*
 
-     */
+        // Show loader
+        progressBar.visibility = ProgressBar.VISIBLE
+    }
 }
