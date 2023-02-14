@@ -14,15 +14,13 @@ import URLImage
 import AlertToast
 
 import MetaKeep
-import class MetaKeep.Environment
-
 
 func getSDK(email: String) -> MetaKeep {
     // Initialize the SDK
-    let sdk = MetaKeep(appId : "2452849e-d6e9-40ef-bbfd-5dfdc7ce1728", appContext: AppContext())
+    let sdk = MetaKeep(appId: "2452849e-d6e9-40ef-bbfd-5dfdc7ce1728", appContext: AppContext())
     sdk.environment = Environment.production
-    
-    if (email != "") {
+
+    if email != "" {
         sdk.user = User(email: email)
     }
     return sdk
@@ -33,18 +31,17 @@ struct ConsentTokenResponse: Codable {
     let status: String
 }
 
-
 struct ConsentTokenRequest: Encodable {
     let token: String
     let from: [String: String]
     let to: [String: String]
-    
+
     enum CodingKeys: String, CodingKey {
         case token
         case from
         case to
     }
-    
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(token, forKey: .token)
@@ -55,7 +52,7 @@ struct ConsentTokenRequest: Encodable {
 
 struct MyView: View {
     var imageUrl: URL
-    
+
     var body: some View {
         URLImage(imageUrl) { image in
             // show the image when it is loaded
@@ -66,7 +63,6 @@ struct MyView: View {
         .padding()
     }
 }
-
 
 struct TokenDetailView: View {
     @State var shouldGoBackToMainScreen = false
@@ -98,7 +94,7 @@ struct TokenDetailView: View {
                     toastMessage = "Invalid Email"
                 }
                 self.transferNft()
-            }){
+            }) {
                 Text("Transfer")
             }.padding()
                 .frame(width: 170)
@@ -107,27 +103,25 @@ struct TokenDetailView: View {
                 .cornerRadius(20)
 
         }.navigationTitle("")
-            .toast(isPresenting: $showToast){
+            .toast(isPresenting: $showToast) {
                 AlertToast(type: .regular, title: toastMessage)
             }
-            .navigationDestination(isPresented: $shouldGoBackToMainScreen){
+            .navigationDestination(isPresented: $shouldGoBackToMainScreen) {
             ContentView()
         }  }
 
-
-    private func transferNft(){
+    private func transferNft() {
         // Make the API Call Here.
         let url = URL(string: "http://localhost:3001/getConsentToken")!
-    
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    
+
         let jsonData = try! JSONEncoder().encode(ConsentTokenRequest(token: self.token.token, from: ["email": self.owner], to: ["email": self.email]))
-        
-    
+
         request.httpBody = jsonData
-    
+
         URLSession.shared.dataTask(with: request) {
             (data, response, error) in
             if let error = error {
@@ -135,12 +129,12 @@ struct TokenDetailView: View {
                 showToast = true
                 return
             }
-            guard let data = data,  let httpResponse = response as? HTTPURLResponse else {
+            guard let data = data, let httpResponse = response as? HTTPURLResponse else {
                 return
             }
-        
+
             if httpResponse.statusCode == 200 {
-                do{
+                do {
                     let decodedResponse = try JSONDecoder().decode(ConsentTokenResponse.self, from: data
                     )
                     let sdk = getSDK(email: "")
@@ -148,28 +142,26 @@ struct TokenDetailView: View {
                         sdk.getConsent(
                             consentToken: consentToken,
                             callback: Callback(
-                                onSuccess: { (result: JsonResponse) in
+                                onSuccess: { (_: JsonResponse) in
                                     toastMessage = "SUCCESS"
                                     showToast = true
-                                    
+
                                     self.shouldGoBackToMainScreen = true
                                 },
                                 onFailure: { (error: JsonResponse) in
-                                    
+
                                     toastMessage = error.description
                                     showToast = true
                                     self.shouldGoBackToMainScreen = false
                                 }
-                                
-                                
+
                             )
-                            
+
                         )
-            }
-            catch {
+            } catch {
                 print("failed")
             }
-            
+
         } else {
             print("Unsuccessful")
             toastMessage = "UnSuccessful While transferring"
@@ -179,10 +171,8 @@ struct TokenDetailView: View {
 }
 }
 
-
 struct TokenDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TokenDetailView(token: Token(collection:"0x8adfbd3fb44baafb8e55db0ba4d5811450651b5f", name: "Hello", symbol: "MTKP", token: "48921598017819282871051754605790182343529368677935464088860073070808968327529", tokenMetadata: TokenMetadata(image:  "https://cdn.pixabay.com/photo/2022/02/19/17/59/nft-7023209_960_720.jpg") ), owner: "adityadhir97@gmail.com")
+        TokenDetailView(token: Token(collection: "0x8adfbd3fb44baafb8e55db0ba4d5811450651b5f", name: "Hello", symbol: "MTKP", token: "48921598017819282871051754605790182343529368677935464088860073070808968327529", tokenMetadata: TokenMetadata(image: "https://cdn.pixabay.com/photo/2022/02/19/17/59/nft-7023209_960_720.jpg") ), owner: "adityadhir97@gmail.com")
     }
 }
-

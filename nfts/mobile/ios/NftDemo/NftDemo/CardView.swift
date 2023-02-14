@@ -11,11 +11,11 @@ import SwiftUI
 
 struct CardView: View {
     let token: Token
-    
+
     var body: some View {
         VStack {
             Text("hello")
-             
+
         }
     }
 }
