@@ -2,11 +2,8 @@
 //  TokenListView.swift
 //  NftDemo
 //
-//  Created by Datacenter SV on 2/11/23.
-//
 
 import Foundation
-
 import SwiftUI
 import URLImage
 

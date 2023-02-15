@@ -2,17 +2,12 @@
 //  TokenDetailView.swift
 //  NftDemo
 //
-//  Created by Datacenter SV on 2/11/23.
-//
 
 import Foundation
-
 import SwiftUI
-
 import URLImage
-
+import UIKit
 import AlertToast
-
 import MetaKeep
 
 func getSDK(email: String) -> MetaKeep {
@@ -81,13 +76,14 @@ struct TokenDetailView: View {
             MyView(imageUrl: URL(string: token.tokenMetadata.image)!)
             Text(token.token).padding()
                 .frame(alignment: .center)
-            TextField("Enter reciever email", text: $email)
+            TextField("Enter receiver email", text: $email)
                 .padding()
-                .background(Color(.lightGray))
                 .foregroundColor(Color.black)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 370)
                 .cornerRadius(5.0)
                 .padding(.bottom, 20)
+                .padding()
             Button(action: {
                 if !isValidEmail(self.email) {
                     showToast = true
@@ -143,16 +139,19 @@ struct TokenDetailView: View {
                         consentToken: consentToken,
                         callback: Callback(
                             onSuccess: { (_: JsonResponse) in
-                                toastMessage = "SUCCESS"
+                                toastMessage = "NFT transferred successfully. Navigating to home in 3 seconds"
                                 showToast = true
                                 
-                                self.shouldGoBackToMainScreen = true
+                                // Go back to the root view in 3 seconds
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                    NavigationUtil.popToRootView()
+                                    
+                                }
                             },
                             onFailure: { (error: JsonResponse) in
                                 
-                                toastMessage = error.description
+                                toastMessage = "Error: \(error.description)"
                                 showToast = true
-                                self.shouldGoBackToMainScreen = false
                             }
                             
                         )
@@ -174,5 +173,24 @@ struct TokenDetailView_Previews: PreviewProvider {
     static var previews: some View {
         // swiftlint:disable line_length
         TokenDetailView(token: Token(collection: "0x8adfbd3fb44baafb8e55db0ba4d5811450651b5f", name: "Hello", symbol: "MTKP", token: "48921598017819282871051754605790182343529368677935464088860073070808968327529", tokenMetadata: TokenMetadata(image: "https://cdn.pixabay.com/photo/2022/02/19/17/59/nft-7023209_960_720.jpg") ), owner: "adityadhir97@gmail.com")
+    }
+}
+
+struct NavigationUtil {
+    static func popToRootView() {
+        findNavigationController(viewController: UIApplication.shared.windows.filter { $0.isKeyWindow }.first?.rootViewController)?
+            .popToRootViewController(animated: true)
+    }
+    static func findNavigationController(viewController: UIViewController?) -> UINavigationController? {
+        guard let viewController = viewController else {
+            return nil
+        }
+        if let navigationController = viewController as? UINavigationController {
+            return navigationController
+        }
+        for childViewController in viewController.children {
+            return findNavigationController(viewController: childViewController)
+        }
+        return nil
     }
 }

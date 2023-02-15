@@ -2,12 +2,10 @@
 //  ContentView.swift
 //  NftDemo
 //
-//  Created by Datacenter SV on 2/10/23.
-//
 
-import SwiftUI
 import AlertToast
 import MetaKeep
+import SwiftUI
 
 struct Token: Codable {
     let collection: String
@@ -34,19 +32,19 @@ struct ContentView: View {
     @State private var toastMessage = ""
     @State private var toastStatus = ""
     @State private var shouldShowNextScreen = false
+    @State private var loaderVisible = false
     
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Metakeep").bold(true).padding(.bottom, 100)
+                Text("MetaKeep").padding(.bottom, 50)
                     .font(.system(size: 70, design: .default))
-                Text("Get Nfts of the User").font(.system(size: 30)).fixedSize()
-                    .padding(.bottom, 70)
                 TextField("Enter your email", text: $name)
                     .padding()
-                    .background(Color(.lightGray))
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .cornerRadius(5.0)
                     .padding(.bottom, 20)
+                    .padding()
                 Button(action: {
                     
                     if !isValidEmail(self.name) {
@@ -59,14 +57,19 @@ struct ContentView: View {
                         toastMessage = "No Tokens Found"
                     } else {
                         showToast = true
-                        toastMessage = "Something went wrong"}
-                })
-                // swiftlint:disable:next multiple_closures_with_trailing_closure
-                { Text("Submit")
+                        toastMessage = "Something went wrong"
+                    }
+                }) {
+                    Text("Get NFTs")
                 }.padding()
                     .background(Color(.black))
                     .cornerRadius(5.0)
                     .foregroundColor(Color(.white))
+                
+                // Loader
+                if loaderVisible {
+                    ProgressView()
+                }
             }
             .navigationDestination(isPresented: $shouldShowNextScreen) {
                 TokenListView(tokens: self.tokens, owner: self.name)
@@ -90,7 +93,9 @@ struct ContentView: View {
         
         request.httpBody = jsonData
         
-        URLSession.shared.dataTask(with: request) {   (data, response, error) in
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            loaderVisible = false
+            
             if let error = error {
                 toastMessage = "Error: \(error)"
                 showToast = true
@@ -102,7 +107,8 @@ struct ContentView: View {
             
             if httpResponse.statusCode == 200 {
                 do {
-                    let decodedResponse = try JSONDecoder().decode(Response.self, from: data
+                    let decodedResponse = try JSONDecoder().decode(
+                        Response.self, from: data
                     )
                     tokens = decodedResponse.tokens
                     shouldShowNextScreen = true
@@ -116,6 +122,8 @@ struct ContentView: View {
                 showToast = true
             }
         }.resume()
+        
+        loaderVisible = true
     }
 }
 
