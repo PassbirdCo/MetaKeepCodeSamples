@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/PassbirdCo/MetaKeepSDK",
       "state" : {
-        "branch" : "Release-version-2.0.1",
-        "revision" : "c0a19d8302271818259b8066f3708e3879f20428"
+        "revision" : "c0a19d8302271818259b8066f3708e3879f20428",
+        "version" : "2.0.1"
       }
     },
     {

@@ -241,7 +241,6 @@
 				589F3854299A53C90047666C /* XCRemoteSwiftPackageReference "url-image" */,
 				5817D0CC299B839D001E6DAC /* XCRemoteSwiftPackageReference "MetaKeepSDK" */,
 				5817D0CF299BACCF001E6DAC /* XCRemoteSwiftPackageReference "AlertToast" */,
-				5817D0D2299BBD0F001E6DAC /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 589F3818299692E20047666C /* Products */;
 			projectDirPath = "";
@@ -615,8 +614,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/PassbirdCo/MetaKeepSDK";
 			requirement = {
-				branch = "Release-version-2.0.1";
-				kind = branch;
+				kind = exactVersion;
+				version = 2.0.1;
 			};
 		};
 		5817D0CF299BACCF001E6DAC /* XCRemoteSwiftPackageReference "AlertToast" */ = {
@@ -625,14 +624,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
-			};
-		};
-		5817D0D2299BBD0F001E6DAC /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.2;
 			};
 		};
 		589F3854299A53C90047666C /* XCRemoteSwiftPackageReference "url-image" */ = {
