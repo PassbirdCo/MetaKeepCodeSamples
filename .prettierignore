@@ -1,1 +1,3 @@
 **/*.sol
+nfts/mobile/ios/NftDemo/Assets.xcassets/**/*
+nfts/mobile/ios/NftDemo/Preview Content/**/*

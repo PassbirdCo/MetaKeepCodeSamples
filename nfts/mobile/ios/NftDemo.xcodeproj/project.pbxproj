@@ -1,0 +1,663 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5817D0CE299B839D001E6DAC /* MetaKeep in Frameworks */ = {isa = PBXBuildFile; productRef = 5817D0CD299B839D001E6DAC /* MetaKeep */; };
+		5817D0D1299BACCF001E6DAC /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 5817D0D0299BACCF001E6DAC /* AlertToast */; };
+		589F381B299692E20047666C /* NftDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589F381A299692E20047666C /* NftDemoApp.swift */; };
+		589F381D299692E20047666C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589F381C299692E20047666C /* ContentView.swift */; };
+		589F381F299692E80047666C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 589F381E299692E80047666C /* Assets.xcassets */; };
+		589F3822299692E80047666C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 589F3821299692E80047666C /* Preview Assets.xcassets */; };
+		589F382C299692E90047666C /* NftDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589F382B299692E90047666C /* NftDemoTests.swift */; };
+		589F3836299692E90047666C /* NftDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589F3835299692E90047666C /* NftDemoUITests.swift */; };
+		589F3838299692E90047666C /* NftDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589F3837299692E90047666C /* NftDemoUITestsLaunchTests.swift */; };
+		589F384D2997F2CD0047666C /* TokenDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589F384C2997F2CD0047666C /* TokenDetailView.swift */; };
+		589F384F2997F40E0047666C /* TokenListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589F384E2997F40E0047666C /* TokenListView.swift */; };
+		589F3856299A53C90047666C /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 589F3855299A53C90047666C /* URLImage */; };
+		589F3858299A53C90047666C /* URLImageStore in Frameworks */ = {isa = PBXBuildFile; productRef = 589F3857299A53C90047666C /* URLImageStore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		589F3828299692E90047666C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 589F380F299692E20047666C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 589F3816299692E20047666C;
+			remoteInfo = NftDemo;
+		};
+		589F3832299692E90047666C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 589F380F299692E20047666C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 589F3816299692E20047666C;
+			remoteInfo = NftDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		589F3817299692E20047666C /* NftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		589F381A299692E20047666C /* NftDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftDemoApp.swift; sourceTree = "<group>"; };
+		589F381C299692E20047666C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		589F381E299692E80047666C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		589F3821299692E80047666C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		589F3827299692E90047666C /* NftDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NftDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		589F382B299692E90047666C /* NftDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftDemoTests.swift; sourceTree = "<group>"; };
+		589F3831299692E90047666C /* NftDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NftDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		589F3835299692E90047666C /* NftDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftDemoUITests.swift; sourceTree = "<group>"; };
+		589F3837299692E90047666C /* NftDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		589F384C2997F2CD0047666C /* TokenDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDetailView.swift; sourceTree = "<group>"; };
+		589F384E2997F40E0047666C /* TokenListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenListView.swift; sourceTree = "<group>"; };
+		589F38532998B1180047666C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		589F3814299692E20047666C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5817D0CE299B839D001E6DAC /* MetaKeep in Frameworks */,
+				589F3856299A53C90047666C /* URLImage in Frameworks */,
+				5817D0D1299BACCF001E6DAC /* AlertToast in Frameworks */,
+				589F3858299A53C90047666C /* URLImageStore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		589F3824299692E90047666C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		589F382E299692E90047666C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		589F380E299692E20047666C = {
+			isa = PBXGroup;
+			children = (
+				589F3819299692E20047666C /* NftDemo */,
+				589F382A299692E90047666C /* NftDemoTests */,
+				589F3834299692E90047666C /* NftDemoUITests */,
+				589F3818299692E20047666C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		589F3818299692E20047666C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				589F3817299692E20047666C /* NftDemo.app */,
+				589F3827299692E90047666C /* NftDemoTests.xctest */,
+				589F3831299692E90047666C /* NftDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		589F3819299692E20047666C /* NftDemo */ = {
+			isa = PBXGroup;
+			children = (
+				589F38532998B1180047666C /* Info.plist */,
+				589F381A299692E20047666C /* NftDemoApp.swift */,
+				589F381C299692E20047666C /* ContentView.swift */,
+				589F384E2997F40E0047666C /* TokenListView.swift */,
+				589F384C2997F2CD0047666C /* TokenDetailView.swift */,
+				589F381E299692E80047666C /* Assets.xcassets */,
+				589F3820299692E80047666C /* Preview Content */,
+			);
+			path = NftDemo;
+			sourceTree = "<group>";
+		};
+		589F3820299692E80047666C /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				589F3821299692E80047666C /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		589F382A299692E90047666C /* NftDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				589F382B299692E90047666C /* NftDemoTests.swift */,
+			);
+			path = NftDemoTests;
+			sourceTree = "<group>";
+		};
+		589F3834299692E90047666C /* NftDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				589F3835299692E90047666C /* NftDemoUITests.swift */,
+				589F3837299692E90047666C /* NftDemoUITestsLaunchTests.swift */,
+			);
+			path = NftDemoUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		589F3816299692E20047666C /* NftDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 589F383B299692E90047666C /* Build configuration list for PBXNativeTarget "NftDemo" */;
+			buildPhases = (
+				589F3813299692E20047666C /* Sources */,
+				589F3814299692E20047666C /* Frameworks */,
+				589F3815299692E20047666C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NftDemo;
+			packageProductDependencies = (
+				589F3855299A53C90047666C /* URLImage */,
+				589F3857299A53C90047666C /* URLImageStore */,
+				5817D0CD299B839D001E6DAC /* MetaKeep */,
+				5817D0D0299BACCF001E6DAC /* AlertToast */,
+			);
+			productName = NftDemo;
+			productReference = 589F3817299692E20047666C /* NftDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		589F3826299692E90047666C /* NftDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 589F383E299692E90047666C /* Build configuration list for PBXNativeTarget "NftDemoTests" */;
+			buildPhases = (
+				589F3823299692E90047666C /* Sources */,
+				589F3824299692E90047666C /* Frameworks */,
+				589F3825299692E90047666C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				589F3829299692E90047666C /* PBXTargetDependency */,
+			);
+			name = NftDemoTests;
+			productName = NftDemoTests;
+			productReference = 589F3827299692E90047666C /* NftDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		589F3830299692E90047666C /* NftDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 589F3841299692E90047666C /* Build configuration list for PBXNativeTarget "NftDemoUITests" */;
+			buildPhases = (
+				589F382D299692E90047666C /* Sources */,
+				589F382E299692E90047666C /* Frameworks */,
+				589F382F299692E90047666C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				589F3833299692E90047666C /* PBXTargetDependency */,
+			);
+			name = NftDemoUITests;
+			productName = NftDemoUITests;
+			productReference = 589F3831299692E90047666C /* NftDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		589F380F299692E20047666C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					589F3816299692E20047666C = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					589F3826299692E90047666C = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 589F3816299692E20047666C;
+					};
+					589F3830299692E90047666C = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 589F3816299692E20047666C;
+					};
+				};
+			};
+			buildConfigurationList = 589F3812299692E20047666C /* Build configuration list for PBXProject "NftDemo" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 589F380E299692E20047666C;
+			packageReferences = (
+				589F3854299A53C90047666C /* XCRemoteSwiftPackageReference "url-image" */,
+				5817D0CC299B839D001E6DAC /* XCRemoteSwiftPackageReference "MetaKeepSDK" */,
+				5817D0CF299BACCF001E6DAC /* XCRemoteSwiftPackageReference "AlertToast" */,
+			);
+			productRefGroup = 589F3818299692E20047666C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				589F3816299692E20047666C /* NftDemo */,
+				589F3826299692E90047666C /* NftDemoTests */,
+				589F3830299692E90047666C /* NftDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		589F3815299692E20047666C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				589F3822299692E80047666C /* Preview Assets.xcassets in Resources */,
+				589F381F299692E80047666C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		589F3825299692E90047666C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		589F382F299692E90047666C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		589F3813299692E20047666C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				589F384F2997F40E0047666C /* TokenListView.swift in Sources */,
+				589F381D299692E20047666C /* ContentView.swift in Sources */,
+				589F381B299692E20047666C /* NftDemoApp.swift in Sources */,
+				589F384D2997F2CD0047666C /* TokenDetailView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		589F3823299692E90047666C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				589F382C299692E90047666C /* NftDemoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		589F382D299692E90047666C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				589F3838299692E90047666C /* NftDemoUITestsLaunchTests.swift in Sources */,
+				589F3836299692E90047666C /* NftDemoUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		589F3829299692E90047666C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 589F3816299692E20047666C /* NftDemo */;
+			targetProxy = 589F3828299692E90047666C /* PBXContainerItemProxy */;
+		};
+		589F3833299692E90047666C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 589F3816299692E20047666C /* NftDemo */;
+			targetProxy = 589F3832299692E90047666C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		589F3839299692E90047666C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		589F383A299692E90047666C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		589F383C299692E90047666C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"NftDemo/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NftDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.metakeep.codesamples.NftDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		589F383D299692E90047666C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"NftDemo/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NftDemo/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.metakeep.codesamples.NftDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		589F383F299692E90047666C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.metakeep.codesamples.NftDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NftDemo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NftDemo";
+			};
+			name = Debug;
+		};
+		589F3840299692E90047666C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.metakeep.codesamples.NftDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NftDemo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NftDemo";
+			};
+			name = Release;
+		};
+		589F3842299692E90047666C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.metakeep.codesamples.NftDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NftDemo;
+			};
+			name = Debug;
+		};
+		589F3843299692E90047666C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.metakeep.codesamples.NftDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NftDemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		589F3812299692E20047666C /* Build configuration list for PBXProject "NftDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				589F3839299692E90047666C /* Debug */,
+				589F383A299692E90047666C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		589F383B299692E90047666C /* Build configuration list for PBXNativeTarget "NftDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				589F383C299692E90047666C /* Debug */,
+				589F383D299692E90047666C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		589F383E299692E90047666C /* Build configuration list for PBXNativeTarget "NftDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				589F383F299692E90047666C /* Debug */,
+				589F3840299692E90047666C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		589F3841299692E90047666C /* Build configuration list for PBXNativeTarget "NftDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				589F3842299692E90047666C /* Debug */,
+				589F3843299692E90047666C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5817D0CC299B839D001E6DAC /* XCRemoteSwiftPackageReference "MetaKeepSDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PassbirdCo/MetaKeepSDK";
+			requirement = {
+				kind = exactVersion;
+				version = 2.0.1;
+			};
+		};
+		5817D0CF299BACCF001E6DAC /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		589F3854299A53C90047666C /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5817D0CD299B839D001E6DAC /* MetaKeep */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5817D0CC299B839D001E6DAC /* XCRemoteSwiftPackageReference "MetaKeepSDK" */;
+			productName = MetaKeep;
+		};
+		5817D0D0299BACCF001E6DAC /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5817D0CF299BACCF001E6DAC /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
+		589F3855299A53C90047666C /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 589F3854299A53C90047666C /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
+		589F3857299A53C90047666C /* URLImageStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 589F3854299A53C90047666C /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImageStore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 589F380F299692E20047666C /* Project object */;
+}

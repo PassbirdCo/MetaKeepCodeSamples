@@ -2,3 +2,6 @@
 /lambda/voting/node_modules
 /lambda/voting/artifacts
 /nfts/node_modules
+
+.DS_Store
+**/.DS_Store
