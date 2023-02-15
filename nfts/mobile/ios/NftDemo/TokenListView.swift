@@ -26,16 +26,16 @@ struct TokenListView: View {
 
 struct CardView: View {
     let token: Token
-
+    
     var body: some View {
         VStack {
-                    let imageURL = URL(string: self.token.tokenMetadata.image)!
-                    URLImage(imageURL) { image in image.resizable()
-                            .aspectRatio(contentMode: .fit)
-                    }.frame(width: 400, height: 200)
-
+            let imageURL = URL(string: self.token.tokenMetadata.image)!
+            URLImage(imageURL) { image in image.resizable()
+                    .aspectRatio(contentMode: .fit)
+            }.frame(width: 400, height: 200)
+            
             Text(formatTokenId(tokenID: token.token)).padding()
-                        }
+        }
     }
 }
 

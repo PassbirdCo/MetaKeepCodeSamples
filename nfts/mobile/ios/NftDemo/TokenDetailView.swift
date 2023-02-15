@@ -19,7 +19,7 @@ func getSDK(email: String) -> MetaKeep {
     // Initialize the SDK
     let sdk = MetaKeep(appId: "2452849e-d6e9-40ef-bbfd-5dfdc7ce1728", appContext: AppContext())
     sdk.environment = Environment.production
-
+    
     if email != "" {
         sdk.user = User(email: email)
     }
@@ -35,13 +35,13 @@ struct ConsentTokenRequest: Encodable {
     let token: String
     let from: [String: String]
     let to: [String: String] // swiftlint:disable:this identifier_name
-
+    
     enum CodingKeys: String, CodingKey {
         case token
         case from
         case to // swiftlint:disable:this identifier_name
     }
-
+    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(token, forKey: .token)
@@ -52,7 +52,7 @@ struct ConsentTokenRequest: Encodable {
 
 struct MyView: View {
     var imageUrl: URL
-
+    
     var body: some View {
         URLImage(imageUrl) { image in
             // show the image when it is loaded
@@ -101,28 +101,28 @@ struct TokenDetailView: View {
                 .background(Color.black)
                 .foregroundColor(Color.white)
                 .cornerRadius(20)
-
+            
         }.navigationTitle("")
             .toast(isPresenting: $showToast) {
                 AlertToast(type: .regular, title: toastMessage)
             }
             .navigationDestination(isPresented: $shouldGoBackToMainScreen) {
-            ContentView()
-        }  }
-
+                ContentView()
+            }  }
+    
     private func transferNft() {
         // Make the API Call Here.
         let url = URL(string: "http://localhost:3001/getConsentToken")!
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
+        
         // swiftlint:disable:next force_try
         let jsonData = try! JSONEncoder().encode(ConsentTokenRequest(token: self.token.token, from: ["email": self.owner], to: ["email": self.email])) // swiftlint:disable:this line_length
-
+        
         request.httpBody = jsonData
-
+        
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 toastMessage = "Error: \(error)"
@@ -132,43 +132,43 @@ struct TokenDetailView: View {
             guard let data = data, let httpResponse = response as? HTTPURLResponse else {
                 return
             }
-
+            
             if httpResponse.statusCode == 200 {
                 do {
                     let decodedResponse = try JSONDecoder().decode(ConsentTokenResponse.self, from: data
                     )
                     let sdk = getSDK(email: "")
                     let consentToken: String = decodedResponse.consentToken
-                        sdk.getConsent(
-                            consentToken: consentToken,
-                            callback: Callback(
-                                onSuccess: { (_: JsonResponse) in
-                                    toastMessage = "SUCCESS"
-                                    showToast = true
-
-                                    self.shouldGoBackToMainScreen = true
-                                },
-                                onFailure: { (error: JsonResponse) in
-
-                                    toastMessage = error.description
-                                    showToast = true
-                                    self.shouldGoBackToMainScreen = false
-                                }
-
-                            )
-
+                    sdk.getConsent(
+                        consentToken: consentToken,
+                        callback: Callback(
+                            onSuccess: { (_: JsonResponse) in
+                                toastMessage = "SUCCESS"
+                                showToast = true
+                                
+                                self.shouldGoBackToMainScreen = true
+                            },
+                            onFailure: { (error: JsonResponse) in
+                                
+                                toastMessage = error.description
+                                showToast = true
+                                self.shouldGoBackToMainScreen = false
+                            }
+                            
                         )
-            } catch {
-                print("failed")
+                        
+                    )
+                } catch {
+                    print("failed")
+                }
+                
+            } else {
+                print("Unsuccessful")
+                toastMessage = "UnSuccessful While transferring"
+                showToast = true
             }
-
-        } else {
-            print("Unsuccessful")
-            toastMessage = "UnSuccessful While transferring"
-            showToast = true
-        }
-    }.resume()
-}}
+        }.resume()
+    }}
 
 struct TokenDetailView_Previews: PreviewProvider {
     static var previews: some View {

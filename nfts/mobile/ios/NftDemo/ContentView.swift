@@ -34,7 +34,7 @@ struct ContentView: View {
     @State private var toastMessage = ""
     @State private var toastStatus = ""
     @State private var shouldShowNextScreen = false
-
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -48,7 +48,7 @@ struct ContentView: View {
                     .cornerRadius(5.0)
                     .padding(.bottom, 20)
                 Button(action: {
-
+                    
                     if !isValidEmail(self.name) {
                         showToast = true
                         toastMessage = "Email is invalid"
@@ -60,7 +60,7 @@ struct ContentView: View {
                     } else {
                         showToast = true
                         toastMessage = "Something went wrong"}
-                    })
+                })
                 // swiftlint:disable:next multiple_closures_with_trailing_closure
                 { Text("Submit")
                 }.padding()
@@ -76,20 +76,20 @@ struct ContentView: View {
             }
         }
     }
-
+    
     private func getNftList() {
         // Make the API Call Here.
         let url = URL(string: "http://localhost:3001/getNftTokenList")!
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
+        
         // swiftlint:disable force_try
         let jsonData = try! JSONEncoder().encode(["of": ["email": self.name]])
-
+        
         request.httpBody = jsonData
-
+        
         URLSession.shared.dataTask(with: request) {   (data, response, error) in
             if let error = error {
                 toastMessage = "Error: \(error)"
@@ -99,7 +99,7 @@ struct ContentView: View {
             guard let data = data, let httpResponse = response as? HTTPURLResponse else {
                 return
             }
-
+            
             if httpResponse.statusCode == 200 {
                 do {
                     let decodedResponse = try JSONDecoder().decode(Response.self, from: data
@@ -109,7 +109,7 @@ struct ContentView: View {
                 } catch {
                     print("failed")
                 }
-
+                
             } else {
                 print("Unsuccessful")
                 toastMessage = "UnSuccessful"
