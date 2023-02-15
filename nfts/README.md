@@ -11,6 +11,7 @@ The project is organized as follows:
 - [scripts](./scripts): Contains the scripts to deploy a new NFT collection, mint tokens, lock and unlock tokens.
 - [backend](./backend): Contains the backend code to list NFTs and P2P Transfer.
 - [frontend](./frontend): Contains the frontend code to show NFTs and P2P transfer.
+- [mobile](./mobile): Contains the mobile code(Android/iOS) to show NFTs and P2P transfer.
 
 ## Quick start
 
@@ -62,6 +63,10 @@ npm run start
 This will open the frontend application on the default browser of your system.
 
 **Note**: Before proceeding, ensure that you have created the collection and minted the token that you want to transfer by following the [steps above](#create-a-new-nft-collection-and-mint-tokens).
+
+### Test mobile(Android/iOS) applications
+
+You can now test the mobile applications in the `nfts/mobile` folder. The mobile applications will use the same backend server started in the previous step.
 
 #### Get the List of your NFT tokens.
 

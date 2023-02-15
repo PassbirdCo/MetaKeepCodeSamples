@@ -14,7 +14,7 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders = [metakeepDomain: "f7da7067-a52c-4495-9f8f-73d6e1bb43f6.auth.metakeep.xyz", metakeepScheme: "xyz.metakeep.metakeepcodesample"]
+        manifestPlaceholders = [metakeepDomain: "9cc98bca-da35-4da8-8f10-655b3e51cb9e.auth.metakeep.xyz", metakeepScheme: "xyz.metakeep.metakeepcodesample"]
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
