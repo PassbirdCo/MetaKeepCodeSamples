@@ -1,4 +1,4 @@
-name: Check JavaScript for conformance with Prettier
+name: Lint
 
 on:
   pull_request:
