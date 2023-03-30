@@ -8,22 +8,21 @@ import {
   sendTransactionOnChain,
 } from "../utils/transferTokenUtils";
 import { MetaKeep } from "metakeep";
+import axios from "axios";
 
 export const TransferForm = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const [email, setEmail] = useState("");
   const [userSolanaAddress, setUserSolanaAddress] = useState("");
 
   const sdk = new MetaKeep({
-    environment: "dev",
-    appId: "ec68d40b-b910-4d20-9d4b-dfe6c2391fb3",
+    environment: "prod",
+    appId: "ENTER_YOUR_APP_ID_HERE",
   });
 
   const login = async (email) => {
     try {
       const response = await sdk.getWallet();
       console.log(response);
-      setEmail(email);
       setUserSolanaAddress(response.wallet.solAddress);
       setIsUserLoggedIn(true);
       message.success("Login successful!");
@@ -34,9 +33,25 @@ export const TransferForm = () => {
   };
 
   const transferTokens = async (to, amount) => {
+    try {
+      var response = await axios.post(
+        "https://api.metakeep.xyz/v3/getWallet",
+        { user: { email: to } },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "x-app-id": "ENTER_YOUR_APP_ID_HERE",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      alert("Recipient Wallet couldnt be fetched!");
+    }
+    const toAddress = response.data.wallet.solAddress;
     const serializedTransaction = await getTransferTokenTransaction(
       userSolanaAddress,
-      to,
+      toAddress,
       amount
     );
     try {
@@ -52,7 +67,7 @@ export const TransferForm = () => {
         response.signature,
         serializedTransaction
       );
-      alert(transactionHash);
+      alert(`Transaction Hash: ${transactionHash}`);
       message.success("Transfer successful!");
     } catch (error) {
       console.log(error);
