@@ -1,0 +1,21 @@
+{
+  "name": "solana_token_transfer_tutorial",
+  "version": "1.0.0",
+  "description": "This tutorial uses MetaKeep /getWallet API and SignTransaction API to transfer SOL tokens.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "transferSol": "node transferSol.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@solana/web3.js": "^1.73.3",
+    "axios": "^1.3.4",
+    "bs58": "^5.0.0",
+    "dotenv": "^16.0.3",
+    "nacl": "^0.1.3",
+    "prettier": "^2.8.4"
+  },
+  "type": "module"
+}
