@@ -8,6 +8,7 @@ import "./App.css";
 function App() {
   const sdk = new MetaKeep({
     environment: "prod",
+    appId: "ENTER_YOUR_APP_ID_HERE",
   });
   return (
     <div className="App">
