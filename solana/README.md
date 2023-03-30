@@ -30,11 +30,9 @@ npm run transferSol
 
 You will get the transaction hash after successfully the transaction is signed and sent Onchain.
 
-
 ### Start frontend server
 
 Now we will start the frontend servers to sign transaction from end user wallet and send it on chain.
-
 
 start the frontend server. Open a second terminal session and go to the repository's `solana/frontend/token-transfer-tutorial` folder and run
 
