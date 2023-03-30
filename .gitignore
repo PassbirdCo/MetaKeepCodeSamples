@@ -3,7 +3,7 @@
 /lambda/voting/artifacts
 /nfts/node_modules
 /solana/scripts/node_modules
-/solana/frontend/token-transfer-tutorial/node_modules
+/solana/frontend/node_modules
 
 .DS_Store
 **/.DS_Store
