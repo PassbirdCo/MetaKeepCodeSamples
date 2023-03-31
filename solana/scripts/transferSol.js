@@ -17,6 +17,8 @@ import env from "dotenv";
 
 env.config();
 
+const METAKEEP_HOST = "api.metakeep.xyz";
+
 const checkApiKey = () => {
   if (!process.env.API_KEY) {
     console.log("Please set API_KEY in .env file");
@@ -34,7 +36,7 @@ const getWallet = async () => {
 
   const apiConfig = {
     method: "POST",
-    url: "https://api.metakeep.xyz/v3/getDeveloperWallet",
+    url: `https://${METAKEEP_HOST}/v3/getDeveloperWallet`,
     headers: headers,
   };
 
@@ -57,13 +59,12 @@ const signTransaction = async (transaction) => {
 
   const apiConfig = {
     method: "POST",
-    url: "https://api.metakeep.xyz/v2/app/sign/transaction",
+    url: `https://${METAKEEP_HOST}/v2/app/sign/transaction`,
     headers: headers,
     data: {
       transaction_object: {
         serialized_transaction_message: transaction.toString("hex"),
       },
-      chainId: "CHAIN_ID_SOLANA_TESTNET",
       reason: "Transfer SOL",
     },
   };
@@ -80,71 +81,75 @@ const signTransaction = async (transaction) => {
   return response.data;
 };
 
-const makeTransaction = async (amount) => {
-  const reciever = Keypair.generate();
+const transferTokens = async (amount) => {
+  // Make a random recipient address.
+  const receiver = Keypair.generate();
+
+  // Get developer wallet address.
   const senderWalletAddress = await getWallet();
-  // Sender is the wallet that we get from the getWallet API.
   const sender = new PublicKey(senderWalletAddress);
 
+  const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+
+  // As the sender would be sending the tokens to the receiver,
+  // we need to fund the wallet with some SOL to pay for the transaction fees.
+  await connection.confirmTransaction(
+    await connection.requestAirdrop(sender, 2 * LAMPORTS_PER_SOL)
+  );
+
+  // Build and sign the transfer transaction.
   let tx = new Transaction().add(
     SystemProgram.transfer({
       fromPubkey: sender,
-      toPubkey: reciever.publicKey,
+      toPubkey: receiver.publicKey,
       lamports: amount * LAMPORTS_PER_SOL,
     })
   );
 
-  const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
   tx.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
-
-  // As the sender would be sending the tokens to the reciever, we need to fund the wallet with some SOL.
-  await connection.confirmTransaction(
-    await connection.requestAirdrop(sender, LAMPORTS_PER_SOL)
-  );
-
   tx.feePayer = sender;
 
   let txnDataToBeSigned = tx.serializeMessage();
-
   let signedTransaction = await signTransaction(txnDataToBeSigned);
 
-  // recover the signed transaction and send it to the network.
+  // Populate the transaction with the signature from the API response
+  // and send it to the network.
   const signature = Uint8Array.from(
     Buffer.from(signedTransaction.signature.slice(2), "hex")
   );
 
-  let recoverTx = Transaction.populate(Message.from(txnDataToBeSigned), [
-    bs58.encode(signature),
-  ]);
+  tx.addSignature(sender, signature);
 
-  // verify the transaction.
-
-  const is_signed_by_sender = nacl.sign.detached.verify(
+  // Verify the signature of the transaction from the API response.
+  const signatureVerified = nacl.sign.detached.verify(
     txnDataToBeSigned,
     signature,
     bs58.decode(senderWalletAddress)
   );
 
-  if (is_signed_by_sender) {
+  if (signatureVerified) {
     console.log("Transaction verified");
+  } else {
+    console.log("Transaction verification failed");
+    exit(1);
   }
 
-  // send the transaction to the network.
+  // Send the transaction to the network.
+  const txnHash = await connection.sendRawTransaction(tx.serialize());
 
-  const txn = await connection.sendRawTransaction(recoverTx.serialize());
+  // Confirm the transaction.
+  await connection.confirmTransaction(txnHash);
 
-  // confirm the transaction.
-
-  await connection.confirmTransaction(txn);
-
-  console.log("Transaction Hash: ", txn);
-
-  console.log("Transaction confirmed");
+  console.log("Transaction Hash: ", txnHash);
+  console.log(
+    "Transaction confirmed. See on Solana Explorer:" +
+      `https://explorer.solana.com/tx/${txnHash}?cluster=devnet`
+  );
 };
 
 async function main() {
   checkApiKey();
-  await makeTransaction(1);
+  await transferTokens(1);
 }
 
 main().then(
