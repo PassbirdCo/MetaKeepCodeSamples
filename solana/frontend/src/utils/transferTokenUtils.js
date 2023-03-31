@@ -61,15 +61,20 @@ const sendTransactionOnChain = async (
   const bufferSignature = Uint8Array.from(
     Buffer.from(signature.slice(2), "hex")
   );
-  let recoverTx = Transaction.populate(
+
+  let transaction = Transaction.populate(
     Message.from(serialized_transaction_message),
     [bs58.encode(bufferSignature)]
   );
 
   const transactionHash = await connection.sendRawTransaction(
-    recoverTx.serialize()
+    transaction.serialize()
   );
   console.log("Transaction Hash :", transactionHash);
+  console.log(
+    "Transaction confirmed. See on Solana Explorer:" +
+      `https://explorer.solana.com/tx/${transactionHash}?cluster=devnet`
+  );
 
   return transactionHash;
 };
