@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <div>
         <Header style={{ background: "black", color: "white" }}>
-          <h1>Metakeep Token Transfer Form</h1>
+          <h1>MetaKeep Solana Token Transfer Form</h1>
         </Header>
         <TransferForm />
       </div>

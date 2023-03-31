@@ -15,8 +15,8 @@ export const TransferForm = () => {
   const [userSolanaAddress, setUserSolanaAddress] = useState("");
 
   const sdk = new MetaKeep({
-    environment: "prod",
-    appId: "ENTER_YOUR_APP_ID_HERE",
+    environment: process.env.REACT_APP_SDK_ENV,
+    appId: process.env.REACT_APP_APP_ID,
   });
 
   const login = async (email) => {
