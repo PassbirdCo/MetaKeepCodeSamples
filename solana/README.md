@@ -1,15 +1,15 @@
-## Solana - Developer and End User signing transaction using MetaKeep SDK tutorial.
+## Solana - Developer and End User transaction signing tutorial.
 
-This directory contains a sample project that you can use as a starting point for using the Signing Apis for Solana chain in MetaKeep.
+This directory contains a sample project that you can use as a starting point to sign Solana transactions for your developer wallet and ask end users to sign the transaction from their wallet.
 
-This Project is intended to be used with the [Transaction Signing using SDK](), but you should also be able to follow by reading this README.
+This Project is intended to be used with the [Solana Transaction Signing Tutorial](https://docs.metakeep.xyz/docs/solana-developer-transaction-signing), but you should also be able to follow by reading this README.
 
 ## Directory Structure
 
 The project is organized as follows:
 
-- [scripts](./scripts): Contains the script to transfer SOL tokens from developer wallet to any wallet.
-- [frontend](./frontend): Contains the frontend code to transfer tokens from end User wallet to any wallet.
+- [scripts](./scripts): Contains the script to transfer SOL tokens from your developer wallet to any other wallet.
+- [frontend](./frontend): Contains the frontend code to transfer tokens from the end user wallet to any other wallet.
 
 ## Quick start
 
@@ -19,35 +19,33 @@ The first thing, you need to do is clone this repository and download the depend
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
 
-### Send to tokens from developer wallet
+### Transfer tokens from your developer wallet
 
-Go to the repository's `solana/scripts` folder and run this script to sign transaction from developer wallet and send on chain:
+Navigate to the repository's `solana/scripts` folder and run this to sign the transaction from the developer wallet and send it to the chain:
 
 ```sh
 npm install
 npm run transferSol
 ```
 
-You will get the transaction hash after successfully the transaction is signed and sent Onchain.
+You will get the transaction hash after the transaction has been successfully signed and sent to the chain.
 
-### Start frontend server
+### Transfer tokens from an end-user wallet
 
-Now we will start the frontend servers to sign transaction from end user wallet and send it on chain.
+Now we will start the frontend server to sign a transaction from an end-user wallet and send it to the chain.
 
-start the frontend server. Open a second terminal session and go to the repository's `solana/frontend/token-transfer-tutorial` folder and run
+Open a second terminal session and navigate to the repository's `solana/frontend` folder and run
 
 ```sh
 npm install
 npm run start
 ```
 
-This will open the frontend application on the default browser of your system.
+This will open up the frontend application on the default browser of your system.
 
 ## User Guide
 
-You can find detailed instructions on using this repository and many tips in [its documentation](https://docs.metakeep.xyz/reference/nft-101).
-
-For a complete introduction to Sign APIs by MetaKeep, refer to [this guide](https://docs.metakeep.xyz/reference/v2apptransactionsign).
+You can find detailed instructions on using MetaKeep's signing APIs and SDK in the [official documentation](https://docs.metakeep.xyz/).
 
 ## Troubleshooting
 
