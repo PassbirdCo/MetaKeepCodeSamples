@@ -9,6 +9,16 @@ const {
 } = require("@solana/web3.js");
 const bs58 = require("bs58");
 
+const requestAirdrop = async (solanaAddress, amount) => {
+  const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+  await connection.confirmTransaction(
+    await connection.requestAirdrop(
+      new PublicKey(solanaAddress),
+      amount * LAMPORTS_PER_SOL
+    )
+  );
+};
+
 /*
  * This function is used to get the serialized transaction message
  * @param {string} from - The public key of the sender
@@ -82,4 +92,5 @@ const sendTransactionOnChain = async (
 module.exports = {
   getTransferTokenTransaction,
   sendTransactionOnChain,
+  requestAirdrop,
 };

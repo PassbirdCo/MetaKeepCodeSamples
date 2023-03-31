@@ -62,8 +62,8 @@ const signTransaction = async (transaction) => {
     url: `https://${METAKEEP_HOST}/v2/app/sign/transaction`,
     headers: headers,
     data: {
-      transaction_object: {
-        serialized_transaction_message: transaction.toString("hex"),
+      transactionObject: {
+        serializedTransactionMessage: transaction.toString("hex"),
       },
       reason: "Transfer SOL",
     },

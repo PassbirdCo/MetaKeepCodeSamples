@@ -6,49 +6,62 @@ import "./transferFrom.css";
 import {
   getTransferTokenTransaction,
   sendTransactionOnChain,
+  requestAirdrop,
 } from "../utils/transferTokenUtils";
 import { MetaKeep } from "metakeep";
-import axios from "axios";
 
 export const TransferForm = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
   const [userSolanaAddress, setUserSolanaAddress] = useState("");
-
-  const sdk = new MetaKeep({
-    environment: process.env.REACT_APP_SDK_ENV,
-    appId: process.env.REACT_APP_APP_ID,
-  });
+  const [sdk, setSdk] = useState(null);
+  const [txnHash, setTxnHash] = useState("");
 
   const login = async (email) => {
     try {
-      const response = await sdk.getWallet();
+      // Initialize the MetaKeep SDK
+      const mkSdk = new MetaKeep({
+        environment: process.env.REACT_APP_SDK_ENV,
+        appId: process.env.REACT_APP_APP_ID,
+        user: { email },
+      });
+      setSdk(mkSdk);
+
+      const response = await mkSdk.getWallet();
       console.log(response);
+      setUserEmail(email);
       setUserSolanaAddress(response.wallet.solAddress);
       setIsUserLoggedIn(true);
       message.success("Login successful!");
     } catch (error) {
       console.log(error);
-      alert("Login failed!");
+      message.error("Login failed!");
     }
   };
 
-  const transferTokens = async (to, amount) => {
+  const transferTokens = async (toEmail, amount) => {
+    // As the sender would be sending the tokens to the receiver,
+    // we need to fund the wallet with some SOL to pay for the transaction fees.
+    await requestAirdrop(userSolanaAddress, 2);
+
     try {
-      var response = await axios.post(
-        "https://api.metakeep.xyz/v3/getWallet",
-        { user: { email: to } },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "x-app-id": "ENTER_YOUR_APP_ID_HERE",
-          },
-        }
-      );
+      // Get the recipient's wallet
+      // We will create a new instance of MetaKeep for the recipient
+      // to get the recipient's wallet address silently.
+      const sdkToUser = new MetaKeep({
+        environment: process.env.REACT_APP_SDK_ENV,
+        appId: process.env.REACT_APP_APP_ID,
+        user: { email: toEmail },
+      });
+
+      var toEmailWallet = await sdkToUser.getWallet();
     } catch (error) {
       console.log(error);
-      alert("Recipient Wallet couldnt be fetched!");
+      alert("Recipient Wallet couldn't be fetched!");
+      return;
     }
-    const toAddress = response.data.wallet.solAddress;
+
+    const toAddress = toEmailWallet.wallet.solAddress;
     const serializedTransaction = await getTransferTokenTransaction(
       userSolanaAddress,
       toAddress,
@@ -56,22 +69,28 @@ export const TransferForm = () => {
     );
     try {
       const transactionObject = {
-        serialized_transaction_message: serializedTransaction.toString("hex"),
+        serializedTransactionMessage: serializedTransaction.toString("hex"),
       };
       const response = await sdk.signTransaction(
         transactionObject,
-        "token transfer"
+        `transfer ${amount} SOL to ${toEmail}`
       );
       console.log(response);
       const transactionHash = await sendTransactionOnChain(
         response.signature,
         serializedTransaction
       );
-      alert(`Transaction Hash: ${transactionHash}`);
-      message.success("Transfer successful!");
+
+      message.success(
+        "Transaction confirmed. See on Solana Explorer:" +
+          `https://explorer.solana.com/tx/${transactionHash}?cluster=devnet`
+      );
+
+      setTxnHash(transactionHash);
     } catch (error) {
       console.log(error);
-      alert("Transfer failed!");
+      message.error("Transfer failed!");
+      throw error;
     }
   };
 
@@ -106,7 +125,7 @@ export const TransferForm = () => {
         layout="vertical"
       >
         <Form.Item
-          label="Email"
+          label="Enter your email"
           name="email"
           rules={[
             {
@@ -125,43 +144,56 @@ export const TransferForm = () => {
       </Form>
     </div>
   ) : (
-    <div className="form-container">
-      <Form
-        name="transfer"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        layout="vertical"
-      >
-        <Form.Item
-          label="To"
-          name="to"
-          rules={[
-            {
-              required: true,
-              message: "Please input the recipient email!",
-            },
-          ]}
+    <>
+      <div className="form-container">
+        <h3>Logged in as {userEmail}</h3>
+        <h3>Your Solana Address is {userSolanaAddress}</h3>
+        <h3>Enter recipient details below </h3>
+        <Form
+          name="transfer"
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          layout="vertical"
         >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Amount"
-          name="amount"
-          rules={[
-            {
-              required: true,
-              message: "Please input the amount!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Send
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+          <Form.Item
+            label="Recipient Email"
+            name="to"
+            rules={[
+              {
+                required: true,
+                message: "Please input the recipient email!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Amount to transfer"
+            name="amount"
+            rules={[
+              {
+                required: true,
+                message: "Please input the amount!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Send
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+      {txnHash && (
+        <h3>
+          Transaction Confirmed. See on Solana Explorer:{" "}
+          <a href={`https://explorer.solana.com/tx/${txnHash}?cluster=devnet`}>
+            https://explorer.solana.com/tx/{txnHash}?cluster=devnet
+          </a>
+        </h3>
+      )}
+    </>
   );
 };
