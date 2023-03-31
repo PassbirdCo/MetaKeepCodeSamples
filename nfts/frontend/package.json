@@ -1,5 +1,5 @@
 {
-  "name": "Metakeep NFT Frontend Tutorial",
+  "name": "MetaKeep NFT Frontend Tutorial",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.1",
     "fs": "^0.0.1-security",
-    "metakeep": "^2.0.7",
+    "metakeep": "^2.1.0",
     "node-fetch": "^2.6.7",
     "prettier": "^2.7.1",
     "react": "^18.2.0",

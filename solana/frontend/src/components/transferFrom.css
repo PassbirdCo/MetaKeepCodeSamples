@@ -1,0 +1,27 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.form-container form {
+  width: 300px;
+}
+
+.form-container form label {
+  font-weight: bold;
+}
+
+.form-container form button {
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Button color to be black */
+.form-container form button {
+  background-color: black;
+  color: white;
+  /* when the button is hovered over, the color changes to white */
+}

@@ -2,6 +2,8 @@
 /lambda/voting/node_modules
 /lambda/voting/artifacts
 /nfts/node_modules
+/solana/scripts/node_modules
+/solana/frontend/node_modules
 
 .DS_Store
 **/.DS_Store
