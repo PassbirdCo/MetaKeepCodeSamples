@@ -21,7 +21,6 @@ export const TransferForm = () => {
     try {
       // Initialize the MetaKeep SDK
       const mkSdk = new MetaKeep({
-        environment: process.env.REACT_APP_SDK_ENV,
         appId: process.env.REACT_APP_APP_ID,
         user: { email },
       });
@@ -49,7 +48,6 @@ export const TransferForm = () => {
       // We will create a new instance of MetaKeep for the recipient
       // to get the recipient's wallet address silently.
       const sdkToUser = new MetaKeep({
-        environment: process.env.REACT_APP_SDK_ENV,
         appId: process.env.REACT_APP_APP_ID,
         user: { email: toEmail },
       });
