@@ -65,6 +65,7 @@ describe("CustomERC721 contract", function () {
         "Address is not whitelisted."
       );
     });
+
     it("Should mint a token", async function () {
       const tokenId = solidityKeccak256(
         ["address", "uint256"],

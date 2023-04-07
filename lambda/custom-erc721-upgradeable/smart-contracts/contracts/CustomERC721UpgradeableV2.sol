@@ -6,6 +6,9 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "metakeep-lambda/ethereum/contracts/MetaKeepLambdaUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol";
 
+// This contract is an upgraded version of CustomERC721Upgradeable.sol.
+// It's used to test the upgradeability of the contract. The logic of the burn
+// function has been changed to prevent burning of token with ID 0.
 contract CustomERC721UpgradeableV2 is
     ERC721URIStorageUpgradeable,
     MetaKeepLambdaUpgradeable,
@@ -19,8 +22,12 @@ contract CustomERC721UpgradeableV2 is
         return MetaKeepLambdaSender.msgSender();
     }
 
-    //MetaKeep Lambda takes two constructor arguments, lambdaOwner and lambdaName. We can use Collection Name as lambdaName.
-    // we need this to deploy the contract using MetaKeep Lambda API (as of now we only support constructor arguments)
+    // MetaKeep Lambda takes two constructor arguments, lambdaOwner and lambdaName. 
+    // We can use Collection Name as the lambdaName.
+    // 
+    // Initializing the contract in constructor is not required for upgradeable contracts.
+    // But it's a good safety practise to prevent any potentially harmful operation from happening
+    // (e.g. a self destruct function if there's any).
     constructor(
         string memory lambdaName,
         string memory symbol,
