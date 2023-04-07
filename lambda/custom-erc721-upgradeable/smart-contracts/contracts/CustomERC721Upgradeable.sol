@@ -17,8 +17,12 @@ contract CustomERC721Upgradeable is
         return MetaKeepLambdaSender.msgSender();
     }
 
-    //MetaKeep Lambda takes two constructor arguments, lambdaOwner and lambdaName. We can use Collection Name as lambdaName.
-    // we need this to deploy the contract using MetaKeep Lambda API (as of now we only support constructor arguments)
+    // MetaKeep Lambda takes two constructor arguments, lambdaOwner and lambdaName. 
+    // We can use Collection Name as the lambdaName.
+    // 
+    // Initializing the contract in constructor is not required for upgradeable contracts.
+    // But it's a good safety practise to prevent any potentially harmful operation from happening
+    // (e.g. a self destruct function if there's any)
     constructor(
         string memory lambdaName,
         string memory symbol,
