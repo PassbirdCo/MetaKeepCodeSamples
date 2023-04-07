@@ -6,7 +6,7 @@ This repository contains a custom ERC721 upgradeable smart contract that runs on
 The custom contract only allows minting to whitelisted users and will only mint at most one token to a user.
 
 This project is intended to be used with the
-[MetaKeep Lambda Upgradeable Tutorial ](https://docs.metakeep.xyz/docs/custom-erc721-upgradeable), but you should be able to follow it by yourself by reading the README and exploring its `smart-contracts` and `scripts` directories.
+[MetaKeep Lambda Upgradeable Tutorial ](https://docs.metakeep.xyz/docs/lambda-upgradeable), but you should be able to follow it by yourself by reading the README and exploring its `smart-contracts` and `scripts` directories.
 
 ## Directory Structure
 
