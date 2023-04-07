@@ -1,37 +1,46 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "metakeep-lambda/ethereum/contracts/MetaKeepLambdaUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol";
 
 contract CustomERC721Upgradeable is
     ERC721URIStorageUpgradeable,
+    MetaKeepLambdaUpgradeable,
     UUPSUpgradeable
 {
-    address public owner;
     mapping(address => bool) public isWhitelisted;
     mapping(address => bool) public ownsToken;
 
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only owner can call this function.");
-        _;
+    // override the  _msgSender() method to support MetaKeep Lambda transactions.
+    function _msgSender() internal view override returns (address sender) {
+        return MetaKeepLambdaSender.msgSender();
     }
 
+    // MetaKeep Lambda takes two constructor arguments, lambdaOwner and lambdaName.
+    // We can use Collection Name as the lambdaName.
+    //
     // Initializing the contract in constructor is not required for upgradeable contracts.
     // But it's a good safety practise to prevent any potentially harmful operation from happening
     // (e.g. a self destruct function if there's any)
-    constructor(string memory name, string memory symbol) {
-        owner = _msgSender();
-        initialize(name, symbol);
+    constructor(
+        string memory lambdaName,
+        string memory symbol,
+        address lambdaOwner
+    ) {
+        initialize(lambdaName, symbol, lambdaOwner);
     }
 
-    function initialize(string memory name, string memory symbol)
-        public
-        initializer
-    {
-        __ERC721_init(name, symbol);
+    function initialize(
+        string memory lambdaName,
+        string memory symbol,
+        address lambdaOwner
+    ) public initializer {
+        __ERC721_init(lambdaName, symbol);
+        _MetaKeepLambda_init(lambdaOwner, lambdaName);
     }
 
-    function mint(address to, uint256 tokenId) public onlyOwner {
+    function mint(address to, uint256 tokenId) public onlyMetaKeepLambdaOwner {
         require(isWhitelisted[to], "Address is not whitelisted.");
         require(!ownsToken[to], "Address already owns a token.");
         ownsToken[to] = true;
@@ -43,33 +52,33 @@ contract CustomERC721Upgradeable is
         return "";
     }
 
-    function burn(uint256 tokenId) public onlyOwner {
+    function burn(uint256 tokenId) public onlyMetaKeepLambdaOwner {
         _burn(tokenId);
     }
 
-    function addToWhitelist(address to) public onlyOwner {
+    function addToWhitelist(address to) public onlyMetaKeepLambdaOwner {
         isWhitelisted[to] = true;
     }
 
-    function removeFromWhitelist(address to) public onlyOwner {
+    function removeFromWhitelist(address to) public onlyMetaKeepLambdaOwner {
         isWhitelisted[to] = false;
     }
 
     /**
     @dev this function needs to be overriden to ensure the contract can be upgraded
-    by the owner.
+    by the MetaKeep Lambda owner.
      */
     function _authorizeUpgrade(address newImplementation)
         internal
         override
-        onlyOwner
+        onlyMetaKeepLambdaOwner
     {}
 
     function supportsInterface(bytes4 interfaceId)
         public
         view
         virtual
-        override(ERC721Upgradeable)
+        override(ERC721Upgradeable, AccessControlUpgradeable)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
