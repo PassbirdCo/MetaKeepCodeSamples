@@ -48,7 +48,12 @@ export const create = async (args, abi, bytecode) => {
 };
 
 // Invokes the lambda function.
-export const invoke = async (functionName, functionArgs, reason) => {
+export const invoke = async (
+  functionName,
+  functionArgs,
+  reason,
+  lambdaAddress
+) => {
   const url = "https://api.metakeep.xyz/v2/app/lambda/invoke";
 
   const headers = {
@@ -58,7 +63,7 @@ export const invoke = async (functionName, functionArgs, reason) => {
     "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
   };
   const requestBody = {
-    lambda: process.env.LAMBDA_ADDRESS,
+    lambda: lambdaAddress || process.env.LAMBDA_ADDRESS,
     function: {
       name: functionName,
       args: functionArgs,

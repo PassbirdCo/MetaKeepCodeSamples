@@ -1,11 +1,12 @@
 {
-  "name": "Custom Collection Creation And Minting tokens",
+  "name": "Upgradeable Collection Creation And Minting tokens",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "create": "node create.js",
+    "deployProxy": "node deployProxy.js",
+    "deployCustomERC721Upgradeable": "node deployCustomERC721Upgradeable.js",
     "invoke": "node whitelistAndMint.js",
     "format": "prettier --write ."
   },

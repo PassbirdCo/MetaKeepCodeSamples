@@ -1,6 +1,5 @@
 import env from "dotenv";
 import { invoke } from "../../lambdaUtils.mjs";
-import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
   waitUntilTransactionMined,
   getUserWallet,
@@ -24,7 +23,8 @@ async function main() {
   const resultJson = await invoke(
     "addToWhitelist",
     [userAddress],
-    "Whitelist User"
+    "Whitelist User",
+    process.env.CUSTOM_ERC721_PROXY_ADDRESS
   );
   console.log("Lambda invocation for whitelisting user is initiated: \n");
 
@@ -46,7 +46,12 @@ async function main() {
 
   // Invokes the lambda function to mint token for the user.
   console.log("Invoking lambda function to mint NFT token to the user\n");
-  const resultJson2 = await invoke("mint", [userAddress, "1234"], "mint token");
+  const resultJson2 = await invoke(
+    "mint",
+    [userAddress, "1234"],
+    "mint token",
+    process.env.CUSTOM_ERC721_PROXY_ADDRESS
+  );
   console.log("Lambda invocation for minting token to user is initiated: ");
 
   // Waits for the transaction to be mined.

@@ -36,6 +36,22 @@ jobs:
           npx hardhat compile
           npx hardhat test
 
+  erc721-upgradeable-lambda:
+    defaults:
+      run:
+        working-directory: lambda/custom-erc721-upgradeable/smart-contracts
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+      - name: Compile and test contracts
+        run: |
+          npm ci
+          npx hardhat compile
+          npx hardhat test
+
   erc1155-lambda:
     defaults:
       run:
