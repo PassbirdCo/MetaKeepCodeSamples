@@ -17,6 +17,22 @@ async function main() {
   // Gets the user Address to register as Candidate in Voting contract.
   const userAddress = await getUserWallet(process.env.REGISTER_CANDIDATE_EMAIL);
 
+  /* *************************************************************** Upgrade contract *************************************************************** */
+  console.log(
+    "***************************************************** Upgrade contract *****************************************************\n"
+  );
+  // Invokes the lambda function to upgrade the contract.
+  console.log("Invoking lambda function to upgrade contract...\n");
+  const resultJson3 = await invoke("upgradeTo", ["0x2D9549E783Cde00AE781Dac40a0feDD84F86A25B"], "upgrade");
+
+  // Waits for the transaction to be mined.
+  await waitUntilTransactionMined(resultJson3);
+  console.log(
+    "Lambda invocation for upgrading contract completed: " +
+      resultJson3.transactionHash +
+      "\n"
+  );
+
   /* *************************************************************** Register Candidate *************************************************************** */
   console.log(
     "***************************************************** Register Candidate *****************************************************\n"
@@ -48,6 +64,8 @@ async function main() {
 
   // Gets the Candidate ID to vote for the candidate.
   const candidateId = solidityKeccak256(["address"], [userAddress]);
+
+  console.log("Candidate ID: " + candidateId + "\n")
 
   // Invokes the lambda function to vote for the candidate.
   console.log("Invoking lambda function to vote for candidate...\n");

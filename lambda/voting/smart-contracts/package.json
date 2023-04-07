@@ -32,9 +32,11 @@
     "solidity-coverage": "^0.8.2"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "^4.8.2",
+    "@openzeppelin/contracts-upgradeable": "^4.8.2",
     "dotenv": "^16.0.2",
     "install": "^0.13.0",
-    "metakeep-lambda": "^2.0.1",
+    "metakeep-lambda": "2.0.2",
     "node-fetch": "^3.2.10",
     "web3": "^1.8.0"
   }
