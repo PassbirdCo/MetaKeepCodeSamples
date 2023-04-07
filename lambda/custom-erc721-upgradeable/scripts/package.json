@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "create": "node create.js",
+    "deployProxy": "node deployProxy.js",
+    "deployCustomERC721Upgradeable": "node deployCustomERC721Upgradeable.js",
     "invoke": "node whitelistAndMint.js",
     "format": "prettier --write ."
   },
