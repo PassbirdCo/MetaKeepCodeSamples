@@ -1,4 +1,4 @@
-// Script to deploy Smart contract using Metakeep Lambda and REST API.
+// Script to deploy Smart contract using MetaKeep Lambda REST API.
 import fs from "fs";
 import env from "dotenv";
 import { create } from "../../lambdaUtils.mjs";
@@ -17,16 +17,20 @@ function getMergedABI(implementationABI, proxyABI) {
   return mergedABI;
 }
 
-function getInitializeData(implementationABI, lambdaName, developerAddress) {
+function getInitializationData(
+  implementationABI,
+  lambdaName,
+  developerAddress
+) {
   const web3 = new Web3();
   const initializeABI = implementationABI.find(
     (item) => item.name === "initialize"
   );
-  const initalizationParameters = [lambdaName, "MTKP", developerAddress];
+  const initializationParameters = [lambdaName, "MTKP", developerAddress];
 
   return web3.eth.abi.encodeFunctionCall(
     initializeABI,
-    initalizationParameters
+    initializationParameters
   );
 }
 
@@ -36,7 +40,7 @@ async function main() {
   // Checks if the API_KEY is set in the .env file.
   checkAPIKey();
 
-  const data = JSON.parse(
+  const proxyContractJson = JSON.parse(
     fs.readFileSync(
       "../smart-contracts/artifacts/contracts/CustomERC721Proxy.sol/CustomERC721Proxy.json"
     )
@@ -57,18 +61,17 @@ async function main() {
       developerAddress,
       lambdaName,
       process.env.CUSTOM_ERC721_UPGRADEABLE_CONTRACT_ADDRESS,
-      getInitializeData(implementationABI, lambdaName, developerAddress),
+      getInitializationData(implementationABI, lambdaName, developerAddress),
     ],
-    getMergedABI(implementationABI, data.abi),
-    data.bytecode
+    getMergedABI(implementationABI, proxyContractJson.abi),
+    proxyContractJson.bytecode
   );
 
-  //Waits for the transaction to be mined.
-
+  // Wait for the transaction to be mined.
   await waitUntilTransactionMined(resultJson);
 
   console.log(
-    "Lambda created successfully. Lambda address: " + resultJson.lambda
+    "Proxy created successfully. Lambda address: " + resultJson.lambda
   );
 }
 

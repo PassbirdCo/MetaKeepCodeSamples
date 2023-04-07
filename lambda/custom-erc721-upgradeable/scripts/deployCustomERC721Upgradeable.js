@@ -1,4 +1,4 @@
-// Script to deploy Smart contract using Metakeep Lambda and REST API.
+// Script to deploy Smart contract using MetaKeep Lambda REST API.
 import fs from "fs";
 import env from "dotenv";
 import { create } from "../../lambdaUtils.mjs";
@@ -26,12 +26,12 @@ async function main() {
     data.bytecode
   );
 
-  //Waits for the transaction to be mined.
-
+  // Wait for the transaction to be mined.
   await waitUntilTransactionMined(resultJson);
 
   console.log(
-    "Lambda created successfully. Lambda address: " + resultJson.lambda
+    "Upgradeable ERC721 Lambda created successfully. Lambda address: " +
+      resultJson.lambda
   );
 }
 
