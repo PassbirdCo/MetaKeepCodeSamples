@@ -3,7 +3,6 @@ const { ethers } = require("hardhat");
 const { solidityKeccak256 } = require("ethers/lib/utils");
 
 describe("CustomERC721 contract", function () {
-  let CustomERC721;
   let customERC721;
   let customERC721Proxy;
   let [owner, addr1, addr2] = [];
@@ -12,7 +11,7 @@ describe("CustomERC721 contract", function () {
     CustomERC721 = await ethers.getContractFactory("CustomERC721Upgradeable");
     [owner, addr1, addr2] = await ethers.getSigners();
 
-    customERC721 = await customERC721WithProxy.deploy(
+    customERC721 = await customERC721.deploy(
       "MetaKeep Originals",
       "MTKP",
       owner.address
