@@ -60,15 +60,12 @@ export const TransferForm = () => {
     }
 
     const toAddress = toEmailWallet.wallet.solAddress;
-    const serializedTransaction = await getTransferTokenTransaction(
+    const transactionObject = await getTransferTokenTransaction(
       userSolanaAddress,
       toAddress,
       amount
     );
     try {
-      const transactionObject = {
-        serializedTransactionMessage: serializedTransaction.toString("hex"),
-      };
       const response = await sdk.signTransaction(
         transactionObject,
         `transfer ${amount} SOL to ${toEmail}`
@@ -76,7 +73,7 @@ export const TransferForm = () => {
       console.log(response);
       const transactionHash = await sendTransactionOnChain(
         response.signature,
-        serializedTransaction
+        transactionObject.serializeMessage()
       );
 
       message.success(
