@@ -10,7 +10,7 @@ const {
 const bs58 = require("bs58");
 
 const requestAirdrop = async (solanaAddress, amount) => {
-  const connection = new Connection("https://solana-devnet.g.alchemy.com/v2/tGQI85a60Yi-jyZREvtJdP68Vv_Kw8Fc", "confirmed");
+  const connection = new Connection("clusterApiUrl("devnet"), "confirmed");
   await connection.confirmTransaction(
     await connection.requestAirdrop(
       new PublicKey(solanaAddress),
