@@ -10,7 +10,7 @@ const {
 const bs58 = require("bs58");
 
 const requestAirdrop = async (solanaAddress, amount) => {
-  const connection = new Connection("clusterApiUrl("devnet"), "confirmed");
+  const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
   await connection.confirmTransaction(
     await connection.requestAirdrop(
       new PublicKey(solanaAddress),
