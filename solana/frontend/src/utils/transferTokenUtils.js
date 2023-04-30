@@ -48,11 +48,7 @@ const getTransferTokenTransaction = async (from, to, amount) => {
 
   transferTransaction.feePayer = fromPublicKey;
 
-  let serializedTransactionMessage = transferTransaction.serializeMessage();
-
-  console.log(serializedTransactionMessage);
-
-  return serializedTransactionMessage;
+  return transferTransaction;
 };
 
 /*
