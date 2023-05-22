@@ -4,7 +4,7 @@ import { message } from "antd";
 import {
   createRegisterAddressTx,
   broadcastTx,
-} from "../utils/addressRegistration";
+} from "../utils/fioTransactionUtils";
 import { MetaKeep } from "metakeep";
 const { Fio } = require("@fioprotocol/fiojs");
 

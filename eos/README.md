@@ -1,4 +1,4 @@
-## FIO/EOS - Developer and End User transaction signing tutorial.
+## FIO/EOS - End User transaction signing tutorial.
 
 This directory contains a sample project that you can use as a starting point to sign Fio/EOS transactions for your developer wallet and ask end users to sign the transaction from their wallet.
 

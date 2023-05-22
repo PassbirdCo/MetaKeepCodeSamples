@@ -1,4 +1,3 @@
-// Utils File to Register Address in FIO Chain
 const { Fio } = require("@fioprotocol/fiojs");
 const {
   serializeActionData,
@@ -17,14 +16,10 @@ export const createRegisterAddressTx = async (
   action
 ) => {
   const chainData = await getChainData();
-  // Create the action data object
 
   Transactions.FioProvider = {
     accountHash: Fio.accountHash,
   };
-  console.log("publicKey", publicKey);
-
-  console.log("actionData", actionData);
 
   const serializedActionData = await createSerializeActionData(
     account,
@@ -32,7 +27,6 @@ export const createRegisterAddressTx = async (
     actionData,
     chainData.chain_id
   );
-  console.log("serializedActionData", serializedActionData);
 
   const { fioTokenAbi } = await getAbiProvider(account);
 
