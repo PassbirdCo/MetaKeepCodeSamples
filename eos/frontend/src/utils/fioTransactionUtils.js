@@ -9,17 +9,18 @@ const {
   Transactions,
 } = require("@fioprotocol/fiosdk/lib/transactions/Transactions");
 
-export const createRegisterAddressTx = async (
-  publicKey,
-  actionData,
-  account,
-  action
-) => {
+export const createRawTx = async (publicKey, actionData, account, action) => {
   const chainData = await getChainData();
 
+  // Reference taken from
+  // https://github.com/fioprotocol/fiosdk_typescript-examples/blob/c0000bf74b20fe824cc792faa121049d60f1bbfe/fio-recipe.offline-sign.js#L32-L35
   Transactions.FioProvider = {
     accountHash: Fio.accountHash,
   };
+
+  const { fioTokenAbi } = await getAbiProvider(account);
+
+  Transactions.abiMap.set(fioTokenAbi.account_name, fioTokenAbi);
 
   const serializedActionData = await createSerializeActionData(
     account,
@@ -27,10 +28,6 @@ export const createRegisterAddressTx = async (
     actionData,
     chainData.chain_id
   );
-
-  const { fioTokenAbi } = await getAbiProvider(account);
-
-  Transactions.abiMap.set(fioTokenAbi.account_name, fioTokenAbi);
 
   const transaction = new Transactions();
   const rawTx = await transaction.createRawTransaction({

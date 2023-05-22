@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import "./common.css"; // Import CSS file
-import { message } from "antd";
-import {
-  createRegisterAddressTx,
-  broadcastTx,
-} from "../utils/fioTransactionUtils";
+import "./common.css";
+import { message, Spin } from "antd";
+import { createRawTx, broadcastTx } from "../utils/fioTransactionUtils";
 import { MetaKeep } from "metakeep";
 const { Fio } = require("@fioprotocol/fiojs");
 
@@ -14,6 +11,7 @@ const TransferFIO = () => {
   const [amount, setAmount] = useState(0);
   const [sdk, setSdk] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSenderEmailChange = (e) => {
     setSenderEmail(e.target.value);
@@ -29,6 +27,7 @@ const TransferFIO = () => {
 
   const handleSdkInit = async (email) => {
     try {
+      setLoading(true);
       // Initialize the MetaKeep SDK
       const mkSdk = new MetaKeep({
         appId: process.env.REACT_APP_APP_ID,
@@ -38,93 +37,103 @@ const TransferFIO = () => {
       setSdk(mkSdk);
     } catch (error) {
       message.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleLogin = async () => {
     if (!senderEmail) {
       message.error("Please enter your email!");
+      return;
     }
-    if (senderEmail) {
-      await handleSdkInit(senderEmail);
-      setLoggedIn(true);
-    }
+
+    setLoading(true);
+    await handleSdkInit(senderEmail);
+    setLoggedIn(true);
+    setLoading(false);
   };
 
   const handleTransfer = async () => {
     if (!senderEmail) {
       message.error("Please enter your email!");
+      return;
     }
     if (!receiverEmail) {
       message.error("Please enter receiver's email!");
+      return;
     }
     if (!amount) {
       message.error("Please enter amount!");
+      return;
     }
-    if (senderEmail && receiverEmail && amount) {
-      const wallet = await sdk.getWallet();
-      const fioAddress = "FIO" + wallet.wallet.eosAddress.slice(3);
 
-      const sdkToUser = new MetaKeep({
-        appId: process.env.REACT_APP_APP_ID,
-        user: { email: receiverEmail },
-        environment: "dev",
-      });
+    setLoading(true);
+    const wallet = await sdk.getWallet();
+    const fioAddress = "FIO" + wallet.wallet.eosAddress.slice(3);
 
-      const recieverAddress = await sdkToUser.getWallet();
-      const recieverFioAddress =
-        "FIO" + recieverAddress.wallet.eosAddress.slice(3);
+    const sdkToUser = new MetaKeep({
+      appId: process.env.REACT_APP_APP_ID,
+      user: { email: receiverEmail },
+      environment: "dev",
+    });
 
-      const actionData = {
-        payee_public_key: recieverFioAddress,
-        amount: amount,
-        max_fee: 40000000000,
-        tpid: "",
-        actor: Fio.accountHash(fioAddress),
-      };
-      const { rawTx, serializedActionData, chain_id } =
-        await createRegisterAddressTx(
-          fioAddress,
-          actionData,
-          "fio.token",
-          "trnsfiopubky"
-        );
+    const recieverAddress = await sdkToUser.getWallet();
+    const recieverFioAddress =
+      "FIO" + recieverAddress.wallet.eosAddress.slice(3);
 
-      // deep copy rawTx
-      const rawTxCopy = JSON.parse(JSON.stringify(rawTx));
-      // sign transaction with MetaKeep
-      rawTx.actions[0].data = serializedActionData;
-      const response = await sdk.signTransaction(
-        { rawTransaction: rawTx, extraSigningData: { chainId: chain_id } },
-        "eos token transfer"
-      );
-      // if user cancels signing, return
-      if (!response) {
-        setLoggedIn(false);
-        return;
-      }
-      if (response.error) {
-        message.error(response.error.message);
-        return;
-      }
+    const actionData = {
+      payee_public_key: recieverFioAddress,
+      amount: amount,
+      max_fee: 40000000000,
+      tpid: "",
+      actor: Fio.accountHash(fioAddress),
+    };
+    const { rawTx, serializedActionData, chain_id } = await createRawTx(
+      fioAddress,
+      actionData,
+      "fio.token",
+      "trnsfiopubky"
+    );
 
-      const signature = response.signature;
-      // broadcast transaction to the blockchain
-      const broadcastResponse = await broadcastTx(
-        rawTxCopy,
-        chain_id,
-        "fio.address",
-        signature
-      );
-      // alert user if transaction is successful
-      if (broadcastResponse.transaction_id) {
-        message.success("Transaction successful!");
-      } else {
-        message.error("Transaction failed!");
-      }
-      console.log(broadcastResponse);
+    // Deep copy rawTx
+    const rawTxCopy = JSON.parse(JSON.stringify(rawTx));
+    // Sign transaction with MetaKeep
+    rawTx.actions[0].data = serializedActionData;
+    const response = await sdk.signTransaction(
+      { rawTransaction: rawTx, extraSigningData: { chainId: chain_id } },
+      "eos token transfer"
+    );
+
+    // If user cancels signing, return
+    if (!response) {
       setLoggedIn(false);
+      setLoading(false);
+      return;
     }
+    if (response.error) {
+      message.error(response.error.message);
+      setLoading(false);
+      return;
+    }
+
+    const signature = response.signature;
+    // Broadcast transaction to the blockchain
+    const broadcastResponse = await broadcastTx(
+      rawTxCopy,
+      chain_id,
+      "fio.address",
+      signature
+    );
+    // Alert user if transaction is successful
+    if (broadcastResponse.transaction_id) {
+      message.success("Transaction successful!");
+    } else {
+      message.error("Transaction failed!");
+    }
+    console.log(broadcastResponse);
+    setLoggedIn(false);
+    setLoading(false);
   };
 
   return (
@@ -136,7 +145,7 @@ const TransferFIO = () => {
         onChange={handleSenderEmailChange}
         placeholder="Enter your email"
         className="email-input"
-        disabled={loggedIn}
+        disabled={loggedIn || loading}
       />
       <input
         type="email"
@@ -144,7 +153,7 @@ const TransferFIO = () => {
         onChange={handleReceiverEmailChange}
         placeholder="Enter receiver's email"
         className="email-input"
-        disabled={loggedIn}
+        disabled={loggedIn || loading}
       />
       <input
         type="number"
@@ -152,15 +161,17 @@ const TransferFIO = () => {
         onChange={handleAmountChange}
         placeholder="Enter amount"
         className="email-input"
-        disabled={loggedIn}
+        disabled={loggedIn || loading}
       />
-      {!loggedIn ? (
-        <button onClick={handleLogin} className="register-button">
-          Login
-        </button>
-      ) : (
+      {loading ? (
+        <Spin size="small" />
+      ) : loggedIn ? (
         <button onClick={handleTransfer} className="register-button">
           Transfer
+        </button>
+      ) : (
+        <button onClick={handleLogin} className="register-button">
+          Login
         </button>
       )}
     </div>
