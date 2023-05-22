@@ -1,6 +1,6 @@
-## FIO/EOS - End User transaction signing tutorial.
+## FIO - End User transaction signing tutorial.
 
-This directory contains a sample project that you can use as a starting point to sign Fio/EOS transactions for your developer wallet and ask end users to sign the transaction from their wallet.
+This directory contains a sample project that you can use as a starting point to sign FIO transactions for your developer wallet and ask end users to sign the transaction from their wallet.
 
 This Project is intended to be used with the [Fio Transaction Signing Tutorial](https://docs.metakeep.xyz/docs/solana-developer-transaction-signing), but you should also be able to follow by reading this README.
 
@@ -22,7 +22,7 @@ git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 
 Now we will start the frontend server to sign a transaction from an end-user wallet and send it to the chain.
 
-Open a second terminal session and navigate to the repository's `eos/frontend` folder and run
+Open a second terminal session and navigate to the repository's `eos/fio/frontend` folder and run
 
 ```sh
 npm install
