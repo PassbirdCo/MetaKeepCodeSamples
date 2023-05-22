@@ -67,6 +67,12 @@ npm run invoke
 
 After the successful invocation, you would have whitelisted the user and minted the token.
 
+## Upgrade the Implementation contract to new customERC721Upgradeable contract
+
+```sh
+npm run upgradeToCustomERC721UpgradeableV2
+```
+
 ## User Guide
 
 You can find detailed instructions on using MetaKeep Lambda and tips in [the documentation](https://docs.metakeep.xyz/reference/lambda-101).
