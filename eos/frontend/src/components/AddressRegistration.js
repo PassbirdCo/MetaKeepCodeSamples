@@ -3,6 +3,7 @@ import "./common.css"; // Import CSS file
 import { message } from "antd";
 import { createRegisterAddressTx, broadcastTx } from "../utils/addressRegistration";
 import { MetaKeep } from "metakeep";
+const { Fio } = require("@fioprotocol/fiojs");
 
 const AddressRegistration = () => {
 
@@ -10,7 +11,6 @@ const AddressRegistration = () => {
 
   const [email, setEmail] = useState("");
   const [sdk, setSdk] = useState(null);
-  const [eosAddress, setEosAddress] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
 
   const handleEmailChange = (e) => {
@@ -21,7 +21,7 @@ const AddressRegistration = () => {
     try {
       // Initialize the MetaKeep SDK
       const mkSdk = new MetaKeep({
-        appId: "fd4be843-7769-41dc-bfd8-5d71af47241c",
+        appId: process.env.REACT_APP_APP_ID,
         user: {email: email},
         environment: "dev"
       });
@@ -47,18 +47,22 @@ const AddressRegistration = () => {
     }
     if (email) {
       const wallet = await sdk.getWallet();
-      const eosAddress = wallet.wallet.eosAddress;
-      // convert EOS address to FIO address
-      console.log(eosAddress);
-      const fioAddress = "FIO" + eosAddress.slice(3);
-      console.log(fioAddress);
-      const {serializedTransaction, serializedContextFreeData, rawTx, serializedActionData, chain_id} = await createRegisterAddressTx(
+      const fioAddress = "FIO" + wallet.wallet.eosAddress.slice(3);
+
+      const actionData = {
+        // slice Email before @
+        fio_address: email.slice(0, email.indexOf("@")) + "@fiotestnet",
+        owner_fio_public_key: fioAddress,
+        max_fee: 40000000000,
+        tpid: 'rewards@wallet',
+        actor: Fio.accountHash(fioAddress),
+    };
+      const {rawTx, serializedActionData, chain_id} = await createRegisterAddressTx(
         fioAddress,
-        "adityatutorial@fiotestnet",
+        actionData,
         "fio.address",
         "regaddress",
       )
-      console.log(serializedTransaction, serializedContextFreeData, rawTx, serializedActionData)
       
       // deep copy rawTx
       const rawTxCopy = JSON.parse(JSON.stringify(rawTx));
@@ -66,10 +70,15 @@ const AddressRegistration = () => {
       rawTx.actions[0].data = serializedActionData;
       const response = await sdk.signTransaction({rawTransaction: rawTx, extraSigningData: {chainId: chain_id}}, "eos address registration");
       const signature = response.signature
-      console.log(signature);
       // broadcast transaction to the blockchain
       const broadcastResponse = await broadcastTx(rawTxCopy, chain_id,"fio.address", signature);
-
+      if (broadcastResponse.transaction_id) {
+        message.success("Transaction successful!");
+      }
+      else {
+        message.error("Transaction failed!");
+      }
+      setLoggedIn(false);
       console.log(broadcastResponse);
     }
   };
@@ -83,6 +92,7 @@ const AddressRegistration = () => {
         onChange={handleEmailChange}
         placeholder="Enter your email"
         className="email-input"
+        disabled={loggedIn}
       />
       {loggedIn ? <button onClick={handleRegister} className="register-button">
         Register

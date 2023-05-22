@@ -12,7 +12,7 @@ const {
 
 export const createRegisterAddressTx = async (
     publicKey,
-    fio_address,
+    actionData,
     account,
     action,
 ) => {
@@ -24,13 +24,6 @@ export const createRegisterAddressTx = async (
         accountHash: Fio.accountHash,
     };
     console.log('publicKey', publicKey)
-    const actionData = {
-        fio_address: fio_address,
-        owner_fio_public_key: publicKey,
-        max_fee: 40000000000,
-        tpid: 'rewards@wallet',
-        actor: Fio.accountHash(publicKey),
-    }
 
     console.log('actionData', actionData)
 
