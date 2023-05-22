@@ -8,6 +8,7 @@
     "deployProxy": "node deployProxy.js",
     "deployCustomERC721Upgradeable": "node deployCustomERC721Upgradeable.js",
     "invoke": "node whitelistAndMint.js",
+    "upgradeToCustomERC721UpgradeableV2": "node upgradeToCustomERC721UpgradeableV2.js",
     "format": "prettier --write ."
   },
   "author": "Passbird Research",
