@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./common.css"; // Import CSS file
-import { message, Spin } from "antd"; // Import Spin component from antd
+import "./common.css";
+import { message, Spin } from "antd";
 import { createRawTx, broadcastTx } from "../utils/fioTransactionUtils";
 import { MetaKeep } from "metakeep";
 const { Fio } = require("@fioprotocol/fiojs");
