@@ -31,7 +31,7 @@ export const createRawTx = async (publicKey, actionData, account, action) => {
   Transactions.abiMap.set(fioTokenAbi.account_name, fioTokenAbi);
 
   /*
-   * This function serializes the action data
+   * This serializes the action data
    * This is needed because we are doing an offline transaction
    * due to which we cant fetch the abi from FIO API
    */
@@ -54,8 +54,6 @@ export const createRawTx = async (publicKey, actionData, account, action) => {
   });
 
   return {
-    serializedTransaction,
-    serializedContextFreeData,
     rawTx,
     serializedActionData,
     chain_id: chainData.chain_id,
@@ -168,6 +166,13 @@ const getChainData = async () => {
   return chainData;
 };
 
+/**
+ * This function broadcasts the transaction
+ * @param {*} rawTx
+ * @param {*} chain_id
+ * @param {*} account
+ * @param {*} signature
+ */
 export const broadcastTx = async (rawTx, chain_id, account, signature) => {
   const { fioTokenAbi } = await getAbiProvider(account);
 
@@ -180,6 +185,8 @@ export const broadcastTx = async (rawTx, chain_id, account, signature) => {
       chainId: chain_id,
       transaction: rawTx,
     });
+
+  // Create the push transaction args
   const pushTransactionArgs = {
     signatures: [signature],
     packed_trx: Buffer.from(serializedTransaction).toString("hex"),

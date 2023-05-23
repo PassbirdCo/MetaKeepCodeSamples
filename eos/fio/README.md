@@ -12,17 +12,17 @@ The project is organized as follows:
 
 ## Quick start
 
-The first thing, you need to do is clone this repository and download the dependencies.
+### Prerequisites
+
+#### Get an APP Id
+
+The first step is to get an APP Id, to do so, sign up [here](https://console.metakeep.xyz) and copy your APP Id to the env file.
+
+Afterward, you need to clone this repository and download the dependencies.
 
 ```sh
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
-
-### Transfer tokens from an end-user wallet
-
-Now we will start the frontend server to sign a transaction from an end-user wallet and send it to the chain.
-
-Open a second terminal session and navigate to the repository's `eos/fio/frontend` folder and run
 
 ```sh
 npm install
@@ -30,6 +30,14 @@ npm run start
 ```
 
 This will open up the frontend application on the default browser of your system.
+
+### Register your address on Fio Testnet Network
+
+To register your address on Fio Network, you need to enter your email ID and click on `Register`.
+
+### Transfer tokens from an end-user wallet
+
+To transfer the tokens, you would need to add the detail like the receiver's email ID and the Amount to transfer, and click on `Transfer`.
 
 ## User Guide
 

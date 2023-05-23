@@ -10,7 +10,7 @@ const TransferFIO = () => {
   const [receiverEmail, setReceiverEmail] = useState("");
   const [amount, setAmount] = useState(0);
   const [sdk, setSdk] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [signInitiated, setSignInitiated] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSenderEmailChange = (e) => {
@@ -32,7 +32,7 @@ const TransferFIO = () => {
       const mkSdk = new MetaKeep({
         appId: process.env.REACT_APP_APP_ID,
         user: { email: email },
-        environment: "dev",
+        environment: process.env.REACT_APP_ENVIRONMENT,
       });
       setSdk(mkSdk);
     } catch (error) {
@@ -50,7 +50,7 @@ const TransferFIO = () => {
 
     setLoading(true);
     await handleSdkInit(senderEmail);
-    setLoggedIn(true);
+    setSignInitiated(true);
     setLoading(false);
   };
 
@@ -75,7 +75,7 @@ const TransferFIO = () => {
     const sdkToUser = new MetaKeep({
       appId: process.env.REACT_APP_APP_ID,
       user: { email: receiverEmail },
-      environment: "dev",
+      environment: process.env.REACT_APP_ENVIRONMENT,
     });
 
     const recieverAddress = await sdkToUser.getWallet();
@@ -107,7 +107,7 @@ const TransferFIO = () => {
 
     // If user cancels signing, return
     if (!response) {
-      setLoggedIn(false);
+      setSignInitiated(false);
       setLoading(false);
       return;
     }
@@ -132,7 +132,7 @@ const TransferFIO = () => {
       message.error("Transaction failed!");
     }
     console.log(broadcastResponse);
-    setLoggedIn(false);
+    setSignInitiated(false);
     setLoading(false);
   };
 
@@ -145,7 +145,7 @@ const TransferFIO = () => {
         onChange={handleSenderEmailChange}
         placeholder="Enter your email"
         className="email-input"
-        disabled={loggedIn || loading}
+        disabled={signInitiated || loading}
       />
       <input
         type="email"
@@ -153,7 +153,7 @@ const TransferFIO = () => {
         onChange={handleReceiverEmailChange}
         placeholder="Enter receiver's email"
         className="email-input"
-        disabled={loggedIn || loading}
+        disabled={signInitiated || loading}
       />
       <input
         type="number"
@@ -161,17 +161,17 @@ const TransferFIO = () => {
         onChange={handleAmountChange}
         placeholder="Enter amount"
         className="email-input"
-        disabled={loggedIn || loading}
+        disabled={signInitiated || loading}
       />
       {loading ? (
-        <Spin size="small" />
-      ) : loggedIn ? (
+        <Spin size="small" style={{ color: "black" }} />
+      ) : signInitiated ? (
         <button onClick={handleTransfer} className="register-button">
-          Transfer
+          Confirm
         </button>
       ) : (
         <button onClick={handleLogin} className="register-button">
-          Login
+          Transfer
         </button>
       )}
     </div>

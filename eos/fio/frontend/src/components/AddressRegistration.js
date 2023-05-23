@@ -8,7 +8,7 @@ const { Fio } = require("@fioprotocol/fiojs");
 const AddressRegistration = () => {
   const [email, setEmail] = useState("");
   const [sdk, setSdk] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [signInitiated, setSignInitiated] = useState(false);
   const [loading, setLoading] = useState(false); // Loading state
 
   const handleEmailChange = (e) => {
@@ -21,7 +21,7 @@ const AddressRegistration = () => {
       const mkSdk = new MetaKeep({
         appId: process.env.REACT_APP_APP_ID,
         user: { email: email },
-        environment: "dev",
+        environment: process.env.REACT_APP_ENVIRONMENT,
       });
       setSdk(mkSdk);
     } catch (error) {
@@ -35,7 +35,7 @@ const AddressRegistration = () => {
       return;
     }
     await handleSdkInit(email);
-    setLoggedIn(true);
+    setSignInitiated(true);
   };
 
   const handleRegister = async () => {
@@ -86,7 +86,7 @@ const AddressRegistration = () => {
       } else {
         message.error("Transaction failed!");
       }
-      setLoggedIn(false);
+      setSignInitiated(false);
       console.log(broadcastResponse);
     } catch (error) {
       message.error(error.message);
@@ -104,17 +104,17 @@ const AddressRegistration = () => {
         onChange={handleEmailChange}
         placeholder="Enter your email"
         className="email-input"
-        disabled={loggedIn}
+        disabled={signInitiated}
       />
       {loading ? (
         // Show the loader if loading state is true
-        <Spin size="large" />
+        <Spin size="large" style={{ color: "black" }} />
       ) : (
         <button
-          onClick={loggedIn ? handleRegister : handleLogin}
+          onClick={signInitiated ? handleRegister : handleLogin}
           className="register-button"
         >
-          {loggedIn ? "Register" : "Login"}
+          {signInitiated ? "Confirm" : "Register"}
         </button>
       )}
     </div>
