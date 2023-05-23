@@ -84,7 +84,7 @@ const TransferFIO = () => {
 
     const actionData = {
       payee_public_key: recieverFioAddress,
-      amount: amount,
+      amount: amount * 1000000000, // 1 FIO = 1000000000 SUFs
       max_fee: 40000000000,
       tpid: "",
       actor: Fio.accountHash(fioAddress),
@@ -102,7 +102,7 @@ const TransferFIO = () => {
     rawTx.actions[0].data = serializedActionData;
     const response = await sdk.signTransaction(
       { rawTransaction: rawTx, extraSigningData: { chainId: chain_id } },
-      "eos token transfer"
+      "FIO token transfer from " + senderEmail + " to " + receiverEmail
     );
 
     // If user cancels signing, return

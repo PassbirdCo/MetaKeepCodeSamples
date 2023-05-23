@@ -49,7 +49,7 @@ const AddressRegistration = () => {
 
     const actionData = {
       // Slice Email before @
-      fio_address: email.slice(0, email.indexOf("@")) + "@fiotestnet",
+      fio_address: email.replace(/[^a-zA-Z0-9]/g, "") + "@fiotestnet",
       owner_fio_public_key: fioAddress,
       max_fee: 40000000000,
       tpid: "rewards@wallet",
@@ -70,7 +70,7 @@ const AddressRegistration = () => {
       rawTx.actions[0].data = serializedActionData;
       const response = await sdk.signTransaction(
         { rawTransaction: rawTx, extraSigningData: { chainId: chain_id } },
-        "eos address registration"
+        "FIO Address Registration"
       );
       const signature = response.signature;
       // Broadcast transaction to the blockchain

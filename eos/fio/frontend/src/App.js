@@ -1,6 +1,12 @@
 import React from "react";
 import { Layout, Menu } from "antd";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import { PlusOutlined, SwapOutlined } from "@ant-design/icons";
 import AddressRegistration from "./components/AddressRegistration";
 import TransferFIO from "./components/TransferFIO";
@@ -36,7 +42,7 @@ function App() {
             style={menuStyle}
             selectedKeys={[]}
           >
-            <h1 style={logoStyle}>MetaKeep EOS Tutorial</h1>
+            <h1 style={logoStyle}>MetaKeep FIO Tutorial</h1>
             <Menu.Item key="create" icon={<PlusOutlined />}>
               <Link
                 to="/create"
@@ -57,6 +63,7 @@ function App() {
             </Menu.Item>
           </Menu>
           <Routes>
+            <Route path="/" element={<Navigate to="/create" />} />
             <Route path="/create" element={<AddressRegistration />} />
             <Route path="/transfer" element={<TransferFIO />} />
           </Routes>
