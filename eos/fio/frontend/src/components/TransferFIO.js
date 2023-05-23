@@ -164,7 +164,7 @@ const TransferFIO = () => {
         disabled={signInitiated || loading}
       />
       {loading ? (
-        <Spin size="small" style={{ color: "black" }} />
+        <Spin size="large" className="custom-spinner" />
       ) : signInitiated ? (
         <button onClick={handleTransfer} className="register-button">
           Confirm

@@ -108,7 +108,7 @@ const AddressRegistration = () => {
       />
       {loading ? (
         // Show the loader if loading state is true
-        <Spin size="large" style={{ color: "black" }} />
+        <Spin size="large" className="custom-spinner" />
       ) : (
         <button
           onClick={signInitiated ? handleRegister : handleLogin}
