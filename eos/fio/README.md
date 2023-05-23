@@ -1,45 +1,55 @@
-## FIO - End User transaction signing tutorial.
+## FIO - User Transaction Signing Tutorial.
 
-This directory contains a sample project that you can use as a starting point to sign FIO transactions for your developer wallet and ask end users to sign the transaction from their wallet.
-
-This Project is intended to be used with the [Fio Transaction Signing Tutorial](https://docs.metakeep.xyz/docs/solana-developer-transaction-signing), but you should also be able to follow by reading this README.
+This directory contains a sample project that you can use as a starting point for signing FIO transactions for your end users.
 
 ## Directory Structure
 
 The project is organized as follows:
 
-- [frontend](./frontend): Contains the frontend code to register a handler for FIO public Key and transfer tokens from the end user wallet to any other wallet.
+- [frontend](./frontend): Contains the frontend code to register a handler for the FIO public Key and transfer tokens from the end user's wallet to a different wallet.
 
-## Quick start
+## Running the Demo
 
-### Prerequisites
+Please follow the steps below to run the demo:
 
-#### Get an APP Id
+### 1. Create an EOS app
 
-The first step is to get an APP Id, to do so, sign up [here](https://console.metakeep.xyz) and copy your APP Id to the env file.
+The first step is to create an EOS app on the [MetaKeep console](https://console.metakeep.xyz). Once you have created the app, you will get an `APP ID`. Copy this `APP ID` to the `.env` file in the root directory of the project.
+
+### 2. Download the project
 
 Afterward, you need to clone this repository and download the dependencies.
 
 ```sh
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
+npm install
 ```
 
+### 3. Start the frontend server
+
+Now start the frontend server. Run the following command:
+
 ```sh
-npm install
 npm run start
 ```
 
 This will open up the frontend application on the default browser of your system.
 
-### Register your address on Fio Testnet Network
+### 4. Register the user's address on the FIO Testnet Network
 
-To register your address on Fio Network, you need to enter your email ID and click on `Register`.
+We will now register the user's address on the FIO Testnet Network. For the demo, we will try to register the user's email ID(after removing the `@` symbol) as the FIO address.
 
-### Transfer tokens from an end-user wallet
+Enter your email ID and click on `Register`.
 
-To transfer the tokens, you would need to add the detail like the receiver's email ID and the Amount to transfer, and click on `Transfer`.
+### 5. Transfer tokens from the user's wallet
 
-## User Guide
+We will now transfer tokens from the user's wallet to a different wallet.
+
+To transfer the tokens, enter the receiver's email ID, and the amount to transfer, and click on `Transfer`.
+
+Voila! You have successfully finished the FIO user signing demo 🎉🎉.
+
+## Guide
 
 You can find detailed instructions on using MetaKeep's signing APIs and SDK in the [official documentation](https://docs.metakeep.xyz/).
 
