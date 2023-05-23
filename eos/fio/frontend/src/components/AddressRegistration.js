@@ -9,7 +9,7 @@ const AddressRegistration = () => {
   const [email, setEmail] = useState("");
   const [sdk, setSdk] = useState(null);
   const [signInitiated, setSignInitiated] = useState(false);
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -91,7 +91,7 @@ const AddressRegistration = () => {
     } catch (error) {
       message.error(error.message);
     } finally {
-      setLoading(false); // Hide the loader
+      setLoading(false);
     }
   };
 
@@ -107,7 +107,6 @@ const AddressRegistration = () => {
         disabled={signInitiated}
       />
       {loading ? (
-        // Show the loader if loading state is true
         <Spin size="large" className="custom-spinner" />
       ) : (
         <button
