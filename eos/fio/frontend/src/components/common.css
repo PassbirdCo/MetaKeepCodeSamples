@@ -1,0 +1,32 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: white;
+  color: black;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.email-input {
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 300px;
+}
+
+.register-button {
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.custom-spinner .ant-spin-dot-item {
+  background-color: black;
+}
