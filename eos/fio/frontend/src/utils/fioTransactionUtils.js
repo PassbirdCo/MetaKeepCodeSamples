@@ -9,6 +9,14 @@ const {
   Transactions,
 } = require("@fioprotocol/fiosdk/lib/transactions/Transactions");
 
+/**
+ * This function creates the raw transaction
+ * @param {*} publicKey
+ * @param {*} actionData
+ * @param {*} account
+ * @param {*} action
+ * @returns
+ */
 export const createRawTx = async (publicKey, actionData, account, action) => {
   const chainData = await getChainData();
 
@@ -22,6 +30,11 @@ export const createRawTx = async (publicKey, actionData, account, action) => {
 
   Transactions.abiMap.set(fioTokenAbi.account_name, fioTokenAbi);
 
+  /*
+   * This function serializes the action data
+   * This is needed because we are doing an offline transaction
+   * due to which we cant fetch the abi from FIO API
+   */
   const serializedActionData = await createSerializeActionData(
     account,
     action,
@@ -30,6 +43,8 @@ export const createRawTx = async (publicKey, actionData, account, action) => {
   );
 
   const transaction = new Transactions();
+
+  /* Creates the raw transaction */
   const rawTx = await transaction.createRawTransaction({
     action: action,
     account: account,
@@ -37,12 +52,6 @@ export const createRawTx = async (publicKey, actionData, account, action) => {
     chainData: chainData,
     publicKey: publicKey,
   });
-
-  const { serializedContextFreeData, serializedTransaction } =
-    await transaction.serialize({
-      chainId: chainData.chain_id,
-      transaction: rawTx,
-    });
 
   return {
     serializedTransaction,
@@ -53,6 +62,14 @@ export const createRawTx = async (publicKey, actionData, account, action) => {
   };
 };
 
+/**
+ * This function serializes the action data
+ * @param {*} account
+ * @param {*} actionName
+ * @param {*} actionData
+ * @param {*} chainId
+ * @returns
+ */
 const createSerializeActionData = async (
   account,
   actionName,
@@ -78,6 +95,10 @@ const createSerializeActionData = async (
   return serializedActionData;
 };
 
+/**
+ * This function gets the abi provider
+ * @param {*} account
+ */
 const getAbiProvider = async (account) => {
   const fioTokenAbi = await fetch(
     "https://fiotestnet.blockpane.com/v1/chain/get_raw_abi",
@@ -109,9 +130,12 @@ const getAbiProvider = async (account) => {
   return { fioTokenAbi, abiProvider };
 };
 
+/**
+ * This function gets the chain data
+ * @returns chainData
+ */
 const getChainData = async () => {
-  // Get the blockchain data
-
+  // Fetches the chain data
   const blockchainData = await fetch(
     "https://fiotestnet.blockpane.com/v1/chain/get_info",
     {
@@ -133,7 +157,8 @@ const getChainData = async () => {
   // Create the chain Data object
   const chainData = {
     chain_id: blockchainData.chain_id,
-    expiration: new Date(new Date().getTime() + 60 * 1000)
+    // 2 minute expiration
+    expiration: new Date(new Date().getTime() + 120 * 1000)
       .toISOString()
       .split(".")[0],
     ref_block_num: blockData.block_num & 0xffff,
