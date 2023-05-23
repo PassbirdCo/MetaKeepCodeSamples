@@ -43,13 +43,13 @@ function App() {
             selectedKeys={[]}
           >
             <h1 style={logoStyle}>MetaKeep FIO Tutorial</h1>
-            <Menu.Item key="create" icon={<PlusOutlined />}>
+            <Menu.Item key="addressRegistration" icon={<PlusOutlined />}>
               <Link
-                to="/create"
+                to="/addressRegistration"
                 style={linkStyle}
                 activestyle={activeLinkStyle}
               >
-                Create
+                Address Registration
               </Link>
             </Menu.Item>
             <Menu.Item key="transfer" icon={<SwapOutlined />}>
@@ -58,13 +58,16 @@ function App() {
                 style={linkStyle}
                 activestyle={activeLinkStyle}
               >
-                Transfer
+                Transfer FIO Tokens
               </Link>
             </Menu.Item>
           </Menu>
           <Routes>
-            <Route path="/" element={<Navigate to="/create" />} />
-            <Route path="/create" element={<AddressRegistration />} />
+            <Route path="/" element={<Navigate to="/addressRegistration" />} />
+            <Route
+              path="/addressRegistration"
+              element={<AddressRegistration />}
+            />
             <Route path="/transfer" element={<TransferFIO />} />
           </Routes>
         </Router>

@@ -22,14 +22,14 @@ Afterward, you need to clone this repository and download the dependencies.
 
 ```sh
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
-npm install
 ```
 
 ### 3. Start the frontend server
 
-Now start the frontend server. Run the following command:
+Now start the frontend server. Navigate to the `eos/fio/frontend` directory and run the following command:
 
 ```sh
+npm install
 npm run start
 ```
 
@@ -39,7 +39,11 @@ This will open up the frontend application on the default browser of your system
 
 We will now register the user's address on the FIO Testnet Network. For the demo, we will try to register the user's email ID(after removing the `@` symbol) as the FIO address.
 
-Enter your email ID and click on `Register`.
+Enter your email ID and click on `Register`. You will see your FIO Public Key in the UI and the you will be prompted to sign the transaction.
+
+_Note that FIO public key for the email needs to have tokens to register the address. You can get tokens from the [FIO Faucet](https://monitor.testnet.fioprotocol.io/#faucet)._
+
+After successful registration, you will see the registered FIO address in [FIO Account Info](https://monitor.testnet.fioprotocol.io/#accountInfo).
 
 ### 5. Transfer tokens from the user's wallet
 

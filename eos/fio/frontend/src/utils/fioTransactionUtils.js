@@ -10,12 +10,7 @@ const {
 } = require("@fioprotocol/fiosdk/lib/transactions/Transactions");
 
 /**
- * This function creates the raw transaction
- * @param {*} publicKey
- * @param {*} actionData
- * @param {*} account
- * @param {*} action
- * @returns
+ * Create a raw transaction and return the raw transaction with serialized action data.
  */
 export const createRawTx = async (publicKey, actionData, account, action) => {
   const chainData = await getChainData();
@@ -31,9 +26,8 @@ export const createRawTx = async (publicKey, actionData, account, action) => {
   Transactions.abiMap.set(fioTokenAbi.account_name, fioTokenAbi);
 
   /*
-   * This serializes the action data
-   * This is needed because we are doing an offline transaction
-   * due to which we cant fetch the abi from FIO API
+   * Serialize the action data. This is needed because MetaKeep expects the
+   * action data to be sent as a serialized hex string.
    */
   const serializedActionData = await createSerializeActionData(
     account,
@@ -61,12 +55,7 @@ export const createRawTx = async (publicKey, actionData, account, action) => {
 };
 
 /**
- * This function serializes the action data
- * @param {*} account
- * @param {*} actionName
- * @param {*} actionData
- * @param {*} chainId
- * @returns
+ * Serializes and returns the action data.
  */
 const createSerializeActionData = async (
   account,
@@ -94,10 +83,10 @@ const createSerializeActionData = async (
 };
 
 /**
- * This function gets the abi provider
- * @param {*} account
+ * Creates abi provider for the given account.
  */
 const getAbiProvider = async (account) => {
+  // Fetch the ABI for the given account from the chain.
   const fioTokenAbi = await fetch(
     "https://fiotestnet.blockpane.com/v1/chain/get_raw_abi",
     {
@@ -129,12 +118,10 @@ const getAbiProvider = async (account) => {
 };
 
 /**
- * This function gets the chain data
- * @returns chainData
+ * Fetches the chain related data.
  */
 const getChainData = async () => {
-  // Fetches the chain data
-  const blockchainData = await fetch(
+  const chainInfo = await fetch(
     "https://fiotestnet.blockpane.com/v1/chain/get_info",
     {
       method: "POST",
@@ -147,14 +134,14 @@ const getChainData = async () => {
     {
       method: "POST",
       body: JSON.stringify({
-        block_num_or_id: blockchainData.last_irreversible_block_num,
+        block_num_or_id: chainInfo.last_irreversible_block_num,
       }),
     }
   ).then((res) => res.json());
 
   // Create the chain Data object
   const chainData = {
-    chain_id: blockchainData.chain_id,
+    chain_id: chainInfo.chain_id,
     // 2 minute expiration
     expiration: new Date(new Date().getTime() + 120 * 1000)
       .toISOString()
@@ -167,11 +154,7 @@ const getChainData = async () => {
 };
 
 /**
- * This function broadcasts the transaction
- * @param {*} rawTx
- * @param {*} chain_id
- * @param {*} account
- * @param {*} signature
+ * Broadcasts the transaction to the chain.
  */
 export const broadcastTx = async (rawTx, chain_id, account, signature) => {
   const { fioTokenAbi } = await getAbiProvider(account);
@@ -179,7 +162,6 @@ export const broadcastTx = async (rawTx, chain_id, account, signature) => {
   Transactions.abiMap.set(fioTokenAbi.account_name, fioTokenAbi);
 
   const transaction = new Transactions();
-  //rawTx.signatures = [signature]
   const { serializedContextFreeData, serializedTransaction } =
     await transaction.serialize({
       chainId: chain_id,
@@ -208,4 +190,14 @@ export const broadcastTx = async (rawTx, chain_id, account, signature) => {
   const pushTransactionJson = await pushTransactionResponse.json();
 
   return pushTransactionJson;
+};
+
+/**
+ * Converts EOS public key to FIO public key.
+ *
+ * Since the FIO public key is derived from the EOS public key, we can simply
+ * replace the first 3 characters of the EOS public key with "FIO".
+ */
+export const EOSPubKeyToFIOPubKey = (eosPubKey) => {
+  return "FIO" + eosPubKey.slice(3);
 };
