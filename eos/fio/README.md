@@ -41,7 +41,6 @@ We will now register the user's address on the FIO Testnet Network. For the demo
 
 ![Screenshot from 2023-05-24 17-57-26](https://github.com/PassbirdCo/MetaKeepCodeSamples/assets/102578238/cfde4b56-3f0a-41bb-aaee-bf064cd6e591)
 
-
 Enter your email ID and click on `Register`. You will see your FIO Public Key in the UI and the you will be prompted to sign the transaction.
 
 _Note that FIO public key for the email needs to have tokens to register the address. You can get tokens from the [FIO Faucet](https://monitor.testnet.fioprotocol.io/#faucet)._
