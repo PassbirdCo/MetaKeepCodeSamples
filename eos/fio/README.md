@@ -39,7 +39,8 @@ This will open up the frontend application on the default browser of your system
 
 We will now register the user's address on the FIO Testnet Network. For the demo, we will try to register the user's email ID(after removing the `@` symbol) as the FIO address.
 
-![Screenshot from 2023-05-24 17-58-15](https://github.com/PassbirdCo/MetaKeepCodeSamples/assets/102578238/aa68a0a1-1b94-4976-a595-a7ed00fe0c1c)
+![Screenshot from 2023-05-24 17-57-26](https://github.com/PassbirdCo/MetaKeepCodeSamples/assets/102578238/cfde4b56-3f0a-41bb-aaee-bf064cd6e591)
+
 
 Enter your email ID and click on `Register`. You will see your FIO Public Key in the UI and the you will be prompted to sign the transaction.
 
