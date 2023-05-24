@@ -32,7 +32,6 @@ const AddressRegistration = () => {
       const sdk = new MetaKeep({
         appId: process.env.REACT_APP_APP_ID,
         user: { email: email },
-        environment: process.env.REACT_APP_ENVIRONMENT,
       });
 
       const wallet = await sdk.getWallet();
