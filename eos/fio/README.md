@@ -39,6 +39,8 @@ This will open up the frontend application on the default browser of your system
 
 We will now register the user's address on the FIO Testnet Network. For the demo, we will try to register the user's email ID(after removing the `@` symbol) as the FIO address.
 
+![Screenshot from 2023-05-24 17-57-26](https://github.com/PassbirdCo/MetaKeepCodeSamples/assets/102578238/cfde4b56-3f0a-41bb-aaee-bf064cd6e591)
+
 Enter your email ID and click on `Register`. You will see your FIO Public Key in the UI and the you will be prompted to sign the transaction.
 
 _Note that FIO public key for the email needs to have tokens to register the address. You can get tokens from the [FIO Faucet](https://monitor.testnet.fioprotocol.io/#faucet)._
@@ -48,6 +50,8 @@ After successful registration, you will see the registered FIO address in [FIO A
 ### 5. Transfer tokens from the user's wallet
 
 We will now transfer tokens from the user's wallet to a different wallet.
+
+![Screenshot from 2023-05-24 17-57-26](https://github.com/PassbirdCo/MetaKeepCodeSamples/assets/102578238/0e85dde4-9af3-46eb-9134-44ff1dd1c046)
 
 To transfer the tokens, enter the receiver's email ID, and the amount to transfer, and click on `Transfer`.
 

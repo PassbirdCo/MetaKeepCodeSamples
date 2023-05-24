@@ -50,14 +50,12 @@ const TransferFIO = () => {
       const senderSdk = new MetaKeep({
         appId: process.env.REACT_APP_APP_ID,
         user: { email: senderEmail },
-        environment: process.env.REACT_APP_ENVIRONMENT,
       });
 
       // Initialize the receiver MetaKeep SDK
       const receiverSdk = new MetaKeep({
         appId: process.env.REACT_APP_APP_ID,
         user: { email: receiverEmail },
-        environment: process.env.REACT_APP_ENVIRONMENT,
       });
 
       const [senderWallet, receiverWallet] = await Promise.all([
