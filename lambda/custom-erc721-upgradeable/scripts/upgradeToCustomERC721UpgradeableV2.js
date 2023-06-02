@@ -7,7 +7,7 @@ import getDeveloperWallet, {
   waitUntilTransactionMined,
 } from "../../../helpers/utils.mjs";
 
-const data = JSON.parse(
+const newImplementationJson = JSON.parse(
   fs.readFileSync(
     "../smart-contracts/artifacts/contracts/CustomERC721UpgradeableV2.sol/CustomERC721UpgradeableV2.json"
   )
@@ -24,8 +24,8 @@ async function deployCustomERC721UpgradeableV2() {
 
   const resultJson = await create(
     ["MetaKeepOriginalsV2", "MTKP", developerAddress],
-    data.abi,
-    data.bytecode
+    newImplementationJson.abi,
+    newImplementationJson.bytecode
   );
 
   // Wait for the transaction to be mined.
@@ -80,7 +80,7 @@ async function upgradeToV2() {
   );
   await updateABI(
     process.env.CUSTOM_ERC721_PROXY_ADDRESS,
-    getMergedABI(data.abi, proxyContractJson.abi)
+    getMergedABI(newImplementationJson.abi, proxyContractJson.abi)
   );
 }
 
