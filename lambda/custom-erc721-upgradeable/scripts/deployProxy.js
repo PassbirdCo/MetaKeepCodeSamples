@@ -1,21 +1,12 @@
 // Script to deploy Smart contract using MetaKeep Lambda REST API.
 import fs from "fs";
 import env from "dotenv";
-import { create } from "../../lambdaUtils.mjs";
+import { create, getMergedABI } from "../../lambdaUtils.mjs";
 import getDeveloperWallet, {
   checkAPIKey,
   waitUntilTransactionMined,
 } from "../../../helpers/utils.mjs";
 import Web3 from "web3";
-
-function getMergedABI(implementationABI, proxyABI) {
-  // Remove constructor from implementation ABI
-  const abi = implementationABI.filter((item) => {
-    return item.type !== "constructor";
-  });
-  const mergedABI = abi.concat(proxyABI);
-  return mergedABI;
-}
 
 function getInitializationData(
   implementationABI,

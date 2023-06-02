@@ -1,24 +1,31 @@
 // Script to deploy Smart contract using MetaKeep Lambda REST API.
 import fs from "fs";
 import env from "dotenv";
-import { create, invoke } from "../../lambdaUtils.mjs";
+import { create, invoke, updateABI, getMergedABI } from "../../lambdaUtils.mjs";
 import getDeveloperWallet, {
   checkAPIKey,
   waitUntilTransactionMined,
 } from "../../../helpers/utils.mjs";
 
+const newImplementationJson = JSON.parse(
+  fs.readFileSync(
+    "../smart-contracts/artifacts/contracts/CustomERC721UpgradeableV2.sol/CustomERC721UpgradeableV2.json"
+  )
+);
+
+const proxyContractJson = JSON.parse(
+  fs.readFileSync(
+    "../smart-contracts/artifacts/contracts/CustomERC721Proxy.sol/CustomERC721Proxy.json"
+  )
+);
+
 async function deployCustomERC721UpgradeableV2() {
-  const data = JSON.parse(
-    fs.readFileSync(
-      "../smart-contracts/artifacts/contracts/CustomERC721UpgradeableV2.sol/CustomERC721UpgradeableV2.json"
-    )
-  );
   const developerAddress = await getDeveloperWallet();
 
   const resultJson = await create(
     ["MetaKeepOriginalsV2", "MTKP", developerAddress],
-    data.abi,
-    data.bytecode
+    newImplementationJson.abi,
+    newImplementationJson.bytecode
   );
 
   // Wait for the transaction to be mined.
@@ -65,6 +72,15 @@ async function upgradeToV2() {
     "Lambda invocation for upgrading the CustomERC721Upgradeable is completed: " +
       resultJson.transactionHash +
       "\n"
+  );
+
+  /****************************** Update the ABI by calling lambda/update API **************** */
+  console.log(
+    "****************************** Update the ABI by calling lambda/update API ****************"
+  );
+  await updateABI(
+    process.env.CUSTOM_ERC721_PROXY_ADDRESS,
+    getMergedABI(newImplementationJson.abi, proxyContractJson.abi)
   );
 }
 
