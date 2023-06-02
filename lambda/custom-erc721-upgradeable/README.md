@@ -73,7 +73,7 @@ After the successful invocation, you would have whitelisted the user and minted 
 npm run upgradeToCustomERC721UpgradeableV2
 ```
 
-_NOTE:_ After the new Lambda is deployed and Upgraded, you also need to update the ABI by calling lambda/update API.
+This will upgrade the contract code and also update the ABI by making an API call to `/v2/lambda/update`.
 
 ## User Guide
 
