@@ -1,18 +1,20 @@
 // Script to deploy Smart contract using MetaKeep Lambda REST API.
 import fs from "fs";
 import env from "dotenv";
-import { create, invoke } from "../../lambdaUtils.mjs";
+import { create, invoke, updateABI } from "../../lambdaUtils.mjs";
 import getDeveloperWallet, {
   checkAPIKey,
   waitUntilTransactionMined,
 } from "../../../helpers/utils.mjs";
 
+const data = JSON.parse(
+  fs.readFileSync(
+    "../smart-contracts/artifacts/contracts/CustomERC721UpgradeableV2.sol/CustomERC721UpgradeableV2.json"
+  )
+);
+
 async function deployCustomERC721UpgradeableV2() {
-  const data = JSON.parse(
-    fs.readFileSync(
-      "../smart-contracts/artifacts/contracts/CustomERC721UpgradeableV2.sol/CustomERC721UpgradeableV2.json"
-    )
-  );
+  
   const developerAddress = await getDeveloperWallet();
 
   const resultJson = await create(
@@ -66,6 +68,12 @@ async function upgradeToV2() {
       resultJson.transactionHash +
       "\n"
   );
+
+  /****************************** Update the ABI by calling lambda/update API **************** */
+  console.log(
+    "****************************** Update the ABI by calling lambda/update API ****************"
+  )
+  await updateABI(lambdaAddress, data.abi);
 }
 
 upgradeToV2();

@@ -88,3 +88,38 @@ export const invoke = async (
   }
   return resultJson;
 };
+
+
+export const updateABI = async (lambdaAddress, abi) => {
+  const url = "https://api.metakeep.xyz/v2/app/lambda/update";
+
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-api-key": process.env.API_KEY,
+  };
+
+  const requestBody = {
+    lambda: lambdaAddress,
+    abi: abi,
+  };
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+
+  console.log("Updating ABI in process...");
+
+  const result = await fetch(url, options);
+
+  if (!result.ok) {
+    console.log("Error while updating ABI. HTTP status code: " + result.status);
+    throw new Error(
+      "Error while updating ABI. HTTP status code: " + result.status
+    );
+  }
+
+  console.log("ABI updated successfully.");
+};
