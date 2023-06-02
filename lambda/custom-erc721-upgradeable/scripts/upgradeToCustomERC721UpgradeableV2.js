@@ -14,7 +14,6 @@ const data = JSON.parse(
 );
 
 async function deployCustomERC721UpgradeableV2() {
-  
   const developerAddress = await getDeveloperWallet();
 
   const resultJson = await create(
@@ -72,7 +71,7 @@ async function upgradeToV2() {
   /****************************** Update the ABI by calling lambda/update API **************** */
   console.log(
     "****************************** Update the ABI by calling lambda/update API ****************"
-  )
+  );
   await updateABI(lambdaAddress, data.abi);
 }
 
