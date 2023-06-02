@@ -73,6 +73,8 @@ After the successful invocation, you would have whitelisted the user and minted 
 npm run upgradeToCustomERC721UpgradeableV2
 ```
 
+*NOTE:* After the new Lambda is deployed and Upgraded, you also need to update the ABI by calling lambda/update API.
+
 ## User Guide
 
 You can find detailed instructions on using MetaKeep Lambda and tips in [the documentation](https://docs.metakeep.xyz/reference/lambda-101).
