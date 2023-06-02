@@ -89,7 +89,6 @@ export const invoke = async (
   return resultJson;
 };
 
-
 export const updateABI = async (lambdaAddress, abi) => {
   const url = "https://api.metakeep.xyz/v2/app/lambda/update";
 
