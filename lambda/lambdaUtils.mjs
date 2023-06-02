@@ -122,3 +122,12 @@ export const updateABI = async (lambdaAddress, abi) => {
 
   console.log("ABI updated successfully.");
 };
+
+export const getMergedABI = (implementationABI, proxyABI) => {
+  // Remove constructor from implementation ABI
+  const abi = implementationABI.filter((item) => {
+    return item.type !== "constructor";
+  });
+  const mergedABI = abi.concat(proxyABI);
+  return mergedABI;
+};
