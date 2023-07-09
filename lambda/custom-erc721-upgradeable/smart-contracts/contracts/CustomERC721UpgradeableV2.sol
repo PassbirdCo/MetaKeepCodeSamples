@@ -85,7 +85,7 @@ contract CustomERC721UpgradeableV2 is
         public
         view
         virtual
-        override(ERC721Upgradeable, AccessControlUpgradeable)
+        override(ERC721URIStorageUpgradeable, AccessControlUpgradeable)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
