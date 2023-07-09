@@ -30,7 +30,7 @@ async function main() {
     "mint",
     // since NFT is unique , the quantity of the token taken is one.
     [userAddress, nftId, "1", nftData],
-    "Mint NFT token to User",
+    "Mint NFT token to User"
   );
   console.log(
     "Lambda invocation for minting NFT token to user is initiated: \n"
