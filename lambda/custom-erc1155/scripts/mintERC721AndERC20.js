@@ -23,13 +23,13 @@ async function main() {
   );
   // Invokes the lambda function to mint NFT to the user.
   console.log("Invoking lambda function to mint NFT user...\n");
-  let nftId = 256;
+  let nftId = "256";
   let nftData =
     "0x0100000000000000000000000000000000000000000000000000000000000000";
   const resultJson = await invoke(
     "mint",
     // since NFT is unique , the quantity of the token taken is one.
-    [userAddress, nftId, 1, nftData],
+    [userAddress, nftId, "1", nftData],
     "Mint NFT token to User"
   );
   console.log(
@@ -54,8 +54,8 @@ async function main() {
 
   // Invokes the lambda function to mint ERC20 token for the user.
   console.log("Invoking lambda function to mint ERC20 token to the user\n");
-  let tokenId = 1234;
-  let quantity = 10000;
+  let tokenId = "1234";
+  let quantity = "10000";
   let data =
     "0x0100000000000000000000000000000000000000000000000000000000000000";
   const resultJson2 = await invoke(
