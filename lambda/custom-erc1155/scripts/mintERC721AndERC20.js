@@ -25,7 +25,7 @@ async function main() {
   console.log("Invoking lambda function to mint NFT user...\n");
   let nftId = "256";
   let nftData =
-    "0x3031303230333034000000000000000000000000000000000000000000000000";
+    "0x0100000000000000000000000000000000000000000000000000000000000000";
   const resultJson = await invoke(
     "mint",
     // since NFT is unique , the quantity of the token taken is one.
@@ -57,7 +57,7 @@ async function main() {
   let tokenId = "1234";
   let quantity = "10000";
   let data =
-    "0x3031303230333034000000000000000000000000000000000000000000000000";
+    "0x0100000000000000000000000000000000000000000000000000000000000000";
   const resultJson2 = await invoke(
     "mint",
     [userAddress, tokenId, quantity, data],
