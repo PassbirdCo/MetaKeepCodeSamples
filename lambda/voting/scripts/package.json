@@ -15,8 +15,7 @@
     "dotenv": "^16.0.2",
     "ethers": "^5.7.1",
     "node-fetch": "^3.2.10",
-    "prettier": "2.7.1",
-    "web3": "^1.8.0"
+    "prettier": "2.7.1"
   },
   "type": "module"
 }
