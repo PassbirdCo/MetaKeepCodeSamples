@@ -1,7 +1,7 @@
 import env from "dotenv";
-import { invoke } from "../../lambdaUtils.mjs";
+import { invoke, invokeInBatch } from "../../lambdaUtils.mjs";
 import { solidityKeccak256 } from "ethers/lib/utils.js";
-import {
+import getDeveloperWallet, {
   waitUntilTransactionMined,
   getUserWallet,
   sleep,
@@ -14,21 +14,29 @@ async function main() {
   // Checks if the API_KEY is set in the .env file.
   checkAPIKey();
 
-  // Gets the user Address to register as Candidate in Voting contract.
-  const userAddress = await getUserWallet(process.env.REGISTER_CANDIDATE_EMAIL);
+  const developerAddress = await getDeveloperWallet();
 
-  /* *************************************************************** Register Candidate *************************************************************** */
+  /* *************************************************************** Register Proposal *************************************************************** */
   console.log(
-    "***************************************************** Register Candidate *****************************************************\n"
+    "***************************************************** Register Proposal *****************************************************\n"
   );
-  // Invokes the lambda function to register the user as candidate.
-  console.log("Invoking lambda function to register candidate...\n");
-  const resultJson = await invoke(
-    "registerCandidate",
-    [userAddress],
-    "register"
+  // Invokes the lambda function to register the user as Proposal.
+  console.log("Invoking lambda function to register proposal...\n");
+  const resultJson = await invokeInBatch(
+    [
+      {
+        call: {
+          function: {
+            name: "addProposal",
+            args: ["Proposal Name", "Proposal Description"],
+          },
+          reason: "Registering the proposal",
+          lambda: process.env.LAMBDA_ADDRESS,
+        },
+      }
+    ]
   );
-  console.log("Lambda invocation for registering user initiated: \n");
+  console.log("Lambda invocation for registering proposal initiated: \n");
 
   // Waits for the transaction to be mined.
   await waitUntilTransactionMined(resultJson);
@@ -41,17 +49,35 @@ async function main() {
   // Waits for 5 seconds.
   sleep(5000);
 
-  /* *************************************************************** Vote Candidate *************************************************************** */
+  /* *************************************************************** Stake And Vote *************************************************************** */
   console.log(
-    "***************************************************** Vote Candidate *****************************************************\n"
+    "***************************************************** Stake And Vote *****************************************************\n"
   );
 
-  // Gets the Candidate ID to vote for the candidate.
-  const candidateId = solidityKeccak256(["address"], [userAddress]);
-
-  // Invokes the lambda function to vote for the candidate.
-  console.log("Invoking lambda function to vote for candidate...\n");
-  const resultJson2 = await invoke("voteForCandidate", [candidateId], "vote");
+  // Invokes the lambda function to vote and stake.
+  console.log("Invoking lambda to state and vote for proposal...\n");
+  const resultJson2 = await invokeInBatch([
+    {
+      call: {
+        function: {
+          name: "stake",
+        },
+        pay: "0.1",
+        reason: "Staking for the proposal",
+        lambda: process.env.LAMBDA_ADDRESS,
+      },
+    },
+    {
+      call: {
+        function: {
+          name: "vote",
+          args: [developerAddress, "1"]
+        },
+        reason: "Voting for the proposal",
+        lambda: process.env.LAMBDA_ADDRESS,
+      }
+    }
+  ]);
   console.log("Lambda invocation for voting initiated: ");
 
   // Waits for the transaction to be mined.

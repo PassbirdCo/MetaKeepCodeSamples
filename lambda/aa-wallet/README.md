@@ -14,8 +14,8 @@ The project is organized as follows:
 
 - [smart-contracts](./smart-contracts): Contains the Smart Contract for the Voting.
 - [scripts](./scripts): Contains the scripts to deploy a new Lambda smart contract and invoke Lambda functions.
-- [backend](./backend): Contains the backend code for the server to generate a consent token to vote for a candidate and register a new candidate.
-- [frontend](./frontend): Contains the frontend code and server for the candidate registration and voting.
+- [backend](./backend): Contains the backend code for the server to generate a consent token to vote for a proposal and create a new proposal.
+- [frontend](./frontend): Contains the frontend code and server for the proposal registration and voting.
 
 ## Quick start
 
@@ -46,7 +46,7 @@ After you have created the Lambda, you can invoke a method by running the follow
 npm run invoke
 ```
 
-This will register a new candidate and vote for the candidate as developer(you).
+This will register a new proposal and vote for the proposal as developer(you).
 
 # How to invoke a Lambda method on behalf of users by getting their consent.
 
@@ -68,7 +68,7 @@ npm install
 npm run start
 ```
 
-The demo application allows you to register and vote for the candidate.
+The demo application allows you to register and vote for the proposal.
 
 ## User Guide
 

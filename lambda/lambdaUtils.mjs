@@ -3,8 +3,8 @@
 import fetch from "node-fetch";
 
 // Creates a Lambda.
-export const create = async (args, abi, bytecode) => {
-  const url = "https://api.metakeep.xyz/v2/app/lambda/create";
+export const create = async (args, abi, bytecode, name) => {
+  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/create";
 
   const headers = {
     Accept: "application/json",
@@ -18,6 +18,7 @@ export const create = async (args, abi, bytecode) => {
       args: args,
     },
     abi: abi,
+    name:  name !== undefined ? name : "",
     bytecode: bytecode,
   };
 
@@ -47,6 +48,47 @@ export const create = async (args, abi, bytecode) => {
   return resultJson;
 };
 
+export const import_lambda = async (abi, name, address) => {
+  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/import";
+
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-api-key": process.env.API_KEY,
+  };
+
+  const requestBody = {
+    abi: abi,
+    name: name,
+    lambda: address,
+  };
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+
+  console.log("Lambda import in process...");
+
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+
+  console.log("Lambda import response:");
+  console.log(resultJson);
+
+  if (!result.ok) {
+    console.log(
+      "Error while creating lambda. HTTP status code: " + result.status
+    );
+    throw new Error(
+      "Error while creating lambda. HTTP status code: " + result.status
+    );
+  }
+
+  return resultJson;
+};
+
 // Invokes the lambda function.
 export const invoke = async (
   functionName,
@@ -54,7 +96,7 @@ export const invoke = async (
   reason,
   lambdaAddress
 ) => {
-  const url = "https://api.metakeep.xyz/v2/app/lambda/invoke";
+  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/invoke/multiple";
 
   const headers = {
     Accept: "application/json",
@@ -89,8 +131,43 @@ export const invoke = async (
   return resultJson;
 };
 
+// Invokes the lambda function.
+export const invokeInBatch = async (
+  invocations,
+) => {
+  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/invoke/multiple";
+
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-api-key": process.env.API_KEY,
+    "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
+  };
+  const requestBody = {
+    invocations: invocations,
+    using: "BUSINESS_WALLET",
+  };
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+
+  console.log(resultJson);
+
+  if (!result.ok) {
+    throw new Error(
+      "Error while invoking method. HTTP status code: " + result.status
+    );
+  }
+  return resultJson;
+};
+
 export const updateABI = async (lambdaAddress, abi) => {
-  const url = "https://api.metakeep.xyz/v2/app/lambda/update";
+  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/update";
 
   const headers = {
     Accept: "application/json",

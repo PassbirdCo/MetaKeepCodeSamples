@@ -2,7 +2,7 @@
 import fs from "fs";
 import env from "dotenv";
 import { create } from "../../lambdaUtils.mjs";
-import getDeveloperWallet, {
+import {
   checkAPIKey,
   waitUntilTransactionMined,
 } from "../../../helpers/utils.mjs";
@@ -18,12 +18,12 @@ async function main() {
       "../smart-contracts/artifacts/contracts/Voting.sol/Voting.json"
     )
   );
-  const developerAddress = await getDeveloperWallet();
 
   const resultJson = await create(
-    [developerAddress, "Voting"],
+    [],
     data.abi,
-    data.bytecode
+    data.bytecode,
+    "Voting",
   );
 
   //Waits for the transaction to be mined.
