@@ -65,10 +65,11 @@ app.post("/stakeAndVote", async (req, res) => {
 
 /* ************************************************************************* Get Proposal API Endpoint ************************************************************************* */
 
-app.post("/getProposalData", async (req, res) => {
+app.post("/getProposal", async (req, res) => {
   console.log("getProposal");
 
   try {
+    console.log(req.body.proposalId)
     const result = await getProposalData(req.body.proposalId);
     res.send(result);
   } catch (error) {
@@ -95,17 +96,17 @@ async function addProposal(proposalName, proposalDescription) {
   const requestBody = {
     invocations: [
       {
-        functionCall: {
+        call: {
           function: {
             name: "addProposal",
             args: [proposalName, proposalDescription]
           },
           lambda: process.env.VOTING_LAMBDA_ADDRESS,
+          reason: "Adding Proposal",
         }
       }
     ],
-    reason: "Adding Proposal",
-    use_holding_account: true,
+    using: "BUSINESS_WALLET",
   };
 
   const outcome = await invokeLambdaFunction(requestBody);
@@ -123,24 +124,27 @@ async function stakeAndVote(proposalId, emailId, reason) {
 
     invocations: [
       {
-        functionCall: {
+        call: {
           function: {
             name: "stake",
-            value: "0.001"
           },
+          pay: "0.1",
+          reason: "Staking for the proposal",
           lambda: process.env.VOTING_LAMBDA_ADDRESS,
         },
-        functionCall: {
+      },
+      {
+        call: {
           function: {
             name: "vote",
-            args: [userWallet, proposalId]
+            args: [userWallet, "1"]
           },
+          reason: "Voting for the proposal",
           lambda: process.env.VOTING_LAMBDA_ADDRESS,
         }
       }
     ],
-    reason: reason,
-    use_holding_account: true,
+    using: "BUSINESS_WALLET",
     as : {
       email: emailId,
     }
@@ -162,7 +166,7 @@ async function getProposalData(proposalId) {
   const requestBody = {
     function: {
       name: "getProposal",
-      args: [proposalId],
+      args: [proposalId]
     },
     lambda: process.env.VOTING_LAMBDA_ADDRESS,
   };

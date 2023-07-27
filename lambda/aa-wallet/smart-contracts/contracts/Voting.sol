@@ -28,19 +28,19 @@ contract Voting {
     }
 
     function stake() public payable {
-        require(msg.value == 1000000000000000, "You need to stake some ETH");
+        require(msg.value >= 100000000000000, "You need to stake some ETH");
         stakes[msg.sender] = msg.value;
     }
 
     function unstake(address user) public {
         require(voters[user] == false, "You have already voted");
-        require(stakes[user] == 1000000000000000, "You need to stake some ETH");
+        require(stakes[user] == 100000000000000, "You need to stake some ETH");
         stakes[user] = 0;
     }
 
     function vote(address voter, uint256 proposalId) public {
       // check if voter has staked 0.0001 ETH
-        require(stakes[voter] == 1000000000000000, "You need to stake some ETH");
+        require(stakes[msg.sender] >= 100000000000000, "You need to stake some ETH");
         require(!voters[voter], "You have already voted");
         require(proposalId > 0 && proposalId <= proposalCount, "Invalid proposal id");
         voters[voter] = true;
@@ -71,5 +71,8 @@ contract Voting {
         }
         return proposals[winningProposalId];
     }
+
+    // add a fallback function to receive ETH
+    receive() external payable {}
 
 }

@@ -66,7 +66,7 @@ export const addProposal = async (proposalName, proposalDescription) => {
 
 // This is the helper function to adding a proposal by making request to the backend server.
 export const getProposal = async (proposalId) => {
-  console.log("Adding proposal: " + proposalId);
+  console.log("Getting proposal: " + proposalId);
   const url = "http://localhost:3001/getProposal";
   const headers = {
     "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export const getProposal = async (proposalId) => {
   const body = JSON.stringify({
     proposalId: proposalId,
   });
-
+  console.log(body)
   const options = {
     method: "POST",
     headers: headers,
