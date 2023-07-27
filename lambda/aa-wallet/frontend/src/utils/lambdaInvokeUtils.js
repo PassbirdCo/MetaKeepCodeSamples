@@ -77,7 +77,7 @@ export const getProposal = async (proposalId) => {
   const body = JSON.stringify({
     proposalId: proposalId,
   });
-  console.log(body)
+  console.log(body);
   const options = {
     method: "POST",
     headers: headers,

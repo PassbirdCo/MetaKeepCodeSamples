@@ -16,7 +16,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/addProposal" element={<AddProposal />} />
-          <Route path="/stakeAndVote" element={<StakingAndVoting sdk={sdk} />} />
+          <Route
+            path="/stakeAndVote"
+            element={<StakingAndVoting sdk={sdk} />}
+          />
         </Routes>
       </Router>
     </div>

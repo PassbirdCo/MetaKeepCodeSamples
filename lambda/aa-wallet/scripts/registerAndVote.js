@@ -22,20 +22,18 @@ async function main() {
   );
   // Invokes the lambda function to register the user as Proposal.
   console.log("Invoking lambda function to register proposal...\n");
-  const resultJson = await invokeInBatch(
-    [
-      {
-        call: {
-          function: {
-            name: "addProposal",
-            args: ["Proposal Name", "Proposal Description"],
-          },
-          reason: "Registering the proposal",
-          lambda: process.env.LAMBDA_ADDRESS,
+  const resultJson = await invokeInBatch([
+    {
+      call: {
+        function: {
+          name: "addProposal",
+          args: ["Proposal Name", "Proposal Description"],
         },
-      }
-    ]
-  );
+        reason: "Registering the proposal",
+        lambda: process.env.LAMBDA_ADDRESS,
+      },
+    },
+  ]);
   console.log("Lambda invocation for registering proposal initiated: \n");
 
   // Waits for the transaction to be mined.
@@ -71,12 +69,12 @@ async function main() {
       call: {
         function: {
           name: "vote",
-          args: [developerAddress, "1"]
+          args: [developerAddress, "1"],
         },
         reason: "Voting for the proposal",
         lambda: process.env.LAMBDA_ADDRESS,
-      }
-    }
+      },
+    },
   ]);
   console.log("Lambda invocation for voting initiated: ");
 

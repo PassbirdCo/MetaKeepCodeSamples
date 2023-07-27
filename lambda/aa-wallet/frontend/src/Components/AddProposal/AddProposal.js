@@ -20,13 +20,9 @@ export const AddProposal = () => {
       setLoading(false);
       if (addProposalResponse.status !== "QUEUED") {
         console.log(
-          "Error adding proposal: " +
-            JSON.stringify(addProposalResponse)
+          "Error adding proposal: " + JSON.stringify(addProposalResponse)
         );
-        alert(
-          "Error adding proposal: " +
-            JSON.stringify(addProposalResponse)
-        );
+        alert("Error adding proposal: " + JSON.stringify(addProposalResponse));
         return;
       }
 
@@ -72,7 +68,11 @@ export const AddProposal = () => {
             role="status"
           ></div>
         ) : (
-          <button type="submit" className="btn btn-primary" id="addProposalButton">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            id="addProposalButton"
+          >
             Add Proposal
           </button>
         )}

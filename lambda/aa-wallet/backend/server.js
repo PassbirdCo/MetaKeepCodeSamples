@@ -54,7 +54,11 @@ app.post("/stakeAndVote", async (req, res) => {
   console.log("stakeAndVote");
 
   try {
-    const result = await stakeAndVote(req.proposalId, req.body.asEmail, "StakeAndVote");
+    const result = await stakeAndVote(
+      req.proposalId,
+      req.body.asEmail,
+      "StakeAndVote"
+    );
     res.send(result);
   } catch (error) {
     res.status(500).send({
@@ -69,7 +73,7 @@ app.post("/getProposal", async (req, res) => {
   console.log("getProposal");
 
   try {
-    console.log(req.body.proposalId)
+    console.log(req.body.proposalId);
     const result = await getProposalData(req.body.proposalId);
     res.send(result);
   } catch (error) {
@@ -99,12 +103,12 @@ async function addProposal(proposalName, proposalDescription) {
         call: {
           function: {
             name: "addProposal",
-            args: [proposalName, proposalDescription]
+            args: [proposalName, proposalDescription],
           },
           lambda: process.env.VOTING_LAMBDA_ADDRESS,
           reason: "Adding Proposal",
-        }
-      }
+        },
+      },
     ],
     using: "BUSINESS_WALLET",
   };
@@ -121,7 +125,6 @@ async function stakeAndVote(proposalId, emailId, reason) {
 
   const userWallet = await getUserWallet(emailId);
   const requestBody = {
-
     invocations: [
       {
         call: {
@@ -137,17 +140,17 @@ async function stakeAndVote(proposalId, emailId, reason) {
         call: {
           function: {
             name: "vote",
-            args: [userWallet, "1"]
+            args: [userWallet, "1"],
           },
           reason: "Voting for the proposal",
           lambda: process.env.VOTING_LAMBDA_ADDRESS,
-        }
-      }
+        },
+      },
     ],
     using: "BUSINESS_WALLET",
-    as : {
+    as: {
       email: emailId,
-    }
+    },
   };
 
   const outcome = await invokeLambdaFunction(requestBody);
@@ -166,7 +169,7 @@ async function getProposalData(proposalId) {
   const requestBody = {
     function: {
       name: "getProposal",
-      args: [proposalId]
+      args: [proposalId],
     },
     lambda: process.env.VOTING_LAMBDA_ADDRESS,
   };

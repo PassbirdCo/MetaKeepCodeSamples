@@ -19,12 +19,7 @@ async function main() {
     )
   );
 
-  const resultJson = await create(
-    [],
-    data.abi,
-    data.bytecode,
-    "Voting",
-  );
+  const resultJson = await create([], data.abi, data.bytecode, "Voting");
 
   //Waits for the transaction to be mined.
 

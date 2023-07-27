@@ -15,11 +15,12 @@ export const StakingAndVoting = ({ sdk }) => {
     event.preventDefault();
     try {
       setLoading(true);
-      const getVotingConsentTokenResponse = await getLambdaStakingAndVotingConsentToken(
-        proposalId,
-        asEmail,
-        "Voting and Staking"
-      );
+      const getVotingConsentTokenResponse =
+        await getLambdaStakingAndVotingConsentToken(
+          proposalId,
+          asEmail,
+          "Voting and Staking"
+        );
       setLoading(false);
       if (getVotingConsentTokenResponse.status !== "USER_CONSENT_NEEDED") {
         alert(
@@ -59,11 +60,11 @@ export const StakingAndVoting = ({ sdk }) => {
     try {
       setLoading(true);
       const getProposalResponse = await getProposal(proposalId);
+      console.log(getProposalResponse);
       setLoading(false);
       if (getProposalResponse.status === "FUNCTION_FAILURE") {
         alert(
-          "Error getting proposal details: " +
-          getProposalResponse.failureReason
+          "Error getting proposal details: " + getProposalResponse.failureReason
         );
         return;
       }
@@ -139,9 +140,25 @@ export const StakingAndVoting = ({ sdk }) => {
                   >
                     Proposal ID:
                   </div>
-                  <div className="CardRowValue">{proposalDetails.data[0]}</div>
+                  <div className="CardRowValue">
+                    {proposalDetails.data["name"]}
+                  </div>
                 </div>
                 <div className="CardRow">
+                  <div className="CardRow">
+                    <div
+                      className="CardRowLabel"
+                      style={{
+                        textEmphasis: "bold",
+                      }}
+                    >
+                      Proposal Description:
+                    </div>
+                    <div className="CardRowValue">
+                      {proposalDetails.data["description"]}
+                    </div>
+                  </div>
+                  <div className="CardRow"></div>
                   <div
                     className="CardRowLabel"
                     style={{
@@ -150,7 +167,9 @@ export const StakingAndVoting = ({ sdk }) => {
                   >
                     Proposal Total Votes:
                   </div>
-                  <div className="CardRowValue">{proposalDetails.data[2]}</div>
+                  <div className="CardRowValue">
+                    {proposalDetails.data["voteCount"]}
+                  </div>
                 </div>
               </div>
             </div>
