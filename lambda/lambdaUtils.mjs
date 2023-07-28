@@ -18,7 +18,7 @@ export const create = async (args, abi, bytecode, name) => {
       args: args,
     },
     abi: abi,
-    name:  name !== undefined ? name : "",
+    name: name !== undefined ? name : "",
     bytecode: bytecode,
   };
 
@@ -132,9 +132,7 @@ export const invoke = async (
 };
 
 // Invokes the lambda function.
-export const invokeInBatch = async (
-  invocations,
-) => {
+export const invokeInBatch = async (invocations) => {
   const url = "https://api.dev.metakeep.xyz/v2/app/lambda/invoke/multiple";
 
   const headers = {
