@@ -1,5 +1,4 @@
 import express from "express";
-import fetch from "node-fetch";
 import bodyParser from "body-parser";
 import cors from "cors";
 import env from "dotenv";
@@ -11,8 +10,6 @@ const app = express();
 env.config();
 
 checkAPIKey();
-
-const API_HOST = process.env.API_HOST || "https://api.metakeep.xyz";
 
 const port = 3001;
 
@@ -104,24 +101,7 @@ app.listen(port, () => {
 async function addProposal(proposalName, proposalDescription) {
   console.log("Adding Proposal ...");
 
-  //
-  const requestBody = {
-    invocations: [
-      {
-        call: {
-          function: {
-            name: "addProposal",
-            args: [proposalName, proposalDescription],
-          },
-          lambda: process.env.VOTING_LAMBDA_ADDRESS,
-          reason: "Adding Proposal",
-        },
-      },
-    ],
-    using: "BUSINESS_WALLET",
-  };
-
-  const outcome = await invokeLambdaFunction(requestBody);
+  const outcome = await invoke("addProposal", [proposalName, proposalDescription], "Adding Proposal", process.env.VOTING_LAMBDA_ADDRESS);
   return outcome;
 }
 // Utility Function to add Proposal using Lambda Invocation API

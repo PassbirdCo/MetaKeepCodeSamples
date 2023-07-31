@@ -1,10 +1,7 @@
 import env from "dotenv";
-import { invoke, invokeMultiple } from "../../lambdaUtils.mjs";
-import { solidityKeccak256 } from "ethers/lib/utils.js";
+import { invokeMultiple } from "../../lambdaUtils.mjs";
 import getDeveloperWallet, {
   waitUntilTransactionMined,
-  getUserWallet,
-  sleep,
   checkAPIKey,
 } from "../../../helpers/utils.mjs";
 
@@ -16,12 +13,13 @@ async function main() {
 
   const developerAddress = await getDeveloperWallet();
 
-  /* *************************************************************** Register Proposal *************************************************************** */
+  /* *************************************************************** Register a proposal, Stake And Vote *************************************************************** */
   console.log(
-    "***************************************************** Register Proposal *****************************************************\n"
+    "***************************************************** Register a proposal, Stake And Vote *****************************************************\n"
   );
-  // Invokes the lambda function to register the user as Proposal.
-  console.log("Invoking lambda function to register proposal...\n");
+
+  // Invokes the lambda function to vote and stake.
+  console.log("Invoking lambda to state and vote for proposal...\n");
   const resultJson = await invokeMultiple(
     [
       {
@@ -34,31 +32,6 @@ async function main() {
           lambda: process.env.LAMBDA_ADDRESS,
         },
       },
-    ],
-    "Register Proposal"
-  );
-  console.log("Lambda invocation for registering proposal initiated: \n");
-
-  // Waits for the transaction to be mined.
-  await waitUntilTransactionMined(resultJson);
-  console.log(
-    "Lambda invocation for registering user completed: " +
-      resultJson.transactionHash +
-      "\n"
-  );
-
-  // Waits for 5 seconds.
-  sleep(5000);
-
-  /* *************************************************************** Stake And Vote *************************************************************** */
-  console.log(
-    "***************************************************** Stake And Vote *****************************************************\n"
-  );
-
-  // Invokes the lambda function to vote and stake.
-  console.log("Invoking lambda to state and vote for proposal...\n");
-  const resultJson2 = await invokeMultiple(
-    [
       {
         call: {
           function: {
@@ -85,10 +58,10 @@ async function main() {
   console.log("Lambda invocation for voting initiated: ");
 
   // Waits for the transaction to be mined.
-  await waitUntilTransactionMined(resultJson2);
+  await waitUntilTransactionMined(resultJson);
   console.log(
     "Lambda invocation for voting completed: " +
-      resultJson2.transactionHash +
+      resultJson.transactionHash +
       "\n"
   );
 }
