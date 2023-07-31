@@ -33,7 +33,6 @@ export default async function getDeveloperWallet() {
   return resultJson.wallet.ethAddress;
 }
 
-
 export const getDeveloperBusinessWallet = async () => {
   console.log("Getting developer business wallet...");
 
@@ -63,7 +62,7 @@ export const getDeveloperBusinessWallet = async () => {
 
   console.log("\n");
   return resultJson.wallet.ethAddress;
-}
+};
 
 export const getUserWallet = async (email) => {
   console.log("Getting user wallet...");
