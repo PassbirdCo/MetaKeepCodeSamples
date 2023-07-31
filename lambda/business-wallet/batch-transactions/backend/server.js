@@ -101,7 +101,12 @@ app.listen(port, () => {
 async function addProposal(proposalName, proposalDescription) {
   console.log("Adding Proposal ...");
 
-  const outcome = await invoke("addProposal", [proposalName, proposalDescription], "Adding Proposal", process.env.VOTING_LAMBDA_ADDRESS);
+  const outcome = await invoke(
+    "addProposal",
+    [proposalName, proposalDescription],
+    "Adding Proposal",
+    process.env.VOTING_LAMBDA_ADDRESS
+  );
   return outcome;
 }
 // Utility Function to add Proposal using Lambda Invocation API
