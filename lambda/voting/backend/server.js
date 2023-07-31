@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 import bodyParser from "body-parser";
 import cors from "cors";
 import env from "dotenv";
-import { checkAPIKey, getUserWallet } from "../../../helpers/utils.mjs";
+import { checkAPIKey, getUserWallet, getAPIHost } from "../../../helpers/utils.mjs";
 import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
   REGISTRATION_FUNCTION_NAME,
@@ -167,7 +167,7 @@ async function getCandidateDetails(candidateEmail) {
 // Utility function to invoke Lambda Function through MetaKeep Lambda Invocation API.
 
 async function invokeLambdaFunction(requestBody) {
-  const url = "https://api.metakeep.xyz/v2/app/lambda/invoke/";
+  const url = getAPIHost() + "/v2/app/lambda/invoke/";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -196,7 +196,7 @@ async function invokeLambdaFunction(requestBody) {
 // Utility function to read from Lambda Function through MetaKeep Lambda Read API.
 
 async function readLambdaFunction(requestBody) {
-  const url = "https://api.metakeep.xyz/v2/app/lambda/read/";
+  const url = getAPIHost() + "/v2/app/lambda/read/";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",

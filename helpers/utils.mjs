@@ -3,10 +3,11 @@
 import fetch from "node-fetch";
 import { exit } from "process";
 
+
 export default async function getDeveloperWallet() {
   console.log("Getting developer wallet...");
 
-  const url = "https://api.metakeep.xyz/v3/getDeveloperWallet";
+  const url = getAPIHost() + "/v3/getDeveloperWallet";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -33,10 +34,11 @@ export default async function getDeveloperWallet() {
   return resultJson.wallet.ethAddress;
 }
 
+
 export const getDeveloperBusinessWallet = async () => {
   console.log("Getting developer business wallet...");
 
-  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/getBusinessWallet";
+  const url = getAPIHost() + "/v2/app/lambda/getBusinessWallet";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -62,12 +64,12 @@ export const getDeveloperBusinessWallet = async () => {
 
   console.log("\n");
   return resultJson.wallet.ethAddress;
-};
+}
 
 export const getUserWallet = async (email) => {
   console.log("Getting user wallet...");
 
-  const url = "https://api.metakeep.xyz/v3/getWallet";
+  const url = getAPIHost() + "/v3/getWallet";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -104,7 +106,7 @@ export const getUserWallet = async (email) => {
 };
 
 export const getTransactionStatus = async (transactionId) => {
-  const url = "https://api.dev.metakeep.xyz/v2/app/transaction/status";
+  const url = getAPIHost() + "/v2/app/transaction/status";
   const requestBody = {
     transactionId: transactionId,
   };
@@ -176,3 +178,10 @@ export const checkAPIKey = () => {
     exit(1);
   }
 };
+
+export const getAPIHost = () => {
+  if (process.env.API_HOST) {
+    return process.env.API_HOST;
+  }
+  return "https://api.metakeep.xyz";
+}

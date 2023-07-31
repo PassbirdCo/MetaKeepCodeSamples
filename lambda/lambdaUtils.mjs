@@ -1,11 +1,10 @@
 //Helper functions for the MetaKeep APIs
 
 import fetch from "node-fetch";
-
-const API_HOST = process.env.API_HOST || "https://api.metakeep.xyz";
+import { getAPIHost } from "../helpers/utils.mjs";
 // Creates a Lambda.
 export const create = async (args, abi, bytecode, name) => {
-  const url = API_HOST + "/v2/app/lambda/create";
+  const url = getAPIHost() + "/v2/app/lambda/create";
 
   const headers = {
     Accept: "application/json",
@@ -50,7 +49,7 @@ export const create = async (args, abi, bytecode, name) => {
 };
 
 export const importLambda = async (abi, name, address) => {
-  const url = API_HOST + "/v2/app/lambda/import";
+  const url = getAPIHost() + "/v2/app/lambda/import";
 
   const headers = {
     Accept: "application/json",
@@ -99,7 +98,7 @@ export const invoke = async (
   value,
   use_business_wallet
 ) => {
-  const url = API_HOST + "/v2/app/lambda/invoke";
+  const url = getAPIHost() + "/v2/app/lambda/invoke";
 
   const headers = {
     Accept: "application/json",
@@ -138,7 +137,7 @@ export const invoke = async (
 
 // Invokes the lambda function.
 export const invokeMultiple = async (invocations, reason, as) => {
-  const url = API_HOST + "/v2/app/lambda/invoke/multiple";
+  const url = getAPIHost() + "/v2/app/lambda/invoke/multiple";
 
   const headers = {
     Accept: "application/json",
@@ -172,7 +171,7 @@ export const invokeMultiple = async (invocations, reason, as) => {
 };
 
 export const updateABI = async (lambdaAddress, abi) => {
-  const url = API_HOST + "/v2/app/lambda/update";
+  const url = getAPIHost() + "/v2/app/lambda/update";
 
   const headers = {
     Accept: "application/json",
@@ -215,7 +214,7 @@ export const getMergedABI = (implementationABI, proxyABI) => {
 };
 
 export const readLambda = async (lambdaAddress, functionName, functionArgs) => {
-  const url = API_HOST + "v2/app/lambda/read";
+  const url = getAPIHost() + "v2/app/lambda/read";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",

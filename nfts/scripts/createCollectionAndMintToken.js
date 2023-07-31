@@ -7,10 +7,11 @@ import getDeveloperWallet, {
   sleep,
   waitUntilTransactionMined,
   checkAPIKey,
+  getAPIHost,
 } from "../../helpers/utils.mjs";
 
 async function createCollection() {
-  const url = "https://api.metakeep.xyz/v2/app/nft/createCollection";
+  const url = getAPIHost() + "/v2/app/nft/createCollection";
 
   const headers = {
     Accept: "application/json",
@@ -62,7 +63,7 @@ async function createCollection() {
 }
 
 async function mintNFT(collection) {
-  const url = "https://api.metakeep.xyz/v2/app/nft/mint";
+  const url = getAPIHost() + "/v2/app/nft/mint";
 
   const headers = {
     Accept: "application/json",
