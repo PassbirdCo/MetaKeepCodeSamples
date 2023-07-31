@@ -180,8 +180,5 @@ export const checkAPIKey = () => {
 };
 
 export const getAPIHost = () => {
-  if (process.env.API_HOST) {
-    return process.env.API_HOST;
-  }
-  return "https://api.metakeep.xyz";
+  return process.env.API_HOST || "https://api.metakeep.xyz";
 }
