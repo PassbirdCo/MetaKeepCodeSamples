@@ -7,7 +7,7 @@ import "./App.css";
 
 function App() {
   const sdk = new MetaKeep({
-    environment: "dev",
+    environment: process.env.REACT_APP_SDK_ENVIRONMENT || "prod",
     appId: process.env.REACT_APP_APP_ID,
   });
   return (

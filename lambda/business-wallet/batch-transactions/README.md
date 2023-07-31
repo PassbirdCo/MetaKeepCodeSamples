@@ -24,7 +24,7 @@ The first thing you need to do is clone this repository:
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
 
-Once you have cloned the repository, you must fund your MetaKeep Business Wallet with MATIC tokens that you can get from faucet or buy from any popular exchange for Polygon Mainnet.
+*Once you have cloned the repository, you must fund your MetaKeep Business Wallet with MATIC tokens that you can get from faucet or buy from any popular exchange for Polygon Mainnet.*
 
 Then, on a new terminal, go to the repository's `lambda/business-wallet/batch-transactions/smart-contracts` folder and run this to
 compile your smart contract:
@@ -51,11 +51,13 @@ After you have created the Lambda, run the following command to register a new p
 npm run registerAndVote
 ```
 
-# Register and vote as end-users.
+## Register and vote as end-users.
 
 To register and vote an end-users, you need their consent. To get consent you need to use the MetaKeep SDK.
 
-Start the backend server by running the following command in the `lambda/business-wallet/batch-transactions/backend` directory.
+*Note that you must fund user's MetaKeep Business Wallet with MATIC tokens that you can get from faucet or buy from any popular exchange for Polygon Mainnet.*
+
+Start the backend server by navigating to `lambda/business-wallet/batch-transactions/backend` directory. Then the update the `.env` file with the Lambda address and run the following commands.
 
 ```sh
 npm install

@@ -34,7 +34,7 @@ app.get("/", (_, res) => {
 /* ************************************************************************* Add proposal API EndPoint ************************************************************************* */
 
 app.post("/addProposal", async (req, res) => {
-  console.log("getConsentToken");
+  console.log("addProposal");
   try {
     const result = await addProposal(
       req.body.proposalName,
@@ -55,9 +55,9 @@ app.post("/stakeAndVote", async (req, res) => {
 
   try {
     const result = await stakeAndVote(
-      req.proposalId,
+      req.body.proposalId,
       req.body.asEmail,
-      "StakeAndVote"
+      "stake and vote for the proposal " + req.body.proposalId
     );
     res.send(result);
   } catch (error) {
@@ -97,11 +97,10 @@ app.listen(port, () => {
 /* ************************************************************************** Utility functions *************************************************************** */
 
 // Utility function to add proposal using Lambda Invocation API.
-
 async function addProposal(proposalName, proposalDescription) {
   console.log("Adding Proposal ...");
 
-  const outcome = await invoke(
+  return await invoke(
     "addProposal",
     [proposalName, proposalDescription],
     "Adding Proposal",
@@ -109,16 +108,10 @@ async function addProposal(proposalName, proposalDescription) {
     null,
     true
   );
-  return outcome;
 }
-// Utility Function to add Proposal using Lambda Invocation API
-
+// Utility Function to stake and vote using Lambda Invocation API.
 async function stakeAndVote(proposalId, emailId, reason) {
-  console.log("Staking and adding proposal ...");
-
-  // since the "addProposalMethod takes the ethereum address as argument, we need to get the wallet associated with the emailId"
-
-  const userWallet = await getUserWallet(emailId);
+  console.log("Staking and Voting for the proposal ...");
 
   const outcome = await invokeMultiple(
     [
@@ -128,7 +121,7 @@ async function stakeAndVote(proposalId, emailId, reason) {
             name: "stake",
           },
           pay: "0.1",
-          reason: "Staking for the proposal",
+          reason: "Stake 0.1 MATIC for the proposal",
           lambda: process.env.VOTING_LAMBDA_ADDRESS,
         },
       },
@@ -136,14 +129,14 @@ async function stakeAndVote(proposalId, emailId, reason) {
         call: {
           function: {
             name: "vote",
-            args: ["1"],
+            args: [proposalId],
           },
-          reason: "Voting for the proposal",
+          reason: "Vote for the proposal",
           lambda: process.env.VOTING_LAMBDA_ADDRESS,
         },
       },
     ],
-    "Stake And Vote",
+    reason,
     { email: emailId }
   );
   return outcome;

@@ -32,7 +32,7 @@ export default async function getLambdaStakingAndVotingConsentToken(
   return data;
 }
 
-// This is the helper function to adding a proposal by making request to the backend server.
+// This is the helper function to add a proposal by making request to the backend server.
 export const addProposal = async (proposalName, proposalDescription) => {
   console.log("Adding proposal " + proposalName);
   const url = "http://localhost:3001/addProposal";
@@ -64,7 +64,7 @@ export const addProposal = async (proposalName, proposalDescription) => {
   return data;
 };
 
-// This is the helper function to adding a proposal by making request to the backend server.
+// This is the helper function to get a proposal by making request to the backend server.
 export const getProposal = async (proposalId) => {
   console.log("Getting proposal: " + proposalId);
   const url = "http://localhost:3001/getProposal";

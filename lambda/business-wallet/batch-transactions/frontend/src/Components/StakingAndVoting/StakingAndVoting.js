@@ -16,11 +16,7 @@ export const StakingAndVoting = ({ sdk }) => {
     try {
       setLoading(true);
       const getVotingConsentTokenResponse =
-        await getLambdaStakingAndVotingConsentToken(
-          proposalId,
-          asEmail,
-          "Voting and Staking"
-        );
+        await getLambdaStakingAndVotingConsentToken(proposalId, asEmail);
       setLoading(false);
       if (getVotingConsentTokenResponse.status !== "USER_CONSENT_NEEDED") {
         alert(
@@ -138,7 +134,7 @@ export const StakingAndVoting = ({ sdk }) => {
                       textEmphasis: "bold",
                     }}
                   >
-                    Proposal ID:
+                    Proposal Name:
                   </div>
                   <div className="CardRowValue">
                     {proposalDetails.data["name"]}

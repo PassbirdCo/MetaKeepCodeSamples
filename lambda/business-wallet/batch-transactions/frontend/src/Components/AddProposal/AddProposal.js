@@ -30,7 +30,7 @@ export const AddProposal = () => {
     } catch (error) {
       setLoading(false);
       alert(
-        "Error Invoking Registration Method:" +
+        "Error adding proposal: " +
           (error.message ? error.message : JSON.stringify(error))
       );
     }
