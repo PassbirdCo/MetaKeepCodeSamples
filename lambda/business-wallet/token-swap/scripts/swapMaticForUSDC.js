@@ -17,11 +17,15 @@ const swapMaticForUSDC = async () => {
   await invoke(
     "swapExactETHForTokens",
     [
+      //minimum amount in wei that you would want to recieve in exchange for the Matic.
       "1",
       [
+        //WMatic token address
         "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+        //USDC token address
         "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
       ],
+      //address of the wallet that will recieve the USDC tokens.
       await getDeveloperBusinessWallet(),
       // timestamp + 1 day
       String(Math.floor(Date.now() / 1000) + 86400),

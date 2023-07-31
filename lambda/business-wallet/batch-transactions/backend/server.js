@@ -31,7 +31,7 @@ app.get("/", (_, res) => {
   res.send("MetaKeep Tutorial Backend Server!");
 });
 
-/* ************************************************************************* Vote For Proposal API EndPoint ************************************************************************* */
+/* ************************************************************************* Add proposal API EndPoint ************************************************************************* */
 
 app.post("/addProposal", async (req, res) => {
   console.log("getConsentToken");
@@ -48,7 +48,7 @@ app.post("/addProposal", async (req, res) => {
   }
 });
 
-/* ************************************************************************* Add Proposal API Endpoint ************************************************************************* */
+/* ************************************************************************* Stake and Vote API Endpoint ************************************************************************* */
 
 app.post("/stakeAndVote", async (req, res) => {
   console.log("stakeAndVote");
@@ -114,7 +114,7 @@ async function addProposal(proposalName, proposalDescription) {
 // Utility Function to add Proposal using Lambda Invocation API
 
 async function stakeAndVote(proposalId, emailId, reason) {
-  console.log("Adding Proposal ...");
+  console.log("Staking and adding proposal ...");
 
   // since the "addProposalMethod takes the ethereum address as argument, we need to get the wallet associated with the emailId"
 

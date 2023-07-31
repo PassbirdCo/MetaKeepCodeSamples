@@ -1,8 +1,9 @@
 import env from "dotenv";
 import { invokeMultiple } from "../../../lambdaUtils.mjs";
-import getDeveloperWallet, {
+import {
   waitUntilTransactionMined,
   checkAPIKey,
+  getDeveloperBusinessWallet,
 } from "../../../../helpers/utils.mjs";
 
 async function main() {
@@ -11,7 +12,7 @@ async function main() {
   // Checks if the API_KEY is set in the .env file.
   checkAPIKey();
 
-  const developerAddress = await getDeveloperWallet();
+  const developerBusinessWalletAddress = await getDeveloperBusinessWallet();
 
   /* *************************************************************** Register a proposal, Stake And Vote *************************************************************** */
   console.log(
@@ -19,7 +20,7 @@ async function main() {
   );
 
   // Invokes the lambda function to vote and stake.
-  console.log("Invoking lambda to state and vote for proposal...\n");
+  console.log("Invoking lambda to register, state, and vote for a proposal...\n");
   const resultJson = await invokeMultiple(
     [
       {
@@ -46,7 +47,7 @@ async function main() {
         call: {
           function: {
             name: "vote",
-            args: [developerAddress, "1"],
+            args: [developerBusinessWalletAddress, "1"],
           },
           reason: "Voting for the proposal",
           lambda: process.env.LAMBDA_ADDRESS,

@@ -79,10 +79,10 @@ export const importLambda = async (abi, name, address) => {
 
   if (!result.ok) {
     console.log(
-      "Error while creating lambda. HTTP status code: " + result.status
+      "Error while importing lambda. HTTP status code: " + result.status
     );
     throw new Error(
-      "Error while creating lambda. HTTP status code: " + result.status
+      "Error while importing lambda. HTTP status code: " + result.status
     );
   }
 
@@ -96,7 +96,7 @@ export const invoke = async (
   reason,
   lambdaAddress,
   value,
-  use_business_wallet
+  useBusinessWallet
 ) => {
   const url = getAPIHost() + "/v2/app/lambda/invoke";
 
@@ -114,7 +114,7 @@ export const invoke = async (
     },
     pay: value || "0",
     reason: reason,
-    using: use_business_wallet || false,
+    using: useBusinessWallet ? "BUSINESS_WALLET" : null,
   };
   const options = {
     method: "POST",
@@ -135,7 +135,7 @@ export const invoke = async (
   return resultJson;
 };
 
-// Invokes the lambda function.
+// Invokes the multiple lambdas.
 export const invokeMultiple = async (invocations, reason, as) => {
   const url = getAPIHost() + "/v2/app/lambda/invoke/multiple";
 
@@ -237,7 +237,7 @@ export const readLambda = async (lambdaAddress, functionName, functionArgs) => {
   };
   const result = await fetch(url, options);
   const resultJson = await result.json();
-  console.log("Lambda Invocation response: ");
+  console.log("Lambda read response: ");
   console.log(resultJson);
   if (!result.ok) {
     console.log(

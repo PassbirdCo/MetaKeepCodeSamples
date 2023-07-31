@@ -34,7 +34,7 @@ contract Voting {
 
     function unstake(address user) public {
         require(voters[user] == false, "You have already voted");
-        require(stakes[user] == 100000000000000, "You need to stake some ETH");
+        require(stakes[user] >= 100000000000000, "You need to stake some ETH");
         stakes[user] = 0;
     }
 
@@ -48,7 +48,7 @@ contract Voting {
     }
 
     function getProposal(uint256 proposalId) public view returns (proposal memory) {
-        require(proposalId > 0 && proposalId <= proposalCount, "Invalid proposal id");
+        require(proposalId >= 0 && proposalId <= proposalCount, "Invalid proposal id");
         return proposals[proposalId];
     }
 
