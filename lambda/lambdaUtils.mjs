@@ -241,7 +241,7 @@ export const readLambda = async (lambdaAddress, functionName, functionArgs) => {
   console.log(resultJson);
   if (!result.ok) {
     console.log(
-      "Error invoking Lambda Function. HTTP status code: " + result.status
+      "Error reading from Lambda Function. HTTP status code: " + result.status
     );
   }
   console.log("\n");
