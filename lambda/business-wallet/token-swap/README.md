@@ -1,17 +1,17 @@
-# MetaKeep Lambda - Import UniswapV2Router and Swap Matic tokens for USDC
+# MetaKeep Lambda - Import SushiSwapRouter contract and Swap Matic tokens for USDC
 
-This repository contains the code that demonstrates how you can import any popular smart contract like Uniswap in Metakeep,
-and Invoke any of its methods.
+This repository contains the code that demonstrates how you can import any popular smart contract like SushiSwap to MetaKeep lambda,
+and invoke any of its methods.
 
 This project is intended to be used with the
-[MetaKeep Lambda Import and Invocation Tutorial Series](https://docs.metakeep.xyz/docs/create-your-first-lambda), but you should be
+[MetaKeep Lambda Business Wallet Token Swap](https://docs.metakeep.xyz/docs/lambda-business-wallet-token-swap), but you should be
 able to follow it by yourself by reading the README and exploring its `scripts` directories.
 
 ## Directory Structure
 
 The project is organized as follows:
 
-- [scripts](./scripts): Contains the scripts to import already deployed smart contracts and invoke its functions.
+- [scripts](./scripts): The scripts to import already deployed smart contract and invoke its functions.
 
 ## Quick start
 
@@ -21,20 +21,19 @@ The first thing you need to do is clone this repository:
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
 
-Once you have cloned the repository, you need to fund your MetaKeep Business Wallet with the MATIC tokens.
-You can either get it from the faucet for Mumbai Network or Buy it from any Popular exchange for Mainnet.
+Once you have cloned the repository, you must fund your MetaKeep Business Wallet with Polygon mainnet MATIC tokens that you can buy from any popular exchange for Mainnet.
 
 Once you have funded the business wallet, on a new terminal,
-go to the repository's `lambda/lambda-import/scripts` folder and add the env variable values.
+go to the repository's `lambda/business-wallet/token-swap/scripts` folder and update the `.env` file with the API key for the Polygon Mainnet network.
 
-Finally, you can run the following commands to import contract and swap MATIC for USDC.
+Then, you can run the following commands to import the contract and swap MATIC for USDC.
 
 ```sh
 npm run importContract
 npm run swapMaticForUSDC
 ```
 
-This will import the Uniswap V2 contract and also swap the MATIC tokens for USDC
+This will import the SushiSwap V2 contract and also swap the MATIC tokens for USDC
 
 ## User Guide
 
@@ -44,7 +43,7 @@ For a complete introduction to MetaKeep Lambda, refer to [this guide](https://do
 
 ## Troubleshooting
 
-You can find a detailed list of the errors [here](https://docs.metakeep.xyz/reference/api-error-status#v2applambdacreate) that would help you to troubleshoot.
+You can find a detailed list of the errors [here](https://docs.metakeep.xyz/reference/api-error-status#v2applambdainvoke) that would help you to troubleshoot.
 
 ## Getting help and updates
 

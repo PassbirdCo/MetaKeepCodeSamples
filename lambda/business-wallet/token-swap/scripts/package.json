@@ -1,5 +1,5 @@
 {
-  "name": "Scripts to Import Lambda And Invoke it",
+  "name": "lambda-business-wallet-token-swap",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
