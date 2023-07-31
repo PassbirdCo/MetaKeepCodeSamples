@@ -1,9 +1,9 @@
 import env from "dotenv";
-import { invokeMultiple } from "../../lambdaUtils.mjs";
+import { invokeMultiple } from "../../../lambdaUtils.mjs";
 import getDeveloperWallet, {
   waitUntilTransactionMined,
   checkAPIKey,
-} from "../../../helpers/utils.mjs";
+} from "../../../../helpers/utils.mjs";
 
 async function main() {
   env.config();

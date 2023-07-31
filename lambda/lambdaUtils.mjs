@@ -214,7 +214,7 @@ export const getMergedABI = (implementationABI, proxyABI) => {
 };
 
 export const readLambda = async (lambdaAddress, functionName, functionArgs) => {
-  const url = getAPIHost() + "v2/app/lambda/read";
+  const url = getAPIHost() + "/v2/app/lambda/read";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",

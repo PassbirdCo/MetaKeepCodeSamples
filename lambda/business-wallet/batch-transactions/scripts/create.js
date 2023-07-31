@@ -1,11 +1,11 @@
 // Script to deploy Smart contract using Metakeep Lambda and REST API.
 import fs from "fs";
 import env from "dotenv";
-import { create } from "../../lambdaUtils.mjs";
+import { create } from "../../../lambdaUtils.mjs";
 import {
   checkAPIKey,
   waitUntilTransactionMined,
-} from "../../../helpers/utils.mjs";
+} from "../../../../helpers/utils.mjs";
 
 async function main() {
   env.config();

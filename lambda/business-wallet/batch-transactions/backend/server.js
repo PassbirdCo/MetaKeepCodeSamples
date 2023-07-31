@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import env from "dotenv";
-import { checkAPIKey, getUserWallet } from "../../../helpers/utils.mjs";
+import { checkAPIKey, getUserWallet } from "../../../../helpers/utils.mjs";
 import { invokeMultiple, invoke, readLambda } from "../../../lambdaUtils.mjs";
 
 const app = express();
@@ -105,7 +105,9 @@ async function addProposal(proposalName, proposalDescription) {
     "addProposal",
     [proposalName, proposalDescription],
     "Adding Proposal",
-    process.env.VOTING_LAMBDA_ADDRESS
+    process.env.VOTING_LAMBDA_ADDRESS,
+    null,
+    true
   );
   return outcome;
 }
