@@ -1,15 +1,13 @@
 pragma solidity ^0.8.0;
 
 contract Voting {
-
     struct proposal {
         uint256 id;
         string name;
         uint256 voteCount;
         string description;
     }
-  
-  
+
     mapping(address => bool) public voters;
 
     mapping(address => uint256) public stakes;
@@ -24,7 +22,12 @@ contract Voting {
 
     function addProposal(string memory name, string memory description) public {
         proposalCount++;
-        proposals[proposalCount] = proposal(proposalCount, name, 0, description);
+        proposals[proposalCount] = proposal(
+            proposalCount,
+            name,
+            0,
+            description
+        );
     }
 
     function stake() public payable {
@@ -34,23 +37,37 @@ contract Voting {
 
     function unstake() public {
         require(voters[msg.sender] == false, "You have already voted");
-        require(stakes[msg.sender] >= 100000000000000, "You need to stake some ETH");
+        require(
+            stakes[msg.sender] >= 100000000000000,
+            "You need to stake some ETH"
+        );
         uint256 amount = stakes[msg.sender];
         stakes[msg.sender] = 0;
         payable(msg.sender).transfer(amount);
     }
 
     function vote(uint256 proposalId) public {
-      // check if voter has staked 0.0001 ETH
-        require(stakes[msg.sender] >= 100000000000000, "You need to stake some ETH");
+        // check if voter has staked 0.0001 ETH
+        require(
+            stakes[msg.sender] >= 100000000000000,
+            "You need to stake some ETH"
+        );
         require(!voters[msg.sender], "You have already voted");
-        require(proposalId > 0 && proposalId <= proposalCount, "Invalid proposal id");
+        require(
+            proposalId > 0 && proposalId <= proposalCount,
+            "Invalid proposal id"
+        );
         voters[msg.sender] = true;
         proposals[proposalId].voteCount++;
     }
 
-    function getProposal(uint256 proposalId) public view returns (proposal memory) {
-        require(proposalId >= 0 && proposalId <= proposalCount, "Invalid proposal id");
+    function getProposal(
+        uint256 proposalId
+    ) public view returns (proposal memory) {
+        require(
+            proposalId >= 0 && proposalId <= proposalCount,
+            "Invalid proposal id"
+        );
         return proposals[proposalId];
     }
 
@@ -76,5 +93,4 @@ contract Voting {
 
     // add a fallback function to receive ETH
     receive() external payable {}
-
 }

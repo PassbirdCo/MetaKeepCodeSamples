@@ -17,7 +17,9 @@ async function main() {
   );
 
   // Invokes the lambda function to vote and stake.
-  console.log("Invoking lambda to register, state, and vote for a proposal...\n");
+  console.log(
+    "Invoking lambda to register, state, and vote for a proposal...\n"
+  );
   const resultJson = await invokeMultiple(
     [
       {

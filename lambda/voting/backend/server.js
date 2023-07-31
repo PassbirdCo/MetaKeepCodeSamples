@@ -3,7 +3,11 @@ import fetch from "node-fetch";
 import bodyParser from "body-parser";
 import cors from "cors";
 import env from "dotenv";
-import { checkAPIKey, getUserWallet, getAPIHost } from "../../../helpers/utils.mjs";
+import {
+  checkAPIKey,
+  getUserWallet,
+  getAPIHost,
+} from "../../../helpers/utils.mjs";
 import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
   REGISTRATION_FUNCTION_NAME,

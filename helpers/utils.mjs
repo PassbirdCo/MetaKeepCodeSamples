@@ -3,7 +3,6 @@
 import fetch from "node-fetch";
 import { exit } from "process";
 
-
 export default async function getDeveloperWallet() {
   console.log("Getting developer wallet...");
 
@@ -34,7 +33,6 @@ export default async function getDeveloperWallet() {
   return resultJson.wallet.ethAddress;
 }
 
-
 export const getDeveloperBusinessWallet = async () => {
   console.log("Getting developer business wallet...");
 
@@ -57,14 +55,15 @@ export const getDeveloperBusinessWallet = async () => {
 
   if (!result.ok) {
     console.log(
-      "Error getting developer business wallet. HTTP status code: " + result.status
+      "Error getting developer business wallet. HTTP status code: " +
+        result.status
     );
     exit(1);
   }
 
   console.log("\n");
   return resultJson.wallet.ethAddress;
-}
+};
 
 export const getUserWallet = async (email) => {
   console.log("Getting user wallet...");
@@ -181,4 +180,4 @@ export const checkAPIKey = () => {
 
 export const getAPIHost = () => {
   return process.env.API_HOST || "https://api.metakeep.xyz";
-}
+};
