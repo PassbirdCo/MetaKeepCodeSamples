@@ -1,9 +1,9 @@
 import env from "dotenv";
-import { invoke } from "../../lambdaUtils.mjs";
+import { invoke } from "../../../lambdaUtils.mjs";
 import {
   getDeveloperBusinessWallet,
   checkAPIKey,
-} from "../../../helpers/utils.mjs";
+} from "../../../../helpers/utils.mjs";
 
 const swapMaticForUSDC = async () => {
   env.config();
@@ -26,7 +26,7 @@ const swapMaticForUSDC = async () => {
       // timestamp + 1 day
       String(Math.floor(Date.now() / 1000) + 86400),
     ],
-    "Swapping Matic For USDC",
+    "Swap Matic For USDC",
     process.env.SUSHISWAP_ROUTER_ADDRESS,
     "0.001",
     true
