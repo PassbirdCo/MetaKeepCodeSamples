@@ -20,7 +20,7 @@ async function main() {
   checkAPIKey();
 
   const address = process.env.SUSHISWAP_ROUTER_ADDRESS;
-  
+
   const abi_r = await getABI();
 
   await importLambda(JSON.parse(abi_r), "SushiSwapV2Router02", address);
