@@ -57,7 +57,7 @@ export const getDeveloperBusinessWallet = async () => {
 
   if (!result.ok) {
     console.log(
-      "Error getting developer wallet. HTTP status code: " + result.status
+      "Error getting developer business wallet. HTTP status code: " + result.status
     );
     exit(1);
   }
