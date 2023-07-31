@@ -1,21 +1,20 @@
-# MetaKeep Lambda - Simple Voting Application
+# MetaKeep Lambda - Batch Transactions
 
-This repository contains a simple Voting Application that you can use as the starting point
-for using MetaKeep's Lambda Infrastructure.
+This repository contains a simple voting Application that you can use as the starting point for using batch transactions on MetaKeep's Lambda Infrastructure.
 
 This project is intended to be used with the
-[MetaKeep Lambda Creation and Invocation Tutorial Series](https://docs.metakeep.xyz/docs/create-your-first-lambda), but you should be
+[MetaKeep Lambda Business Wallet Batch Transactions](https://docs.metakeep.xyz/docs/lambda-business-wallet-batch-transactions), but you should be
 able to follow it by yourself by reading the README and exploring its
-`smart-contracts`, `backend`, `scripts` and `frontend` directories.
+`smart-contracts`, `backend`, `scripts`, and `frontend` directories.
 
 ## Directory Structure
 
 The project is organized as follows:
 
-- [smart-contracts](./smart-contracts): Contains the Smart Contract for the Voting.
+- [smart-contracts](./smart-contracts): Contains the smart contract for voting.
 - [scripts](./scripts): Contains the scripts to deploy a new Lambda smart contract and invoke Lambda functions.
 - [backend](./backend): Contains the backend code for the server to generate a consent token to vote for a proposal and create a new proposal.
-- [frontend](./frontend): Contains the frontend code and server for the proposal registration and voting.
+- [frontend](./frontend): Contains the frontend code and server for proposal registration and voting.
 
 ## Quick start
 
@@ -25,7 +24,7 @@ The first thing you need to do is clone this repository:
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
 
-Then, on a new terminal, go to the repository's `lambda/voting/smart-contracts` folder and run this to
+Then, on a new terminal, go to the repository's `lambda/business-wallet/batch-transactions/smart-contracts` folder and run this to
 compile your smart contract:
 
 ```sh
@@ -33,26 +32,24 @@ npm install
 npx hardhat compile
 ```
 
-Once the contract has been compiled, go to the repository's `lambda/voting/scripts` folder and run the following commands to create a new Lambda and call the voting method directly as a developer.
+Once the contract has been compiled, go to the repository's `lambda/business-wallet/batch-transactions/scripts` folder and run the following commands to create a new Lambda.
 
 ```sh
 npm install
 npm run create
 ```
 
-After you have created the Lambda, you can invoke a method by running the following command.
+After you have created the Lambda, run the following command to register a new proposal and vote for the proposal as the developer(you).
 
 ```sh
 npm run invoke
 ```
 
-This will register a new proposal and vote for the proposal as developer(you).
+# Register and vote as end-users.
 
-# How to invoke a Lambda method on behalf of users by getting their consent.
+To register and vote an end-users, you need their consent. To get consent you need to use the MetaKeep SDK.
 
-If you want to invoke the Lambda function using end-user's wallet, you need their consent. To get consent you need to use the MetaKeep SDK. Run the following commands for an end-to-end demo for Lambda Invocation for the end-user.
-
-Start the backend server by running the following command in the `lambda/voting/backend` directory.
+Start the backend server by running the following command in the `lambda/business-wallet/batch-transactions/backend` directory.
 
 ```sh
 npm install
@@ -61,13 +58,14 @@ npm run start
 
 This will start a server at port number `3001`.
 
-Start the frontend server by running the following command in the `lambda/voting/frontend` directory.
+Start the frontend server by running the following command in the `lambda/business-wallet/batch-transactions/frontend` directory.
 
 ```sh
 npm install
 npm run start
 ```
 
+This will open up the demo application on your browser at port number `3000`.
 The demo application allows you to register and vote for the proposal.
 
 ## User Guide

@@ -21,13 +21,13 @@ contract Voting {
     }
 
     function addProposal(string memory name, string memory description) public {
-        proposalCount++;
         proposals[proposalCount] = proposal(
             proposalCount,
             name,
             0,
             description
         );
+        proposalCount++;
     }
 
     function stake() public payable {
@@ -54,7 +54,7 @@ contract Voting {
         );
         require(!voters[msg.sender], "You have already voted");
         require(
-            proposalId > 0 && proposalId <= proposalCount,
+            proposalId >= 0 && proposalId < proposalCount,
             "Invalid proposal id"
         );
         voters[msg.sender] = true;
@@ -65,7 +65,7 @@ contract Voting {
         uint256 proposalId
     ) public view returns (proposal memory) {
         require(
-            proposalId >= 0 && proposalId <= proposalCount,
+            proposalId >= 0 && proposalId < proposalCount,
             "Invalid proposal id"
         );
         return proposals[proposalId];

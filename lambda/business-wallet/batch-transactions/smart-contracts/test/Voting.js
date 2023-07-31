@@ -23,7 +23,7 @@ describe("Voting contract", function () {
         .connect(owner)
         .addProposal("new Park", "Should we build a new park?");
       // it should be able to get the proposal
-      const proposal = await votingContract.getProposal(1);
+      const proposal = await votingContract.getProposal(0);
 
       expect(proposal[1]).to.equal("new Park");
       expect(proposal[3]).to.equal("Should we build a new park?");
@@ -36,14 +36,14 @@ describe("Voting contract", function () {
       const stake = await votingContract.stakes(owner.address);
     });
 
-    it("no one should be able to vote if they havent staked", async function () {
-      await expect(votingContract.connect(addr1).vote(1)).to.be.revertedWith(
+    it("no one should be able to vote if they haven't staked", async function () {
+      await expect(votingContract.connect(addr1).vote(0)).to.be.revertedWith(
         "You need to stake some ETH"
       );
     });
 
     it("anyone should be able to vote", async function () {
-      await votingContract.connect(owner).vote(1);
+      await votingContract.connect(owner).vote(0);
 
       // check the vote of the owner
       const vote = await votingContract.voters(owner.address);
@@ -52,7 +52,7 @@ describe("Voting contract", function () {
     });
 
     it("once voted, should not be able to vote again", async function () {
-      await expect(votingContract.connect(owner).vote(1)).to.be.revertedWith(
+      await expect(votingContract.connect(owner).vote(0)).to.be.revertedWith(
         "You have already voted"
       );
     });
