@@ -18,7 +18,7 @@ async function main() {
 
   // Invokes the lambda function to vote and stake.
   console.log(
-    "Invoking lambda to register, state, and vote for a proposal...\n"
+    "Invoking lambda to register, stake, and vote for a proposal...\n"
   );
   const resultJson = await invokeMultiple(
     [
@@ -28,7 +28,7 @@ async function main() {
             name: "addProposal",
             args: ["Proposal Name", "Proposal Description"],
           },
-          reason: "Registering the proposal",
+          reason: "Register the proposal",
           lambda: process.env.LAMBDA_ADDRESS,
         },
       },
@@ -38,7 +38,7 @@ async function main() {
             name: "stake",
           },
           pay: "0.1",
-          reason: "Staking for the proposal",
+          reason: "Stake for the proposal",
           lambda: process.env.LAMBDA_ADDRESS,
         },
       },
@@ -46,19 +46,20 @@ async function main() {
         call: {
           function: {
             name: "vote",
-            args: ["1"],
+            args: ["0"],
           },
-          reason: "Voting for the proposal",
+          reason: "Vote for the proposal",
           lambda: process.env.LAMBDA_ADDRESS,
         },
       },
     ],
     "Stake And Vote"
   );
-  console.log("Lambda invocation for voting initiated: ");
+  console.log("Lambda multiple invocation initiated: ");
 
   // Waits for the transaction to be mined.
   await waitUntilTransactionMined(resultJson);
+
   console.log(
     "Lambda invocation for voting completed: " +
       resultJson.transactionHash +

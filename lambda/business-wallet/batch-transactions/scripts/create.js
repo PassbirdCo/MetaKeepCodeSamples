@@ -13,6 +13,8 @@ async function main() {
   // Checks if the API_KEY is set in the .env file.
   checkAPIKey();
 
+  console.log("Creating Lambda...");
+
   const data = JSON.parse(
     fs.readFileSync(
       "../smart-contracts/artifacts/contracts/Voting.sol/Voting.json"
@@ -21,8 +23,7 @@ async function main() {
 
   const resultJson = await create([], data.abi, data.bytecode, "Voting");
 
-  //Waits for the transaction to be mined.
-
+  // Wait for the transaction to be mined.
   await waitUntilTransactionMined(resultJson);
 
   console.log(
