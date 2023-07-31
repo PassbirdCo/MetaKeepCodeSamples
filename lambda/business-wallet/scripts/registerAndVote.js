@@ -22,18 +22,21 @@ async function main() {
   );
   // Invokes the lambda function to register the user as Proposal.
   console.log("Invoking lambda function to register proposal...\n");
-  const resultJson = await invokeInBatch([
-    {
-      call: {
-        function: {
-          name: "addProposal",
-          args: ["Proposal Name", "Proposal Description"],
+  const resultJson = await invokeInBatch(
+    [
+      {
+        call: {
+          function: {
+            name: "addProposal",
+            args: ["Proposal Name", "Proposal Description"],
+          },
+          reason: "Registering the proposal",
+          lambda: process.env.LAMBDA_ADDRESS,
         },
-        reason: "Registering the proposal",
-        lambda: process.env.LAMBDA_ADDRESS,
       },
-    },
-  ]);
+    ],
+    "Register Proposal"
+  );
   console.log("Lambda invocation for registering proposal initiated: \n");
 
   // Waits for the transaction to be mined.
@@ -54,28 +57,31 @@ async function main() {
 
   // Invokes the lambda function to vote and stake.
   console.log("Invoking lambda to state and vote for proposal...\n");
-  const resultJson2 = await invokeInBatch([
-    {
-      call: {
-        function: {
-          name: "stake",
+  const resultJson2 = await invokeInBatch(
+    [
+      {
+        call: {
+          function: {
+            name: "stake",
+          },
+          pay: "0.1",
+          reason: "Staking for the proposal",
+          lambda: process.env.LAMBDA_ADDRESS,
         },
-        pay: "0.1",
-        reason: "Staking for the proposal",
-        lambda: process.env.LAMBDA_ADDRESS,
       },
-    },
-    {
-      call: {
-        function: {
-          name: "vote",
-          args: [developerAddress, "1"],
+      {
+        call: {
+          function: {
+            name: "vote",
+            args: [developerAddress, "1"],
+          },
+          reason: "Voting for the proposal",
+          lambda: process.env.LAMBDA_ADDRESS,
         },
-        reason: "Voting for the proposal",
-        lambda: process.env.LAMBDA_ADDRESS,
       },
-    },
-  ]);
+    ],
+    "Stake And Vote"
+  );
   console.log("Lambda invocation for voting initiated: ");
 
   // Waits for the transaction to be mined.

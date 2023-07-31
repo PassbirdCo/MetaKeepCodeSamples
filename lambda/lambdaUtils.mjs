@@ -48,7 +48,7 @@ export const create = async (args, abi, bytecode, name) => {
   return resultJson;
 };
 
-export const import_lambda = async (abi, name, address) => {
+export const importLambda = async (abi, name, address) => {
   const url = "https://api.dev.metakeep.xyz/v2/app/lambda/import";
 
   const headers = {
@@ -132,7 +132,7 @@ export const invoke = async (
 };
 
 // Invokes the lambda function.
-export const invokeInBatch = async (invocations) => {
+export const invokeInBatch = async (invocations, reason) => {
   const url = "https://api.dev.metakeep.xyz/v2/app/lambda/invoke/multiple";
 
   const headers = {
@@ -143,6 +143,7 @@ export const invokeInBatch = async (invocations) => {
   };
   const requestBody = {
     invocations: invocations,
+    reason: reason,
     using: "BUSINESS_WALLET",
   };
   const options = {
@@ -197,6 +198,8 @@ export const updateABI = async (lambdaAddress, abi) => {
 
   console.log("ABI updated successfully.");
 };
+
+
 
 export const getMergedABI = (implementationABI, proxyABI) => {
   // Remove constructor from implementation ABI

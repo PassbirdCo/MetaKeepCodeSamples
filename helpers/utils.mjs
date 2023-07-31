@@ -33,6 +33,38 @@ export default async function getDeveloperWallet() {
   return resultJson.wallet.ethAddress;
 }
 
+
+export const getDeveloperBusinessWallet = async () => {
+  console.log("Getting developer business wallet...");
+
+  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/getBusinessWallet";
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "x-api-key": process.env.API_KEY,
+    "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
+  };
+  const options = {
+    method: "POST",
+    headers: headers,
+  };
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+
+  console.log("get Business wallet response:");
+  console.log(resultJson);
+
+  if (!result.ok) {
+    console.log(
+      "Error getting developer wallet. HTTP status code: " + result.status
+    );
+    exit(1);
+  }
+
+  console.log("\n");
+  return resultJson.wallet.ethAddress;
+}
+
 export const getUserWallet = async (email) => {
   console.log("Getting user wallet...");
 
@@ -73,7 +105,7 @@ export const getUserWallet = async (email) => {
 };
 
 export const getTransactionStatus = async (transactionId) => {
-  const url = "https://api.metakeep.xyz/v2/app/transaction/status";
+  const url = "https://api.dev.metakeep.xyz/v2/app/transaction/status";
   const requestBody = {
     transactionId: transactionId,
   };
