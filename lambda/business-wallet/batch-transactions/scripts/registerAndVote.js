@@ -1,5 +1,5 @@
 import env from "dotenv";
-import { invoke, invokeInBatch } from "../../lambdaUtils.mjs";
+import { invoke, invokeMultiple } from "../../lambdaUtils.mjs";
 import { solidityKeccak256 } from "ethers/lib/utils.js";
 import getDeveloperWallet, {
   waitUntilTransactionMined,
@@ -22,7 +22,7 @@ async function main() {
   );
   // Invokes the lambda function to register the user as Proposal.
   console.log("Invoking lambda function to register proposal...\n");
-  const resultJson = await invokeInBatch(
+  const resultJson = await invokeMultiple(
     [
       {
         call: {
@@ -57,7 +57,7 @@ async function main() {
 
   // Invokes the lambda function to vote and stake.
   console.log("Invoking lambda to state and vote for proposal...\n");
-  const resultJson2 = await invokeInBatch(
+  const resultJson2 = await invokeMultiple(
     [
       {
         call: {

@@ -24,7 +24,7 @@ async function main() {
   console.log(abi_r);
   const abi = JSON.parse(abi_r);
 
-  const name = "UniswapV2Router02";
+  const name = "SushiSwapV2Router02";
 
   await importLambda(abi, name, address);
 }

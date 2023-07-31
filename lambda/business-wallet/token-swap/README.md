@@ -1,7 +1,7 @@
 # MetaKeep Lambda - Import UniswapV2Router and Swap Matic tokens for USDC
 
 This repository contains the code that demonstrates how you can import any popular smart contract like Uniswap in Metakeep,
-and Invoke any of its method.
+and Invoke any of its methods.
 
 This project is intended to be used with the
 [MetaKeep Lambda Import and Invocation Tutorial Series](https://docs.metakeep.xyz/docs/create-your-first-lambda), but you should be
@@ -11,7 +11,7 @@ able to follow it by yourself by reading the README and exploring its `scripts` 
 
 The project is organized as follows:
 
-- [scripts](./scripts): Contains the scripts to import already deployed smart contract and invoke its functions.
+- [scripts](./scripts): Contains the scripts to import already deployed smart contracts and invoke its functions.
 
 ## Quick start
 
@@ -21,7 +21,13 @@ The first thing you need to do is clone this repository:
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
 
-Then, on a new terminal, go to the repository's `lambda/lambda-import/scripts` folder and run the scripts:
+Once you have cloned the repository, you need to fund your MetaKeep Business Wallet with the MATIC tokens.
+You can either get it from the faucet for Mumbai Network or Buy it from any Popular exchange for Mainnet.
+
+Once you have funded the business wallet, on a new terminal,
+go to the repository's `lambda/lambda-import/scripts` folder and add the env variable values.
+
+Finally, you can run the following commands to import contract and swap MATIC for USDC.
 
 ```sh
 npm run importContract

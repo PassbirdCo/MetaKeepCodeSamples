@@ -2,9 +2,10 @@
 
 import fetch from "node-fetch";
 
+const apiHost = process.env.API_HOST || "https://api.metakeep.xyz";
 // Creates a Lambda.
 export const create = async (args, abi, bytecode, name) => {
-  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/create";
+  const url = apiHost + "/v2/app/lambda/create";
 
   const headers = {
     Accept: "application/json",
@@ -18,7 +19,7 @@ export const create = async (args, abi, bytecode, name) => {
       args: args,
     },
     abi: abi,
-    name: name !== undefined ? name : "",
+    name: name || "",
     bytecode: bytecode,
   };
 
@@ -49,7 +50,7 @@ export const create = async (args, abi, bytecode, name) => {
 };
 
 export const importLambda = async (abi, name, address) => {
-  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/import";
+  const url = apiHost + "/v2/app/lambda/import";
 
   const headers = {
     Accept: "application/json",
@@ -94,9 +95,11 @@ export const invoke = async (
   functionName,
   functionArgs,
   reason,
-  lambdaAddress
+  lambdaAddress,
+  value,
+  use_business_wallet
 ) => {
-  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/invoke/multiple";
+  const url = apiHost + "/v2/app/lambda/invoke";
 
   const headers = {
     Accept: "application/json",
@@ -110,7 +113,9 @@ export const invoke = async (
       name: functionName,
       args: functionArgs,
     },
+    pay: value || "0",
     reason: reason,
+    using: use_business_wallet || false,
   };
   const options = {
     method: "POST",
@@ -132,8 +137,8 @@ export const invoke = async (
 };
 
 // Invokes the lambda function.
-export const invokeInBatch = async (invocations, reason) => {
-  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/invoke/multiple";
+export const invokeMultiple = async (invocations, reason) => {
+  const url = apiHost + "/v2/app/lambda/invoke/multiple";
 
   const headers = {
     Accept: "application/json",
@@ -166,7 +171,7 @@ export const invokeInBatch = async (invocations, reason) => {
 };
 
 export const updateABI = async (lambdaAddress, abi) => {
-  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/update";
+  const url = apiHost + "/v2/app/lambda/update";
 
   const headers = {
     Accept: "application/json",
@@ -198,8 +203,6 @@ export const updateABI = async (lambdaAddress, abi) => {
 
   console.log("ABI updated successfully.");
 };
-
-
 
 export const getMergedABI = (implementationABI, proxyABI) => {
   // Remove constructor from implementation ABI

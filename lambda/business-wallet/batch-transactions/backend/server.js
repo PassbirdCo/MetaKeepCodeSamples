@@ -11,6 +11,8 @@ env.config();
 
 checkAPIKey();
 
+const API_HOST = process.env.API_HOST || "https://api.metakeep.xyz";
+
 const port = 3001;
 
 app.use(
@@ -181,7 +183,7 @@ async function getProposalData(proposalId) {
 // Utility function to invoke Lambda Function through MetaKeep Lambda Invocation API.
 
 async function invokeLambdaFunction(requestBody) {
-  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/invoke/";
+  const url = API_HOST + "/v2/app/lambda/invoke";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -210,7 +212,7 @@ async function invokeLambdaFunction(requestBody) {
 // Utility function to read from Lambda Function through MetaKeep Lambda Read API.
 
 async function readLambdaFunction(requestBody) {
-  const url = "https://api.dev.metakeep.xyz/v2/app/lambda/read/";
+  const url = API_HOST + "v2/app/lambda/read";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
