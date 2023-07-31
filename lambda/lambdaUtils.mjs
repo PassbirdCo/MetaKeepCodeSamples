@@ -1,10 +1,10 @@
 //Helper functions for the MetaKeep APIs
 
 import fetch from "node-fetch";
-
+import { getAPIHost } from "../helpers/utils.mjs";
 // Creates a Lambda.
-export const create = async (args, abi, bytecode) => {
-  const url = "https://api.metakeep.xyz/v2/app/lambda/create";
+export const create = async (args, abi, bytecode, name) => {
+  const url = getAPIHost() + "/v2/app/lambda/create";
 
   const headers = {
     Accept: "application/json",
@@ -18,6 +18,7 @@ export const create = async (args, abi, bytecode) => {
       args: args,
     },
     abi: abi,
+    name: name || "",
     bytecode: bytecode,
   };
 
@@ -47,14 +48,57 @@ export const create = async (args, abi, bytecode) => {
   return resultJson;
 };
 
+export const importLambda = async (abi, name, address) => {
+  const url = getAPIHost() + "/v2/app/lambda/import";
+
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-api-key": process.env.API_KEY,
+  };
+
+  const requestBody = {
+    abi: abi,
+    name: name,
+    lambda: address,
+  };
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+
+  console.log("Lambda import in process...");
+
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+
+  console.log("Lambda import response:");
+  console.log(resultJson);
+
+  if (!result.ok) {
+    console.log(
+      "Error while importing lambda. HTTP status code: " + result.status
+    );
+    throw new Error(
+      "Error while importing lambda. HTTP status code: " + result.status
+    );
+  }
+
+  return resultJson;
+};
+
 // Invokes the lambda function.
 export const invoke = async (
   functionName,
   functionArgs,
   reason,
-  lambdaAddress
+  lambdaAddress,
+  value,
+  useBusinessWallet
 ) => {
-  const url = "https://api.metakeep.xyz/v2/app/lambda/invoke";
+  const url = getAPIHost() + "/v2/app/lambda/invoke";
 
   const headers = {
     Accept: "application/json",
@@ -68,7 +112,44 @@ export const invoke = async (
       name: functionName,
       args: functionArgs,
     },
+    pay: value || "0",
     reason: reason,
+    using: useBusinessWallet ? "BUSINESS_WALLET" : null,
+  };
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+
+  console.log(resultJson);
+
+  if (!result.ok) {
+    throw new Error(
+      "Error while invoking method. HTTP status code: " + result.status
+    );
+  }
+  return resultJson;
+};
+
+// Invokes multiple lambdas.
+export const invokeMultiple = async (invocations, reason, as) => {
+  const url = getAPIHost() + "/v2/app/lambda/invoke/multiple";
+
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-api-key": process.env.API_KEY,
+    "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
+  };
+  const requestBody = {
+    invocations: invocations,
+    reason: reason,
+    using: "BUSINESS_WALLET",
+    as: as || null,
   };
   const options = {
     method: "POST",
@@ -90,7 +171,7 @@ export const invoke = async (
 };
 
 export const updateABI = async (lambdaAddress, abi) => {
-  const url = "https://api.metakeep.xyz/v2/app/lambda/update";
+  const url = getAPIHost() + "/v2/app/lambda/update";
 
   const headers = {
     Accept: "application/json",
@@ -130,4 +211,39 @@ export const getMergedABI = (implementationABI, proxyABI) => {
   });
   const mergedABI = abi.concat(proxyABI);
   return mergedABI;
+};
+
+export const readLambda = async (lambdaAddress, functionName, functionArgs) => {
+  const url = getAPIHost() + "/v2/app/lambda/read";
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "x-api-key": process.env.API_KEY,
+    "Idempotency-Key": "Idempotency-Key" + Math.random().toString(),
+  };
+
+  const requestBody = {
+    lambda: lambdaAddress,
+    function: {
+      name: functionName,
+      args: functionArgs,
+    },
+  };
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+  console.log("Lambda read response: ");
+  console.log(resultJson);
+  if (!result.ok) {
+    console.log(
+      "Error reading from Lambda Function. HTTP status code: " + result.status
+    );
+  }
+  console.log("\n");
+  return resultJson;
 };

@@ -6,6 +6,7 @@ import { exit } from "process";
 import {
   waitUntilTransactionMined,
   checkAPIKey,
+  getAPIHost,
 } from "../../helpers/utils.mjs";
 
 async function lockUnlockToken(
@@ -15,9 +16,9 @@ async function lockUnlockToken(
   let url;
 
   if (type == "unlock") {
-    url = "https://api.metakeep.xyz/v2/app/nft/unlock";
+    url = getAPIHost() + "/v2/app/nft/unlock";
   } else if (type == "lock") {
-    url = "https://api.metakeep.xyz/v2/app/nft/lock";
+    url = getAPIHost() + "/v2/app/nft/lock";
   }
 
   const headers = {

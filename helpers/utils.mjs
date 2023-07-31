@@ -6,7 +6,7 @@ import { exit } from "process";
 export default async function getDeveloperWallet() {
   console.log("Getting developer wallet...");
 
-  const url = "https://api.metakeep.xyz/v3/getDeveloperWallet";
+  const url = getAPIHost() + "/v3/getDeveloperWallet";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -33,10 +33,42 @@ export default async function getDeveloperWallet() {
   return resultJson.wallet.ethAddress;
 }
 
+export const getDeveloperBusinessWallet = async () => {
+  console.log("Getting developer business wallet...");
+
+  const url = getAPIHost() + "/v2/app/lambda/getBusinessWallet";
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "x-api-key": process.env.API_KEY,
+    "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
+  };
+  const options = {
+    method: "POST",
+    headers: headers,
+  };
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+
+  console.log("Get business wallet response:");
+  console.log(resultJson);
+
+  if (!result.ok) {
+    console.log(
+      "Error getting developer business wallet. HTTP status code: " +
+        result.status
+    );
+    exit(1);
+  }
+
+  console.log("\n");
+  return resultJson.wallet.ethAddress;
+};
+
 export const getUserWallet = async (email) => {
   console.log("Getting user wallet...");
 
-  const url = "https://api.metakeep.xyz/v3/getWallet";
+  const url = getAPIHost() + "/v3/getWallet";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -73,7 +105,7 @@ export const getUserWallet = async (email) => {
 };
 
 export const getTransactionStatus = async (transactionId) => {
-  const url = "https://api.metakeep.xyz/v2/app/transaction/status";
+  const url = getAPIHost() + "/v2/app/transaction/status";
   const requestBody = {
     transactionId: transactionId,
   };
@@ -144,4 +176,8 @@ export const checkAPIKey = () => {
     console.log("Please set API_KEY in .env file");
     exit(1);
   }
+};
+
+export const getAPIHost = () => {
+  return process.env.API_HOST || "https://api.metakeep.xyz";
 };
