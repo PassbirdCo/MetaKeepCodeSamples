@@ -137,7 +137,7 @@ export const invoke = async (
 };
 
 // Invokes the lambda function.
-export const invokeMultiple = async (invocations, reason) => {
+export const invokeMultiple = async (invocations, reason, as) => {
   const url = apiHost + "/v2/app/lambda/invoke/multiple";
 
   const headers = {
@@ -150,6 +150,7 @@ export const invokeMultiple = async (invocations, reason) => {
     invocations: invocations,
     reason: reason,
     using: "BUSINESS_WALLET",
+    as: as || null,
   };
   const options = {
     method: "POST",
@@ -211,4 +212,39 @@ export const getMergedABI = (implementationABI, proxyABI) => {
   });
   const mergedABI = abi.concat(proxyABI);
   return mergedABI;
+};
+
+export const readLambda = async (lambdaAddress, functionName, functionArgs) => {
+  const url = apiHost + "v2/app/lambda/read";
+  const headers = {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "x-api-key": process.env.API_KEY,
+    "Idempotency-Key": "Idempotency-Key" + Math.random().toString(),
+  };
+
+  const requestBody = {
+    lambda: lambdaAddress,
+    function: {
+      name: functionName,
+      args: functionArgs,
+    },
+  };
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+  console.log("Lambda Invocation response: ");
+  console.log(resultJson);
+  if (!result.ok) {
+    console.log(
+      "Error invoking Lambda Function. HTTP status code: " + result.status
+    );
+  }
+  console.log("\n");
+  return resultJson;
 };
