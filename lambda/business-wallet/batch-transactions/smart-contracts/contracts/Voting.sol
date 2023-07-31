@@ -32,18 +32,20 @@ contract Voting {
         stakes[msg.sender] = msg.value;
     }
 
-    function unstake(address user) public {
-        require(voters[user] == false, "You have already voted");
-        require(stakes[user] >= 100000000000000, "You need to stake some ETH");
-        stakes[user] = 0;
+    function unstake() public {
+        require(voters[msg.sender] == false, "You have already voted");
+        require(stakes[msg.sender] >= 100000000000000, "You need to stake some ETH");
+        uint256 amount = stakes[msg.sender];
+        stakes[msg.sender] = 0;
+        payable(msg.sender).transfer(amount);
     }
 
-    function vote(address voter, uint256 proposalId) public {
+    function vote(uint256 proposalId) public {
       // check if voter has staked 0.0001 ETH
         require(stakes[msg.sender] >= 100000000000000, "You need to stake some ETH");
-        require(!voters[voter], "You have already voted");
+        require(!voters[msg.sender], "You have already voted");
         require(proposalId > 0 && proposalId <= proposalCount, "Invalid proposal id");
-        voters[voter] = true;
+        voters[msg.sender] = true;
         proposals[proposalId].voteCount++;
     }
 

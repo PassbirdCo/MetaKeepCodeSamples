@@ -38,12 +38,12 @@ describe("Voting contract", function () {
 
     it("no one should be able to vote if they havent staked", async function () {
       await expect(
-        votingContract.connect(addr1).vote(addr1.address, 1)
+        votingContract.connect(addr1).vote(1)
       ).to.be.revertedWith("You need to stake some ETH");
     });
 
     it("anyone should be able to vote", async function () {
-      await votingContract.connect(owner).vote(owner.address, 1);
+      await votingContract.connect(owner).vote(1);
 
       // check the vote of the owner
       const vote = await votingContract.voters(owner.address);
@@ -53,7 +53,7 @@ describe("Voting contract", function () {
 
     it("once voted, should not be able to vote again", async function () {
       await expect(
-        votingContract.connect(owner).vote(owner.address, 1)
+        votingContract.connect(owner).vote(1)
       ).to.be.revertedWith("You have already voted");
     });
   });

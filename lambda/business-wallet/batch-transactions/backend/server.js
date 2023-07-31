@@ -136,7 +136,7 @@ async function stakeAndVote(proposalId, emailId, reason) {
         call: {
           function: {
             name: "vote",
-            args: [userWallet, "1"],
+            args: ["1"],
           },
           reason: "Voting for the proposal",
           lambda: process.env.VOTING_LAMBDA_ADDRESS,

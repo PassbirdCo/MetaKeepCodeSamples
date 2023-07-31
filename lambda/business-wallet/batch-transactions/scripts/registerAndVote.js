@@ -12,8 +12,6 @@ async function main() {
   // Checks if the API_KEY is set in the .env file.
   checkAPIKey();
 
-  const developerBusinessWalletAddress = await getDeveloperBusinessWallet();
-
   /* *************************************************************** Register a proposal, Stake And Vote *************************************************************** */
   console.log(
     "***************************************************** Register a proposal, Stake And Vote *****************************************************\n"
@@ -47,7 +45,7 @@ async function main() {
         call: {
           function: {
             name: "vote",
-            args: [developerBusinessWalletAddress, "1"],
+            args: ["1"],
           },
           reason: "Voting for the proposal",
           lambda: process.env.LAMBDA_ADDRESS,
