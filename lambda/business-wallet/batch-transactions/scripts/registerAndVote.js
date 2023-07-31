@@ -3,7 +3,6 @@ import { invokeMultiple } from "../../../lambdaUtils.mjs";
 import {
   waitUntilTransactionMined,
   checkAPIKey,
-  getDeveloperBusinessWallet,
 } from "../../../../helpers/utils.mjs";
 
 async function main() {
