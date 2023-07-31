@@ -135,7 +135,7 @@ export const invoke = async (
   return resultJson;
 };
 
-// Invokes the multiple lambdas.
+// Invokes multiple lambdas.
 export const invokeMultiple = async (invocations, reason, as) => {
   const url = getAPIHost() + "/v2/app/lambda/invoke/multiple";
 
