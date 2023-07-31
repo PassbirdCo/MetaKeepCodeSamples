@@ -52,7 +52,7 @@ export const getDeveloperBusinessWallet = async () => {
   const result = await fetch(url, options);
   const resultJson = await result.json();
 
-  console.log("get Business wallet response:");
+  console.log("Get business wallet response:");
   console.log(resultJson);
 
   if (!result.ok) {
