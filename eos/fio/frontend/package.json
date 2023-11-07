@@ -9,11 +9,14 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.5.0",
+    "assert": "^2.1.0",
+    "buffer": "^6.0.3",
     "metakeep": "^2.1.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "5.0.1",
+    "stream": "^0.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
