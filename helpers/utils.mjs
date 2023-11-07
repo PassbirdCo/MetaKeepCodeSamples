@@ -1,6 +1,5 @@
 //Helper functions for the MetaKeep APIs
 
-import fetch from "node-fetch";
 import { exit } from "process";
 
 export default async function getDeveloperWallet() {
