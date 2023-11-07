@@ -1,6 +1,5 @@
 //Helper functions for the MetaKeep APIs
 
-import fetch from "node-fetch";
 import { getAPIHost } from "../helpers/utils.mjs";
 // Creates a Lambda.
 export const create = async (args, abi, bytecode, name) => {
