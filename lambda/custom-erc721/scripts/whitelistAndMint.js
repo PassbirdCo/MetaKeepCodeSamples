@@ -3,7 +3,7 @@ import { invoke } from "../../lambdaUtils.mjs";
 import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
   waitUntilTransactionMined,
-  getEvmUserWallet,
+  getUserEvmAddress,
   sleep,
   checkAPIKey,
 } from "../../../helpers/utils.mjs";
@@ -15,7 +15,7 @@ async function main() {
   checkAPIKey();
 
   // Gets the user Address to whitelist in NFT collection contract.
-  const userAddress = await getEvmUserWallet(process.env.USER_EMAIL);
+  const userAddress = await getUserEvmAddress(process.env.USER_EMAIL);
 
   /* ******************** Whitelist User ******************** */
   console.log("******************** Whitelist User ********************");

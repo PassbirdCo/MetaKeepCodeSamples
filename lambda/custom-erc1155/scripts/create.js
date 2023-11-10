@@ -2,9 +2,10 @@
 import fs from "fs";
 import env from "dotenv";
 import { create } from "../../lambdaUtils.mjs";
-import getEvmDeveloperWallet, {
+import {
   checkAPIKey,
   waitUntilTransactionMined,
+  getDeveloperEvmAddress,
 } from "../../../helpers/utils.mjs";
 
 async function main() {
@@ -18,7 +19,7 @@ async function main() {
       "../smart-contracts/artifacts/contracts/CustomERC1155.sol/CustomERC1155.json"
     )
   );
-  const developerAddress = await getEvmDeveloperWallet();
+  const developerAddress = await getDeveloperEvmAddress();
 
   const resultJson = await create(
     ["Enter Your URI", developerAddress, "Custom ERC1155"],

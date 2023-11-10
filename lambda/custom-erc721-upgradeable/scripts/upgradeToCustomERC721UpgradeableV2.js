@@ -2,9 +2,10 @@
 import fs from "fs";
 import env from "dotenv";
 import { create, invoke, updateABI, getMergedABI } from "../../lambdaUtils.mjs";
-import getEvmDeveloperWallet, {
+import {
   checkAPIKey,
   waitUntilTransactionMined,
+  getDeveloperEvmAddress,
 } from "../../../helpers/utils.mjs";
 
 const newImplementationJson = JSON.parse(
@@ -20,7 +21,7 @@ const proxyContractJson = JSON.parse(
 );
 
 async function deployCustomERC721UpgradeableV2() {
-  const developerAddress = await getEvmDeveloperWallet();
+  const developerAddress = await getDeveloperEvmAddress();
 
   const resultJson = await create(
     ["MetaKeepOriginalsV2", "MTKP", developerAddress],

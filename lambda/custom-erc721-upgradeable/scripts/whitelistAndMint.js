@@ -4,7 +4,7 @@ import {
   waitUntilTransactionMined,
   sleep,
   checkAPIKey,
-  getEvmUserWallet,
+  getUserEvmAddress,
 } from "../../../helpers/utils.mjs";
 
 async function main() {
@@ -14,7 +14,7 @@ async function main() {
   checkAPIKey();
 
   // Gets the user Address to whitelist in NFT collection contract.
-  const userAddress = await getEvmUserWallet(process.env.USER_EMAIL);
+  const userAddress = await getUserEvmAddress(process.env.USER_EMAIL);
 
   /* ******************** Whitelist User ******************** */
   console.log("******************** Whitelist User ********************");
