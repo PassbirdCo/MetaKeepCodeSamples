@@ -16,15 +16,15 @@ async function main() {
 
   const data = JSON.parse(
     fs.readFileSync(
-      "../smart-contracts/artifacts/contracts/Voting.sol/Voting.json"
-    )
+      "../smart-contracts/artifacts/contracts/Voting.sol/Voting.json",
+    ),
   );
   const developerAddress = await getDeveloperEvmAddress();
 
   const resultJson = await create(
     [developerAddress, "Voting"],
     data.abi,
-    data.bytecode
+    data.bytecode,
   );
 
   //Waits for the transaction to be mined.
@@ -32,7 +32,7 @@ async function main() {
   await waitUntilTransactionMined(resultJson);
 
   console.log(
-    "Lambda created successfully. Lambda address: " + resultJson.lambda
+    "Lambda created successfully. Lambda address: " + resultJson.lambda,
   );
 }
 
