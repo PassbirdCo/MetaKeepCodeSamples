@@ -32,7 +32,7 @@ export default async function getEvmDeveloperWallet() {
   return resultJson.wallet.ethAddress;
 }
 
-export default async function getSolanaDeveloperWallet() {
+export const getSolanaDeveloperWallet = async () => {
   console.log("Getting developer wallet...");
 
   const url = getAPIHost() + "/v3/getDeveloperWallet";
