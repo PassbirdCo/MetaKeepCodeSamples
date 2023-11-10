@@ -3,7 +3,7 @@ import { invoke } from "../../lambdaUtils.mjs";
 import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
   waitUntilTransactionMined,
-  getUserWallet,
+  getEvmUserWallet,
   sleep,
   checkAPIKey,
 } from "../../../helpers/utils.mjs";
@@ -15,7 +15,7 @@ async function main() {
   checkAPIKey();
 
   // Gets the user Address to mint tokens.
-  const userAddress = await getUserWallet(process.env.USER_EMAIL);
+  const userAddress = await getEvmUserWallet(process.env.USER_EMAIL);
 
   /* ******************** Mint a NFT token to User ******************** */
   console.log(

@@ -5,8 +5,8 @@ import cors from "cors";
 import env from "dotenv";
 import {
   checkAPIKey,
-  getUserWallet,
   getAPIHost,
+  getEvmUserWallet,
 } from "../../../helpers/utils.mjs";
 import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
@@ -103,7 +103,7 @@ async function registerCandidate(emailId, reason) {
 
   // since the "registerCandidateMethod takes the ethereum address as argument, we need to get the wallet associated with the emailId"
 
-  const userWallet = await getUserWallet(emailId);
+  const userWallet = await getEvmUserWallet(emailId);
   const requestBody = {
     function: {
       name: REGISTRATION_FUNCTION_NAME,
@@ -126,7 +126,7 @@ async function voteForCandidate(candidateEmail, asEmail) {
   we need to get the wallet associated with the candidateEmail 
   and then hash it to get the candidate ID */
 
-  const candidateWallet = await getUserWallet(candidateEmail);
+  const candidateWallet = await getEvmUserWallet(candidateEmail);
   const candidateId = solidityKeccak256(["address"], [candidateWallet]);
 
   const requestBody = {
@@ -153,7 +153,7 @@ async function getCandidateDetails(candidateEmail) {
   we need to get the wallet associated with the candidateEmail 
   and then hash it to get the candidate ID */
 
-  const candidateWallet = await getUserWallet(candidateEmail);
+  const candidateWallet = await getEvmUserWallet(candidateEmail);
   const candidateId = solidityKeccak256(["address"], [candidateWallet]);
 
   const requestBody = {

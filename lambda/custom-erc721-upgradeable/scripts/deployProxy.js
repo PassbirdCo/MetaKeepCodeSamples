@@ -2,7 +2,7 @@
 import fs from "fs";
 import env from "dotenv";
 import { create, getMergedABI } from "../../lambdaUtils.mjs";
-import getDeveloperWallet, {
+import getEvmDeveloperWallet, {
   checkAPIKey,
   waitUntilTransactionMined,
 } from "../../../helpers/utils.mjs";
@@ -43,7 +43,7 @@ async function main() {
     )
   ).abi;
 
-  const developerAddress = await getDeveloperWallet();
+  const developerAddress = await getEvmDeveloperWallet();
 
   const lambdaName = "MetaKeep Originals";
 

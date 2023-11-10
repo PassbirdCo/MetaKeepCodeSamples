@@ -3,7 +3,7 @@
 import fetch from "node-fetch";
 import env from "dotenv";
 import { exit } from "process";
-import getDeveloperWallet, {
+import getEvmDeveloperWallet, {
   sleep,
   waitUntilTransactionMined,
   checkAPIKey,
@@ -20,7 +20,7 @@ async function createCollection() {
     "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
   };
 
-  const developerAddress = await getDeveloperWallet();
+  const developerAddress = await getEvmDeveloperWallet();
 
   const requestBody = {
     nft: {

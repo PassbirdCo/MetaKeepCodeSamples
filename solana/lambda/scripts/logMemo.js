@@ -5,7 +5,7 @@ import {
   checkAPIKey,
 } from "../../../helpers/utils.mjs";
 import Web3 from "@solana/web3.js";
-import getDeveloperWallet from "../../../helpers/utils.mjs";
+import getSolanaDeveloperWallet from "../../../helpers/utils.mjs";
 
 async function main() {
   env.config();
@@ -23,7 +23,7 @@ async function main() {
   const result = await invokeSolana(
     await logMemoSerializedMessage(
       "hello world from Metakeep",
-      await getDeveloperWallet()
+      await getSolanaDeveloperWallet()
     ),
     "Invoke Log Memo Program on Solana"
   );

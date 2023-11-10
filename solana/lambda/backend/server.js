@@ -6,7 +6,7 @@ import env from "dotenv";
 import {
   checkAPIKey,
   getAPIHost,
-  getUserWallet,
+  getSolanaUserWallet,
 } from "../../../helpers/utils.mjs";
 import Web3 from "@solana/web3.js";
 const app = express();
@@ -61,7 +61,7 @@ app.listen(port, () => {
 
 async function invokeMemoLambda(asEmail, message) {
   console.log("Get Lambda Invocation consent token...");
-  const solAddress = await getUserWallet(asEmail, true);
+  const solAddress = await getSolanaUserWallet(asEmail);
   const serializedTransactionMessageL = await logMemoSerializedMessage(
     message,
     solAddress
