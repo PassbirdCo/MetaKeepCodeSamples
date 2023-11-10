@@ -5,7 +5,7 @@ import {
   checkAPIKey,
 } from "../../../helpers/utils.mjs";
 import Web3 from "@solana/web3.js";
-import {getDeveloperSolAddress} from "../../../helpers/utils.mjs";
+import { getDeveloperSolAddress } from "../../../helpers/utils.mjs";
 
 async function main() {
   env.config();
@@ -20,7 +20,7 @@ async function main() {
 
   // Invokes the lambda function of memo program in solana.
   console.log("Invoking log Memo Program on Solana...\n");
-  const developerSolAddress = await getDeveloperSolAddress()
+  const developerSolAddress = await getDeveloperSolAddress();
   console.log("Developer Solana Address: " + developerSolAddress);
   const result = await invokeSolana(
     await logMemoSerializedMessage(
