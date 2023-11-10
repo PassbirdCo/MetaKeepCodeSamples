@@ -9,11 +9,11 @@ const getDeveloperWallet = async () => {
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
-    "x-api-key": process.env.API_KEY,
+    "x-api-key": process.env.API_KEY
   };
   const options = {
     method: "POST",
-    headers: headers,
+    headers: headers
   };
   const result = await fetch(url, options);
   const resultJson = await result.json();
@@ -30,7 +30,7 @@ const getDeveloperWallet = async () => {
 
   console.log("\n");
   return resultJson.wallet;
-}
+};
 
 export default async function getDeveloperEvmAddress() {
   return (await getDeveloperWallet()).ethAddress;
@@ -38,7 +38,7 @@ export default async function getDeveloperEvmAddress() {
 
 export const getDeveloperSolAddress = async () => {
   return (await getDeveloperWallet()).solAddress;
-}
+};
 
 export const getDeveloperBusinessWallet = async () => {
   console.log("Getting developer business wallet...");
@@ -48,11 +48,11 @@ export const getDeveloperBusinessWallet = async () => {
     "Content-Type": "application/json",
     Accept: "application/json",
     "x-api-key": process.env.API_KEY,
-    "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
+    "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000)
   };
   const options = {
     method: "POST",
-    headers: headers,
+    headers: headers
   };
   const result = await fetch(url, options);
   const resultJson = await result.json();
@@ -72,25 +72,25 @@ export const getDeveloperBusinessWallet = async () => {
   return resultJson.wallet.ethAddress;
 };
 
-const getUserWallet = async (email) =>  {
+const getUserWallet = async email => {
   console.log("Getting user wallet...");
 
   const url = getAPIHost() + "/v3/getWallet";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
-    "x-api-key": process.env.API_KEY,
+    "x-api-key": process.env.API_KEY
   };
 
   const body = {
     user: {
-      email: email,
-    },
+      email: email
+    }
   };
   const options = {
     method: "POST",
     headers: headers,
-    body: JSON.stringify(body),
+    body: JSON.stringify(body)
   };
   const result = await fetch(url, options);
   const resultJson = await result.json();
@@ -109,29 +109,28 @@ const getUserWallet = async (email) =>  {
   return resultJson.wallet;
 };
 
-export const getUserEvmAddress = async (email) => {
+export const getUserEvmAddress = async email => {
   return (await getUserWallet(email)).ethAddress;
 };
 
-
-export const getUserSolAddress = async (email) => {
+export const getUserSolAddress = async email => {
   return (await getUserWallet(email)).solAddress;
 };
 
-export const getTransactionStatus = async (transactionId) => {
+export const getTransactionStatus = async transactionId => {
   const url = getAPIHost() + "/v2/app/transaction/status";
   const requestBody = {
-    transactionId: transactionId,
+    transactionId: transactionId
   };
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",
-    "x-api-key": process.env.API_KEY,
+    "x-api-key": process.env.API_KEY
   };
   const options = {
     method: "POST",
     headers: headers,
-    body: JSON.stringify(requestBody),
+    body: JSON.stringify(requestBody)
   };
   const result = await fetch(url, options);
   const resultJson = await result.json();
@@ -150,7 +149,7 @@ export const getTransactionStatus = async (transactionId) => {
 };
 
 // Waits for the transaction to be mined.
-export const waitUntilTransactionMined = async (resultJson) => {
+export const waitUntilTransactionMined = async resultJson => {
   let transactionStatus;
 
   console.log("Waiting for transaction to be mined...\n");
@@ -181,8 +180,8 @@ export const waitUntilTransactionMined = async (resultJson) => {
   }
 };
 
-export const sleep = async (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+export const sleep = async ms => {
+  return new Promise(resolve => setTimeout(resolve, ms));
 };
 
 export const checkAPIKey = () => {
