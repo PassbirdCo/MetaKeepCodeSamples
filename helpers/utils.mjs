@@ -29,7 +29,7 @@ export default async function getDeveloperWallet() {
   }
 
   console.log("\n");
-  return resultJson.wallet.ethAddress;
+  return resultJson.wallet.ethAddress || resultJson.wallet.solAddress;
 }
 
 export const getDeveloperBusinessWallet = async () => {
@@ -64,7 +64,7 @@ export const getDeveloperBusinessWallet = async () => {
   return resultJson.wallet.ethAddress;
 };
 
-export const getUserWallet = async (email) => {
+export const getUserWallet = async (email, return_solana_wallet=false) => {
   console.log("Getting user wallet...");
 
   const url = getAPIHost() + "/v3/getWallet";
@@ -100,6 +100,9 @@ export const getUserWallet = async (email) => {
   }
 
   console.log("\n");
+  if (return_solana_wallet) {
+    return resultJson.wallet.solAddress;
+  }
   return resultJson.wallet.ethAddress;
 };
 
@@ -178,5 +181,5 @@ export const checkAPIKey = () => {
 };
 
 export const getAPIHost = () => {
-  return process.env.API_HOST || "https://api.metakeep.xyz";
+  return process.env.API_HOST || "https://api.dev.metakeep.xyz";
 };

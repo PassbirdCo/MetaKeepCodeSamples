@@ -8,7 +8,6 @@ import {
   SystemProgram,
   LAMPORTS_PER_SOL,
   PublicKey,
-  Message,
 } from "@solana/web3.js";
 import axios from "axios";
 import bs58 from "bs58";

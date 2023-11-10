@@ -1,0 +1,25 @@
+{
+  "name": "Backend Server",
+  "version": "1.0.0",
+  "description": "Backend Server for invoking the Solana memo program using the consent token flow",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write ."
+  },
+  "author": "Passbird Research",
+  "license": "ISC",
+  "dependencies": {
+    "@solana/spl-account-compression": "^0.1.8",
+    "@solana/spl-token": "^0.3.8",
+    "@solana/web3.js": "^1.78.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.1",
+    "express": "^4.18.1",
+    "node-fetch": "^3.2.10",
+    "prettier": "^2.7.1"
+  },
+  "type": "module"
+}
