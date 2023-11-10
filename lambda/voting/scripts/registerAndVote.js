@@ -16,19 +16,19 @@ async function main() {
 
   // Gets the user Address to register as Candidate in Voting contract.
   const userAddress = await getUserEvmAddress(
-    process.env.REGISTER_CANDIDATE_EMAIL,
+    process.env.REGISTER_CANDIDATE_EMAIL
   );
 
   /* *************************************************************** Register Candidate *************************************************************** */
   console.log(
-    "***************************************************** Register Candidate *****************************************************\n",
+    "***************************************************** Register Candidate *****************************************************\n"
   );
   // Invokes the lambda function to register the user as candidate.
   console.log("Invoking lambda function to register candidate...\n");
   const resultJson = await invoke(
     "registerCandidate",
     [userAddress],
-    "register",
+    "register"
   );
   console.log("Lambda invocation for registering user initiated: \n");
 
@@ -37,7 +37,7 @@ async function main() {
   console.log(
     "Lambda invocation for registering user completed: " +
       resultJson.transactionHash +
-      "\n",
+      "\n"
   );
 
   // Waits for 5 seconds.
@@ -45,7 +45,7 @@ async function main() {
 
   /* *************************************************************** Vote Candidate *************************************************************** */
   console.log(
-    "***************************************************** Vote Candidate *****************************************************\n",
+    "***************************************************** Vote Candidate *****************************************************\n"
   );
 
   // Gets the Candidate ID to vote for the candidate.
@@ -61,7 +61,7 @@ async function main() {
   console.log(
     "Lambda invocation for voting completed: " +
       resultJson2.transactionHash +
-      "\n",
+      "\n"
   );
 }
 
