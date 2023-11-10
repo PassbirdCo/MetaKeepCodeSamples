@@ -1,6 +1,6 @@
 # MetaKeep Lambda - Invoke Memo Program in Solana
 
-This repository contains a simple Voting Application that you can use as the starting point
+This repository contains a simple application to invoke method in Solana Blockchain that you can use as the starting point
 for using MetaKeep's Lambda Infrastructure.
 
 This project is intended to be used with the
@@ -11,7 +11,7 @@ able to follow it by yourself by reading the README and exploring its, `backend`
 
 The project is organized as follows:
 
-- [scripts](./scripts): Contains the scripts to invoke Memo Contract in SOlana Blockchain.
+- [scripts](./scripts): Contains the scripts to invoke Memo Contract in Solana Blockchain.
 - [backend](./backend): Contains the backend code for the server to generate a consent token to invoke a memo Program
 - [frontend](./frontend): Contains the frontend code and server for invoking the memo Program
 
@@ -23,7 +23,7 @@ The first thing you need to do is clone this repository:
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
 
-go to the repository's `lambda/solana-memo-lambda-invoke/scripts` folder and run the following commands to invoke the memo program as the developer.
+go to the repository's `solana/lambda/scripts` folder and run the following commands to invoke the memo program as the developer.
 
 ```sh
 npm install
@@ -42,7 +42,7 @@ This will invoke a lambda method as developer(you).
 
 If you want to invoke the Lambda function using end-user's wallet, you need their consent. To get consent you need to use the MetaKeep SDK. Run the following commands for an end-to-end demo for Lambda Invocation for the end-user.
 
-Start the backend server by running the following command in the `lambda/solana-memo-lambda-invoke/backend` directory.
+Start the backend server by running the following command in the `solana/lambda/backend` directory.
 
 ```sh
 npm install
@@ -51,14 +51,14 @@ npm run start
 
 This will start a server at port number `3001`.
 
-Start the frontend server by running the following command in the `lambda/solana-memo-lambda-invoke/frontend` directory.
+Start the frontend server by running the following command in the `solana/lambda/frontend` directory.
 
 ```sh
 npm install
 npm run start
 ```
 
-The demo application allows you to invoke method in solana-memo-lambda-invoke
+The demo application allows you to invoke method in lambda
 
 ## User Guide
 
