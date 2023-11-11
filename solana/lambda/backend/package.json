@@ -1,5 +1,5 @@
 {
-  "name": "Backend Server",
+  "name": "solana-lambda-backend",
   "version": "1.0.0",
   "description": "Backend Server for invoking the Solana memo program using the consent token flow",
   "main": "index.js",

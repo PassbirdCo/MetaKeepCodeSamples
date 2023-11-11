@@ -18,36 +18,38 @@ async function main() {
     "***************************************************** Invoke Memo Program *****************************************************\n"
   );
 
-  // Invokes the lambda function of memo program in solana.
+  // Invokes the Solana memo program.
   console.log("Invoking log Memo Program on Solana...\n");
   const developerSolAddress = await getDeveloperSolAddress();
   console.log("Developer Solana Address: " + developerSolAddress);
   const result = await invokeSolana(
     await logMemoSerializedMessage(
-      "hello world from Metakeep",
+      "hello world from MetaKeep",
       developerSolAddress
     ),
     "Invoke Log Memo Program on Solana"
   );
-  console.log("Lambda invocation for memo program initiated: ");
+  console.log("Lambda invocation for memo program sent.");
 
   // Waits for the transaction to be mined.
   await waitUntilTransactionMined(result);
   console.log(
-    "Lambda invocation for memo Program completed: " +
+    "Lambda invocation for memo program completed: " +
       result.transactionSignature +
       "\n"
   );
 }
 
 const logMemoSerializedMessage = async (message, from) => {
-  const connection = new Web3.Connection(
-    "https://api.devnet.solana.com",
-    "confirmed"
-  );
   let tx = new Web3.Transaction();
+
+  // Set any fee payer.
+  // It will be overridden by MetaKeep lambda infrastructure to a different sponsoring account.
   tx.feePayer = new Web3.PublicKey(from);
-  tx.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
+
+  // Set any blockhash.
+  // It will be overridden by MetaKeep lambda infrastructure to the most recent blockhash.
+  tx.recentBlockhash = "3Epnu1Sb1bDqHwieG1o4Dj4XeFAUjHKD3reYPUFVoRaJ";
   tx.add(
     new Web3.TransactionInstruction({
       keys: [

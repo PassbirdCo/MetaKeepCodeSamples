@@ -4,7 +4,7 @@ export default async function getLambdaMemoInvokeConsentToken(
   message
 ) {
   console.log("Getting Lambda Consent token from backend...");
-  const url = "http://localhost:3001/logMemo";
+  const url = "http://localhost:3001/logMemoForEndUser";
   const headers = {
     "Content-Type": "application/json",
     Accept: "application/json",

@@ -37,7 +37,7 @@ app.get("/", (_, res) => {
 
 /* ************************************************************************* log Memo API EndPoint ************************************************************************* */
 
-app.post("/logMemo", async (req, res) => {
+app.post("/logMemoForEndUser", async (req, res) => {
   console.log("getConsentToken");
   try {
     const result = await invokeMemoLambda(req.body.asEmail, req.body.message);
@@ -111,13 +111,16 @@ async function invokeLambdaFunction(requestBody) {
 }
 
 const logMemoSerializedMessage = async (message, from) => {
-  const connection = new Web3.Connection(
-    "https://api.devnet.solana.com",
-    "confirmed"
-  );
   let tx = new Web3.Transaction();
+
+  // Set any fee payer.
+  // It will be overridden by MetaKeep lambda infrastructure to a different sponsoring account.
   tx.feePayer = new Web3.PublicKey(from);
-  tx.recentBlockhash = (await connection.getRecentBlockhash()).blockhash;
+
+  // Set any blockhash.
+  // It will be overridden by MetaKeep lambda infrastructure to the most recent blockhash.
+  tx.recentBlockhash = "3Epnu1Sb1bDqHwieG1o4Dj4XeFAUjHKD3reYPUFVoRaJ";
+
   tx.add(
     new Web3.TransactionInstruction({
       keys: [
@@ -133,7 +136,6 @@ const logMemoSerializedMessage = async (message, from) => {
       ),
     })
   );
-  console.log("tx", tx);
-  console.log("tx", "0x" + tx.serializeMessage().toString("hex"));
+
   return "0x" + tx.serializeMessage().toString("hex");
 };

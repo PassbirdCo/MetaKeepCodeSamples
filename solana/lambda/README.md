@@ -33,7 +33,7 @@ This will invoke the lambda as you(the developer).
 
 # Invoke Solana lambda method on behalf of end-users by getting their consent.
 
-If you want to invoke the Lambda function using end-user's wallet, you need their consent. To get consent you need to use the MetaKeep SDK. Run the following commands for an end-to-end demo for Lambda Invocation for the end-user.
+If you want to invoke the Lambda using end-user's wallet, you need their consent. To get the consent you need to use the MetaKeep SDK. Run the following commands for an end-to-end Lambda invocation demo on behalf of the end-user.
 
 Start the backend server by running the following command in the `solana/lambda/backend` directory.
 
@@ -51,17 +51,17 @@ npm install
 npm run start
 ```
 
-The demo application allows you to invoke method in lambda
+The demo application allows you to invoke Solana lambda on behalf of end-users.
 
 ## User Guide
 
-You can find detailed instructions on using this repository and many tips in [its documentation](https://docs.metakeep.xyz/reference/lambda-101).
+You can find detailed instructions on using this repository and many tips in [its documentation](https://docs.metakeep.xyz/reference/solana-lambda-101).
 
-For a complete introduction to MetaKeep Lambda, refer to [this guide](https://docs.metakeep.xyz/reference/lambda-101).
+For a complete introduction to MetaKeep Lambda, refer to [this guide](https://docs.metakeep.xyz/reference/solana-lambda-101).
 
 ## Troubleshooting
 
-You can find a detailed list of the errors [here](https://docs.metakeep.xyz/reference/api-error-status#v2applambdacreate) that would help you to troubleshoot.
+You can find a detailed list of the errors [here](https://docs.metakeep.xyz/reference/api-error-status#v2applambdainvoke) that would help you to troubleshoot.
 
 ## Getting help and updates
 
