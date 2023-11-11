@@ -38,7 +38,7 @@ app.get("/", (_, res) => {
 /* ************************************************************************* log Memo API EndPoint ************************************************************************* */
 
 app.post("/logMemoForEndUser", async (req, res) => {
-  console.log("getConsentToken");
+  console.log("logMemoForEndUser handler running...");
   try {
     const result = await invokeMemoLambda(req.body.asEmail, req.body.message);
     res.send(result);
@@ -60,16 +60,16 @@ app.listen(port, () => {
 // Utility function to invoke Lambda Function through MetaKeep Lambda Invocation API.
 
 async function invokeMemoLambda(asEmail, message) {
-  console.log("Get Lambda Invocation consent token...");
+  console.log("Getting Lambda Invocation consent token...");
   const solAddress = await getUserSolAddress(asEmail);
-  const serializedTransactionMessageL = await logMemoSerializedMessage(
+  const serializedTransactionMessage = await logMemoSerializedMessage(
     message,
     solAddress
   );
-  console.log(serializedTransactionMessageL);
+
   // We will invoke the Lambda Function as the user with the given email address.
   const requestBody = {
-    serializedTransactionMessage: serializedTransactionMessageL,
+    serializedTransactionMessage: serializedTransactionMessage,
     reason: "Log Memo Program",
     as: {
       email: asEmail,
@@ -77,7 +77,6 @@ async function invokeMemoLambda(asEmail, message) {
   };
 
   const outcome = await invokeLambdaFunction(requestBody);
-  console.log(outcome);
   return outcome;
 }
 
