@@ -1,5 +1,5 @@
 {
-  "name": "Lambda Creation and Invocation Scripts",
+  "name": "solana-lambda",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

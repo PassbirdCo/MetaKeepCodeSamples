@@ -1,19 +1,18 @@
-# MetaKeep Lambda - Invoke Memo Program in Solana
+# MetaKeep Lambda - Solana
 
-This repository contains a simple application to invoke method in Solana Blockchain that you can use as the starting point
-for using MetaKeep's Lambda Infrastructure.
+This repository contains a simple application use MetaKeep's Lambda Infrastructure on the Solana Blockchain. MetaKeep Lambda provides the best developer and user experience for building applications on the Solana Blockchain. You don't need to worry about the infrastructure, gas fees, retries, and other complexities of the blockchain. You can focus on building your application and leave the rest to us.
 
 This project is intended to be used with the
-[MetaKeep Lambda Creation and Invocation Tutorial Series](https://docs.metakeep.xyz/docs/create-your-first-lambda), but you should be
+[MetaKeep Solana Lambda Tutorial Series](https://docs.metakeep.xyz/docs/invoke-solana-lambda), but you should be
 able to follow it by yourself by reading the README and exploring its, `backend`, `scripts` and `frontend` directories.
 
 ## Directory Structure
 
 The project is organized as follows:
 
-- [scripts](./scripts): Contains the scripts to invoke Memo Contract in Solana Blockchain.
-- [backend](./backend): Contains the backend code for the server to generate a consent token to invoke a memo Program
-- [frontend](./frontend): Contains the frontend code and server for invoking the memo Program
+- [scripts](./scripts): Contains the scripts to invoke the [memo program](https://spl.solana.com/memo) on Solana.
+- [backend](./backend): Contains the backend code for the server to generate a consent token to invoke the memo Program as an end-user.
+- [frontend](./frontend): Contains the frontend code and server for getting use user consent and invoke the memo Program as an end-user.
 
 ## Quick start
 
@@ -23,22 +22,16 @@ The first thing you need to do is clone this repository:
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
 
-go to the repository's `solana/lambda/scripts` folder and run the following commands to invoke the memo program as the developer.
+go to the repository's `solana/lambda/scripts` folder and run the following commands to invoke the memo program as you(the developer).
 
 ```sh
 npm install
-npm run create
-```
-
-After you have created the Lambda, you can invoke a method by running the following command.
-
-```sh
 npm run invoke
 ```
 
-This will invoke a lambda method as developer(you).
+This will invoke the lambda as you(the developer).
 
-# How to invoke a Lambda method on behalf of users by getting their consent.
+# Invoke Solana lambda method on behalf of end-users by getting their consent.
 
 If you want to invoke the Lambda function using end-user's wallet, you need their consent. To get consent you need to use the MetaKeep SDK. Run the following commands for an end-to-end demo for Lambda Invocation for the end-user.
 
