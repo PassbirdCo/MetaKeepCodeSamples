@@ -134,6 +134,39 @@ export const invoke = async (
   return resultJson;
 };
 
+// Invokes the lambda function.
+export const invokeSolana = async (serializedTransactionMessage, reason) => {
+  const url = getAPIHost() + "/v2/app/lambda/invoke";
+
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-api-key": process.env.API_KEY,
+    "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
+  };
+  const requestBody = {
+    serializedTransactionMessage: serializedTransactionMessage,
+    reason: reason,
+  };
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+
+  console.log(resultJson);
+
+  if (!result.ok) {
+    throw new Error(
+      "Error while invoking method. HTTP status code: " + result.status
+    );
+  }
+  return resultJson;
+};
+
 // Invokes multiple lambdas.
 export const invokeMultiple = async (invocations, reason, as) => {
   const url = getAPIHost() + "/v2/app/lambda/invoke/multiple";

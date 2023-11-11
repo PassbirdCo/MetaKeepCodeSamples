@@ -1,0 +1,21 @@
+{
+  "name": "solana-lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "invoke": "node logMemo.js",
+    "format": "prettier --write ."
+  },
+  "author": "Passbird Research",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "ethers": "^5.7.1",
+    "node-fetch": "^3.2.10",
+    "prettier": "2.7.1",
+    "@solana/web3.js": "^1.7.4"
+  },
+  "type": "module"
+}

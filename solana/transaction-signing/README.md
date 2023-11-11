@@ -21,7 +21,7 @@ git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 
 ### Transfer tokens from your developer wallet
 
-Navigate to the repository's `solana/scripts` folder and run this to sign the transaction from the developer wallet and send it to the chain:
+Navigate to the repository's `solana/transaction-signing/scripts` folder and run this to sign the transaction from the developer wallet and send it to the chain:
 
 ```sh
 npm install
@@ -34,7 +34,7 @@ You will get the transaction hash after the transaction has been successfully si
 
 Now we will start the frontend server to sign a transaction from an end-user wallet and send it to the chain.
 
-Open a second terminal session and navigate to the repository's `solana/frontend` folder and run
+Open a second terminal session and navigate to the repository's `solana/transaction-signing/frontend` folder and run
 
 ```sh
 npm install

@@ -2,9 +2,10 @@
 import fs from "fs";
 import env from "dotenv";
 import { create } from "../../lambdaUtils.mjs";
-import getDeveloperWallet, {
+import {
   checkAPIKey,
   waitUntilTransactionMined,
+  getDeveloperEvmAddress,
 } from "../../../helpers/utils.mjs";
 
 async function main() {
@@ -18,7 +19,7 @@ async function main() {
       "../smart-contracts/artifacts/contracts/CustomERC721.sol/CustomERC721.json"
     )
   );
-  const developerAddress = await getDeveloperWallet();
+  const developerAddress = await getDeveloperEvmAddress();
 
   const resultJson = await create(
     ["MetaKeepOriginals", "MTKP", developerAddress],

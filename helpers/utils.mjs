@@ -2,7 +2,7 @@
 
 import { exit } from "process";
 
-export default async function getDeveloperWallet() {
+const getDeveloperWallet = async () => {
   console.log("Getting developer wallet...");
 
   const url = getAPIHost() + "/v3/getDeveloperWallet";
@@ -29,8 +29,16 @@ export default async function getDeveloperWallet() {
   }
 
   console.log("\n");
-  return resultJson.wallet.ethAddress;
+  return resultJson.wallet;
+};
+
+export default async function getDeveloperEvmAddress() {
+  return (await getDeveloperWallet()).ethAddress;
 }
+
+export const getDeveloperSolAddress = async () => {
+  return (await getDeveloperWallet()).solAddress;
+};
 
 export const getDeveloperBusinessWallet = async () => {
   console.log("Getting developer business wallet...");
@@ -64,7 +72,7 @@ export const getDeveloperBusinessWallet = async () => {
   return resultJson.wallet.ethAddress;
 };
 
-export const getUserWallet = async (email) => {
+const getUserWallet = async (email) => {
   console.log("Getting user wallet...");
 
   const url = getAPIHost() + "/v3/getWallet";
@@ -98,9 +106,15 @@ export const getUserWallet = async (email) => {
       "Error getting user wallet. Response: " + JSON.stringify(resultJson)
     );
   }
+  return resultJson.wallet;
+};
 
-  console.log("\n");
-  return resultJson.wallet.ethAddress;
+export const getUserEvmAddress = async (email) => {
+  return (await getUserWallet(email)).ethAddress;
+};
+
+export const getUserSolAddress = async (email) => {
+  return (await getUserWallet(email)).solAddress;
 };
 
 export const getTransactionStatus = async (transactionId) => {

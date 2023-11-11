@@ -3,7 +3,7 @@ import { invoke } from "../../lambdaUtils.mjs";
 import { solidityKeccak256 } from "ethers/lib/utils.js";
 import {
   waitUntilTransactionMined,
-  getUserWallet,
+  getUserEvmAddress,
   sleep,
   checkAPIKey,
 } from "../../../helpers/utils.mjs";
@@ -15,7 +15,9 @@ async function main() {
   checkAPIKey();
 
   // Gets the user Address to register as Candidate in Voting contract.
-  const userAddress = await getUserWallet(process.env.REGISTER_CANDIDATE_EMAIL);
+  const userAddress = await getUserEvmAddress(
+    process.env.REGISTER_CANDIDATE_EMAIL
+  );
 
   /* *************************************************************** Register Candidate *************************************************************** */
   console.log(
