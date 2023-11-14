@@ -25,6 +25,9 @@ const Navbar = () => {
               <Link className="nav-link" to="/logMemo">
                 Log Memo<span className="sr-only"></span>
               </Link>
+              <Link className="nav-link" to="/transferSol">
+                Transfer Sol<span className="sr-only"></span>
+              </Link>
             </li>
           </ul>
         </div>

@@ -9,6 +9,8 @@ import {
   getUserSolAddress,
 } from "../../../helpers/utils.mjs";
 import Web3 from "@solana/web3.js";
+import nacl from "tweetnacl";
+import { getLambdaSponsor } from "../../../lambda/lambdaUtils.mjs";
 const app = express();
 
 env.config();
@@ -41,6 +43,22 @@ app.post("/logMemoForEndUser", async (req, res) => {
   console.log("logMemoForEndUser handler running...");
   try {
     const result = await invokeMemoLambda(req.body.asEmail, req.body.message);
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({
+      error: error.message ? error.message : JSON.stringify(error),
+    });
+  }
+});
+
+app.post("/transferSolForEndUser", async (req, res) => {
+  console.log("transferSolForEndUser handler running...");
+  try {
+    const result = await invokeTransferSolLambda(
+      req.body.asEmail,
+      req.body.to,
+      req.body.amount
+    );
     res.send(result);
   } catch (error) {
     res.status(500).send({
@@ -137,4 +155,73 @@ const logMemoSerializedMessage = async (message, from) => {
   );
 
   return "0x" + tx.serializeMessage().toString("hex");
+};
+
+const invokeTransferSolLambda = async (asEmail, to, amount) => {
+  const connection = new Web3.Connection(
+    "https://api.devnet.solana.com",
+    "confirmed"
+  );
+
+  let tx = new Web3.Transaction();
+  const amountInt = Number(amount);
+  const payer = await getLambdaSponsor();
+  console.log("payer: ", payer.wallet.solAddress);
+
+  tx.feePayer = new Web3.PublicKey(payer.wallet.solAddress);
+
+  tx.recentBlockhash = (await connection.getRecentBlockhash("max")).blockhash;
+
+  const solAddress = await getUserSolAddress(asEmail);
+  const recieverSolAddress = await getUserSolAddress(to);
+
+  tx.add(
+    Web3.SystemProgram.transfer({
+      fromPubkey: new Web3.PublicKey(solAddress),
+      toPubkey: new Web3.PublicKey(recieverSolAddress),
+      lamports: Web3.LAMPORTS_PER_SOL * amountInt,
+    })
+  );
+
+  // create a new keypair for the second transfer
+  const newAccount = Web3.Keypair.generate();
+  console.log("new account", newAccount.publicKey.toBase58());
+  tx.add(
+    Web3.SystemProgram.transfer({
+      fromPubkey: newAccount.publicKey,
+      toPubkey: new Web3.PublicKey(
+        "3kQpXruMDjfq8YQGp744i4GCJ5VA39KdU8u55MzVo1QZ"
+      ),
+      lamports: Web3.LAMPORTS_PER_SOL * amountInt,
+    })
+  );
+
+  // sign the transaction
+  let realDataNeedToSign = tx.serializeMessage();
+  let newAccountSignature = nacl.sign.detached(
+    realDataNeedToSign,
+    newAccount.secretKey
+  );
+
+  tx.addSignature(newAccount.publicKey, Buffer.from(newAccountSignature));
+
+  const hexSignature = "0x" + Buffer.from(newAccountSignature).toString("hex");
+
+  const requestBody = {
+    serializedTransactionMessage: "0x" + realDataNeedToSign.toString("hex"),
+    signatures: [
+      {
+        publicKey: newAccount.publicKey.toBase58(),
+        signature: hexSignature,
+      },
+    ],
+    reason: "Transfer Sol Program",
+    as: {
+      email: asEmail,
+    },
+  };
+
+  const outcome = await invokeLambdaFunction(requestBody);
+
+  return outcome;
 };
