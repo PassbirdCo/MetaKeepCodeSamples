@@ -167,6 +167,37 @@ export const invokeSolana = async (serializedTransactionMessage, reason) => {
   return resultJson;
 };
 
+export const getLambdaSponsor = async () => {
+  const url = getAPIHost() + "/v2/app/lambda/getSponsor";
+
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-api-key": process.env.API_KEY,
+  };
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({}),
+  };
+
+  const result = await fetch(url, options);
+
+  const resultJson = await result.json();
+
+  if (!result.ok) {
+    console.log(
+      "Error while getting lambda sponsor. HTTP status code: " + result.status
+    );
+    throw new Error(
+      "Error while getting lambda sponsor. HTTP status code: " + result.status
+    );
+  }
+
+  return resultJson;
+}
+
 // Invokes multiple lambdas.
 export const invokeMultiple = async (invocations, reason, as) => {
   const url = getAPIHost() + "/v2/app/lambda/invoke/multiple";
