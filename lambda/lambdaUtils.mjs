@@ -196,7 +196,7 @@ export const getLambdaSponsor = async () => {
   }
 
   return resultJson;
-}
+};
 
 // Invokes multiple lambdas.
 export const invokeMultiple = async (invocations, reason, as) => {
