@@ -41,24 +41,16 @@ app.get("/", (_, res) => {
 
 app.post("/logMemoForEndUser", async (req, res) => {
   console.log("logMemoForEndUser handler running...");
+  let result;
   try {
-    const result = await invokeMemoLambda(req.body.asEmail, req.body.message);
-    res.send(result);
-  } catch (error) {
-    res.status(500).send({
-      error: error.message ? error.message : JSON.stringify(error),
-    });
-  }
-});
-
-app.post("/transferSolForEndUser", async (req, res) => {
-  console.log("transferSolForEndUser handler running...");
-  try {
-    const result = await invokeTransferSolLambda(
-      req.body.asEmail,
-      req.body.to,
-      req.body.amount
-    );
+    if (req.body.multipleInvocation == false) {
+      result = await invokeMemoLambda(req.body.asEmail, req.body.message);
+    } else {
+      result = await invokeMultipleMemoProgram(
+        req.body.asEmail,
+        req.body.message
+      );
+    }
     res.send(result);
   } catch (error) {
     res.status(500).send({
@@ -157,14 +149,13 @@ const logMemoSerializedMessage = async (message, from) => {
   return "0x" + tx.serializeMessage().toString("hex");
 };
 
-const invokeTransferSolLambda = async (asEmail, to, amount) => {
+const invokeMultipleMemoProgram = async (asEmail, message) => {
   const connection = new Web3.Connection(
     "https://api.devnet.solana.com",
     "confirmed"
   );
 
   let tx = new Web3.Transaction();
-  const amountInt = Number(amount);
   const payer = await getLambdaSponsor();
   console.log("payer: ", payer.wallet.solAddress);
 
@@ -173,13 +164,20 @@ const invokeTransferSolLambda = async (asEmail, to, amount) => {
   tx.recentBlockhash = (await connection.getRecentBlockhash("max")).blockhash;
 
   const solAddress = await getUserSolAddress(asEmail);
-  const recieverSolAddress = await getUserSolAddress(to);
 
   tx.add(
-    Web3.SystemProgram.transfer({
-      fromPubkey: new Web3.PublicKey(solAddress),
-      toPubkey: new Web3.PublicKey(recieverSolAddress),
-      lamports: Web3.LAMPORTS_PER_SOL * amountInt,
+    new Web3.TransactionInstruction({
+      keys: [
+        {
+          pubkey: new Web3.PublicKey(solAddress),
+          isSigner: true,
+          isWritable: false,
+        },
+      ],
+      data: Buffer.from(message, "utf8"),
+      programId: new Web3.PublicKey(
+        "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"
+      ),
     })
   );
 
@@ -187,12 +185,18 @@ const invokeTransferSolLambda = async (asEmail, to, amount) => {
   const newAccount = Web3.Keypair.generate();
   console.log("new account", newAccount.publicKey.toBase58());
   tx.add(
-    Web3.SystemProgram.transfer({
-      fromPubkey: newAccount.publicKey,
-      toPubkey: new Web3.PublicKey(
-        "3kQpXruMDjfq8YQGp744i4GCJ5VA39KdU8u55MzVo1QZ"
+    new Web3.TransactionInstruction({
+      keys: [
+        {
+          pubkey: newAccount.publicKey,
+          isSigner: true,
+          isWritable: false,
+        },
+      ],
+      data: Buffer.from(message, "utf8"),
+      programId: new Web3.PublicKey(
+        "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"
       ),
-      lamports: Web3.LAMPORTS_PER_SOL * amountInt,
     })
   );
 
