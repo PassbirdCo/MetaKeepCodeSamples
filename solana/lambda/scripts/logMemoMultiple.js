@@ -101,8 +101,8 @@ const logMemoMultipleSerializedTransaction = async (from, message) => {
       keys: [
         {
           pubkey: newAccount.publicKey,
-          isSigner: false,
-          isWritable: true,
+          isSigner: true,
+          isWritable: false,
         },
       ],
       data: Buffer.from(message, "utf8"),
