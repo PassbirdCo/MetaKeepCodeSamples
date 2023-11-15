@@ -6,6 +6,7 @@ export const LogMemo = ({ sdk }) => {
   const [logMessage, setLogMessage] = useState("");
   const [asEmail, setAsEmail] = useState("");
   const [result, setResult] = useState("");
+  const [multipleInvocation, setMultipleInvocation] = useState(false);
   const [loading, setLoading] = useState(false);
 
   let handleSubmit = async (event) => {
@@ -13,7 +14,11 @@ export const LogMemo = ({ sdk }) => {
     try {
       setLoading(true);
       const getLambdaMemoInvokeConsentTokenResponse =
-        await getLambdaMemoInvokeConsentToken(asEmail, logMessage);
+        await getLambdaMemoInvokeConsentToken(
+          asEmail,
+          logMessage,
+          multipleInvocation
+        );
       setLoading(false);
       if (
         getLambdaMemoInvokeConsentTokenResponse.status !== "USER_CONSENT_NEEDED"
@@ -73,6 +78,16 @@ export const LogMemo = ({ sdk }) => {
             onChange={(e) => setLogMessage(e.target.value)}
             placeholder="Enter log message"
           />
+          {/* create a option to choose multiple invocation */}
+          <br />
+          <input
+            type="checkbox"
+            id="multipleInvocation"
+            name="multipleInvocation"
+            value="multipleInvocation"
+            onChange={(e) => setMultipleInvocation(e.target.checked)}
+          />
+          <label htmlFor="multipleInvocation">Multiple Invocation</label>
         </label>
         {loading === false ? (
           <input
