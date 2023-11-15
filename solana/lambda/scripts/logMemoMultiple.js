@@ -24,7 +24,10 @@ async function main() {
   const developerSolAddress = await getDeveloperSolAddress();
   console.log("Developer Solana Address: " + developerSolAddress);
 
-  const request = await logMemoMultipleSerializedTransaction(developerSolAddress, "METAKEEP TUTORIAL");
+  const request = await logMemoMultipleSerializedTransaction(
+    developerSolAddress,
+    "METAKEEP TUTORIAL"
+  );
 
   const url = getAPIHost() + "/v2/app/lambda/invoke";
 
@@ -95,7 +98,7 @@ const logMemoMultipleSerializedTransaction = async (from, message) => {
   // create a new keypair
   const newAccount = Web3.Keypair.generate();
   console.log("new account", newAccount.publicKey.toBase58());
-  
+
   tx.add(
     new Web3.TransactionInstruction({
       keys: [
@@ -110,7 +113,7 @@ const logMemoMultipleSerializedTransaction = async (from, message) => {
         "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"
       ),
     })
-  )
+  );
 
   // sign the transaction
   let realDataNeedToSign = tx.serializeMessage();
