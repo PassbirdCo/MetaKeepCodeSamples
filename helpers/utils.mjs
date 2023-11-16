@@ -149,14 +149,17 @@ export const getTransactionStatus = async (transactionId) => {
 };
 
 // Waits for the transaction to be mined.
-export const waitUntilTransactionMined = async (resultJson) => {
+export const waitUntilTransactionMined = async (
+  resultJson,
+  retryIntervalSeconds = 5
+) => {
   let transactionStatus;
 
   console.log("Waiting for transaction to be mined...\n");
 
   // Waits for 5 seconds and checks the transaction status for 10 times.
   for (let i = 0; i < 10; i++) {
-    await sleep(5000);
+    await sleep(retryIntervalSeconds * 1000);
     transactionStatus = await getTransactionStatus(resultJson.transactionId);
     if (transactionStatus.status == "COMPLETED") {
       break;

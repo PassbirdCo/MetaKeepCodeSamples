@@ -22,21 +22,18 @@ The first thing you need to do is clone this repository:
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
 
-go to the repository's `solana/lambda/scripts` folder and run the following commands to invoke the memo program as you(the developer).
+Navigate to repository's `solana/lambda/scripts` folder and run the following commands to invoke the memo program as you(the developer).
 
 ```sh
 npm install
 npm run invoke
 ```
 
-commands to invoke solana lambda with external signers
+Then, run the following command to invoke the memo program as you(the developer) and an external signer. The script will create a partially signed transaction and invoke the MetaKeep Lambda to sign and broadcast the transaction as you(the developer).
 
 ```sh
-npm install
-npm run invokeMultiple
+npm run invokeWithExternalSigners
 ```
-
-This will invoke the lambda as you(the developer).
 
 # Invoke Solana lambda method on behalf of end-users by getting their consent.
 

@@ -32,7 +32,7 @@ async function main() {
   console.log("Lambda invocation for memo program sent.");
 
   // Waits for the transaction to be mined.
-  await waitUntilTransactionMined(result);
+  await waitUntilTransactionMined(result, 1);
   console.log(
     "Lambda invocation for memo program completed: " +
       result.transactionSignature +
@@ -43,7 +43,7 @@ async function main() {
 const logMemoSerializedMessage = async (message, from) => {
   let tx = new Web3.Transaction();
 
-  // Set any fee payer.
+  // Set fee payer as the from address.
   // It will be overridden by MetaKeep lambda infrastructure to a different sponsoring account.
   tx.feePayer = new Web3.PublicKey(from);
 

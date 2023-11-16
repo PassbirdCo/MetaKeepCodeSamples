@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "invoke": "node logMemo.js",
-    "invokeMultiple": "node logMemoMultiple.js",
+    "invokeWithExternalSigners": "node logMemoWithExternalSigners.js",
     "format": "prettier --write ."
   },
   "author": "Passbird Research",
