@@ -8,7 +8,7 @@ import {
   getAPIHost,
   getUserSolAddress,
 } from "../../../helpers/utils.mjs";
-import Web3 from "@solana/web3.js";
+import Web3, { clusterApiUrl } from "@solana/web3.js";
 import nacl from "tweetnacl";
 import { getLambdaSponsor } from "../../../lambda/lambdaUtils.mjs";
 const app = express();
@@ -18,6 +18,7 @@ env.config();
 checkAPIKey();
 
 const port = 3001;
+const MEMO_PROGRAM_ID = "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr";
 
 app.use(
   bodyParser.urlencoded({
@@ -43,10 +44,10 @@ app.post("/logMemoForEndUser", async (req, res) => {
   console.log("logMemoForEndUser handler running...");
   let result;
   try {
-    if (req.body.multipleInvocation == false) {
+    if (!req.body.includeExternalSigners) {
       result = await invokeMemoLambda(req.body.asEmail, req.body.message);
     } else {
-      result = await invokeMultipleMemoProgram(
+      result = await invokeMemoLambdaWithExternalSigners(
         req.body.asEmail,
         req.body.message
       );
@@ -67,8 +68,6 @@ app.listen(port, () => {
 
 /* ************************************************************************** Utility functions *************************************************************** */
 
-// Utility function to invoke Lambda Function through MetaKeep Lambda Invocation API.
-
 async function invokeMemoLambda(asEmail, message) {
   console.log("Getting Lambda Invocation consent token...");
   const solAddress = await getUserSolAddress(asEmail);
@@ -86,13 +85,11 @@ async function invokeMemoLambda(asEmail, message) {
     },
   };
 
-  const outcome = await invokeLambdaFunction(requestBody);
-  return outcome;
+  return await getConsentTokenFromMetaKeep(requestBody);
 }
 
 // Utility function to invoke Lambda Function through MetaKeep Lambda Invocation API.
-
-async function invokeLambdaFunction(requestBody) {
+async function getConsentTokenFromMetaKeep(requestBody) {
   const url = getAPIHost() + "/v2/app/lambda/invoke/";
   const headers = {
     "Content-Type": "application/json",
@@ -122,7 +119,7 @@ async function invokeLambdaFunction(requestBody) {
 const logMemoSerializedMessage = async (message, from) => {
   let tx = new Web3.Transaction();
 
-  // Set any fee payer.
+  // Set fee payer as the from address.
   // It will be overridden by MetaKeep lambda infrastructure to a different sponsoring account.
   tx.feePayer = new Web3.PublicKey(from);
 
@@ -149,83 +146,79 @@ const logMemoSerializedMessage = async (message, from) => {
   return "0x" + tx.serializeMessage().toString("hex");
 };
 
-const invokeMultipleMemoProgram = async (asEmail, message) => {
-  const connection = new Web3.Connection(
-    "https://api.devnet.solana.com",
-    "confirmed"
-  );
+const invokeMemoLambdaWithExternalSigners = async (asEmail, message) => {
+  // Get MetaKeep Lambda Fee Sponsor Solana Address
+  const payer = await getLambdaSponsor();
+  console.log("Fee payer: ", payer.wallet.solAddress);
 
   let tx = new Web3.Transaction();
-  const payer = await getLambdaSponsor();
-  console.log("payer: ", payer.wallet.solAddress);
-
   tx.feePayer = new Web3.PublicKey(payer.wallet.solAddress);
 
+  // Get most recent blockhash
+  // This needs to be filled in since there are external signers too.
+  const connection = new Web3.Connection(clusterApiUrl("devnet"), "confirmed");
   tx.recentBlockhash = (await connection.getRecentBlockhash("max")).blockhash;
 
-  const solAddress = await getUserSolAddress(asEmail);
+  // Add log memo instruction for the end user
+  const userSolAddress = await getUserSolAddress(asEmail);
 
   tx.add(
     new Web3.TransactionInstruction({
       keys: [
         {
-          pubkey: new Web3.PublicKey(solAddress),
+          pubkey: new Web3.PublicKey(userSolAddress),
           isSigner: true,
           isWritable: false,
         },
       ],
       data: Buffer.from(message, "utf8"),
-      programId: new Web3.PublicKey(
-        "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"
-      ),
+      programId: new Web3.PublicKey(MEMO_PROGRAM_ID),
     })
   );
 
-  // create a new keypair for the second transfer
-  const newAccount = Web3.Keypair.generate();
-  console.log("new account", newAccount.publicKey.toBase58());
+  // Simulate external signer by generating a new keypair
+  const externalSigner = Web3.Keypair.generate();
+  console.log("External signer", externalSigner.publicKey.toBase58());
+
   tx.add(
     new Web3.TransactionInstruction({
       keys: [
         {
-          pubkey: newAccount.publicKey,
+          pubkey: externalSigner.publicKey,
           isSigner: true,
           isWritable: false,
         },
       ],
       data: Buffer.from(message, "utf8"),
-      programId: new Web3.PublicKey(
-        "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr"
-      ),
+      programId: new Web3.PublicKey(MEMO_PROGRAM_ID),
     })
   );
 
-  // sign the transaction
-  let realDataNeedToSign = tx.serializeMessage();
-  let newAccountSignature = nacl.sign.detached(
-    realDataNeedToSign,
-    newAccount.secretKey
+  // Sign the transaction with the external signer
+  let messageToSign = tx.serializeMessage();
+  let externalSignerSignature = nacl.sign.detached(
+    messageToSign,
+    externalSigner.secretKey
   );
 
-  tx.addSignature(newAccount.publicKey, Buffer.from(newAccountSignature));
-
-  const hexSignature = "0x" + Buffer.from(newAccountSignature).toString("hex");
+  const externalSignerHexSignature =
+    "0x" + Buffer.from(externalSignerSignature).toString("hex");
 
   const requestBody = {
-    serializedTransactionMessage: "0x" + realDataNeedToSign.toString("hex"),
+    // The transaction message to be signed by the end user.
+    serializedTransactionMessage: "0x" + messageToSign.toString("hex"),
+    // List of external signers and their signatures.
     signatures: [
       {
-        publicKey: newAccount.publicKey.toBase58(),
-        signature: hexSignature,
+        publicKey: externalSigner.publicKey.toBase58(),
+        signature: externalSignerHexSignature,
       },
     ],
-    reason: "Transfer Sol Program",
+    reason: "MetaKeep Lambda Tutorial",
     as: {
       email: asEmail,
     },
   };
 
-  const outcome = await invokeLambdaFunction(requestBody);
-
-  return outcome;
+  return await getConsentTokenFromMetaKeep(requestBody);
 };

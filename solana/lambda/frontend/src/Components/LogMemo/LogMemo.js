@@ -6,7 +6,7 @@ export const LogMemo = ({ sdk }) => {
   const [logMessage, setLogMessage] = useState("");
   const [asEmail, setAsEmail] = useState("");
   const [result, setResult] = useState("");
-  const [multipleInvocation, setMultipleInvocation] = useState(false);
+  const [includeExternalSigners, setIncludeExternalSigners] = useState(false);
   const [loading, setLoading] = useState(false);
 
   let handleSubmit = async (event) => {
@@ -17,7 +17,7 @@ export const LogMemo = ({ sdk }) => {
         await getLambdaMemoInvokeConsentToken(
           asEmail,
           logMessage,
-          multipleInvocation
+          includeExternalSigners
         );
       setLoading(false);
       if (
@@ -78,16 +78,16 @@ export const LogMemo = ({ sdk }) => {
             onChange={(e) => setLogMessage(e.target.value)}
             placeholder="Enter log message"
           />
-          {/* create a option to choose multiple invocation */}
+          {/* create an option to include external signers */}
           <br />
           <input
             type="checkbox"
             id="multipleInvocation"
             name="multipleInvocation"
             value="multipleInvocation"
-            onChange={(e) => setMultipleInvocation(e.target.checked)}
+            onChange={(e) => setIncludeExternalSigners(e.target.checked)}
           />
-          <label htmlFor="multipleInvocation">Multiple Invocation</label>
+          <label htmlFor="multipleInvocation">Include external signers</label>
         </label>
         {loading === false ? (
           <input
