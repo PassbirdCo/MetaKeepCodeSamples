@@ -10,9 +10,9 @@ able to follow it by yourself by reading the README and exploring its, `backend`
 
 The project is organized as follows:
 
-- [scripts](./scripts): Contains the scripts to invoke the [memo program](https://spl.solana.com/memo) on Solana.
-- [backend](./backend): Contains the backend code for the server to generate a consent token to invoke the memo Program as an end-user.
-- [frontend](./frontend): Contains the frontend code and server for getting use user consent and invoking the memo Program as an end-user.
+- [scripts](./scripts): Contains the scripts to invoke the [memo program](https://spl.solana.com/memo) with and without external signers.
+- [backend](./backend): Contains the backend code for the server to generate a consent token to invoke the memo Program with or without external_signers as an end-user.
+- [frontend](./frontend): Contains the frontend code and server for getting use user consent and invoking the memo Program with or without external signer as an end-user.
 
 ## Quick start
 
@@ -27,6 +27,13 @@ go to the repository's `solana/lambda/scripts` folder and run the following comm
 ```sh
 npm install
 npm run invoke
+```
+
+commands to invoke solana lambda with external signers
+
+```
+npm install
+npm run invokeMultiple
 ```
 
 This will invoke the lambda as you(the developer).
