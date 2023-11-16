@@ -134,8 +134,8 @@ export const LogMemo = ({ sdk }) => {
             <div>
               <div className="card">
                 <div className="card-body">
-                  <h5 className="card-title">Transaction Hash</h5>
-                  <p className="card-text">{result.transactionHash}</p>
+                  <h5 className="card-title">Transaction Signature</h5>
+                  <p className="card-text">{result.transactionSignature}</p>
                 </div>
               </div>
               <div className="card">
