@@ -10,9 +10,9 @@ able to follow it by yourself by reading the README and exploring its, `backend`
 
 The project is organized as follows:
 
-- [scripts](./scripts): Contains the scripts to invoke the [memo program](https://spl.solana.com/memo) on Solana.
-- [backend](./backend): Contains the backend code for the server to generate a consent token to invoke the memo Program as an end-user.
-- [frontend](./frontend): Contains the frontend code and server for getting use user consent and invoking the memo Program as an end-user.
+- [scripts](./scripts): Contains the scripts to invoke the [memo program](https://spl.solana.com/memo) with and without external signers.
+- [backend](./backend): Contains the backend code for the server to generate a consent token to invoke the memo Program with or without external_signers as an end-user.
+- [frontend](./frontend): Contains the frontend code and server for getting use user consent and invoking the memo Program with or without external signer as an end-user.
 
 ## Quick start
 
@@ -22,14 +22,18 @@ The first thing you need to do is clone this repository:
 git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
 
-go to the repository's `solana/lambda/scripts` folder and run the following commands to invoke the memo program as you(the developer).
+Navigate to repository's `solana/lambda/scripts` folder and run the following commands to invoke the memo program as you(the developer).
 
 ```sh
 npm install
 npm run invoke
 ```
 
-This will invoke the lambda as you(the developer).
+Then, run the following command to invoke the memo program as you(the developer) and an external signer. The script will create a partially signed transaction and invoke the MetaKeep Lambda to sign and broadcast the transaction as you(the developer).
+
+```sh
+npm run invokeWithExternalSigners
+```
 
 # Invoke Solana lambda method on behalf of end-users by getting their consent.
 

@@ -135,7 +135,11 @@ export const invoke = async (
 };
 
 // Invokes the lambda function.
-export const invokeSolana = async (serializedTransactionMessage, reason) => {
+export const invokeSolana = async (
+  serializedTransactionMessage,
+  reason,
+  signatures = []
+) => {
   const url = getAPIHost() + "/v2/app/lambda/invoke";
 
   const headers = {
@@ -147,6 +151,7 @@ export const invokeSolana = async (serializedTransactionMessage, reason) => {
   const requestBody = {
     serializedTransactionMessage: serializedTransactionMessage,
     reason: reason,
+    signatures: signatures,
   };
   const options = {
     method: "POST",
@@ -164,6 +169,37 @@ export const invokeSolana = async (serializedTransactionMessage, reason) => {
       "Error while invoking method. HTTP status code: " + result.status
     );
   }
+  return resultJson;
+};
+
+export const getLambdaSponsor = async () => {
+  const url = getAPIHost() + "/v2/app/lambda/getSponsor";
+
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-api-key": process.env.API_KEY,
+  };
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify({}),
+  };
+
+  const result = await fetch(url, options);
+
+  const resultJson = await result.json();
+
+  if (!result.ok) {
+    console.log(
+      "Error while getting lambda sponsor. HTTP status code: " + result.status
+    );
+    throw new Error(
+      "Error while getting lambda sponsor. HTTP status code: " + result.status
+    );
+  }
+
   return resultJson;
 };
 

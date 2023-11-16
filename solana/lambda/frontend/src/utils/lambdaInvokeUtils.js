@@ -1,7 +1,8 @@
 // This is the helper function to get the consent token by making request to the backend server.
 export default async function getLambdaMemoInvokeConsentToken(
   asEmail,
-  message
+  message,
+  includeExternalSigners
 ) {
   console.log("Getting Lambda Consent token from backend...");
   const url = "http://localhost:3001/logMemoForEndUser";
@@ -13,6 +14,7 @@ export default async function getLambdaMemoInvokeConsentToken(
   const body = JSON.stringify({
     asEmail: asEmail,
     message: message,
+    includeExternalSigners: includeExternalSigners,
   });
 
   const options = {
