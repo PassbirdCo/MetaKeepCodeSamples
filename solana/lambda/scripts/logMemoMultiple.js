@@ -58,7 +58,7 @@ async function main() {
   await waitUntilTransactionMined(resultJson);
   console.log(
     "Lambda invocation for memo program completed: " +
-      result.transactionSignature +
+      resultJson.transactionSignature +
       "\n"
   );
 }
