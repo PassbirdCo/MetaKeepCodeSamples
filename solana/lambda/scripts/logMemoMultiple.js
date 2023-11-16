@@ -1,9 +1,11 @@
 import env from "dotenv";
-import { getLambdaSponsor } from "../../../lambda/lambdaUtils.mjs";
+import {
+  getLambdaSponsor,
+  invokeSolana,
+} from "../../../lambda/lambdaUtils.mjs";
 import {
   waitUntilTransactionMined,
   checkAPIKey,
-  getAPIHost,
 } from "../../../helpers/utils.mjs";
 import { getDeveloperSolAddress } from "../../../helpers/utils.mjs";
 
@@ -29,31 +31,11 @@ async function main() {
     "METAKEEP TUTORIAL"
   );
 
-  const url = getAPIHost() + "/v2/app/lambda/invoke";
-
-  const headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "x-api-key": process.env.API_KEY,
-    "Idempotency-Key": Math.floor(Math.random() * 10000),
-  };
-
-  const options = {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(request),
-  };
-
-  const result = await fetch(url, options);
-  const resultJson = await result.json();
-
-  console.log(resultJson);
-
-  if (!result.ok) {
-    throw new Error(
-      "Error while invoking method. HTTP status code: " + result.status
-    );
-  }
+  const resultJson = await invokeSolana(
+    request.serialized_transaction_message,
+    request.reason,
+    request.signatures
+  );
 
   await waitUntilTransactionMined(resultJson);
   console.log(

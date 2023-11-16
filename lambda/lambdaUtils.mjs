@@ -135,7 +135,7 @@ export const invoke = async (
 };
 
 // Invokes the lambda function.
-export const invokeSolana = async (serializedTransactionMessage, reason) => {
+export const invokeSolana = async (serializedTransactionMessage, reason, signatures=[]) => {
   const url = getAPIHost() + "/v2/app/lambda/invoke";
 
   const headers = {
@@ -147,6 +147,7 @@ export const invokeSolana = async (serializedTransactionMessage, reason) => {
   const requestBody = {
     serializedTransactionMessage: serializedTransactionMessage,
     reason: reason,
+    signatures: signatures,
   };
   const options = {
     method: "POST",
