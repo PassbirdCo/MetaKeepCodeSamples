@@ -31,7 +31,7 @@ npm run invoke
 
 commands to invoke solana lambda with external signers
 
-```
+```sh
 npm install
 npm run invokeMultiple
 ```
