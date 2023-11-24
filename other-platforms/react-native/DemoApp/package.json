@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "metakeep-react-native-sdk": "file:../MetaKeepReactNativeSDK",
     "react": "18.2.0",
     "react-native": "0.72.7"
   },
