@@ -75,7 +75,7 @@ PODS:
   - hermes-engine/Pre-built (0.72.7)
   - libevent (2.1.12)
   - MetaKeep (2.0.2-alpha)
-  - metakeep-react-native-sdk (0.0.1):
+  - metakeep-react-native-sdk (1.0.0):
     - MetaKeep (~> 2.0.2-alpha)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -681,7 +681,7 @@ SPEC CHECKSUMS:
   hermes-engine: 9180d43df05c1ed658a87cc733dc3044cf90c00a
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   MetaKeep: a7aced82dbe464ad0a7a53090459962bad0fdc28
-  metakeep-react-native-sdk: c2002f34b5409af04347f26666813ff7eb9a4953
+  metakeep-react-native-sdk: 37e190dceb593c0898d4f43a5e8ca24f4c02e597
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 83bca1c184feb4d2e51c72c8369b83d641443f95

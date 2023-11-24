@@ -25,11 +25,17 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import MetaKeep from 'metakeep-react-native-sdk';
 
-import * as mk from 'metakeep-react-native-sdk';
+MetaKeep.initialize('appId');
 
-
-mk.multiply(3, 7).then((result) => console.log(result));
+MetaKeep.signMessage('hello', 'world')
+  .then(result => {
+    console.log(result);
+  })
+  .catch(error => {
+    console.log(error);
+  });
 
 type SectionProps = PropsWithChildren<{
   title: string;

@@ -2,7 +2,7 @@
   "name": "metakeep-react-native-sdk",
   "version": "1.0.0",
   "description": "MetaKeep React Native SDK",
-  "main": "src/index.ts",
+  "main": "src/index",
   "author": "MetaKeep",
   "license": "ISC",
   "homepage": "https://metakeep.xyz"
