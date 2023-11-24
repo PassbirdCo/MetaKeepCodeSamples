@@ -74,9 +74,9 @@ PODS:
     - hermes-engine/Pre-built (= 0.72.7)
   - hermes-engine/Pre-built (0.72.7)
   - libevent (2.1.12)
-  - MetaKeep (2.0.2-alpha)
+  - MetaKeep (2.0.2)
   - metakeep-react-native-sdk (1.0.0):
-    - MetaKeep (~> 2.0.2-alpha)
+    - MetaKeep (~> 2.0.2)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - OpenSSL-Universal (1.1.1100)
@@ -680,8 +680,8 @@ SPEC CHECKSUMS:
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: 9180d43df05c1ed658a87cc733dc3044cf90c00a
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  MetaKeep: a7aced82dbe464ad0a7a53090459962bad0fdc28
-  metakeep-react-native-sdk: 37e190dceb593c0898d4f43a5e8ca24f4c02e597
+  MetaKeep: 0c7e4ea1bfa9cc4530bfee7f79a0e3b12781fe95
+  metakeep-react-native-sdk: 81a2508fd8dddcc1fadee614bfc99d25164d3da8
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 83bca1c184feb4d2e51c72c8369b83d641443f95
@@ -719,6 +719,6 @@ SPEC CHECKSUMS:
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 04f154e009a24cbacaf303fb64b766ba4ac09364
+PODFILE CHECKSUM: 08859208f24740f1f3af93a1102ae6851d83a1b9
 
 COCOAPODS: 1.14.3
