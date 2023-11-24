@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "11.0" }
+  s.platforms    = { :ios => "14.0" }
   s.source       = { :git => ".git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
@@ -38,4 +38,6 @@ Pod::Spec.new do |s|
     s.dependency "ReactCommon/turbomodule/core"
    end
   end    
+
+  s.dependency "MetaKeep", "~> 2.0.2-alpha"
 end

@@ -1,3 +1,5 @@
+import MetaKeep
+
 @objc(MetaKeepReactNativeSDK)
 class MetaKeepReactNativeSDK: NSObject {
 

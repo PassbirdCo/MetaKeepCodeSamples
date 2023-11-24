@@ -25,6 +25,12 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+
+import * as mk from 'metakeep-react-native-sdk';
+
+
+mk.multiply(3, 7).then((result) => console.log(result));
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;

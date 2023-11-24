@@ -1,9 +1,9 @@
 {
   "name": "metakeep-react-native-sdk",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "MetaKeep React Native SDK",
-  "main": "src/index",
-  "author": " <> ()",
-  "license": "UNLICENSED",
-  "homepage": "#readme"
+  "main": "src/index.ts",
+  "author": "MetaKeep",
+  "license": "ISC",
+  "homepage": "https://metakeep.xyz"
 }
