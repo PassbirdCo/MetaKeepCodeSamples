@@ -5,8 +5,11 @@
 // MetaKeep SDK init synchronous method
 RCT_EXTERN__BLOCKING_SYNCHRONOUS_METHOD(initialize : (NSString *)appId)
 
-// MetaKeep SDK set user synchronous method
-RCT_EXTERN__BLOCKING_SYNCHRONOUS_METHOD(setUser : (NSDictionary *)user)
+// MetaKeep SDK set user asynchronous method
+RCT_EXTERN_METHOD(setUser
+                  : (NSDictionary *)user withResolver
+                  : (RCTPromiseResolveBlock)resolve withRejecter
+                  : (RCTPromiseRejectBlock)reject)
 
 // MetaKeep SDK sign message asynchronous method
 RCT_EXTERN_METHOD(signMessage

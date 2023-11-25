@@ -24,11 +24,14 @@ class MetaKeep {
    * @param appId - The unique identifier for the app.
    * @throws Error if appId is not provided.
    */
-  static initialize(appId: string) {
+  public constructor(appId: string) {
     if (!appId) {
       throw new Error('appId is required');
     }
-    return MetaKeepReactNativeSDK.initialize(appId);
+
+    // Only one instance of the SDK can be initialized in
+    // React Native.
+    MetaKeepReactNativeSDK.initialize(appId);
   }
 
   /**
@@ -36,11 +39,13 @@ class MetaKeep {
    * @param user - The user to be set.
    * @throws Error if the user is not valid.
    */
-  static setUser(user: object) {
+  public async setUser(user: object): Promise<any> {
     if (!user) {
       throw new Error('user is required');
     }
-    return MetaKeepReactNativeSDK.setUser(user);
+    return this.handleNativeOperationPromise(
+      MetaKeepReactNativeSDK.setUser(user),
+    );
   }
 
   /**
@@ -49,7 +54,7 @@ class MetaKeep {
    * @param reason - The reason for signing the message.
    * @returns A promise that resolves to an object representing the signed message.
    */
-  static async signMessage(message: string, reason: string): Promise<object> {
+  public async signMessage(message: string, reason: string): Promise<object> {
     return this.handleNativeOperationPromise(
       MetaKeepReactNativeSDK.signMessage(message, reason),
     );
@@ -61,7 +66,7 @@ class MetaKeep {
    * @param reason - The reason for signing the transaction.
    * @returns A promise that resolves to an object representing the signed transaction.
    */
-  static async signTransaction(
+  public async signTransaction(
     transaction: object,
     reason: string,
   ): Promise<object> {
@@ -76,7 +81,7 @@ class MetaKeep {
    * @param reason - The reason for signing the typed data object.
    * @returns A promise that resolves to an object representing the signed typed data object.
    */
-  static async signTypedData(
+  public async signTypedData(
     typedData: object,
     reason: string,
   ): Promise<object> {
@@ -90,13 +95,13 @@ class MetaKeep {
    * @param consentToken - The consent token to be used for the get consent operation.
    * @returns A promise that resolves to an object representing the result of the native operation.
    */
-  static async getConsent(consentToken: string): Promise<object> {
+  public async getConsent(consentToken: string): Promise<object> {
     return this.handleNativeOperationPromise(
       MetaKeepReactNativeSDK.getConsent(consentToken),
     );
   }
 
-  private static async handleNativeOperationPromise(
+  private async handleNativeOperationPromise(
     nativeOperationPromise: Promise<object>,
   ): Promise<object> {
     return new Promise((resolve, reject) => {
