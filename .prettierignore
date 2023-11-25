@@ -1,3 +1,5 @@
 **/*.sol
 nfts/mobile/ios/NftDemo/Assets.xcassets/**/*
 nfts/mobile/ios/NftDemo/Preview Content/**/*
+.vscode/**/*
+other-platforms/react-native/DemoApp/ios/DemoApp/Images.xcassets/**/*
