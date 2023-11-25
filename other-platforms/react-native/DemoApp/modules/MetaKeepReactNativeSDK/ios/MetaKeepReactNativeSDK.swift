@@ -14,12 +14,6 @@ class MetaKeepReactNativeSDK: NSObject {
     user: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    guard sdk != nil else {
-      rejectWithErrorStatus(
-        errorStatus: SKD_NOT_INITIALIZED_ERROR_STATUS, reject: reject)
-      return
-    }
-
     // Only email is supported for now
     if user[EMAIL_FIELD] == nil {
       rejectWithErrorStatus(
@@ -40,12 +34,6 @@ class MetaKeepReactNativeSDK: NSObject {
     message: String, reason: String, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    guard sdk != nil else {
-      rejectWithErrorStatus(
-        errorStatus: SKD_NOT_INITIALIZED_ERROR_STATUS, reject: reject)
-      return
-    }
-
     sdk!.signMessage(
       message: message,
       reason: reason,
@@ -57,12 +45,6 @@ class MetaKeepReactNativeSDK: NSObject {
     transaction: NSDictionary, reason: String, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    guard sdk != nil else {
-      rejectWithErrorStatus(
-        errorStatus: SKD_NOT_INITIALIZED_ERROR_STATUS, reject: reject)
-      return
-    }
-
     do {
       sdk!.signTransaction(
         transaction: try NSDictionaryToJsonRequest(dictionary: transaction),
@@ -78,12 +60,6 @@ class MetaKeepReactNativeSDK: NSObject {
     typedData: NSDictionary, reason: String, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    guard sdk != nil else {
-      rejectWithErrorStatus(
-        errorStatus: SKD_NOT_INITIALIZED_ERROR_STATUS, reject: reject)
-      return
-    }
-
     do {
       sdk!.signTypedData(
         typedData: try NSDictionaryToJsonRequest(dictionary: typedData),
@@ -99,12 +75,6 @@ class MetaKeepReactNativeSDK: NSObject {
     consentToken: String, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    guard sdk != nil else {
-      rejectWithErrorStatus(
-        errorStatus: SKD_NOT_INITIALIZED_ERROR_STATUS, reject: reject)
-      return
-    }
-
     sdk!.getConsent(
       consentToken: consentToken,
       callback: getCallback(resolve: resolve, reject: reject))
@@ -150,7 +120,6 @@ class MetaKeepReactNativeSDK: NSObject {
   private var sdk: MetaKeep?
 
   // Error status
-  private let SKD_NOT_INITIALIZED_ERROR_STATUS = "SDK_NOT_INITIALIZED"
   private let INVALID_USER_ERROR_STATUS = "INVALID_USER"
   private let INVALID_TRANSACTION_ERROR_STATUS = "INVALID_TRANSACTION"
   private let INVALID_TYPED_DATA_ERROR_STATUS = "INVALID_TYPED_DATA"
