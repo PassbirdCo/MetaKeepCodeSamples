@@ -80,6 +80,12 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+
+        //---> Configure MetaKeep Domain and Scheme
+        // metakeepDomain: Replace <app_id> with your app's id which you can find in the developer console
+        // metakeepScheme: Replace com.domain.app with your app's package name
+        manifestPlaceholders = [metakeepDomain: "<metakeep_app_id>.auth.metakeep.xyz", metakeepScheme: "com.demoapp"]
+        //<---
     }
     signingConfigs {
         debug {

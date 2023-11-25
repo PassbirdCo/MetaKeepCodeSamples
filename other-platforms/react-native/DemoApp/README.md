@@ -1,5 +1,11 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+This app demonstrates how to use MetaKeep React Native SDK to build a simple app for Android and iOS.
+
+# Prerequisites
+
+Please make sure you update `metakeepDomain` in `android/app/build.gradle` with your MetaKeep appId. You can find your appId in the MetaKeep dashboard.
+
 # Getting Started
 
 > **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
