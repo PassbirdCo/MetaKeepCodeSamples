@@ -29,6 +29,9 @@ import MetaKeep from 'metakeep-react-native-sdk';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+
+  const [metaKeepSdk, setMetaKeepSdkSdk] = useState<MetaKeep | null>(null);
+
   const [appId, setAppId] = useState('');
   const [currentSdkOperation, setCurrentSdkOperation] = useState('signMessage');
   const [sdkOperations, _] = useState([
@@ -46,14 +49,15 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.white,
   };
 
-  const initializeSdk = () => {
-    MetaKeep.initialize(appId);
+  const initializeSdk = async () => {
+    setMetaKeepSdkSdk(new MetaKeep(appId));
+
     Alert.alert('SDK Initialized');
 
     // You can also set the user for the SDK
     // if you already have a signed in user
-
-    // MetaKeep.setUser({
+    //
+    // await metaKeepSdk?.setUser({
     //   email: 'user@email.com',
     // });
   };
@@ -61,29 +65,34 @@ function App(): JSX.Element {
   const performSdkOperation = () => {
     let operationResult = null;
 
+    if (!metaKeepSdk) {
+      Alert.alert('SDK not initialized');
+      return;
+    }
+
     if (currentSdkOperation === 'signMessage') {
-      operationResult = MetaKeep.signMessage(
+      operationResult = metaKeepSdk.signMessage(
         sdkOperationData,
         sdkOperationReason,
       );
     }
 
     if (currentSdkOperation === 'signTransaction') {
-      operationResult = MetaKeep.signTransaction(
+      operationResult = metaKeepSdk.signTransaction(
         JSON.parse(sdkOperationData),
         sdkOperationReason,
       );
     }
 
     if (currentSdkOperation === 'signTypedData') {
-      operationResult = MetaKeep.signTypedData(
+      operationResult = metaKeepSdk.signTypedData(
         JSON.parse(sdkOperationData),
         sdkOperationReason,
       );
     }
 
     // You can get user's consent for operations that return a consentToken
-    // await MetaKeep.getConsent(consentToken);
+    // await metaKeepSdk.getConsent(consentToken);
 
     operationResult
       ?.then((result: any) => {

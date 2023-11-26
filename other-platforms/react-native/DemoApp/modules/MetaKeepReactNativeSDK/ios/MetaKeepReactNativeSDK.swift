@@ -5,23 +5,28 @@ class MetaKeepReactNativeSDK: NSObject {
 
   @objc(initialize:)
   func initialize(appId: String) -> Any {
-    MetaKeepReactNativeSDK.instance = MetaKeep(appId: appId, appContext: AppContext())
+    sdk = MetaKeep(appId: appId, appContext: AppContext())
     return 0
   }
 
-  @objc(setUser:)
-  func setUser(user: NSDictionary) -> Any {
+  @objc(setUser:withResolver:withRejecter:)
+  func setUser(
+    user: NSDictionary, resolve: @escaping RCTPromiseResolveBlock,
+    reject: @escaping RCTPromiseRejectBlock
+  ) {
     // Only email is supported for now
-    if user["email"] == nil {
-      return 0
+    if user[EMAIL_FIELD] == nil {
+      rejectWithErrorStatus(
+        errorStatus: INVALID_USER_ERROR_STATUS, reject: reject)
+      return
     }
 
-    MetaKeepReactNativeSDK.instance!.user =
+    sdk!.user =
       User(
-        email: user["email"] as! String
+        email: user[EMAIL_FIELD] as! String
       )
 
-    return 0
+    resolve(nil)
   }
 
   @objc(signMessage:withReason:withResolver:withRejecter:)
@@ -29,15 +34,10 @@ class MetaKeepReactNativeSDK: NSObject {
     message: String, reason: String, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    if MetaKeepReactNativeSDK.instance == nil {
-      reject("MetaKeep SDK not initialized", "Please call initialize() first", nil)
-      return
-    }
-
-    MetaKeepReactNativeSDK.instance!.signMessage(
+    sdk!.signMessage(
       message: message,
       reason: reason,
-      callback: MetaKeepReactNativeSDK.getCallback(resolve: resolve, reject: reject))
+      callback: getCallback(resolve: resolve, reject: reject))
   }
 
   @objc(signTransaction:withReason:withResolver:withRejecter:)
@@ -45,21 +45,14 @@ class MetaKeepReactNativeSDK: NSObject {
     transaction: NSDictionary, reason: String, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    if MetaKeepReactNativeSDK.instance == nil {
-      reject("MetaKeep SDK not initialized", "Please call initialize() first", nil)
-      return
-    }
-
     do {
-
-      MetaKeepReactNativeSDK.instance!.signTransaction(
-        transaction: try MetaKeepReactNativeSDK.NSDictionaryToJsonRequest(dictionary: transaction),
+      sdk!.signTransaction(
+        transaction: try NSDictionaryToJsonRequest(dictionary: transaction),
         reason: reason,
-        callback: MetaKeepReactNativeSDK.getCallback(resolve: resolve, reject: reject))
+        callback: getCallback(resolve: resolve, reject: reject))
     } catch {
-      reject("INVALID_TRANSACTION", "Invalid transaction", error)
+      rejectWithErrorStatus(errorStatus: INVALID_TRANSACTION_ERROR_STATUS, reject: reject)
     }
-
   }
 
   @objc(signTypedData:withReason:withResolver:withRejecter:)
@@ -67,18 +60,13 @@ class MetaKeepReactNativeSDK: NSObject {
     typedData: NSDictionary, reason: String, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    if MetaKeepReactNativeSDK.instance == nil {
-      reject("MetaKeep SDK not initialized", "Please call initialize() first", nil)
-      return
-    }
-
     do {
-      MetaKeepReactNativeSDK.instance!.signTypedData(
-        typedData: try MetaKeepReactNativeSDK.NSDictionaryToJsonRequest(dictionary: typedData),
+      sdk!.signTypedData(
+        typedData: try NSDictionaryToJsonRequest(dictionary: typedData),
         reason: reason,
-        callback: MetaKeepReactNativeSDK.getCallback(resolve: resolve, reject: reject))
+        callback: getCallback(resolve: resolve, reject: reject))
     } catch {
-      reject("INVALID_TYPED_DATA", "Invalid typed data", error)
+      rejectWithErrorStatus(errorStatus: INVALID_TYPED_DATA_ERROR_STATUS, reject: reject)
     }
   }
 
@@ -87,17 +75,12 @@ class MetaKeepReactNativeSDK: NSObject {
     consentToken: String, resolve: @escaping RCTPromiseResolveBlock,
     reject: @escaping RCTPromiseRejectBlock
   ) {
-    if MetaKeepReactNativeSDK.instance == nil {
-      reject("MetaKeep SDK not initialized", "Please call initialize() first", nil)
-      return
-    }
-
-    MetaKeepReactNativeSDK.instance!.getConsent(
+    sdk!.getConsent(
       consentToken: consentToken,
-      callback: MetaKeepReactNativeSDK.getCallback(resolve: resolve, reject: reject))
+      callback: getCallback(resolve: resolve, reject: reject))
   }
 
-  static private func getCallback(
+  private func getCallback(
     resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock
   ) -> Callback {
     return Callback(
@@ -106,21 +89,49 @@ class MetaKeepReactNativeSDK: NSObject {
       },
       onFailure: { (error: JsonResponse) in
         reject(
-          "OPERATION_FAILED", "MetaKeep SDK operation failed",
+          self.OPERATION_FAILED_ERROR_STATUS, self.OPERATION_FAILED_ERROR_STRING,
           NSError(
-            domain: "MetaKeep", code: -1, userInfo: error.data as NSDictionary? as? [String: Any])
+            domain: self.METAKEEP_DOMAIN, code: -1,
+            // Pack the actual JSON error response into the NSError userInfo.
+            // This will be extracted in the JS layer and returned as the error.
+            userInfo: error.data as NSDictionary? as? [String: Any])
         )
       }
     )
   }
 
-  static private func NSDictionaryToJsonRequest(dictionary: NSDictionary) throws -> JsonRequest {
-    print(dictionary.description)
+  private func NSDictionaryToJsonRequest(dictionary: NSDictionary) throws -> JsonRequest {
     let jsonString = String(
       bytes: try JSONSerialization.data(withJSONObject: dictionary), encoding: .utf8)!
     return try JsonRequest(jsonString: jsonString)
   }
 
-  // Singleton that holds the MetaKeep SDK instance
-  static var instance: MetaKeep?
+  private func rejectWithErrorStatus(
+    errorStatus: String, reject: @escaping RCTPromiseRejectBlock
+  ) {
+    reject(
+      errorStatus, OPERATION_FAILED_ERROR_STRING,
+      NSError(
+        domain: METAKEEP_DOMAIN, code: -1, userInfo: [STATUS_FIELD: errorStatus]
+      ))
+  }
+
+  // Holds the MetaKeep SDK instance
+  private var sdk: MetaKeep?
+
+  // Error status
+  private let INVALID_USER_ERROR_STATUS = "INVALID_USER"
+  private let INVALID_TRANSACTION_ERROR_STATUS = "INVALID_TRANSACTION"
+  private let INVALID_TYPED_DATA_ERROR_STATUS = "INVALID_TYPED_DATA"
+  private let OPERATION_FAILED_ERROR_STATUS = "OPERATION_FAILED"
+
+  // Error strings
+  private let INVALID_TRANSACTION_ERROR_STRING = "Invalid transaction"
+  private let INVALID_TYPED_DATA_ERROR_STRING = "Invalid typed data"
+  private let OPERATION_FAILED_ERROR_STRING = "MetaKeep SDK operation failed"
+
+  // Constant strings
+  private let METAKEEP_DOMAIN = "MetaKeep"
+  private let EMAIL_FIELD = "email"
+  private let STATUS_FIELD = "status"
 }
