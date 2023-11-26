@@ -110,8 +110,8 @@ class MetaKeep {
           resolve(result);
         })
         .catch((error: {userInfo: object}) => {
-          // Handle error.userInfo for iOS
-          // Json Error for iOS is sent in the userInfo object
+          // Handle error.userInfo from native module.
+          // Json Error is sent in the userInfo object.
           if (error.userInfo) {
             reject(error.userInfo);
             return;
