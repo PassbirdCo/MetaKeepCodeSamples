@@ -80,6 +80,14 @@ class MetaKeepReactNativeSDK: NSObject {
       callback: getCallback(resolve: resolve, reject: reject))
   }
 
+  @objc(getWallet:withRejecter:)
+  func getWallet(
+    resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock
+  ) {
+    sdk!.getWallet(
+      callback: getCallback(resolve: resolve, reject: reject))
+  }
+
   private func getCallback(
     resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock
   ) -> Callback {

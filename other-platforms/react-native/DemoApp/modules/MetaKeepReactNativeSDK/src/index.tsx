@@ -101,6 +101,16 @@ class MetaKeep {
     );
   }
 
+  /**
+   * Gets the user's wallet with MetaKeepReactNativeSDK.
+   * @returns A promise that resolves to an object representing the result of the native operation.
+   */
+  public async getWallet(): Promise<object> {
+    return this.handleNativeOperationPromise(
+      MetaKeepReactNativeSDK.getWallet(),
+    );
+  }
+
   private async handleNativeOperationPromise(
     nativeOperationPromise: Promise<object>,
   ): Promise<object> {

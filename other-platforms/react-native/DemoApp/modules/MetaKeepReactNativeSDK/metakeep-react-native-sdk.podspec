@@ -39,5 +39,5 @@ Pod::Spec.new do |s|
    end
   end    
 
-  s.dependency "MetaKeep", "~> 2.0.2"
+  s.dependency "MetaKeep", "~> 2.0.3"
 end

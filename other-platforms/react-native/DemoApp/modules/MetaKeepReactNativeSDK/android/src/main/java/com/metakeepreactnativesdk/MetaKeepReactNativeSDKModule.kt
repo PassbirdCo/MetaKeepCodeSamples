@@ -73,6 +73,11 @@ class MetaKeepReactNativeSDKModule(reactContext: ReactApplicationContext) :
         sdk.getConsent(consentToken, getCallback(promise))
     }
 
+    @ReactMethod
+    fun getWallet(promise: Promise) {
+        sdk.getWallet(getCallback(promise))
+    }
+
     private fun getCallback(promise: Promise): Callback {
         return Callback(
             onSuccess = { response: JsonResponse ->
