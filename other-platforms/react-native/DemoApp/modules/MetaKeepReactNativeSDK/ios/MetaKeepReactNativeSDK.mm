@@ -38,6 +38,11 @@ RCT_EXTERN_METHOD(getConsent
                   : (RCTPromiseResolveBlock)resolve withRejecter
                   : (RCTPromiseRejectBlock)reject)
 
+// MetaKeep SDK get wallet asynchronous method
+RCT_EXTERN_METHOD(getWallet
+                  : (RCTPromiseResolveBlock)resolve withRejecter
+                  : (RCTPromiseRejectBlock)reject)
+
 + (BOOL)requiresMainQueueSetup {
   return NO;
 }
