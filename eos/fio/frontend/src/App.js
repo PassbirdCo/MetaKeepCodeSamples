@@ -31,6 +31,9 @@ const activeLinkStyle = {
   fontWeight: "bold",
 };
 
+// Fix for missing Buffer issue in fiojs.
+window.Buffer = window.Buffer || require("buffer").Buffer;
+
 function App() {
   return (
     <div className="App">
