@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, use, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import { useAppState } from "./app-state";
 import { W3CCredential } from "@0xpolygonid/js-sdk";
