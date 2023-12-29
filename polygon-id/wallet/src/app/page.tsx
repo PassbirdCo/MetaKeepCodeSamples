@@ -203,7 +203,7 @@ export default function Home() {
       {/* Textbox asking users to enter their email */}
       <UserInfo />
 
-      {/* DID */}
+      {/* DID and public key */}
       <p className="text-2xl font-semibold">
         DID: <span className="font-light">{did ? did : "UNKNOWN"}</span>
         <br />
