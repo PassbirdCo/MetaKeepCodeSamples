@@ -1,0 +1,12 @@
+diff --git a/node_modules/@iden3/js-iden3-core/package.json b/node_modules/@iden3/js-iden3-core/package.json
+index b56a0a1..6fe274e 100644
+--- a/node_modules/@iden3/js-iden3-core/package.json
++++ b/node_modules/@iden3/js-iden3-core/package.json
+@@ -8,6 +8,7 @@
+   "module": "dist/node/esm/index.js",
+   "exports": {
+     ".": {
++      "types": "./dist/types/index.d.ts",
+       "node": {
+         "import": "./dist/node/esm/index.js",
+         "require": "./dist/node/cjs/index.js"

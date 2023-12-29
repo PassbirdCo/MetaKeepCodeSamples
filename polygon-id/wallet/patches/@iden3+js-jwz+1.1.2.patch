@@ -1,0 +1,12 @@
+diff --git a/node_modules/@iden3/js-jwz/package.json b/node_modules/@iden3/js-jwz/package.json
+index 822f894..e90e1b0 100644
+--- a/node_modules/@iden3/js-jwz/package.json
++++ b/node_modules/@iden3/js-jwz/package.json
+@@ -6,6 +6,7 @@
+   "module": "./dist/node/esm/index.js",
+   "exports": {
+     ".": {
++      "types": "./dist/types/index.d.ts",
+       "node": {
+         "import": "./dist/node/esm/index.js",
+         "require": "./dist/node/cjs/index.js"
