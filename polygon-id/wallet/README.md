@@ -8,7 +8,7 @@ Please follow the steps below to run the demo:
 
 ### 1. Update the `.env` file
 
-Update the `APP_ID` in the `.env` file with the `APP ID` of your MetaKeep Cryptography BabyJubJub app.
+Update the `APP_ID` in the `.env` file with the `APP_ID` of your MetaKeep Cryptography BabyJubJub app.
 
 ### 2. Install dependencies and run the application
 
@@ -35,12 +35,12 @@ We will use the [PolygonID sample issuer](https://issuer-ui.polygonid.me/) to is
 
 1. Navigate to the [PolygonID sample issuer](https://issuer-ui.polygonid.me/).
 2. Import a new `KYCAgeCredential-v4.json` schema from https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v4.json
-3. Issue a `SIG` based `KYCAgeCredential` to your `DID` using the schema imported in the previous step and open up QR code page of the issued credential.
+3. Issue a `SIG` based `KYCAgeCredential` to your `DID` using the schema imported in the previous step and open up the QR code page of the issued credential.
 4. Click on the `Add KYC Age Credential` in the wallet application button to add credentials to your identity. It will open up a QR code scanner.
 5. Scan the QR code generated in step 4. It might be hard to scan the QR code from the same device, so you can instead take a photo of the QR code from another device and scan it.
 6. MetaKeep will ask for your consent to sign a message to create a new credential. Click on the `Allow` button to sign the message and a new credential will be added to your identity.
 
-### 4. View credentials
+### 4. View Credentials
 
 Click on the `View Credentials` button to view all the credentials stored in the application.
 
@@ -49,7 +49,7 @@ Click on the `View Credentials` button to view all the credentials stored in the
 We will use the [PolygonID sample verifier](https://verifier-demo.polygonid.me/) to generate a `KYCAgeProof` request for your `DID`.
 
 1. Navigate to the [PolygonID sample verifier](https://verifier-demo.polygonid.me/).
-2. Chose the `KYCAgeCredential` from the `Credential` dropdown.
+2. Choose the `KYCAgeCredential` from the `Credential` dropdown.
 3. Make sure that the schema matches the one used to issue the `KYCAgeCredential` in the previous step, else the proof generation will fail.
-4. You should see a QR code on the screen. .
+4. You should see a QR code on the screen.
 5. Click on the `Create & Verify Age Proof` button in the application to create and verify an age proof. It will open up a QR code scanner. Scan the QR code generated in step 4. It might be hard to scan the QR code from the same device, so you can instead take a photo of the QR code from another device and scan it.
