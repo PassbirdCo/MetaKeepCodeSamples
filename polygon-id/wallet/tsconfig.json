@@ -30,7 +30,6 @@
     "typeRoots": [
       "./node_modules/@0xpolygonid/js-sdk/dist/types/",
       "./node_modules/@0xpolygonid/js-sdk/dist/types/index.d.ts",
-
     ]
   },
   "include": [
