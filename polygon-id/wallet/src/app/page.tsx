@@ -4,22 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { Wallet } from "./services/Wallet";
-import {
-  core,
-  CredentialStatusType,
-  KmsKeyType,
-  W3CCredential,
-  AuthorizationRequestMessage,
-  CredentialsOfferMessage,
-  StandardJSONCredentialsQueryFilter,
-} from "@0xpolygonid/js-sdk";
+import { core, CredentialStatusType, KmsKeyType } from "@0xpolygonid/js-sdk";
 import { DID } from "@iden3/js-iden3-core";
 import { RHS_URL } from "./constants/constants";
 import { useAppState } from "./app-state";
 import ViewCredentials from "./view-credentials";
 import QRScanner from "./qr-scanner";
 import axios from "axios";
-import CreateAndVerifyAgeProof from "./create-and-verify-proof";
 
 export default function Home() {
   const [email, wallet, setWallet] = useAppState((state) => [
@@ -33,6 +24,7 @@ export default function Home() {
   const [showAddCredential, setShowAddCredential] = useState(false);
   const [showCreateAndVerifyAgeProof, setShowCreateAndVerifyAgeProof] =
     useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const createIdentity = async () => {
@@ -63,7 +55,13 @@ export default function Home() {
 
       console.log("Identity created: ", identity);
 
+      setToastMessage("Identity created successfully.");
       return;
+    } catch (e: any) {
+      setToastMessage(
+        "Error creating identity: " + (e.status ? e.status : e.message)
+      );
+      console.error("Error creating identity: ", e);
     } finally {
       setLoading(false);
     }
@@ -76,18 +74,6 @@ export default function Home() {
       if (!credentialQRCode) {
         return;
       }
-
-      // // Parse credential guid from the credential URL
-      // // E.g. url: https://issuer-ui.polygonid.me/credentials/issued/689d64e4-a5f1-11ee-93b5-0242ac120009
-      // const credentialGuid = credentialURL.split("/").pop();
-
-      // // Make a call to the issuer to get the credential offer QR code
-      // // E.g. https://issuer-admin.polygonid.me/v1/credentials/78023d9b-a5c3-11ee-93b5-0242ac120009/qrcode
-      // const credentialOfferQRCodeLink = (
-      //   await axios.get(
-      //     `https://${process.env.NEXT_PUBLIC_POLYGON_ID_TEST_ISSUER}/v1/credentials/${credentialGuid}/qrcode`
-      //   )
-      // ).data.qrCodeLink;
 
       // Parse the request URI from the link embedded in the QR code
       // E.g. "iden3comm://?request_uri=https://issuer-admin.polygonid.me/v1/qr-store?id=35286fb7-0d8b-418d-98c7-18b481abe76c"
@@ -114,30 +100,23 @@ export default function Home() {
       await wallet.credWallet.saveAll(credentials);
 
       console.log("Credentials added: ", credentials);
+
+      setToastMessage("Credential added successfully.");
+
+      return;
+    } catch (e: any) {
+      setToastMessage(
+        "Error adding credential: " + (e.status ? e.status : e.message)
+      );
+      console.error("Error adding credential: ", e);
     } finally {
       setLoading(false);
     }
   };
 
-  // TODO: Add support for QR scanning
   const createAndVerifyAgeProof = async (authRequestQRCode: string) => {
     try {
       setLoading(true);
-
-      // Parse type from the auth URL
-      // E.g. URL: https://verifier-demo.polygonid.me/auth-qr?type=kycMTP
-      // const type = new URL(authRequestQRCode).searchParams.get("type");
-
-      // Get the auth request from the verifier
-      // Request URL: https://self-hosted-demo-backend-platform.polygonid.me/api/sign-in?issuer=did:polygonid:polygon:mumbai:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT&type=kycMTP
-
-      // let authRequest: AuthorizationRequestMessage = (
-      //   await axios.get(
-      //     `https://${process.env.NEXT_PUBLIC_POLYGON_ID_TEST_VERIFIER}/api/sign-in?` +
-      //       `issuer=did:polygonid:polygon:mumbai:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT&` +
-      //       `type=kycMTP&type=${type}`
-      //   )
-      // ).data;
 
       const authRequest = JSON.parse(authRequestQRCode);
 
@@ -190,6 +169,16 @@ export default function Home() {
       );
 
       console.log("Callback response: ", callbackResponse.data);
+
+      setToastMessage("Age proof created and verified successfully.");
+
+      return;
+    } catch (e: any) {
+      setToastMessage(
+        "Error creating and verifying age proof: " +
+          (e.status ? e.status : e.message)
+      );
+      console.error("Error creating and verifying age proof: ", e);
     } finally {
       setLoading(false);
     }
@@ -293,6 +282,11 @@ export default function Home() {
         />
       )}
 
+      {/* Toast */}
+      {toastMessage && (
+        <Toast message={toastMessage} onClose={() => setToastMessage("")} />
+      )}
+
       {/* Main content */}
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none"></div>
@@ -372,6 +366,79 @@ const Loader = () => {
 
         <div className="text-2xl font-semibold">Processing ...</div>
       </div>
+    </div>
+  );
+};
+
+// Toast
+const Toast = ({
+  message,
+  onClose,
+}: {
+  message: string;
+  onClose: () => void;
+}) => {
+  return (
+    <div
+      id="toast-success"
+      className="fixed right-4 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+      role="alert"
+    >
+      {!message.includes("Error") && (
+        <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+          <svg
+            className="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+          </svg>
+          <span className="sr-only">Check icon</span>
+        </div>
+      )}
+
+      {message.includes("Error") && (
+        <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+          <svg
+            className="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z" />
+          </svg>
+          <span className="sr-only">Error icon</span>
+        </div>
+      )}
+
+      <div className="ms-3 text-sm font-normal"> {message} </div>
+      <button
+        type="button"
+        className="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+        data-dismiss-target="#toast-success"
+        aria-label="Close"
+        onClick={onClose}
+      >
+        <span className="sr-only">Close</span>
+        <svg
+          className="w-3 h-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 14"
+        >
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+          />
+        </svg>
+      </button>
     </div>
   );
 };
