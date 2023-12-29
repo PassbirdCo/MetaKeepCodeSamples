@@ -15,7 +15,7 @@ Please follow the steps below to run the demo:
 
 ### 1. Create MetaKeep Cryptography BabyJubJub App
 
-The first step is to create a `MetaKeep Cryptography BabyJubJub` app on the [MetaKeep console](https://console.metakeep.xyz). Once you have created the app, you will get an `APP ID`. Copy this `APP ID` to the `.env` file in the `wallet` directory.
+The first step is to create a `MetaKeep Cryptography BabyJubJub` app on the [MetaKeep console](https://console.metakeep.xyz). Once you have created the app, you will get an `APP_ID`. Save this `APP_ID`.
 
 ### 2. Download the project
 
@@ -27,7 +27,9 @@ git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 
 ### 3. Start the wallet application
 
-Now start the wallet application. Navigate to the `polygon-id/wallet` directory and run the following command:
+Now start the wallet application. Navigate to the `polygon-id/wallet` directory and update the `APP_ID` in the `.env` file with the `APP_ID` of your MetaKeep Cryptography BabyJubJub app.
+
+Then, run the following commands:
 
 ```sh
 npm install
