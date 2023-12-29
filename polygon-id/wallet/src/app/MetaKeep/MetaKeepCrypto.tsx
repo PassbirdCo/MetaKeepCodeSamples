@@ -39,7 +39,7 @@ export class MetaKeepKeyProvider implements IKeyProvider {
    * @param {string} email - User's email address.
    */
   constructor(appId: string, email: string, env: string = "prod") {
-    if (!process.env.NEXT_PUBLIC_METAKEEP_APP_ID) {
+    if (!appId) {
       throw new Error("Missing MetaKeep App ID");
     }
 
