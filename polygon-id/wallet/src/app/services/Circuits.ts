@@ -65,7 +65,6 @@ export class CircuitStorageInstance {
         .then((response) => response.arrayBuffer())
         .then((buffer) => new Uint8Array(buffer));
       console.timeEnd("CircuitStorageInstance.init");
-      // this.instanceCS = new CircuitStorage(new InMemoryDataSource());
       console.time("CircuitStorageInstance.saveCircuitData");
       await this.circuitStorage.saveCircuitData(CircuitId.AuthV2, {
         circuitId: "authV2".toString(),

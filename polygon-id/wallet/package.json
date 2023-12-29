@@ -12,6 +12,7 @@
   "dependencies": {
     "@0xpolygonid/js-sdk": "1.4.2",
     "@headlessui/react": "^1.7.17",
+    "@yudiel/react-qr-scanner": "^1.2.4",
     "axios": "^1.6.3",
     "metakeep": "^2.2.0",
     "next": "14.0.4",

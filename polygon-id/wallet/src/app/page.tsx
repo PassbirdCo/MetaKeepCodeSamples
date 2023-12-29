@@ -17,8 +17,9 @@ import { DID } from "@iden3/js-iden3-core";
 import { RHS_URL } from "./constants/constants";
 import { useAppState } from "./app-state";
 import ViewCredentials from "./view-credentials";
-import AddCredential from "./add-credential";
+import QRScanner from "./qr-scanner";
 import axios from "axios";
+import CreateAndVerifyAgeProof from "./create-and-verify-proof";
 
 export default function Home() {
   const [email, wallet, setWallet] = useAppState((state) => [
@@ -30,6 +31,8 @@ export default function Home() {
   const [did, setDid] = useState("");
   const [showViewCredentials, setShowViewCredentials] = useState(false);
   const [showAddCredential, setShowAddCredential] = useState(false);
+  const [showCreateAndVerifyAgeProof, setShowCreateAndVerifyAgeProof] =
+    useState(false);
   const [loading, setLoading] = useState(false);
 
   const createIdentity = async () => {
@@ -66,25 +69,29 @@ export default function Home() {
     }
   };
 
-  const addCredentialCallback = async (credentialURL: string) => {
+  const addCredential = async (credentialQRCode: string) => {
     try {
       setLoading(true);
 
-      // Parse credential guid from the credential URL
-      // E.g. url: https://issuer-ui.polygonid.me/credentials/issued/689d64e4-a5f1-11ee-93b5-0242ac120009
-      const credentialGuid = credentialURL.split("/").pop();
+      if (!credentialQRCode) {
+        return;
+      }
 
-      // Make a call to the issuer to get the credential offer QR code
-      // E.g. https://issuer-admin.polygonid.me/v1/credentials/78023d9b-a5c3-11ee-93b5-0242ac120009/qrcode
-      const credentialOfferQRCodeLink = (
-        await axios.get(
-          `https://${process.env.NEXT_PUBLIC_POLYGON_ID_TEST_ISSUER}/v1/credentials/${credentialGuid}/qrcode`
-        )
-      ).data.qrCodeLink;
+      // // Parse credential guid from the credential URL
+      // // E.g. url: https://issuer-ui.polygonid.me/credentials/issued/689d64e4-a5f1-11ee-93b5-0242ac120009
+      // const credentialGuid = credentialURL.split("/").pop();
+
+      // // Make a call to the issuer to get the credential offer QR code
+      // // E.g. https://issuer-admin.polygonid.me/v1/credentials/78023d9b-a5c3-11ee-93b5-0242ac120009/qrcode
+      // const credentialOfferQRCodeLink = (
+      //   await axios.get(
+      //     `https://${process.env.NEXT_PUBLIC_POLYGON_ID_TEST_ISSUER}/v1/credentials/${credentialGuid}/qrcode`
+      //   )
+      // ).data.qrCodeLink;
 
       // Parse the request URI from the link embedded in the QR code
       // E.g. "iden3comm://?request_uri=https://issuer-admin.polygonid.me/v1/qr-store?id=35286fb7-0d8b-418d-98c7-18b481abe76c"
-      const requestURI = new URL(credentialOfferQRCodeLink).searchParams.get(
+      const requestURI = new URL(credentialQRCode).searchParams.get(
         "request_uri"
       );
 
@@ -104,9 +111,7 @@ export default function Home() {
         );
 
       // Add the credential to the wallet
-      for (const credential of credentials) {
-        await wallet.credWallet.save(credential);
-      }
+      await wallet.credWallet.saveAll(credentials);
 
       console.log("Credentials added: ", credentials);
     } finally {
@@ -114,39 +119,27 @@ export default function Home() {
     }
   };
 
-  const createAndVerifyAgeProof = async () => {
+  // TODO: Add support for QR scanning
+  const createAndVerifyAgeProof = async (authRequestQRCode: string) => {
     try {
       setLoading(true);
 
-      const authRequest: AuthorizationRequestMessage = {
-        id: "5afb5804-5591-4460-b834-a99ec64497ac",
-        typ: "application/iden3comm-plain-json",
-        type: "https://iden3-communication.io/authorization/1.0/request",
-        thid: "5afb5804-5591-4460-b834-a99ec64497ac",
-        body: {
-          callbackUrl:
-            "https://self-hosted-demo-backend-platform.polygonid.me/api/callback?sessionId=453184",
-          reason: "test flow",
-          scope: [
-            {
-              id: 1,
-              circuitId: "credentialAtomicQuerySigV2",
-              query: {
-                allowedIssuers: ["*"],
-                context:
-                  "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld",
-                credentialSubject: {
-                  birthday: {
-                    $lt: 20000101,
-                  },
-                },
-                type: "KYCAgeCredential",
-              },
-            },
-          ],
-        },
-        from: "did:polygonid:polygon:mumbai:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT",
-      };
+      // Parse type from the auth URL
+      // E.g. URL: https://verifier-demo.polygonid.me/auth-qr?type=kycMTP
+      // const type = new URL(authRequestQRCode).searchParams.get("type");
+
+      // Get the auth request from the verifier
+      // Request URL: https://self-hosted-demo-backend-platform.polygonid.me/api/sign-in?issuer=did:polygonid:polygon:mumbai:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT&type=kycMTP
+
+      // let authRequest: AuthorizationRequestMessage = (
+      //   await axios.get(
+      //     `https://${process.env.NEXT_PUBLIC_POLYGON_ID_TEST_VERIFIER}/api/sign-in?` +
+      //       `issuer=did:polygonid:polygon:mumbai:2qH7TstpRRJHXNN4o49Fu9H2Qismku8hQeUxDVrjqT&` +
+      //       `type=kycMTP&type=${type}`
+      //   )
+      // ).data;
+
+      const authRequest = JSON.parse(authRequestQRCode);
 
       console.log("Authorization request: ", authRequest);
 
@@ -184,19 +177,22 @@ export default function Home() {
         throw new Error("Age proof verification failed");
       }
 
-      // Handle the callback URL to submit the  proof
-      await wallet.authHandler.verifyAuthorizationResponse(authResponse);
+      // Handle the callback URL to submit the proof
+      const callbackResponse = await axios.post(
+        `${authRequest.body.callbackUrl}`,
+        authResponse.token,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+          responseType: "json",
+        }
+      );
+
+      console.log("Callback response: ", callbackResponse.data);
     } finally {
       setLoading(false);
     }
-  };
-
-  const viewCredentials = async () => {
-    setShowViewCredentials(true);
-  };
-
-  const addCredential = async () => {
-    setShowAddCredential(true);
   };
 
   return loading ? (
@@ -245,7 +241,7 @@ export default function Home() {
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-              onClick={viewCredentials}
+              onClick={() => setShowViewCredentials(true)}
             >
               View Credentials
             </button>
@@ -256,7 +252,7 @@ export default function Home() {
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-              onClick={addCredential}
+              onClick={() => setShowAddCredential(true)}
             >
               Add KYC Age Credential
             </button>
@@ -267,7 +263,7 @@ export default function Home() {
             <button
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-              onClick={createAndVerifyAgeProof}
+              onClick={() => setShowCreateAndVerifyAgeProof(true)}
             >
               Create & Verify Age Proof
             </button>
@@ -280,10 +276,19 @@ export default function Home() {
       )}
 
       {showAddCredential && (
-        <AddCredential
-          onAdd={async (credentialURL: string) => {
+        <QRScanner
+          onScan={async (credentialQRCode: string) => {
             setShowAddCredential(false);
-            await addCredentialCallback(credentialURL);
+            await addCredential(credentialQRCode);
+          }}
+        />
+      )}
+
+      {showCreateAndVerifyAgeProof && (
+        <QRScanner
+          onScan={async (authRequestQRCode: string) => {
+            setShowCreateAndVerifyAgeProof(false);
+            await createAndVerifyAgeProof(authRequestQRCode);
           }}
         />
       )}
