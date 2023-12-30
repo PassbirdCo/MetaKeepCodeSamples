@@ -1,0 +1,12 @@
+diff --git a/node_modules/@0xpolygonid/js-sdk/package.json b/node_modules/@0xpolygonid/js-sdk/package.json
+index 7c21fd0..2116efc 100644
+--- a/node_modules/@0xpolygonid/js-sdk/package.json
++++ b/node_modules/@0xpolygonid/js-sdk/package.json
+@@ -6,6 +6,7 @@
+   "module": "dist/node/esm/index.js",
+   "exports": {
+     ".": {
++      "types": "./dist/types/index.d.ts",
+       "node": {
+         "import": "./dist/node/esm/index.js",
+         "require": "./dist/node/cjs/index.js"
