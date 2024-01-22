@@ -1,4 +1,3 @@
-
 import 'metakeep_flutter_sdk_platform_interface.dart';
 
 class MetakeepFlutterSdk {

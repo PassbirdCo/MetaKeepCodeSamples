@@ -1,7 +1,7 @@
 name: metakeep_flutter_sdk
-description: "A new Flutter plugin project."
-version: 0.0.1
-homepage:
+description: "Metakeep Flutter SDK"
+version: 2.0.3
+homepage: https://metakeep.xyz
 
 environment:
   sdk: '>=3.2.5 <4.0.0'

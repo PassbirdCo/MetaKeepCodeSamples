@@ -1,5 +1,5 @@
 group 'xyz.metakeep.sdk.metakeep_flutter_sdk'
-version '1.0-SNAPSHOT'
+version '2.0.3'
 
 buildscript {
     ext.kotlin_version = '1.7.10'
@@ -50,6 +50,7 @@ android {
     }
 
     dependencies {
+        implementation "xyz.metakeep.sdk:lib:2.0.3"
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.mockito:mockito-core:5.0.0'
     }
