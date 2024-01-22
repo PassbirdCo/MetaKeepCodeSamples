@@ -107,6 +107,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  metakeep_flutter_sdk:
+    dependency: "direct main"
+    description:
+      path: "../metakeep_flutter_sdk"
+      relative: true
+    source: path
+    version: "2.0.3"
   path:
     dependency: transitive
     description:
@@ -115,6 +122,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.8"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -186,3 +201,4 @@ packages:
     version: "0.3.0"
 sdks:
   dart: ">=3.2.5 <4.0.0"
+  flutter: ">=3.3.0"
