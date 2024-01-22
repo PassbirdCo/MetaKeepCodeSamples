@@ -1,18 +1,18 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:flutter/services.dart';
 
-import 'metakeep_flutter_sdk_method_channel.dart';
-
-abstract class MetakeepFlutterSdkPlatform extends PlatformInterface {
+/// Class that interfaces with the native platform.
+class MetakeepFlutterSdkPlatform extends PlatformInterface {
   /// Constructs a MetakeepFlutterSdkPlatform.
   MetakeepFlutterSdkPlatform() : super(token: _token);
 
   static final Object _token = Object();
 
-  static MetakeepFlutterSdkPlatform _instance = MethodChannelMetakeepFlutterSdk();
+  static MetakeepFlutterSdkPlatform _instance = MetakeepFlutterSdkPlatform();
 
   /// The default instance of [MetakeepFlutterSdkPlatform] to use.
   ///
-  /// Defaults to [MethodChannelMetakeepFlutterSdk].
+  /// Defaults to [MetakeepFlutterSdkPlatform].
   static MetakeepFlutterSdkPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own
@@ -23,7 +23,17 @@ abstract class MetakeepFlutterSdkPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  /// The method channel used to interact with the native platform.
+  final methodChannel = const MethodChannel('metakeep_flutter_sdk');
+
+  Future<String?> getPlatformVersion() async {
+    final version =
+        await methodChannel.invokeMethod<String>('getPlatformVersion');
+    return version;
+  }
+
+  /// Initializes the Metakeep SDK.
+  Future<void> initialize(String appId) async {
+    await methodChannel.invokeMethod<void>('initialize', appId);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metakeep_flutter_sdk/metakeep_flutter_sdk.dart';
 
 void main() {
   runApp(const MyApp());
@@ -66,6 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+
+    Metakeep sdk = Metakeep('my-app-id');
+    // sdk.initialize("my-app-id");
   }
 
   @override

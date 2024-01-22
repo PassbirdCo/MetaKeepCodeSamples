@@ -1,7 +1,12 @@
 import 'metakeep_flutter_sdk_platform_interface.dart';
 
-class MetakeepFlutterSdk {
-  Future<String?> getPlatformVersion() {
-    return MetakeepFlutterSdkPlatform.instance.getPlatformVersion();
+class Metakeep {
+  /// Constructs a MetakeepFlutterSdk.
+  Metakeep(String appId) {
+    if (appId.isEmpty) {
+      throw ArgumentError.value(appId, 'appId', 'appId cannot be empty');
+    }
+
+    MetakeepFlutterSdkPlatform.instance.initialize(appId);
   }
 }
