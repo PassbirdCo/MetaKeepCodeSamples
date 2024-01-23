@@ -49,6 +49,12 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        //---> Configure MetaKeep Domain and Scheme
+        // metakeepDomain: Replace <app_id> with your app's id which you can find in the developer console
+        // metakeepScheme: Replace com.domain.app with your app's package name
+        manifestPlaceholders = [metakeepDomain: "<app_id>.auth.metakeep.xyz", metakeepScheme: "com.domain.app"]
+        //<---
     }
 
     buildTypes {
