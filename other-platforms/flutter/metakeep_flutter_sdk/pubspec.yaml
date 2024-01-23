@@ -4,8 +4,8 @@ version: 2.0.3
 homepage: https://metakeep.xyz
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
-  flutter: '>=3.3.0'
+  sdk: ">=3.2.5 <4.0.0"
+  flutter: ">=3.3.0"
 
 dependencies:
   flutter:
@@ -36,9 +36,9 @@ flutter:
     platforms:
       android:
         package: xyz.metakeep.sdk.metakeep_flutter_sdk
-        pluginClass: MetakeepFlutterSdkPlugin
+        pluginClass: MetaKeepFlutterSdkPlugin
       ios:
-        pluginClass: MetakeepFlutterSdkPlugin
+        pluginClass: MetaKeepFlutterSdkPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

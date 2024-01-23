@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.demo_app"
+        applicationId "com.example.demoapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 26
@@ -53,7 +53,7 @@ android {
         //---> Configure MetaKeep Domain and Scheme
         // metakeepDomain: Replace <app_id> with your app's id which you can find in the developer console
         // metakeepScheme: Replace com.domain.app with your app's package name
-        manifestPlaceholders = [metakeepDomain: "<app_id>.auth.metakeep.xyz", metakeepScheme: "com.domain.app"]
+        manifestPlaceholders += [metakeepDomain: "<app_id>.auth.metakeep.xyz", metakeepScheme: "com.example.demoapp"]
         //<---
     }
 
