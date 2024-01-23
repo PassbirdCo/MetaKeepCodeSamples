@@ -32,7 +32,7 @@ class Metakeep {
   }
 
   /// Signs a transaction using the Metakeep SDK.
-  Future<dynamic> signTransaction(String transaction, String reason) async {
+  Future<dynamic> signTransaction(dynamic transaction, String reason) async {
     return await MetakeepFlutterSdkPlatform.instance.methodChannel
         .invokeMethod<dynamic>(signTransactionMethod, {
       transactionField: transaction,
@@ -41,7 +41,7 @@ class Metakeep {
   }
 
   /// Signs typed data using the Metakeep SDK.
-  Future<dynamic> signTypedData(String typedData, String reason) async {
+  Future<dynamic> signTypedData(dynamic typedData, String reason) async {
     return await MetakeepFlutterSdkPlatform.instance.methodChannel
         .invokeMethod<dynamic>(signTypedDataMethod, {
       typedDataField: typedData,

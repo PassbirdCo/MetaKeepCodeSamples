@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:metakeep_flutter_sdk/metakeep_flutter_sdk.dart';
 
 void main() {
@@ -12,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MetaKeep Flutter SDK Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'MetaKeep Flutter SDK Demo'),
     );
   }
 }
@@ -119,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 setState(() {
                   if (_appId == null || _appId!.isEmpty) {
-                    showAlertDialog(context, "Error", "App ID cannot be empty");
+                    showAlertDialog("Error", "App ID cannot be empty");
                     return;
                   }
 
@@ -132,46 +135,107 @@ class _MyHomePageState extends State<MyHomePage> {
             // MetaKeep SDK action buttons e.g. sign message, sign transaction.
             // These buttons should be disabled until the MetaKeep SDK is initialized.
             ElevatedButton(
-              onPressed: () {
-                setState(() async {
-                  if (_sdk == null) {
-                    showAlertDialog(
-                        context, "Error", "MetaKeep SDK is not initialized");
-                    return;
-                  }
-
-                  try {
-                    var result = await _sdk!.signMessage('message', 'reason');
-                    // Result should be a parsed JSON map.
-                    showAlertDialog(context, "Result", result.toString());
-                  } catch (e) {
-                    showAlertDialog(context, "Error", e.toString());
-                  }
-                });
-              },
+              onPressed: () async => handleAction(() => _sdk!.getWallet()),
+              child: const Text('Get Wallet'),
+            ),
+            ElevatedButton(
+              onPressed: () async => handleAction(() => _sdk!.signMessage(
+                  "Hello World", "sign sample message from Flutter")),
               child: const Text('Sign Message'),
             ),
+            ElevatedButton(
+              onPressed: () async => handleAction(() => _sdk!.signTransaction({
+                    "type": 2,
+                    "to": "0x97706df14a769e28ec897dac5ba7bcfa5aa9c444",
+                    "value": "0x2710",
+                    "nonce": "0x1",
+                    "data": "0x0123456789",
+                    "chainId": "0x13881",
+                    "gas": "0x17",
+                    "maxFeePerGas": "0x3e8",
+                    "maxPriorityFeePerGas": "0x3e7"
+                  }, "sign sample transaction from Flutter")),
+              child: const Text('Sign Transaction'),
+            ),
+            ElevatedButton(
+              onPressed: () async => handleAction(() => _sdk!.signTypedData({
+                    "types": {
+                      "EIP712Domain": [
+                        {"name": "name", "type": "string"},
+                        {"name": "version", "type": "string"},
+                        {"name": "chainId", "type": "uint256"},
+                        {"name": "verifyingContract", "type": "address"}
+                      ],
+                      "MetaTransaction": [
+                        {"name": "nonce", "type": "uint256"},
+                        {"name": "from", "type": "address"},
+                        {"name": "functionSignature", "type": "bytes"}
+                      ]
+                    },
+                    "primaryType": "MetaTransaction",
+                    "domain": {
+                      "name": "Ether Mail",
+                      "version": "1",
+                      "chainId": 1,
+                      "verifyingContract":
+                          "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC"
+                    },
+                    "message": {
+                      "nonce": 200,
+                      "from": "0x97706Df14A769E28EC897dAc5Ba7bCfa5AA9C444",
+                      "functionSignature": "0xd1a1beb40000"
+                    }
+                  }, "sign sample transaction from Flutter")),
+              child: const Text('Sign Typed Data'),
+            ),
+            ElevatedButton(
+              onPressed: () async => handleAction(() => _sdk!.getConsent(
+                    // Replace this with a valid consent token.
+                    "Sample Invalid Token",
+                  )),
+              child: const Text('Get Consent'),
+            )
           ],
         ),
       ),
     );
   }
 
-  showAlertDialog(BuildContext context, String title, String content) =>
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(title),
-              content: Text(content),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Close'),
-                ),
-              ],
-            );
-          });
+  handleAction(
+    actionFn,
+  ) async {
+    if (_sdk == null) {
+      showAlertDialog("Error", "MetaKeep SDK is not initialized");
+      return false;
+    }
+
+    try {
+      var result = await actionFn();
+      // Result should be a parsed JSON map.
+      showAlertDialog(
+          "Result", const JsonEncoder.withIndent(' ').convert(result));
+    } on PlatformException catch (e) {
+      // Exception details should be error JSON returned by the native platform
+      // with `status` field containing the error status code.
+      showAlertDialog(
+          "Error", const JsonEncoder.withIndent(' ').convert(e.details));
+    }
+  }
+
+  showAlertDialog(String title, String content) => showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      });
 }
