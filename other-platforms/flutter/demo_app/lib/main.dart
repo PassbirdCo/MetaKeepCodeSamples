@@ -56,21 +56,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  // int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  // Store the MetaKeep SDK app ID.
+  String? _appId;
 
-    Metakeep sdk = Metakeep('my-app-id');
-    // sdk.initialize("my-app-id");
-  }
+  // Holds the MetaKeep SDK instance.
+  Metakeep? _sdk;
 
   @override
   Widget build(BuildContext context) {
@@ -109,21 +101,77 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            // Text field for the MetaKeep SDK app ID.
+            TextField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'MetaKeep App ID',
+                hintText: 'Enter MetaKeep App ID',
+              ),
+              onChanged: (text) {
+                setState(() {
+                  _appId = text;
+                });
+              },
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            // Initialize the MetaKeep SDK button.
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  if (_appId == null || _appId!.isEmpty) {
+                    showAlertDialog(context, "Error", "App ID cannot be empty");
+                    return;
+                  }
+
+                  _sdk = Metakeep(_appId!);
+                });
+              },
+              child: const Text('Initialize MetaKeep SDK'),
+            ),
+
+            // MetaKeep SDK action buttons e.g. sign message, sign transaction.
+            // These buttons should be disabled until the MetaKeep SDK is initialized.
+            ElevatedButton(
+              onPressed: () {
+                setState(() async {
+                  if (_sdk == null) {
+                    showAlertDialog(
+                        context, "Error", "MetaKeep SDK is not initialized");
+                    return;
+                  }
+
+                  try {
+                    var result = await _sdk!.signMessage('message', 'reason');
+                    // Result should be a parsed JSON map.
+                    showAlertDialog(context, "Result", result.toString());
+                  } catch (e) {
+                    showAlertDialog(context, "Error", e.toString());
+                  }
+                });
+              },
+              child: const Text('Sign Message'),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  showAlertDialog(BuildContext context, String title, String content) =>
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(title),
+              content: Text(content),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Close'),
+                ),
+              ],
+            );
+          });
 }

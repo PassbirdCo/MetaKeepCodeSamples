@@ -25,15 +25,4 @@ class MetakeepFlutterSdkPlatform extends PlatformInterface {
 
   /// The method channel used to interact with the native platform.
   final methodChannel = const MethodChannel('metakeep_flutter_sdk');
-
-  Future<String?> getPlatformVersion() async {
-    final version =
-        await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
-  }
-
-  /// Initializes the Metakeep SDK.
-  Future<void> initialize(String appId) async {
-    await methodChannel.invokeMethod<void>('initialize', appId);
-  }
 }
