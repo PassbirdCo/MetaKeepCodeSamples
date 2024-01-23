@@ -127,6 +127,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   }
 
                   _sdk = Metakeep(_appId!);
+
+                  // You can provide an existing user here e.g.
+                  // _sdk!.setUser({"email": "user_email@email.com"});
                 });
               },
               child: const Text('Initialize MetaKeep SDK'),
