@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String? _appId;
 
   // Holds the MetaKeep SDK instance.
-  Metakeep? _sdk;
+  MetaKeep? _sdk;
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     return;
                   }
 
-                  _sdk = Metakeep(_appId!);
+                  _sdk = MetaKeep(_appId!);
 
                   // You can provide an existing user here e.g.
                   // _sdk!.setUser({"email": "user_email@email.com"});

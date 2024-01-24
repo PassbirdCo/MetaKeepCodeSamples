@@ -1,8 +1,8 @@
 import 'metakeep_flutter_sdk_platform_interface.dart';
 
-class Metakeep {
+class MetaKeep {
   /// Constructs a MetakeepFlutterSdk.
-  Metakeep(String appId) {
+  MetaKeep(String appId) {
     if (appId.isEmpty) {
       throw ArgumentError.value(appId, 'appId', 'appId cannot be empty');
     }
