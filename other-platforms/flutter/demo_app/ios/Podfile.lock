@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - MetaKeep (2.0.3)
+  - metakeep_flutter_sdk (2.0.3):
+    - Flutter
+    - MetaKeep (~> 2.0.3)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - metakeep_flutter_sdk (from `.symlinks/plugins/metakeep_flutter_sdk/ios`)
+
+SPEC REPOS:
+  trunk:
+    - MetaKeep
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  metakeep_flutter_sdk:
+    :path: ".symlinks/plugins/metakeep_flutter_sdk/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  MetaKeep: baf8a14f282c9d9ff9348f56d70023f10cc65483
+  metakeep_flutter_sdk: ff269794ccd1b46688bebfd335bd0ce5ad6d80c4
+
+PODFILE CHECKSUM: 1959d098c91d8a792531a723c4a9d7e9f6a01e38
+
+COCOAPODS: 1.14.3
