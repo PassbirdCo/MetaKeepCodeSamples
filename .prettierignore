@@ -6,3 +6,7 @@ other-platforms/react-native/DemoApp/ios/DemoApp/Images.xcassets/**/*
 other-platforms/flutter/demo_app/ios/Runner/Assets.xcassets/**/*
 polygon-id/wallet/public/circuits/**/*
 polygon-id/wallet/tsconfig.json
+other-platforms/unity/DemoApp/.vscode/**/*
+other-platforms/unity/DemoApp/Assets/VegetationSpawner/CHANGELOG.md
+other-platforms/unity/DemoApp/Assets/VegetationSpawner/package.json
+other-platforms/unity/DemoApp/ProjectSettings/SceneTemplateSettings.json

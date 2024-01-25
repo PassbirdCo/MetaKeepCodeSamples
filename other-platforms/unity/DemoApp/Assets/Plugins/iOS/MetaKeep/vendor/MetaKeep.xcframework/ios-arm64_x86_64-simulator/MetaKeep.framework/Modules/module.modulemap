@@ -1,0 +1,6 @@
+framework module MetaKeep {
+    umbrella header "MetaKeep.h"
+
+    export *
+    module * { export * }
+}
