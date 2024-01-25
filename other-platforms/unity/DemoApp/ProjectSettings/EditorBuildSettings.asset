@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/VegetationSpawner/_Demo/VegetationSpawnerExample.unity
+    guid: fb6e12cfd5628144393f171a9a6fb54f
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 600b86355152449ababb046fbb5f000b,
       type: 2}
