@@ -75,4 +75,4 @@ crashlytics-build.properties
 # Xcode
 XCode/
 XCode_*
-iOS/
+/iOS
