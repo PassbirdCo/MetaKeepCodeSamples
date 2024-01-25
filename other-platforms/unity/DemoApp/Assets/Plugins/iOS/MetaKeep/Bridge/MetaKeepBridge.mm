@@ -41,6 +41,14 @@
 
 @end
 
+// Converts C style string to NSString
+NSString *CreateNSString(const char *string) {
+  if (string)
+    return [NSString stringWithUTF8String:string];
+  else
+    return [NSString stringWithUTF8String:""];
+}
+
 // When native code plugin is implemented in .mm / .cpp file, then functions
 // should be surrounded with extern "C" block to conform C function naming rules
 // and avoid name mangling.
@@ -56,7 +64,7 @@ const void _setupSDK() {
 }
 
 // Calls MetaKeep SDK signTransaction function.
-const void _signTransaction() {
+const void _signTransaction(const char *email) {
   // By default mono string marshaler creates .Net string for returned UTF-8 C
   // string and calls free for returned value, thus returned strings should be
   // allocated on heap
@@ -64,6 +72,11 @@ const void _signTransaction() {
   MetaKeepMetaKeep *sdk = [[MetaKeepMetaKeep alloc]
       initWithAppId:@"289c1a16-3644-4645-a89c-3c9d40ac96fc"
          appContext:[MetaKeepAppContext alloc]];
+
+  // Set user email
+  MetaKeepUser *user =
+      [[MetaKeepUser alloc] initWithEmail:CreateNSString(email)];
+  [sdk setUser:user];
 
   MetaKeepCallback *callback = [[MetaKeepCallback alloc]
       initWithOnSuccess:^(MetaKeepJsonResponse *success) {
