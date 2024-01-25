@@ -19,20 +19,11 @@ public class KeyboardInputHandler : MonoBehaviour
     {
         // Set email text object to empty string
         emailTextObject.GetComponent<UnityEngine.UI.Text>().text = "";
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // Return if no keyboard input
-        if (Input.anyKey == false)
+        // Register textField endEdit event
+        emailInputField.GetComponent<UnityEngine.UI.InputField>().onEndEdit.AddListener(delegate
         {
-            return;
-        }
-
-        // Check if enter key is pressed
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
+            Debug.Log("End edit event");
             string email = emailInputField.GetComponent<UnityEngine.UI.InputField>().text.ToLower();
 
             Debug.Log("Email entered: " + email);
@@ -56,9 +47,18 @@ public class KeyboardInputHandler : MonoBehaviour
             {
                 Debug.Log("Email invalid");
             }
+        });
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Return if no keyboard input
+        if (Input.anyKey == false)
+        {
+            return;
         }
-
-
 
         // If email is not set, return
         if (emailTextObject.GetComponent<UnityEngine.UI.Text>().text == "")
@@ -75,7 +75,7 @@ public class KeyboardInputHandler : MonoBehaviour
             Debug.Log("S key pressed or screen tapped");
 
 #if !UNITY_EDITOR
-            
+
             Debug.Log("Calling sign transaction");
             MetaKeep.SignTransaction(emailInputField.GetComponent<UnityEngine.UI.InputField>().text);
 #else
