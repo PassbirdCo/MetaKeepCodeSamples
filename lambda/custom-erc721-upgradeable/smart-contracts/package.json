@@ -38,6 +38,6 @@
     "install": "^0.13.0",
     "metakeep-lambda": "^2.0.2",
     "node-fetch": "^3.2.10",
-    "web3": "^1.8.0"
+    "web3": "^4.5.0"
   }
 }
