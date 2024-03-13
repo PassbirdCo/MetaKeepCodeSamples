@@ -1,0 +1,29 @@
+{
+  "name": "metakeep-fio",
+  "version": "1.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf dist/*"
+  },
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "@fioprotocol/fiojs": "^1.0.1",
+    "@fioprotocol/fiosdk": "^1.8.0",
+    "metakeep": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.26",
+    "rimraf": "^5.0.5",
+    "rollup-plugin-terser": "^7.0.2"
+  },
+  "dependencies": {
+    "rollup-plugin-typescript2": "^0.36.0"
+  }
+}
