@@ -3,7 +3,7 @@ import { serializeActionData } from "@fioprotocol/fiojs/dist/chain-serialize";
 import { base64ToBinary } from "@fioprotocol/fiojs/dist/chain-numeric";
 import { Api } from "@fioprotocol/fiojs/dist/chain-api";
 import { Transactions } from "@fioprotocol/fiosdk/lib/transactions/Transactions";
-import { ActionData } from ".";
+import { ActionData } from "./mapHandles";
 
 interface CreateRawTxParams {
   publicKey: string;
