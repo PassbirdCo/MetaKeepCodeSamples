@@ -7,3 +7,6 @@
 
 .DS_Store
 **/.DS_Store
+
+/fio/lib/node_modules
+/fio/lib/dist

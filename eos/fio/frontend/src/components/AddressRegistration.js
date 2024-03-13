@@ -8,6 +8,7 @@ import {
 } from "../utils/fioTransactionUtils";
 import { MetaKeep } from "metakeep";
 const { Fio } = require("@fioprotocol/fiojs");
+import { mapHandle } from "metakeep-fio";
 
 const AddressRegistration = () => {
   const [email, setEmail] = useState("");
