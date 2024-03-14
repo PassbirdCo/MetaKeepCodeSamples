@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./common.css";
 import { message } from "antd";
-const { mapHandle } = require("metakeep-fio");
+const { FIOWallet } = require("fio-wallet");
 
 const MapHandle = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +22,8 @@ const MapHandle = () => {
       return;
     }
 
-    mapHandle({
+    const wallet = new FIOWallet(appId, email);
+    wallet.mapHandle({
       appId: process.env.REACT_APP_APP_ID,
       publicAddress: publicAddress,
       email,
