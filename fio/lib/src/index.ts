@@ -1,1 +1,1 @@
-export { mapHandle } from "./mapHandles";
+export { FioWallet } from "./FIOWallet";

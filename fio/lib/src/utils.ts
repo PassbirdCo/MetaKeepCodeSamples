@@ -3,8 +3,11 @@ import { serializeActionData } from "@fioprotocol/fiojs/dist/chain-serialize";
 import { base64ToBinary } from "@fioprotocol/fiojs/dist/chain-numeric";
 import { Api } from "@fioprotocol/fiojs/dist/chain-api";
 import { Transactions } from "@fioprotocol/fiosdk/lib/transactions/Transactions";
-import { ActionData } from "./mapHandles";
+import { ActionData } from "./FIOWallet";
 
+/**
+ * Represents the parameters required for creating a raw transaction.
+ */
 interface CreateRawTxParams {
   publicKey: string;
   actionData: ActionData;
@@ -12,6 +15,9 @@ interface CreateRawTxParams {
   action: string;
 }
 
+/**
+ * Represents the parameters required for serializing action data.
+ */
 interface CreateSerializeActionDataParams {
   account: string;
   actionName: string;
@@ -19,6 +25,9 @@ interface CreateSerializeActionDataParams {
   chainId: string;
 }
 
+/**
+ * Represents the parameters required for broadcasting a transaction.
+ */
 interface BroadcastTransactionParams {
   rawTx: any;
   chainId: string;
@@ -26,6 +35,9 @@ interface BroadcastTransactionParams {
   signature: string;
 }
 
+/**
+ * Represents data from the blockchain chain.
+ */
 interface ChainData {
   chain_id: string;
   expiration: string;
@@ -33,15 +45,24 @@ interface ChainData {
   ref_block_prefix: number;
 }
 
+/**
+ * Represents an ABI provider.
+ */
 interface AbiProvider {
   getRawAbi: () => Promise<{ accountName: string; abi: Uint8Array }>;
 }
 
+/**
+ * Represents the ABI for the FIO token.
+ */
 interface FioTokenAbi {
   account_name: string;
   abi: string;
 }
 
+/**
+ * Represents the response of pushing a transaction.
+ */
 interface PushTransactionResponse {
   transaction_id: string;
   processed: {
@@ -53,6 +74,14 @@ interface PushTransactionResponse {
   };
 }
 
+/**
+ * Creates a raw transaction.
+ * @param publicKey The public key.
+ * @param actionData The action data.
+ * @param account The account.
+ * @param action The action.
+ * @returns The raw transaction, serialized action data, and chain ID.
+ */
 export const createRawTx = async ({
   publicKey,
   actionData,
@@ -94,6 +123,14 @@ export const createRawTx = async ({
   };
 };
 
+/**
+ * Serializes action data.
+ * @param account The account.
+ * @param actionName The action name.
+ * @param actionData The action data.
+ * @param chainId The chain ID.
+ * @returns The serialized action data.
+ */
 const createSerializeActionData = async ({
   account,
   actionName,
@@ -108,13 +145,18 @@ const createSerializeActionData = async ({
   const contract = await fioApi.getContract(account);
   const serializedActionData = serializeActionData(
     contract,
-    account,
+    account,a
     actionName,
     actionData
   );
   return serializedActionData;
 };
 
+/**
+ * Gets the ABI provider and FIO token ABI.
+ * @param account The account.
+ * @returns The FIO token ABI and ABI provider.
+ */
 const getAbiProvider = async (
   account: string
 ): Promise<{ fioTokenAbi: FioTokenAbi; abiProvider: AbiProvider }> => {
@@ -147,6 +189,10 @@ const getAbiProvider = async (
   return { fioTokenAbi, abiProvider };
 };
 
+/**
+ * Gets chain data.
+ * @returns The chain data.
+ */
 const getChainData = async (): Promise<ChainData> => {
   const chainInfo = await fetch(
     "https://fiotestnet.blockpane.com/v1/chain/get_info",
@@ -177,6 +223,14 @@ const getChainData = async (): Promise<ChainData> => {
   return chainData;
 };
 
+/**
+ * Broadcasts a transaction.
+ * @param rawTx The raw transaction.
+ * @param chainId The chain ID.
+ * @param account The account.
+ * @param signature The transaction signature.
+ * @returns The response of pushing the transaction.
+ */
 export const broadcastTx = async ({
   rawTx,
   chainId,
@@ -216,6 +270,11 @@ export const broadcastTx = async ({
   return pushTransactionJson;
 };
 
+/**
+ * Converts an EOS public key to a FIO public key.
+ * @param eosPubKey The EOS public key.
+ * @returns The FIO public key.
+ */
 export const EOSPubKeyToFIOPubKey = (eosPubKey: string): string => {
   return "FIO" + eosPubKey.slice(3);
 };
