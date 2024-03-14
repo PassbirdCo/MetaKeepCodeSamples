@@ -44,10 +44,10 @@ wallet.mapHandle({
   tokenCode: "ETH",
 });
 ```
+
 Make sure to replace 'your_public_address' with the actual public address you want to map, and provide the necessary chain code and token code.
 
 ## mapHandle method
-
 
 ### Parameters
 
