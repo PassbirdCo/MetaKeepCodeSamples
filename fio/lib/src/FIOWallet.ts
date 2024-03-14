@@ -21,27 +21,9 @@ export interface ActionData {
  * Represents the parameters required for mapping a public address to a FIO address.
  */
 interface MapHandleParams {
-  appId: string;
-  email: string;
   publicAddress: string;
   chainCode: string;
   tokenCode: string;
-}
-
-/**
- * Represents the parameters required for signing a transaction.
- */
-interface SignTransactionParams {
-  rawTx: any;
-  chainId: string;
-  fioAddress: string;
-}
-
-/**
- * Represents the response of signing a transaction.
- */
-interface SignResponse {
-  signature: string;
 }
 
 /**
@@ -58,22 +40,16 @@ class FioWallet {
    * @param email The user's email address.
    */
   constructor(private appId: string, private email: string) {
-    this.initialize();
-  }
-
-  /**
-   * Initializes the FioWallet by retrieving necessary data.
-   */
-  private async initialize(): Promise<void> {
+    this.appId = appId;
+    this.email = email;
     this.sdk = new MetaKeep({
       appId: this.appId || "",
       user: { email: this.email },
     });
-    const wallet = await this.sdk.getWallet();
-    this.fioPubKey = EOSPubKeyToFIOPubKey(wallet.wallet.eosAddress);
-    this.fioAddress = this.getFioAddress(this.email);
+    this.fioPubKey = null;
+    this.fioAddress = null;
   }
-  
+
   /**
    * Generates a FIO address from an email.
    * @param email The email address.
@@ -81,25 +57,6 @@ class FioWallet {
    */
   private getFioAddress(email: string): string {
     return email.replace(/[^a-zA-Z0-9]/g, "") + "@fiotestnet";
-  }
-
-  /**
-   * Signs a transaction.
-   * @param rawTx The raw transaction data.
-   * @param chainId The chain ID.
-   * @param fioAddress The FIO address.
-   * @returns The signature response.
-   */
-  private async signTransaction({
-    rawTx,
-    chainId,
-    fioAddress,
-  }: SignTransactionParams): Promise<SignResponse> {
-    const response = await this.sdk.signTransaction(
-      { rawTransaction: rawTx, extraSigningData: { chainId: chainId } },
-      `register FIO Address "${fioAddress}"`
-    );
-    return response;
   }
 
   /**
@@ -114,6 +71,9 @@ class FioWallet {
     tokenCode,
   }: MapHandleParams): Promise<void> {
     try {
+      const wallet = await this.sdk.getWallet();
+      this.fioPubKey = EOSPubKeyToFIOPubKey(wallet.wallet.eosAddress);
+      this.fioAddress = this.getFioAddress(this.email);
       const actionData: ActionData = {
         fio_address: this.fioAddress,
         public_addresses: [
@@ -138,11 +98,10 @@ class FioWallet {
       const rawTxCopy = JSON.parse(JSON.stringify(rawTx));
       rawTx.actions[0].data = serializedActionData;
 
-      const response = await this.signTransaction({
-        rawTx,
-        chainId,
-        fioAddress: this.fioAddress,
-      });
+      const response = await this.sdk.signTransaction(
+        { rawTransaction: rawTx, extraSigningData: { chainId: chainId } },
+        `register FIO Address "${this.fioAddress}"`
+      );
       const signature = response.signature;
       const broadcastResponse = await broadcastTx({
         rawTx: rawTxCopy,

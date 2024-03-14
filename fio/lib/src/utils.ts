@@ -138,14 +138,16 @@ const createSerializeActionData = async ({
   chainId,
 }: CreateSerializeActionDataParams): Promise<string> => {
   const { abiProvider } = await getAbiProvider(account);
+  // @ts-ignore
   const fioApi = new Api({
     chainId: chainId,
     abiProvider: abiProvider,
   });
   const contract = await fioApi.getContract(account);
+  // @ts-ignore
   const serializedActionData = serializeActionData(
     contract,
-    account,a
+    account,
     actionName,
     actionData
   );
