@@ -24,9 +24,7 @@ const MapHandle = () => {
 
     const wallet = new FIOWallet(appId, email);
     wallet.mapHandle({
-      appId: process.env.REACT_APP_APP_ID,
       publicAddress: publicAddress,
-      email,
       chainCode: "ETH",
       tokenCode: "ETH",
     });

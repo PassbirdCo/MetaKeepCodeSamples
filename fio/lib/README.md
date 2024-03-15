@@ -37,9 +37,7 @@ const wallet = new FIOWallet(appId, email);
 ```js
 const publicAddress = "your_public_address";
 wallet.mapHandle({
-  appId: process.env.REACT_APP_APP_ID,
   publicAddress: publicAddress,
-  email: email,
   chainCode: "ETH",
   tokenCode: "ETH",
 });
@@ -51,8 +49,6 @@ Make sure to replace 'your_public_address' with the actual public address you wa
 
 ### Parameters
 
-- `appId`: The application ID.
 - `publicAddress`: The public address to be mapped.
-- `email`: The user's email address.
 - `chainCode`: The chain code associated with the public address.
 - `tokenCode`: The token code associated with the public address.
