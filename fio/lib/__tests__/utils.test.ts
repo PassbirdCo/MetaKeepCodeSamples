@@ -82,7 +82,7 @@ describe("createRawTx", () => {
     const expectedRawTx = "mockRawTx";
     const expectedSerializedActionData = "mockSerializedActionData";
     const expectedChainId = "chainId";
-    
+
     // Run
     const result = await createRawTx({
       publicKey,
@@ -132,7 +132,6 @@ describe("broadcastTx", () => {
     // Run
     const result = await broadcastTx({ rawTx, chainId, account, signature });
 
-
     // Assert
     expect(result.transaction_id).toEqual(expectedTransactionId);
 
@@ -158,7 +157,7 @@ describe("EOSPubKeyToFIOPubKey", () => {
     // Setup
     const eosPubKey = "yourEOSPublicKey";
     const expectedFIOPubKey = "FIOrEOSPublicKey";
-    
+
     // Run
     const result = EOSPubKeyToFIOPubKey(eosPubKey);
 
