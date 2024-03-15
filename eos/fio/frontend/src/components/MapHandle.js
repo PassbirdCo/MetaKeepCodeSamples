@@ -22,7 +22,7 @@ const MapHandle = () => {
       return;
     }
 
-    const wallet = new FIOWallet(appId, email);
+    const wallet = new FIOWallet(process.env.REACT_APP_APP_ID, email);
     wallet.mapHandle({
       publicAddress: publicAddress,
       chainCode: "ETH",
