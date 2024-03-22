@@ -18,7 +18,7 @@ Creates a new app for MetaKeep with the given name, API key, and user wallet att
 
 - `name` (string): The name of the app.
 - `appType` (app type Object): the kind of app that you want to create
-Currently we support two types of App Cryptography and Blockchain, for more details checkout here.
+  Currently we support two types of App Cryptography and Blockchain, for more details checkout here.
 
 ### `updateApp(id, data)`
 
