@@ -1,12 +1,51 @@
 import { generateKeyPairSync, sign } from "crypto";
-import { generateApiSignature } from "./utils";
+import { generateApiSignature } from "./utils.js";
+import { compressPublicKey } from "./utils.js";
+import { createPrivateKey } from "crypto";
 import axios from "axios";
+import * as dotenv from 'dotenv'
+
+dotenv.config()
+
+const findAppById = async (appId) => {
+    const timestamp = Date.now().toString();
+    
+    const apiSignature = await generateApiSignature(
+        "POST",
+        "/v2/app/list",
+        null,
+        timestamp,
+        "",
+        process.env.ACCOUNT_KEY,
+        process.env.ACCOUNT_SECRET
+    );
+
+    const response = await axios.get(`https://${process.env.API_ENDPOINT}/v2/app/list`, {
+        headers: {
+            "Content-Type": "application/json",
+            "X-Timestamp": timestamp,
+            "X-Api-Signature": apiSignature,
+            "X-Account-Key": "account_key_" + process.env.ACCOUNT_KEY,
+        },
+    });
+
+    const apps = response.data.apps;
+    const foundApp = apps.find(app => app.appId === appId);
+    
+    return foundApp;
+}
 
 const updateAppUsingAccountKey = async () => {
-
     const timestamp = Date.now().toString();
     const updatedAppName = "MyApp-Updated";
-    
+
+    // Find the app by ID
+    const app = await findAppById(process.env.APP_ID);
+    if (!app) {
+        throw new Error(`App with ID ${process.env.APP_ID} not found`);
+    }
+    console.log(app)
+
     // generate a new key pair
     const keyPair = generateKeyPairSync("ec", {
         namedCurve: "P-256", // Options
@@ -44,7 +83,7 @@ const updateAppUsingAccountKey = async () => {
     const updateAppData = {
         name: updatedAppName,
         appId: process.env.APP_ID,
-        api_keys_info: {
+        apiKeys: {
             add_api_keys: [newKey],
         }
     }
@@ -59,11 +98,10 @@ const updateAppUsingAccountKey = async () => {
         process.env.ACCOUNT_SECRET
     )
 
-    const response = await axios.post(`${process.env.API_ENDPOINT}/v2/app/update`, updateAppData, {
+    const response = await axios.post(`https://${process.env.API_ENDPOINT}/v2/app/update`, updateAppData, {
         headers: {
             "Content-Type": "application/json",
             "X-Timestamp": timestamp,
-            "Authorization": `Bearer ${process.env.ACCOUNT_KEY}`,
             "X-Api-Signature": apiSignature,
             "X-Account-Key": "account_key_" + process.env.ACCOUNT_KEY,
         },

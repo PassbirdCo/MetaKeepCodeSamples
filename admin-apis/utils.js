@@ -1,5 +1,36 @@
-import { generateKeyPairSync, sign, createPrivateKey, getSigningKey, createHash } from "crypto";
+import { generateKeyPairSync, sign, createPrivateKey, createHash } from "crypto";
+import pkg from 'elliptic';
+const {ec} = pkg;
 
+const getSigningKey = async (key, secret) => {
+  const pubKey = new ec("p256").keyFromPublic(
+    Buffer.from(key, "base64")
+  );
+
+  // Remove padding from x and y
+  const x = Buffer.from(pubKey.getPublic().getX().toBuffer()).toString(
+    "base64"
+  );
+  const y = Buffer.from(pubKey.getPublic().getY().toBuffer()).toString(
+    "base64"
+  );
+
+  const signingKey = {
+    key: createPrivateKey({
+      key: {
+        kty: "EC",
+        // P-256 curve
+        crv: "P-256",
+        x: x,
+        y: y,
+        d: secret,
+      },
+      format: "jwk",
+    }),
+    dsaEncoding: "ieee-p1363",
+  };
+  return signingKey;
+};
 
 export const compressPublicKey = (rawPublicKey) => {
     let ySign = Buffer.alloc(1);
