@@ -4,6 +4,9 @@
   "description": "This repository contains the script",
   "main": "createApp.js",
   "scripts": {
+    "createAppUsingAccountKey": "node createApp.js",
+    "updateAppUsingAccountKey": "node updateApp.js",
+    "format": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,6 +15,7 @@
   "dependencies": {
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
-    "elliptic": "^6.5.5"
+    "elliptic": "^6.5.5",
+    "prettier": "^3.2.5"
   }
 }
