@@ -1,12 +1,12 @@
 import { generateKeyPairSync, sign } from "crypto";
 import { generateApiSignature } from "./utils";
+import axios from "axios";
 
 const updateAppUsingAccountKey = async () => {
 
     const timestamp = Date.now().toString();
     const updatedAppName = "MyApp-Updated";
     
-
     // generate a new key pair
     const keyPair = generateKeyPairSync("ec", {
         namedCurve: "P-256", // Options
@@ -59,8 +59,7 @@ const updateAppUsingAccountKey = async () => {
         process.env.ACCOUNT_SECRET
     )
 
-    const response = await fetch(`${process.env.API_ENDPOINT}/v2/app/update`, {
-        method: "POST",
+    const response = await axios.post(`${process.env.API_ENDPOINT}/v2/app/update`, updateAppData, {
         headers: {
             "Content-Type": "application/json",
             "X-Timestamp": timestamp,
@@ -68,11 +67,9 @@ const updateAppUsingAccountKey = async () => {
             "X-Api-Signature": apiSignature,
             "X-Account-Key": "account_key_" + process.env.ACCOUNT_KEY,
         },
-        body: JSON.stringify(updateAppData),
     });
 
-
-    return response.json();
+    return response.data; // Return response data
 }
 
 updateAppUsingAccountKey().then((response) => {

@@ -1,5 +1,7 @@
+import axios from "axios";
 import { generateApiSignature } from "./utils";
 
+// Function to create a new app using the account key
 const createNewAppUsingAccountKey = async () => {
     const timestamp = Date.now().toString();
     const appName = "MyApp";
@@ -10,6 +12,7 @@ const createNewAppUsingAccountKey = async () => {
         name: appName,
     }
 
+    // Generate API signature using the account key and secret
     const apiSignature = await generateApiSignature(
         "POST",
         "/v2/app/create",
@@ -20,8 +23,8 @@ const createNewAppUsingAccountKey = async () => {
         process.env.ACCOUNT_SECRET
     )
 
-    const response = await fetch(`${process.env.API_ENDPOINT}/v2/app/create`, {
-        method: "POST",
+    // Send a POST request to create a new app using Axios
+    const response = await axios.post(`${process.env.API_ENDPOINT}/v2/app/create`, createAppData, {
         headers: {
             "Content-Type": "application/json",
             "X-Timestamp": timestamp,
@@ -29,13 +32,13 @@ const createNewAppUsingAccountKey = async () => {
             "X-Api-Signature": apiSignature,
             "X-Account-Key": "account_key_" + process.env.ACCOUNT_KEY,
         },
-        body: JSON.stringify(createAppData),
     });
 
-    return response.json();
+    // Return the response data
+    return response.data;
 }
 
-
+// Call the createNewAppUsingAccountKey function and log the response
 createNewAppUsingAccountKey().then((response) => {
     console.log(response);
 });
