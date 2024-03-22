@@ -13,6 +13,7 @@ const createNewAppUsingAccountKey = async () => {
     }
 
     // Generate API signature using the account key and secret
+    
     const apiSignature = await generateApiSignature(
         "POST",
         "/v2/app/create",

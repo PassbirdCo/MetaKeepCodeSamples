@@ -30,7 +30,7 @@ To create an account key and account secret and login to your developer's accoun
 
 Visit the official documentation at https://docs.metakeep.xyz for more details on how to create an account key and account secret.
 
-Once you have obtained the account key and account secret, update the .env file in your project with these credentials. This file is located in the same directory as the account.js, utils.js, createApp.js, and updateApp.js files.
+Once you have obtained the account key and account secret, update the .env file in your project with these credentials. This file is located in the same directory as the utils.js, createApp.js, and updateApp.js files.
 
 After updating the .env file, you can now run the scripts in your project to create a new app or update an existing app for MetaKeep.
 
