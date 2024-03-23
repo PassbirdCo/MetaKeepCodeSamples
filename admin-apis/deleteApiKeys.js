@@ -6,7 +6,7 @@ import fetchAppListByAccountKey from "./fetchAllApps.js";
 dotenv.config();
 
 const deleteAllApiKeys = async (accountKey, accountSecret) => {
-  const { apps } = await fetchAppListByAccountKey();
+  const apps = await fetchAppListByAccountKey();
   const initialApp = apps[0];
   const timestamp = Date.now().toString();
 

@@ -9,7 +9,7 @@ const fetchAppListByAccountKey = async () => {
 
   try {
     const apiSignature = await generateApiSignature(
-      "GET",
+      "POST",
       "/v2/app/list",
       null,
       timestamp,
@@ -25,12 +25,11 @@ const fetchAppListByAccountKey = async () => {
           "Content-Type": "application/json",
           "X-Timestamp": timestamp,
           "X-Api-Signature": apiSignature,
-          "X-Account-Key": "account_key_" + accountKey,
+          "X-Account-Key": "account_key_" + process.env.ACCOUNT_KEY,
         },
       },
     );
-
-    return response.data;
+    return response.data.apps;
   } catch (error) {
     console.error("Error fetching app list:", error);
     throw error;
