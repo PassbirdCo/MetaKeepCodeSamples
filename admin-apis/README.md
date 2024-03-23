@@ -8,21 +8,9 @@ This repository contains the script
 - `utils.js`: Contains utility functions used by the account APIs.
 - `createApp.js`: Allows you to create a new app for MetaKeep.
 - `updateApp.js`: Allows you to update the app by modifying its name, API keys, and user wallet attributes.
+- `addApiKeys.js`: Allows you to add new api keys to your app.
+- `deleteApiKeys.js`: allows you to delete api Keys of your app.
 - `.env`: Configuration file that needs to be updated with the account key and account secret before running any of the scripts.
-
-## Functions
-
-### `createNewAppUsingAccountKey()`
-
-Creates a new app for MetaKeep with the given name, API key, and user wallet attributes.
-
-- `name` (string): The name of the app.
-- `appType` (app type Object): the kind of app that you want to create
-  Currently we support two types of App Cryptography and Blockchain, for more details checkout here.
-
-### `updateApp(id, data)`
-
-Updates the app with the given ID by modifying its name, API keys, and user wallet attributes.
 
 # How to create Account Key and Account Secret
 
@@ -37,3 +25,12 @@ After updating the .env file, you can now run the scripts in your project to cre
 Please note that the .env file should be kept secure and not shared publicly, as it contains sensitive information.
 
 If you have any further questions or need assistance, feel free to ask.
+
+# Commands
+
+To run each script, use the following commands:
+
+- `npm run createAppUsingAccountKey`: Runs the `createApp.js` script to create new App in MetaKeep.
+- `npm run addApiKeysUsingAccountKey`: Runs the `addApiKeys.js` script to add new API keys to your app.
+- `npm run deleteApiKeysUsingAccountKey`: Runs the `deleteApiKeys.js` script to delete API keys of your app.
+- `npm run updateAppUsingAccountKey`: Runs the `updateApp.js` script to update the app by modifying its name, API keys, and user wallet attributes.
