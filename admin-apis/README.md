@@ -31,6 +31,9 @@ If you have any further questions or need assistance, feel free to ask.
 To run each script, use the following commands:
 
 - `npm run createAppUsingAccountKey`: Runs the `createApp.js` script to create new App in MetaKeep.
+
+- Note: Before running the following scripts, copy and paste the app id that you obtained from running the create app script into the APP_ID variable in the .env file.
+
 - `npm run addApiKeysUsingAccountKey`: Runs the `addApiKeys.js` script to add new API keys to your app.
 - `npm run deleteApiKeysUsingAccountKey`: Runs the `deleteApiKeys.js` script to delete API keys of your app.
 - `npm run updateAppUsingAccountKey`: Runs the `updateApp.js` script to update the app by modifying its name, API keys, and user wallet attributes.
