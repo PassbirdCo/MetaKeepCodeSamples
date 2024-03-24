@@ -1,8 +1,10 @@
 import axios from "axios";
-import { generateApiSignature } from "./utils.js";
+import { checkEnvVariables, generateApiSignature } from "./utils.js";
 import * as dotenv from "dotenv";
 
 dotenv.config();
+
+checkEnvVariables();
 
 const fetchAppListByAccountKey = async () => {
   const timestamp = Date.now().toString();
@@ -22,10 +24,10 @@ const fetchAppListByAccountKey = async () => {
       `https://${process.env.API_ENDPOINT}/v2/app/list`,
       {
         headers: {
-          "Content-Type": "application/json",
-          "X-Timestamp": timestamp,
-          "X-Api-Signature": apiSignature,
-          "X-Account-Key": "account_key_" + process.env.ACCOUNT_KEY,
+          "content-type": "application/json",
+          "x-timestamp": timestamp,
+          "x-api-signature": apiSignature,
+          "x-account-key": process.env.ACCOUNT_KEY,
         },
       },
     );

@@ -1,5 +1,5 @@
 import { generateKeyPairSync, sign } from "crypto";
-import { generateApiSignature } from "./utils.js";
+import { checkEnvVariables, generateApiSignature } from "./utils.js";
 import { compressPublicKey } from "./utils.js";
 import { createPrivateKey } from "crypto";
 import axios from "axios";
@@ -8,6 +8,8 @@ import fetchAppListByAccountKey from "./fetchAllApps.js";
 
 dotenv.config();
 
+checkEnvVariables();
+
 const findAppById = async (appId) => {
   const apps = await fetchAppListByAccountKey();
   const foundApp = apps.find((app) => app.appId === appId);
@@ -15,9 +17,8 @@ const findAppById = async (appId) => {
   return foundApp;
 };
 
-const updateAppUsingAccountKey = async () => {
+const updateApp = async () => {
   const timestamp = Date.now().toString();
-  const updatedAppName = "MyApp-Updated";
 
   // Find the app by ID
   const app = await findAppById(process.env.APP_ID);
@@ -61,7 +62,6 @@ const updateAppUsingAccountKey = async () => {
   };
 
   const updateAppData = {
-    name: updatedAppName,
     appId: process.env.APP_ID,
     apiKeys: {
       add_api_keys: [newKey],
@@ -86,7 +86,7 @@ const updateAppUsingAccountKey = async () => {
         "Content-Type": "application/json",
         "X-Timestamp": timestamp,
         "X-Api-Signature": apiSignature,
-        "X-Account-Key": "account_key_" + process.env.ACCOUNT_KEY,
+        "X-Account-Key": process.env.ACCOUNT_KEY,
       },
     },
   );
@@ -94,6 +94,6 @@ const updateAppUsingAccountKey = async () => {
   return response.data; // Return response data
 };
 
-updateAppUsingAccountKey().then((response) => {
+updateApp().then((response) => {
   console.log(response);
 });

@@ -1,11 +1,26 @@
-import {
-  generateKeyPairSync,
-  sign,
-  createPrivateKey,
-  createHash,
-} from "crypto";
+import { sign, createPrivateKey, createHash } from "crypto";
 import pkg from "elliptic";
 const { ec } = pkg;
+
+export const checkEnvVariables = (checkAppId = true) => {
+  const requiredEnvVariables = [
+    "ACCOUNT_KEY",
+    "ACCOUNT_SECRET",
+    "API_ENDPOINT",
+  ];
+  if (checkAppId) {
+    requiredEnvVariables.push("APP_ID");
+  }
+  const missingEnvVariables = requiredEnvVariables.filter(
+    (envVariable) => !process.env[envVariable],
+  );
+
+  if (missingEnvVariables.length > 0) {
+    throw new Error(
+      `Missing environment variables: ${missingEnvVariables.join(", ")}`,
+    );
+  }
+};
 
 const getSigningKey = async (key, secret) => {
   const pubKey = new ec("p256").keyFromPublic(Buffer.from(key, "base64"));
@@ -41,48 +56,14 @@ export const compressPublicKey = (rawPublicKey) => {
   return Buffer.concat([ySign, rawPublicKey.slice(0, 32)]);
 };
 
-export const generateNewKeyAndSignedMessage = () => {
-  const keyPair = generateKeyPairSync("ec", {
-    namedCurve: "P-256", // Options
-    publicKeyEncoding: {
-      type: "spki",
-      format: "jwk",
-    },
-    privateKeyEncoding: {
-      type: "pkcs8",
-      format: "jwk",
-    },
-  });
-
-  const publicKeyJwk = keyPair.publicKey;
-  const privateKeyJwk = keyPair.privateKey;
-
-  const publicKeyCompressed = compressPublicKey(
-    Buffer.concat([
-      Buffer.from(publicKeyJwk.x, "base64"),
-      Buffer.from(publicKeyJwk.y, "base64"),
-    ]),
-  );
-
-  const signedMsg = sign("SHA256", Buffer.from("Hello"), {
-    key: createPrivateKey({ key: privateKeyJwk, format: "jwk" }),
-    dsaEncoding: "ieee-p1363",
-  }).toString("base64");
-
-  return {
-    key: publicKeyCompressed.toString("base64"),
-    signedMsg,
-  };
-};
-
 export const generateApiSignature = async (
   httpMethod,
   apiPath,
   idempotencyKey,
   timestampMillis,
   requestDataString,
-  key = null,
-  secret = null,
+  accountKey = null,
+  accountSecret = null,
 ) => {
   const hostElement = `${process.env.API_ENDPOINT}\n`;
   const methodElement = `${httpMethod}\n`;
@@ -97,6 +78,10 @@ export const generateApiSignature = async (
 
   // If there is no request data, use an empty string
   const dataElement = requestDataString || "";
+  const key = accountKey ? accountKey.replace("account_key_", "") : null;
+  const secret = accountSecret
+    ? accountSecret.replace("account_secret_", "")
+    : null;
   const signingKey = await getSigningKey(key, secret);
   return sign(
     "SHA256",

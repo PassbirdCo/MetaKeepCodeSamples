@@ -1,9 +1,11 @@
-import { generateApiSignature } from "./utils.js";
+import { checkEnvVariables, generateApiSignature } from "./utils.js";
 import axios from "axios";
 import * as dotenv from "dotenv";
 import fetchAppListByAccountKey from "./fetchAllApps.js";
 
 dotenv.config();
+
+checkEnvVariables();
 
 const deleteAllApiKeys = async (accountKey, accountSecret) => {
   const apps = await fetchAppListByAccountKey();
@@ -11,13 +13,13 @@ const deleteAllApiKeys = async (accountKey, accountSecret) => {
   const timestamp = Date.now().toString();
 
   const deleteApiKeys = initialApp.apiKeysInfo.apiKeys.map((apiKey) => {
-    return { api_key: apiKey.apiKey };
+    return { apiKey: apiKey.apiKey };
   });
 
   const requestBody = {
-    app_id: initialApp.appId,
-    api_keys: {
-      delete_api_keys: deleteApiKeys,
+    appId: initialApp.appId,
+    apiKeys: {
+      deleteApiKeys: deleteApiKeys,
     },
   };
 
@@ -39,7 +41,7 @@ const deleteAllApiKeys = async (accountKey, accountSecret) => {
         "Content-Type": "application/json",
         "X-Timestamp": timestamp,
         "X-Api-Signature": apiSignature,
-        "X-Account-Key": "account_key_" + accountKey,
+        "X-Account-Key": accountKey,
       },
     },
   );
