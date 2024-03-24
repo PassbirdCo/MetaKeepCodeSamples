@@ -1,7 +1,7 @@
 {
   "name": "admin-apis",
   "version": "1.0.0",
-  "description": "This repository contains the script",
+  "description": "This repository contains scripts to call MetaKeep Admin APIs",
   "main": "createApp.js",
   "scripts": {
     "createAppUsingAccountKey": "node createApp.js",
