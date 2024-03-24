@@ -62,8 +62,8 @@ export const generateApiSignature = async (
   idempotencyKey,
   timestampMillis,
   requestDataString,
-  accountKey = null,
-  accountSecret = null,
+  accountKey,
+  accountSecret,
 ) => {
   const hostElement = `${process.env.API_ENDPOINT}\n`;
   const methodElement = `${httpMethod}\n`;
