@@ -4,10 +4,10 @@
   "description": "This repository contains scripts to call MetaKeep Admin APIs",
   "main": "createApp.js",
   "scripts": {
-    "createAppUsingAccountKey": "node createApp.js",
-    "addApiKeysUsingAccountKey": "node addApiKeys.js",
-    "deleteApiKeysUsingAccountKey": "node deleteApiKeys.js",
-    "updateAppUsingAccountKey": "node updateApp.js",
+    "createApp": "node createApp.js",
+    "addApiKeys": "node addApiKeys.js",
+    "deleteApiKeys": "node deleteApiKeys.js",
+    "updateApp": "node updateApp.js",
     "format": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
