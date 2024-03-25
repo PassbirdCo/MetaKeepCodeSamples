@@ -1,7 +1,6 @@
 import { sign, createPrivateKey, createHash } from "crypto";
 import axios from "axios";
-import pkg from "elliptic";
-const { ec } = pkg;
+import { ec } from "elliptic";
 
 export const checkEnvVariables = (checkAppId = true) => {
   const requiredEnvVariables = [

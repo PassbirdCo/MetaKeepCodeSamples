@@ -6,7 +6,6 @@ dotenv.config();
 checkEnvVariables();
 
 const fetchAppListByAccountKey = async () => {
-
   try {
     const responseData = await callAdminAPI("/v2/app/list", {});
     return responseData.apps;
