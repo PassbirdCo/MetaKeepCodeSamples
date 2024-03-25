@@ -34,8 +34,7 @@ const updateAppUserWallet = async () => {
 
   if (responseData.error) {
     throw new Error(responseData.error);
-  }
-  else {
+  } else {
     console.log("App updated successfully:", responseData);
   }
 };

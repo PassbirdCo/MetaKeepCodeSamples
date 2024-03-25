@@ -103,7 +103,6 @@ export const generateApiSignature = async (
   ).toString("base64");
 };
 
-
 export const callAdminAPI = async (path, requestBody) => {
   const timestamp = Date.now().toString();
   const apiSignature = await generateApiSignature(
@@ -129,4 +128,4 @@ export const callAdminAPI = async (path, requestBody) => {
     },
   );
   return response.data;
-}
+};
