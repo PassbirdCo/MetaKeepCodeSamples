@@ -39,7 +39,7 @@ const updateApp = async () => {
       namedCurve: "P-256",
     },
     true,
-    ["sign", "verify"],
+    ["sign", "verify"]
   );
 
   const key = await subtle.exportKey("raw", keyPair.publicKey);
@@ -51,8 +51,8 @@ const updateApp = async () => {
         hash: "SHA-256",
       },
       keyPair.privateKey,
-      new TextEncoder().encode("Hello"),
-    ),
+      new TextEncoder().encode("Hello")
+    )
   );
   const newKey = {
     name: `Key-${Date.now()}`,

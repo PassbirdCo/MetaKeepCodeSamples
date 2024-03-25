@@ -12,12 +12,12 @@ export const checkEnvVariables = (checkAppId = true) => {
     requiredEnvVariables.push("APP_ID");
   }
   const missingEnvVariables = requiredEnvVariables.filter(
-    (envVariable) => !process.env[envVariable],
+    (envVariable) => !process.env[envVariable]
   );
 
   if (missingEnvVariables.length > 0) {
     throw new Error(
-      `Missing environment variables: ${missingEnvVariables.join(", ")}`,
+      `Missing environment variables: ${missingEnvVariables.join(", ")}`
     );
   }
 };
@@ -27,10 +27,10 @@ const getSigningKey = async (key, secret) => {
 
   // Remove padding from x and y
   const x = Buffer.from(pubKey.getPublic().getX().toBuffer()).toString(
-    "base64",
+    "base64"
   );
   const y = Buffer.from(pubKey.getPublic().getY().toBuffer()).toString(
-    "base64",
+    "base64"
   );
 
   const signingKey = {
@@ -65,7 +65,7 @@ export const generateApiSignature = async (
   timestampMillis,
   requestDataString,
   accountKey,
-  accountSecret,
+  accountSecret
 ) => {
   const hostElement = `${process.env.API_ENDPOINT}\n`;
   const methodElement = `${httpMethod}\n`;
@@ -95,10 +95,10 @@ export const generateApiSignature = async (
           idempotencyElement +
           timestampElement +
           dataElement,
-        "utf8",
+        "utf8"
       )
       .digest(),
-    signingKey,
+    signingKey
   ).toString("base64");
 };
 
@@ -111,7 +111,7 @@ export const callAdminAPI = async (path, requestBody) => {
     timestamp,
     JSON.stringify(requestBody),
     process.env.ACCOUNT_KEY,
-    process.env.ACCOUNT_SECRET,
+    process.env.ACCOUNT_SECRET
   );
 
   const response = await axios.post(
@@ -124,7 +124,7 @@ export const callAdminAPI = async (path, requestBody) => {
         "X-Api-Signature": apiSignature,
         "X-Account-Key": process.env.ACCOUNT_KEY,
       },
-    },
+    }
   );
   return response.data;
 };
