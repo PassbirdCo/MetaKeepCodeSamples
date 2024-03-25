@@ -1,5 +1,4 @@
-import { checkEnvVariables, generateApiSignature } from "./utils.js";
-import axios from "axios";
+import { checkEnvVariables, callAdminAPI } from "./utils.js";
 import * as dotenv from "dotenv";
 import fetchAppListByAccountKey from "./fetchAllApps.js";
 
@@ -10,7 +9,6 @@ checkEnvVariables();
 const deleteAllApiKeys = async (accountKey, accountSecret) => {
   const apps = await fetchAppListByAccountKey();
   const initialApp = apps[0];
-  const timestamp = Date.now().toString();
 
   const deleteApiKeys = initialApp.apiKeysInfo.apiKeys.map((apiKey) => {
     return { apiKey: apiKey.apiKey };
@@ -23,30 +21,9 @@ const deleteAllApiKeys = async (accountKey, accountSecret) => {
     },
   };
 
-  const apiSignature = await generateApiSignature(
-    "POST",
-    "/v2/app/update",
-    null,
-    timestamp,
-    JSON.stringify(requestBody),
-    accountKey,
-    accountSecret,
-  );
+  const responseData = await callAdminAPI("/v2/app/update", requestBody);
 
-  const response = await axios.post(
-    `https://${process.env.API_ENDPOINT}/v2/app/update`,
-    requestBody,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        "X-Timestamp": timestamp,
-        "X-Api-Signature": apiSignature,
-        "X-Account-Key": accountKey,
-      },
-    },
-  );
-
-  return response.data; // Return response data
+  return responseData; // Return response data
 };
 
 const accountKey = process.env.ACCOUNT_KEY;

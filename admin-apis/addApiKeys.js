@@ -1,14 +1,20 @@
-import { generateKeyPairSync, sign } from "crypto";
-import { checkEnvVariables, generateApiSignature } from "./utils.js";
+import { callAdminAPI, checkEnvVariables } from "./utils.js";
 import { compressPublicKey } from "./utils.js";
-import { createPrivateKey } from "crypto";
-import axios from "axios";
 import * as dotenv from "dotenv";
 import fetchAppListByAccountKey from "./fetchAllApps.js";
+import { subtle } from "crypto";
 
 dotenv.config();
 
 checkEnvVariables();
+
+function bytesArrayToBase64(bytes) {
+  // Convert the byte array to a Buffer
+  const buffer = Buffer.from(bytes);
+  // Encode the Buffer to Base64
+  const base64String = buffer.toString("base64");
+  return base64String;
+}
 
 const findAppById = async (appId) => {
   const apps = await fetchAppListByAccountKey();
@@ -25,73 +31,43 @@ const updateApp = async () => {
   if (!app) {
     throw new Error(`App with ID ${process.env.APP_ID} not found`);
   }
-  console.log(app);
 
   // generate a new key pair
-  const keyPair = generateKeyPairSync("ec", {
-    namedCurve: "P-256", // Options
-    publicKeyEncoding: {
-      type: "spki",
-      format: "jwk",
+  const keyPair = await subtle.generateKey(
+    {
+      name: "ECDSA",
+      namedCurve: "P-256",
     },
-    privateKeyEncoding: {
-      type: "pkcs8",
-      format: "jwk",
-    },
-  });
-
-  const publicKeyJwk = keyPair.publicKey;
-  const privateKeyJwk = keyPair.privateKey;
-
-  const publicKeyCompressed = compressPublicKey(
-    Buffer.concat([
-      Buffer.from(publicKeyJwk.x, "base64"),
-      Buffer.from(publicKeyJwk.y, "base64"),
-    ]),
+    true,
+    ["sign", "verify"],
   );
 
-  const publicKey = publicKeyCompressed.toString("base64");
-
+  const key = await subtle.exportKey("raw", keyPair.publicKey);
+  const compressedB64PublicKey = bytesArrayToBase64(compressPublicKey(key));
+  const signedMessageB64 = bytesArrayToBase64(
+    await subtle.sign(
+      {
+        name: "ECDSA",
+        hash: "SHA-256",
+      },
+      keyPair.privateKey,
+      new TextEncoder().encode("Hello"),
+    ),
+  );
   const newKey = {
     name: `Key-${Date.now()}`,
-    api_key: publicKey,
-    signed_hello_message: sign("SHA256", Buffer.from("Hello"), {
-      key: createPrivateKey({ key: privateKeyJwk, format: "jwk" }),
-      dsaEncoding: "ieee-p1363",
-    }).toString("base64"),
+    api_key: compressedB64PublicKey,
+    signed_hello_message: signedMessageB64,
   };
 
   const updateAppData = {
     appId: process.env.APP_ID,
     apiKeys: {
-      add_api_keys: [newKey],
+      addApiKeys: [newKey],
     },
   };
 
-  const apiSignature = await generateApiSignature(
-    "POST",
-    "/v2/app/update",
-    null,
-    timestamp,
-    JSON.stringify(updateAppData),
-    process.env.ACCOUNT_KEY,
-    process.env.ACCOUNT_SECRET,
-  );
-
-  const response = await axios.post(
-    `https://${process.env.API_ENDPOINT}/v2/app/update`,
-    updateAppData,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        "X-Timestamp": timestamp,
-        "X-Api-Signature": apiSignature,
-        "X-Account-Key": process.env.ACCOUNT_KEY,
-      },
-    },
-  );
-
-  return response.data; // Return response data
+  return await callAdminAPI("/v2/app/update", updateAppData); // Return response data
 };
 
 updateApp().then((response) => {

@@ -1,4 +1,5 @@
 import { sign, createPrivateKey, createHash } from "crypto";
+import axios from "axios";
 import pkg from "elliptic";
 const { ec } = pkg;
 
@@ -51,9 +52,11 @@ const getSigningKey = async (key, secret) => {
 };
 
 export const compressPublicKey = (rawPublicKey) => {
-  let ySign = Buffer.alloc(1);
-  ySign[0] = 0x2 | (rawPublicKey[63] & 0x01); // encode sign of `y` in first bit
-  return Buffer.concat([ySign, rawPublicKey.slice(0, 32)]);
+  const u8full = new Uint8Array(rawPublicKey);
+  const len = u8full.byteLength;
+  const u8 = u8full.slice(0, (1 + len) >>> 1); // drop `y`
+  u8[0] = 0x2 | (u8full[len - 1] & 0x01); // encode sign of `y` in first bit
+  return u8.buffer;
 };
 
 export const generateApiSignature = async (
@@ -99,3 +102,31 @@ export const generateApiSignature = async (
     signingKey,
   ).toString("base64");
 };
+
+
+export const callAdminAPI = async (path, requestBody) => {
+  const timestamp = Date.now().toString();
+  const apiSignature = await generateApiSignature(
+    "POST",
+    path,
+    null,
+    timestamp,
+    JSON.stringify(requestBody),
+    process.env.ACCOUNT_KEY,
+    process.env.ACCOUNT_SECRET,
+  );
+
+  const response = await axios.post(
+    `https://${process.env.API_ENDPOINT}/${path}`,
+    requestBody,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Timestamp": timestamp,
+        "X-Api-Signature": apiSignature,
+        "X-Account-Key": process.env.ACCOUNT_KEY,
+      },
+    },
+  );
+  return response.data;
+}

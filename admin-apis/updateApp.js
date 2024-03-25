@@ -1,5 +1,4 @@
-import { checkEnvVariables, generateApiSignature } from "./utils.js";
-import axios from "axios";
+import { checkEnvVariables, callAdminAPI } from "./utils.js";
 import * as dotenv from "dotenv";
 import fetchAppListByAccountKey from "./fetchAllApps.js";
 
@@ -23,8 +22,6 @@ const updateAppUserWallet = async () => {
   const appList = await fetchAppListByAccountKey();
   const app = appList.find((app) => app.appId === process.env.APP_ID);
 
-  const timestamp = Date.now().toString();
-
   const requestBody = {
     appId: app.appId,
     name: updatedAppName,
@@ -33,30 +30,14 @@ const updateAppUserWallet = async () => {
     },
   };
 
-  const apiSignature = await generateApiSignature(
-    "POST",
-    "/v2/app/update",
-    null,
-    timestamp,
-    JSON.stringify(requestBody),
-    process.env.ACCOUNT_KEY,
-    process.env.ACCOUNT_SECRET,
-  );
+  const responseData = await callAdminAPI("/v2/app/update", requestBody);
 
-  await axios
-    .post(`https://${process.env.API_ENDPOINT}/v2/app/update`, requestBody, {
-      headers: {
-        "X-Account-Key": process.env.ACCOUNT_KEY,
-        "X-Api-Signature": apiSignature,
-        "X-Timestamp": timestamp,
-      },
-    })
-    .then((response) => {
-      console.log("userWallet attributes updated successfully:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error updating userWallet attributes:", error);
-    });
+  if (responseData.error) {
+    throw new Error(responseData.error);
+  }
+  else {
+    console.log("App updated successfully:", responseData);
+  }
 };
 
 updateAppUserWallet();
