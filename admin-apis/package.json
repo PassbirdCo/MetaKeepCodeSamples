@@ -1,0 +1,23 @@
+{
+  "name": "admin-apis",
+  "version": "1.0.0",
+  "description": "This repository contains scripts to call MetaKeep Admin APIs",
+  "main": "createApp.js",
+  "scripts": {
+    "createApp": "node createApp.js",
+    "addApiKey": "node addApiKey.js",
+    "deleteApiKeys": "node deleteApiKeys.js",
+    "updateApp": "node updateApp.js",
+    "format": "prettier --write .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "elliptic": "^6.5.5",
+    "prettier": "^2.8"
+  }
+}
