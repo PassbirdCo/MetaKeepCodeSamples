@@ -6,16 +6,28 @@ dotenv.config();
 
 checkEnvVariables();
 
-const deleteAllApiKeys = async (accountKey, accountSecret) => {
+const findAppById = async (appId) => {
   const apps = await fetchAppListByAccountKey();
-  const initialApp = apps[0];
+  const foundApp = apps.find((app) => app.appId === appId);
 
-  const deleteApiKeys = initialApp.apiKeysInfo.apiKeys.map((apiKey) => {
+  return foundApp;
+};
+
+const deleteAllApiKeys = async () => {
+  const app = await findAppById(process.env.APP_ID);
+
+  if (!app) {
+    throw new Error(`App with ID ${process.env.APP_ID} not found`);
+  }
+
+  // Get list of API keys of the app
+  const deleteApiKeys = app.apiKeysInfo.apiKeys.map((apiKey) => {
     return { apiKey: apiKey.apiKey };
   });
 
+  // Call the admin API to delete the API keys
   const requestBody = {
-    appId: initialApp.appId,
+    appId: app.appId,
     apiKeys: {
       deleteApiKeys: deleteApiKeys,
     },
@@ -23,16 +35,9 @@ const deleteAllApiKeys = async (accountKey, accountSecret) => {
 
   const responseData = await callAdminAPI("/v2/app/update", requestBody);
 
-  return responseData; // Return response data
+  return responseData;
 };
 
-const accountKey = process.env.ACCOUNT_KEY;
-const accountSecret = process.env.ACCOUNT_SECRET;
-
-deleteAllApiKeys(accountKey, accountSecret)
-  .then((response) => {
-    console.log("API Keys deleted successfully:", response);
-  })
-  .catch((error) => {
-    console.error("Error deleting API Keys:", error);
-  });
+deleteAllApiKeys().then((response) => {
+  console.log("API Keys deleted successfully:", response);
+});

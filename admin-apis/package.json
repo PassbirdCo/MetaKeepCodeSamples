@@ -5,7 +5,7 @@
   "main": "createApp.js",
   "scripts": {
     "createApp": "node createApp.js",
-    "addApiKeys": "node addApiKeys.js",
+    "addApiKey": "node addApiKey.js",
     "deleteApiKeys": "node deleteApiKeys.js",
     "updateApp": "node updateApp.js",
     "format": "prettier --write .",

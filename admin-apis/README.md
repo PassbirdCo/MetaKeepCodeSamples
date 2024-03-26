@@ -8,7 +8,7 @@ The project contains the following scripts:
 
 - `createApp.js`: Script to create a new MetaKeep app.
 - `updateApp.js`: Script to update an app by modifying its name, and user wallet attributes.
-- `addApiKeys.js`: Script to add new API keys to your app.
+- `addApiKey.js`: Script to add a new API key to your app.
 - `deleteApiKeys.js`: Script to delete API Keys of your app.
 
 ## Running the scripts

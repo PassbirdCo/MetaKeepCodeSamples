@@ -6,24 +6,21 @@ dotenv.config();
 
 checkEnvVariables();
 
-const updateAppUserWallet = async () => {
+const updateApp = async () => {
   const colorCodes = ["#FFBF00", "#6495ED", "#CCCCFF"];
-  const updatedAppName = `appName - ${Math.floor(Math.random() * 10000)}`;
+  const updatedAppName = `UpdatedAppName - ${Math.floor(Math.random() * 10000)}`;
   const updateUserWalletFields = {
-    displayName: `displayName - ${Math.floor(Math.random() * 10000)}`,
+    displayName: `WalletDisplayName - ${Math.floor(Math.random() * 10000)}`,
     button: {
       backgroundColor:
         colorCodes[Math.floor(Math.random() * colorCodes.length)],
     },
     theme: { style: "DARK" },
-    logoUrl: "https://google.com",
+    logoUrl: "https://metakeep.xyz/images/MetaKeep-1.png",
   };
 
-  const appList = await fetchAppListByAccountKey();
-  const app = appList.find((app) => app.appId === process.env.APP_ID);
-
   const requestBody = {
-    appId: app.appId,
+    appId: process.env.APP_ID,
     name: updatedAppName,
     userWallet: {
       ...updateUserWalletFields,
@@ -39,4 +36,4 @@ const updateAppUserWallet = async () => {
   }
 };
 
-updateAppUserWallet();
+updateApp();
