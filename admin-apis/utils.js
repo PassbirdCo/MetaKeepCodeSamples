@@ -1,14 +1,15 @@
 import { sign, createPrivateKey, createHash } from "crypto";
 import axios from "axios";
-import { ec } from "elliptic";
+import ec_pkg from "elliptic";
+const { ec } = ec_pkg;
 
-export const checkEnvVariables = (checkAppId = true) => {
+export const checkEnvVariables = (appIdRequired = true) => {
   const requiredEnvVariables = [
     "ACCOUNT_KEY",
     "ACCOUNT_SECRET",
     "API_ENDPOINT",
   ];
-  if (checkAppId) {
+  if (appIdRequired) {
     requiredEnvVariables.push("APP_ID");
   }
   const missingEnvVariables = requiredEnvVariables.filter(
@@ -80,11 +81,11 @@ export const generateApiSignature = async (
 
   // If there is no request data, use an empty string
   const dataElement = requestDataString || "";
-  const key = accountKey ? accountKey.replace("account_key_", "") : null;
-  const secret = accountSecret
-    ? accountSecret.replace("account_secret_", "")
-    : null;
+  const key = accountKey.replace("account_key_", "");
+  const secret = accountSecret.replace("account_secret_", "");
+
   const signingKey = await getSigningKey(key, secret);
+
   return sign(
     "SHA256",
     createHash("SHA256")

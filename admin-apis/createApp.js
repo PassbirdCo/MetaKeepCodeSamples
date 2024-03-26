@@ -5,12 +5,12 @@ dotenv.config();
 
 checkEnvVariables(false);
 
-// Function to create a new app using the account key
+// Function to create a new app using the admin API
 const createNewApp = async () => {
-  const appName = "MyApp";
+  const appName = "NewAwesomeApp" + Date.now();
   const createAppData = {
     blockchain: {
-      chainId: "CHAIN_ID_SOLANA_DEVNET",
+      chainId: "CHAIN_ID_SOLANA_TESTNET",
     },
     name: appName,
   };
