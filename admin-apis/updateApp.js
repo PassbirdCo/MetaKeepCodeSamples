@@ -8,7 +8,9 @@ checkEnvVariables();
 
 const updateApp = async () => {
   const colorCodes = ["#FFBF00", "#6495ED", "#CCCCFF"];
-  const updatedAppName = `UpdatedAppName - ${Math.floor(Math.random() * 10000)}`;
+  const updatedAppName = `UpdatedAppName - ${Math.floor(
+    Math.random() * 10000
+  )}`;
   const updateUserWalletFields = {
     displayName: `WalletDisplayName - ${Math.floor(Math.random() * 10000)}`,
     button: {
