@@ -1,0 +1,1 @@
+export { FioWallet } from "./FIOWallet";

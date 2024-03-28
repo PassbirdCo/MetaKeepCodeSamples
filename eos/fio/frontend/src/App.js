@@ -10,6 +10,7 @@ import {
 import { PlusOutlined, SwapOutlined } from "@ant-design/icons";
 import AddressRegistration from "./components/AddressRegistration";
 import TransferFIO from "./components/TransferFIO";
+import MapHandle from "./components/MapHandle";
 
 const menuStyle = {
   background: "black",
@@ -64,6 +65,15 @@ function App() {
                 Transfer FIO Tokens
               </Link>
             </Menu.Item>
+            <Menu.Item key="transfer" icon={<SwapOutlined />}>
+              <Link
+                to="/mapHandle"
+                style={linkStyle}
+                activestyle={activeLinkStyle}
+              >
+                Map handle
+              </Link>
+            </Menu.Item>
           </Menu>
           <Routes>
             <Route path="/" element={<Navigate to="/addressRegistration" />} />
@@ -72,6 +82,7 @@ function App() {
               element={<AddressRegistration />}
             />
             <Route path="/transfer" element={<TransferFIO />} />
+            <Route path="/mapHandle" element={<MapHandle />} />
           </Routes>
         </Router>
       </Layout>
