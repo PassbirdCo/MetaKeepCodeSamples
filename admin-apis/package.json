@@ -7,6 +7,7 @@
     "createApp": "node createApp.js",
     "addApiKey": "node addApiKey.js",
     "deleteApiKeys": "node deleteApiKeys.js",
+    "manageAppPolicy": "node manageAppPolicy.js",
     "updateApp": "node updateApp.js",
     "format": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
