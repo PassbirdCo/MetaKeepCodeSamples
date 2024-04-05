@@ -62,7 +62,8 @@ export class Wallet {
     // Initialize MetaKeep Key Provider
     const metakeepProvider = new MetaKeepKeyProvider(
       process.env.NEXT_PUBLIC_METAKEEP_APP_ID ?? "",
-      email
+      email,
+      process.env.NEXT_PUBLIC_METAKEEP_ENV ?? "prod"
     );
     const kms = new KMS();
     kms.registerKeyProvider(KmsKeyType.BabyJubJub, metakeepProvider);
