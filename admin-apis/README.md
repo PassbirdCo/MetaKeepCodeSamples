@@ -1,6 +1,6 @@
 ## Admin APIs
 
-This repository contains the script to manage MetaKeep apps using MetaKeep admin APIs. The scripts allow you to create a new app, update an existing app, add new API keys to your app, and delete the API keys of your app.
+This repository contains the script to manage MetaKeep apps using MetaKeep admin APIs. The scripts allow you to create a new app, update an existing app, add new API keys to your app, delete the API keys of your app, and manage policies of your app.
 
 ## Files
 
@@ -10,6 +10,7 @@ The project contains the following scripts:
 - `updateApp.js`: Script to update an app by modifying its name, and user wallet attributes.
 - `addApiKey.js`: Script to add a new API key to your app.
 - `deleteApiKeys.js`: Script to delete API Keys of your app.
+- `manageAppPolicy.js`: Script to manage the policies of your app.
 
 ## Running the scripts
 

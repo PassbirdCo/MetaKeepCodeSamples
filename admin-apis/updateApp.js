@@ -1,10 +1,9 @@
 import { checkEnvVariables, callAdminAPI } from "./utils.js";
 import * as dotenv from "dotenv";
-import fetchAppListByAccountKey from "./fetchAllApps.js";
 
 dotenv.config();
 
-checkEnvVariables();
+checkEnvVariables(["APP_ID"]);
 
 const updateApp = async () => {
   const colorCodes = ["#FFBF00", "#6495ED", "#CCCCFF"];

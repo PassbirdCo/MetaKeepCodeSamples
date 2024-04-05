@@ -5,9 +5,10 @@
   "main": "createApp.js",
   "scripts": {
     "createApp": "node createApp.js",
+    "updateApp": "node updateApp.js",
     "addApiKey": "node addApiKey.js",
     "deleteApiKeys": "node deleteApiKeys.js",
-    "updateApp": "node updateApp.js",
+    "manageAppPolicy": "node manageAppPolicy.js",
     "format": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
