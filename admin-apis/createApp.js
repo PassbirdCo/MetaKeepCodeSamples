@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-checkEnvVariables(false);
+checkEnvVariables();
 
 // Function to create a new app using the admin API
 const createNewApp = async () => {

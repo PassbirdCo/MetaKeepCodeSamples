@@ -1,20 +1,16 @@
-import { checkEnvVariables, callAdminAPI } from "./utils.js";
+import {
+  checkEnvVariables,
+  callAdminAPI,
+  fetchAppsByAccountKey,
+} from "./utils.js";
 import * as dotenv from "dotenv";
-import fetchAppListByAccountKey from "./fetchAllApps.js";
 
 dotenv.config();
 
-checkEnvVariables();
-
-const findAppById = async (appId) => {
-  const apps = await fetchAppListByAccountKey();
-  const foundApp = apps.find((app) => app.appId === appId);
-
-  return foundApp;
-};
+checkEnvVariables(["APP_ID"]);
 
 const deleteAllApiKeys = async () => {
-  const app = await findAppById(process.env.APP_ID);
+  const app = (await fetchAppsByAccountKey(process.env.APP_ID))[0];
 
   if (!app) {
     throw new Error(`App with ID ${process.env.APP_ID} not found`);
