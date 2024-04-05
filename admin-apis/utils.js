@@ -133,7 +133,7 @@ export const callAdminAPI = async (path, requestBody) => {
 
 export const fetchAppsByAccountKey = async (appId = null) => {
   const responseData = await callAdminAPI("/v2/app/list", {
-    appIds: [appId],
+    appIds: appId ? [appId] : [],
   });
   return responseData.apps || [];
 };
