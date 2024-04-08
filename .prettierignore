@@ -4,8 +4,8 @@ nfts/mobile/ios/NftDemo/Preview Content/**/*
 .vscode/**/*
 other-platforms/react-native/DemoApp/ios/DemoApp/Images.xcassets/**/*
 other-platforms/flutter/demo_app/ios/Runner/Assets.xcassets/**/*
-polygon-id/wallet/public/circuits/**/*
-polygon-id/wallet/tsconfig.json
+polygon-id/wallet/web/public/circuits/**/*
+polygon-id/wallet/web/tsconfig.json
 other-platforms/unity/DemoApp/.vscode/**/*
 other-platforms/unity/DemoApp/Assets/VegetationSpawner/CHANGELOG.md
 other-platforms/unity/DemoApp/Assets/VegetationSpawner/package.json

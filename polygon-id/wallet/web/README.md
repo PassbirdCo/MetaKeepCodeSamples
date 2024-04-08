@@ -6,16 +6,32 @@ This directory contains a sample Polygon ID wallet application with MetaKeep int
 
 Please follow the steps below to run the demo:
 
-### 1. Update the `.env` file
+### 1. Create MetaKeep Cryptography BabyJubJub App
 
-Update the `APP_ID` in the `.env` file with the `APP_ID` of your MetaKeep Cryptography BabyJubJub app.
+The first step is to create a `MetaKeep Cryptography BabyJubJub` app on the [MetaKeep console](https://console.metakeep.xyz). Once you have created the app, you will get an `APP_ID`. Save this `APP_ID`.
 
-### 2. Install dependencies and run the application
+### 2. Download the project
+
+Afterward, you need to clone this repository and download the dependencies.
+
+```sh
+git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
+```
+
+### 3. Update the `.env` file
+
+Navigate to the `polygon-id/wallet/web` directory and update the `APP_ID` in the `.env` file with the `APP_ID` of your MetaKeep Cryptography BabyJubJub app.
+
+### 4. Install dependencies and run the application
 
 ```sh
 npm install
 npm run dev
 ```
+
+This will open up the wallet application on your system's default browser. You can also open the wallet application by navigating to `http://localhost:3000` in your browser.
+
+You can now use the wallet application to create a new identity, add credentials, and verify them.
 
 ## Using the Application
 
