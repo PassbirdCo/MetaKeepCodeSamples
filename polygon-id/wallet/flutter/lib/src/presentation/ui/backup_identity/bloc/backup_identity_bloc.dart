@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:polygonid_flutter_sdk/common/domain/entities/chain_config_entity.dart';
 import 'package:polygonid_flutter_sdk/common/domain/entities/env_entity.dart';
 import 'package:polygonid_flutter_sdk/sdk/polygon_id_sdk.dart';
 import 'package:polygonid_flutter_sdk_example/src/data/secure_storage.dart';
@@ -33,13 +32,12 @@ class BackupIdentityBloc
       return;
     }
 
-    ChainConfigEntity chainConfigEntity =
-        await _polygonIdSdk.getSelectedChain();
+    EnvEntity env = await _polygonIdSdk.getEnv();
 
     String? genesisDid = await _polygonIdSdk.identity.getDidIdentifier(
       privateKey: privateKey,
-      blockchain: chainConfigEntity.blockchain,
-      network: chainConfigEntity.network,
+      blockchain: env.blockchain,
+      network: env.network,
     );
 
     if (genesisDid.isEmpty) {

@@ -20,6 +20,9 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   /// Simulation of a possible loading time
   Future<void> onStartDownloadSplashEvent(
       StartDownloadSplashEvent event, Emitter<SplashState> emit) async {
+    //https://iden3-circuits-bucket.s3.eu-west-1.amazonaws.com/tmpv3.zip
+    //"https://circuits.polygonid.me/circuits/v1.0.0/polygonid-keys.zip"
+
     Stream<DownloadInfo> stream =
         PolygonIdSdk.I.proof.initCircuitsDownloadAndGetInfoStream(
       circuitsToDownload: [
@@ -31,7 +34,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         CircuitsToDownloadParam(
           circuitsName: "circuitsV3",
           bucketUrl:
-              "https://iden3-circuits-bucket.s3.eu-west-1.amazonaws.com/circuitsv3-beta-1.zip",
+              "https://iden3-circuits-bucket.s3.eu-west-1.amazonaws.com/circuitsv3-beta-0.zip",
         ),
       ],
     );
@@ -54,7 +57,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       );
     } else if (event.downloadInfo is DownloadInfoOnDone) {
       _subscription?.cancel();
-
       emit(SplashState.waitingTimeEnded());
     } else if (event.downloadInfo is DownloadInfoOnError) {
       _subscription?.cancel();

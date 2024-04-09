@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:polygonid_flutter_sdk/common/domain/domain_constants.dart';
 import 'package:polygonid_flutter_sdk/common/domain/domain_logger.dart';
-import 'package:polygonid_flutter_sdk/common/domain/entities/chain_config_entity.dart';
 import 'package:polygonid_flutter_sdk/common/domain/entities/env_entity.dart';
 import 'package:polygonid_flutter_sdk/common/domain/entities/filter_entity.dart';
 import 'package:polygonid_flutter_sdk/credential/domain/entities/claim_entity.dart';
@@ -55,12 +54,12 @@ class ClaimsBloc extends Bloc<ClaimsEvent, ClaimsState> {
       return;
     }
 
-    ChainConfigEntity chainConfig = await _polygonIdSdk.getSelectedChain();
+    EnvEntity env = await _polygonIdSdk.getEnv();
 
     String didIdentifier = await _polygonIdSdk.identity.getDidIdentifier(
         privateKey: privateKey,
-        blockchain: chainConfig.blockchain,
-        network: chainConfig.network);
+        blockchain: env.blockchain,
+        network: env.network);
 
     emit(const ClaimsState.loading());
 
@@ -108,12 +107,12 @@ class ClaimsBloc extends Bloc<ClaimsEvent, ClaimsState> {
       return;
     }
 
-    ChainConfigEntity chainConfig = await _polygonIdSdk.getSelectedChain();
+    EnvEntity env = await _polygonIdSdk.getEnv();
 
     String did = await _polygonIdSdk.identity.getDidIdentifier(
       privateKey: privateKey,
-      blockchain: chainConfig.blockchain,
-      network: chainConfig.network,
+      blockchain: env.blockchain,
+      network: env.network,
     );
 
     if (did.isEmpty) {
@@ -154,13 +153,12 @@ class ClaimsBloc extends Bloc<ClaimsEvent, ClaimsState> {
       return;
     }
 
-    final ChainConfigEntity chainConfig =
-        await _polygonIdSdk.getSelectedChain();
+    EnvEntity env = await _polygonIdSdk.getEnv();
 
     String did = await _polygonIdSdk.identity.getDidIdentifier(
       privateKey: privateKey,
-      blockchain: chainConfig.blockchain,
-      network: chainConfig.network,
+      blockchain: env.blockchain,
+      network: env.network,
     );
 
     if (did.isEmpty) {
@@ -200,12 +198,12 @@ class ClaimsBloc extends Bloc<ClaimsEvent, ClaimsState> {
       return;
     }
 
-    final ChainConfigEntity chain = await _polygonIdSdk.getSelectedChain();
+    EnvEntity env = await _polygonIdSdk.getEnv();
 
     String did = await _polygonIdSdk.identity.getDidIdentifier(
       privateKey: privateKey,
-      blockchain: chain.blockchain,
-      network: chain.network,
+      blockchain: env.blockchain,
+      network: env.network,
     );
 
     if (did.isEmpty) {
@@ -241,12 +239,12 @@ class ClaimsBloc extends Bloc<ClaimsEvent, ClaimsState> {
       return;
     }
 
-    final ChainConfigEntity chain = await _polygonIdSdk.getSelectedChain();
+    EnvEntity env = await _polygonIdSdk.getEnv();
 
     String did = await _polygonIdSdk.identity.getDidIdentifier(
       privateKey: privateKey,
-      blockchain: chain.blockchain,
-      network: chain.network,
+      blockchain: env.blockchain,
+      network: env.network,
     );
 
     if (did.isEmpty) {
@@ -366,12 +364,12 @@ class ClaimsBloc extends Bloc<ClaimsEvent, ClaimsState> {
       return;
     }
 
-    final ChainConfigEntity chain = await _polygonIdSdk.getSelectedChain();
+    EnvEntity env = await _polygonIdSdk.getEnv();
 
     String did = await _polygonIdSdk.identity.getDidIdentifier(
       privateKey: privateKey,
-      blockchain: chain.blockchain,
-      network: chain.network,
+      blockchain: env.blockchain,
+      network: env.network,
     );
 
     if (did.isEmpty) {
