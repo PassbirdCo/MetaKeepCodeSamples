@@ -9,7 +9,7 @@ import {
 } from "../../../helpers/utils.mjs";
 import { getDeveloperSolAddress } from "../../../helpers/utils.mjs";
 
-import Web3, { clusterApiUrl } from "@solana/web3.js";
+import Web3, { clusterApiUrl, ComputeBudgetProgram } from "@solana/web3.js";
 import nacl from "tweetnacl";
 
 const MEMO_PROGRAM_ID = "MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr";
@@ -60,6 +60,23 @@ const logMemoMultipleSignersRequest = async (from, message) => {
   // This needs to be filled in since there are external signers too.
   const connection = new Web3.Connection(clusterApiUrl("devnet"), "confirmed");
   tx.recentBlockhash = (await connection.getRecentBlockhash("max")).blockhash;
+
+  // Set the compute price.
+  // Since there are external signers, the compute price needs to be set to the right value.
+  // MetaKeep Solana Lambda infrastructure will not be able to reprice the transaction in this case.
+  tx.add(
+    // Add compute price for the transaction.
+    ComputeBudgetProgram.setComputeUnitPrice({
+      microLamports: 30000,
+    })
+  );
+
+  // Also, set a compute budget for the transaction to avoid unnecessary fee charges.
+  tx.add(
+    ComputeBudgetProgram.setComputeUnitLimit({
+      units: 60000,
+    })
+  );
 
   tx.add(
     new Web3.TransactionInstruction({
