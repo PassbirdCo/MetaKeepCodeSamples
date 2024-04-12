@@ -27,7 +27,7 @@ class MetaKeepWalletLib extends WalletLibWrapper {
   BjjWallet? _bjjWallet;
 
   MetaKeepWalletLib(String appId, String? email) {
-    logger.i("MetaKeepWalletLib: appId: $appId");
+    logger.i("MetaKeepWalletLib constructor");
 
     if (appId.isEmpty) {
       throw ArgumentError("appId cannot be empty");
@@ -37,7 +37,8 @@ class MetaKeepWalletLib extends WalletLibWrapper {
 
     // Set user if email is provided
     if (email != null && email.isNotEmpty) {
-      _metakeepSdk.setUser({"email": email});
+      _metakeepSdk.setUser({"email": email}).onError((error, stacktrace) =>
+          logger.e("Error setting user: $error", stackTrace: stacktrace));
     }
   }
 
@@ -63,7 +64,7 @@ class MetaKeepWalletLib extends WalletLibWrapper {
     return _getMetaKeepWallet();
   }
 
-  /// Signs message with bjjKey derived from private key
+  /// Signs message with the MetaKeep SDK
   /// @param [String] privateKey - privateKey which is not used here
   /// @param [String] message - message to sign
   /// @returns [String] - Babyjubjub signature packed and encoded as an hex string
@@ -89,7 +90,7 @@ class MetaKeepWalletLib extends WalletLibWrapper {
     // Sign message using MetaKeep SDK
     final signMessageResponse = await _metakeepSdk.signMessage(
         beHex, // Signing reason. This can be customized to your application.
-        "create a verified credential");
+        "create/verify a credential(update this message to your application's needs)");
 
     // Return the signature without the 0x prefix
     return HexUtils.strip0x(signMessageResponse["signature"]);
@@ -130,7 +131,7 @@ class MetaKeepBjjWallet implements BjjWallet {
 
   /// Create a PublicKey from a compressed public key
   ///
-  /// @param {String} publicKeyCompressedHex - compressed public key in hex format (without 0x prefix)
+  /// @param {String} publicKeyCompressedHex - compressed public key in hex format
   ///
   /// @returns {List<String>} - public key as a list of BigInt strings
   static List<String> newFromCompressed(String publicKeyCompressedHex) {
