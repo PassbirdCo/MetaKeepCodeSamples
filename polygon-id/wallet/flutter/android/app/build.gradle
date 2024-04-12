@@ -45,8 +45,8 @@ android {
     defaultConfig {
         multiDexEnabled true
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "io.iden3.polygonid_flutter_sdk.example"
-        minSdkVersion 21
+        applicationId "xyz.metakeep.polygonidfluttersdk.example"
+        minSdkVersion 26
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -55,6 +55,12 @@ android {
             // TODO: armeabi-v7a and x86 not supported yet
             abiFilters 'arm64-v8a', 'x86_64'  /*,'armeabi-v7a', 'x86',*/
         }
+        
+        //---> Configure MetaKeep Domain and Scheme
+        // metakeepDomain: Replace <app_id> with your app's id which you can find in the developer console
+        // metakeepScheme: Replace com.domain.app with your app's package name
+        manifestPlaceholders += [metakeepDomain: "20cf6c1b-5d1b-4847-8ea6-9c520163fcc7.auth.metakeep.xyz", metakeepScheme: "xyz.metakeep.polygonidfluttersdk.example"]
+        //<---
     }
 
     buildTypes {

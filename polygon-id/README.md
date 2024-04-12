@@ -9,6 +9,7 @@ The project is organized as follows:
 
 - [wallet](./wallet): Contains the Polygon ID wallet applications with MetaKeep integration.
   - [wallet/web](./wallet/web): Sample Polygon ID web wallet application with MetaKeep integration. Please refer to the [README](./wallet/web/README.md) for more details on how to run the wallet application.
+  - [wallet/flutter](./wallet/flutter): Sample Polygon ID Flutter wallet application with MetaKeep integration. Please refer to the [README](./wallet/flutter/README.md) for more details on how to run the wallet application.
 
 ## Running the Demo
 
