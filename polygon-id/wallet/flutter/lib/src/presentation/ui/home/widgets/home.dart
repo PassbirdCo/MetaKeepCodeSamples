@@ -154,9 +154,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   ///
   Widget _buildLogo() {
-    return SvgPicture.asset(
-      ImageResources.logo,
-      width: 120,
+    // Build a horizontal component with 2 logs
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SvgPicture.asset(
+          ImageResources.logo,
+          width: 120,
+        ),
+        SizedBox(width: 16),
+        Image.asset(ImageResources.metakeepCryptographyLogo, width: 200)
+      ],
     );
   }
 
