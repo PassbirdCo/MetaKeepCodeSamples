@@ -1,6 +1,6 @@
 // From: https://github.com/0xPolygonID/extension-demo/blob/main/src/constants/common.constants.js
 export const RHS_URL = "https://rhs-staging.polygonid.me";
-export const RPC_URL = "https://rpc.ankr.com/polygon_mumbai";
+export const RPC_URL = "https://rpc.ankr.com/polygon_amoy";
 
 export const defaultEthConnectionConfig = [
   {
