@@ -45,7 +45,7 @@ export default function Home() {
       let identity = await wallet.identityWallet.createIdentity({
         method: core.DidMethod.PolygonId,
         blockchain: core.Blockchain.Polygon,
-        networkId: core.NetworkId.Mumbai,
+        networkId: core.NetworkId.Amoy,
         revocationOpts: {
           type: CredentialStatusType.Iden3ReverseSparseMerkleTreeProof,
           id: RHS_URL,

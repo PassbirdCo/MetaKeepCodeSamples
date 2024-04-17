@@ -39,6 +39,7 @@ Update the `METAKEEP_APP_ID` in the `.env` file with the `APP_ID` of your MetaKe
 Then, run `build_runner` to generate `.g.dart` files with the environment variables:
 
 ```bash
+dart run build_runner clean
 dart run build_runner build --delete-conflicting-outputs
 ```
 
