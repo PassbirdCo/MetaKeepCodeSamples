@@ -13,7 +13,7 @@
   "dependencies": {
     "@solana/spl-account-compression": "^0.1.8",
     "@solana/spl-token": "^0.3.8",
-    "@solana/web3.js": "^1.78.4",
+    "@solana/web3.js": "^1.91.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.1",
