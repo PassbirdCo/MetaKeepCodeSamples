@@ -121,9 +121,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       emit(const AuthState.authenticated());
-    } on OperatorException catch (error) {
+    } on OperatorException catch (error, stacktrace) {
+      logger().e("Error: $error", error, stacktrace);
       emit(AuthState.error(error.errorMessage));
-    } catch (error) {
+    } catch (error, stacktrace) {
+      logger().e("Error: $error", error, stacktrace);
       emit(AuthState.error(error.toString()));
     }
   }
