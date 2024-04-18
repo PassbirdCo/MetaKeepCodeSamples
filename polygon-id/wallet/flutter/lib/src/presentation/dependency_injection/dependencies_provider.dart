@@ -241,8 +241,6 @@ class PatchedIden3commRepositoryImpl extends Iden3commRepositoryImpl {
       return null;
     }
 
-    logger.i('response.data: ${response.data}');
-
     final messageJson = jsonDecode(response.toString());
     if (messageJson is! Map<String, dynamic> || messageJson.isEmpty) {
       return null;
