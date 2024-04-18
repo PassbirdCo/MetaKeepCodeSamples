@@ -4,8 +4,11 @@ import 'package:bloc/bloc.dart';
 import 'dart:math';
 import 'package:polygonid_flutter_sdk/common/domain/domain_constants.dart';
 import 'package:polygonid_flutter_sdk/common/domain/domain_logger.dart';
+import 'package:polygonid_flutter_sdk/common/domain/entities/chain_config_entity.dart';
 import 'package:polygonid_flutter_sdk/common/domain/entities/env_entity.dart';
 import 'package:polygonid_flutter_sdk/iden3comm/domain/entities/common/iden3_message_entity.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/domain/exceptions/iden3comm_exceptions.dart';
+import 'package:polygonid_flutter_sdk/identity/domain/entities/identity_entity.dart';
 import 'package:polygonid_flutter_sdk/sdk/polygon_id_sdk.dart';
 import 'package:polygonid_flutter_sdk_example/src/data/secure_storage.dart';
 import 'package:polygonid_flutter_sdk_example/src/presentation/dependency_injection/dependencies_provider.dart';
@@ -88,18 +91,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }) async {
     emit(const AuthState.loading());
 
-    EnvEntity envEntity = await _polygonIdSdk.getEnv();
+    final ChainConfigEntity currentChain =
+        await _polygonIdSdk.getSelectedChain();
+    final EnvEntity envEntity = await _polygonIdSdk.getEnv();
 
     String? did = await _polygonIdSdk.identity.getDidIdentifier(
-        privateKey: privateKey,
-        blockchain: envEntity.blockchain,
-        network: envEntity.network);
+      privateKey: privateKey,
+      blockchain: currentChain.blockchain,
+      network: currentChain.network,
+    );
+
+    IdentityEntity identityEntity = await _polygonIdSdk.identity.getIdentity(
+      genesisDid: did,
+      privateKey: privateKey,
+    );
 
     try {
       final BigInt nonce = selectedProfile == SelectedProfile.public
           ? GENESIS_PROFILE_NONCE
           : await NonceUtils(getIt()).getPrivateProfileNonce(
               did: did, privateKey: privateKey, from: iden3message.from);
+
+      // Migrate to authenticateV2 when MetaKeep support is added.
       await _polygonIdSdk.iden3comm.authenticate(
         message: iden3message,
         genesisDid: did,
@@ -108,7 +121,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       emit(const AuthState.authenticated());
-    } catch (error) {
+    } on OperatorException catch (error, stacktrace) {
+      logger().e("Error: $error", error, stacktrace);
+      emit(AuthState.error(error.errorMessage));
+    } catch (error, stacktrace) {
+      logger().e("Error: $error", error, stacktrace);
       emit(AuthState.error(error.toString()));
     }
   }

@@ -2,8 +2,25 @@ import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
 import 'package:polygonid_flutter_sdk/common/domain/entities/env_entity.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/data/data_sources/iden3_message_data_source.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/data/data_sources/lib_pidcore_iden3comm_data_source.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/data/data_sources/remote_iden3comm_data_source.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/data/mappers/auth_inputs_mapper.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/data/mappers/auth_proof_mapper.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/data/mappers/auth_response_mapper.dart';
 import 'package:polygonid_flutter_sdk/iden3comm/data/mappers/iden3_message_type_mapper.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/data/mappers/iden3comm_proof_mapper.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/data/mappers/jwz_mapper.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/data/repositories/iden3comm_repository_impl.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/domain/entities/authorization/request/auth_request_iden3_message_entity.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/domain/entities/common/iden3_message_entity.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/domain/exceptions/iden3comm_exceptions.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/domain/repositories/iden3comm_repository.dart';
+import 'package:polygonid_flutter_sdk/iden3comm/domain/use_cases/get_iden3message_use_case.dart';
+import 'package:polygonid_flutter_sdk/identity/data/data_sources/lib_babyjubjub_data_source.dart';
 import 'package:polygonid_flutter_sdk/identity/data/data_sources/wallet_data_source.dart';
+import 'package:polygonid_flutter_sdk/identity/data/mappers/q_mapper.dart';
+import 'package:polygonid_flutter_sdk/proof/data/mappers/gist_mtproof_mapper.dart';
 import 'package:polygonid_flutter_sdk/sdk/credential.dart';
 import 'package:polygonid_flutter_sdk/sdk/di/injector.dart';
 import 'package:polygonid_flutter_sdk/sdk/error_handling.dart';
@@ -48,37 +65,30 @@ Future<void> init() async {
 }
 
 void registerEnv() {
-  Map<String, dynamic> polygonMumbai = jsonDecode(Env.polygonMumbai);
-  Map<String, dynamic> polygonMainnet = jsonDecode(Env.polygonMainnet);
+  Map<String, dynamic> defaultEnv = jsonDecode(Env.defaultEnvironment);
+  String stacktraceEncryptionKey = Env.stacktraceEncryptionKey;
+  String pinataGateway = Env.pinataGateway;
+  String pinataGatewayToken = Env.pinataGatewayToken;
 
-  Map<String, EnvEntity> env = {
-    "mumbai": EnvEntity(
-      blockchain: polygonMumbai['blockchain'],
-      network: polygonMumbai['network'],
-      web3Url: polygonMumbai['web3Url'],
-      web3RdpUrl: polygonMumbai['web3RdpUrl'],
-      web3ApiKey: polygonMumbai['web3ApiKey'],
-      idStateContract: polygonMumbai['idStateContract'],
-      pushUrl: polygonMumbai['pushUrl'],
-      ipfsUrl: polygonMumbai['ipfsUrl'],
-    ),
-    "mainnet": EnvEntity(
-      blockchain: polygonMainnet['blockchain'],
-      network: polygonMainnet['network'],
-      web3Url: polygonMainnet['web3Url'],
-      web3RdpUrl: polygonMainnet['web3RdpUrl'],
-      web3ApiKey: polygonMainnet['web3ApiKey'],
-      idStateContract: polygonMainnet['idStateContract'],
-      pushUrl: polygonMainnet['pushUrl'],
-      ipfsUrl: polygonMainnet['ipfsUrl'],
-    )
-  };
-  getIt.registerSingleton<Map<String, EnvEntity>>(env);
+  EnvEntity envV1 = EnvEntity.fromJson(defaultEnv);
+  if (stacktraceEncryptionKey.isNotEmpty) {
+    envV1 = envV1.copyWith(stacktraceEncryptionKey: stacktraceEncryptionKey);
+  }
+
+  if (pinataGateway.isNotEmpty) {
+    envV1 = envV1.copyWith(pinataGateway: pinataGateway);
+  }
+
+  if (pinataGatewayToken.isNotEmpty) {
+    envV1 = envV1.copyWith(pinataGatewayToken: pinataGatewayToken);
+  }
+
+  getIt.registerSingleton<EnvEntity>(envV1);
 }
 
 ///
 Future<void> registerProviders() async {
-  await PolygonIdSdk.init(env: getIt<Map<String, EnvEntity>>()["mumbai"]);
+  await PolygonIdSdk.init(env: getIt<EnvEntity>());
 
   // Register MetaKeep wallet provider
   // We unregister the default WalletDataSource and register a new one with MetaKeepWalletLib
@@ -90,8 +100,30 @@ Future<void> registerProviders() async {
       // If available, provide the user email here.
       null)));
 
+  // Register the patched Iden3commRepository
+  // The default implementation of the authenticate method in the SDK is broken
+  getItSdk.unregister<Iden3commRepository>();
+  getItSdk.registerFactory<Iden3commRepository>(
+      () => PatchedIden3commRepositoryImpl(
+            getItSdk.get<Iden3MessageDataSource>(),
+            getItSdk.get<RemoteIden3commDataSource>(),
+            getItSdk.get<LibPolygonIdCoreIden3commDataSource>(),
+            getItSdk.get<LibBabyJubJubDataSource>(),
+            getItSdk.get<AuthResponseMapper>(),
+            getItSdk.get<AuthInputsMapper>(),
+            getItSdk.get<AuthProofMapper>(),
+            getItSdk.get<GistMTProofMapper>(),
+            getItSdk.get<QMapper>(),
+            getItSdk.get<JWZMapper>(),
+            getItSdk.get<Iden3commProofMapper>(),
+            getItSdk.get<GetIden3MessageUseCase>(),
+            getItSdk.get<RemoteIden3commDataSource>(),
+            getItSdk.get<GetIden3MessageUseCase>(),
+          ));
+
   await getItSdk.allReady();
 
+  // Reinitialize the PolygonIdSdk fields with the new implementations
   PolygonIdSdk.I.identity = await getItSdk.getAsync<Identity>();
   PolygonIdSdk.I.credential = await getItSdk.getAsync<Credential>();
   PolygonIdSdk.I.proof = await getItSdk.getAsync<Proof>();
@@ -164,4 +196,64 @@ void registerRestoreIdentityDependencies() {
 void registerUtilities() {
   getIt.registerLazySingleton<QrcodeParserUtils>(
       () => QrcodeParserUtils(getIt()));
+}
+
+/// Patched Iden3commRepository implementation
+class PatchedIden3commRepositoryImpl extends Iden3commRepositoryImpl {
+  final RemoteIden3commDataSource _remoteIden3commDataSource;
+  final GetIden3MessageUseCase _getIden3MessageUseCase;
+
+  PatchedIden3commRepositoryImpl(
+      super.iden3messageDataSource,
+      super.remoteIden3commDataSource,
+      super.libPolygonIdCoreIden3commDataSource,
+      super.libBabyJubJubDataSource,
+      super.authResponseMapper,
+      super.authInputsMapper,
+      super.authProofMapper,
+      super.gistProofMapper,
+      super.qMapper,
+      super.jwzMapper,
+      super.iden3commProofMapper,
+      super.getIden3MessageUseCase,
+      this._remoteIden3commDataSource,
+      this._getIden3MessageUseCase);
+
+  /// The default implementation of the authenticate method in the SDK is broken
+  /// with a failing JSON parsing. This patched implementation fixes the issue.
+  @override
+  Future<Iden3MessageEntity?> authenticate({
+    required AuthIden3MessageEntity request,
+    required String authToken,
+  }) async {
+    String? url = request.body.callbackUrl;
+
+    if (url == null || url.isEmpty) {
+      throw NullAuthenticateCallbackException(request);
+    }
+
+    final response = await _remoteIden3commDataSource.authWithToken(
+      token: authToken,
+      url: url,
+    );
+
+    if (response.data.isEmpty) {
+      return null;
+    }
+
+    final messageJson = jsonDecode(response.toString());
+    if (messageJson is! Map<String, dynamic> || messageJson.isEmpty) {
+      return null;
+    }
+
+    try {
+      final nextRequest = await _getIden3MessageUseCase.execute(
+        param: jsonEncode(messageJson),
+      );
+
+      return nextRequest;
+    } catch (e) {
+      return null;
+    }
+  }
 }
