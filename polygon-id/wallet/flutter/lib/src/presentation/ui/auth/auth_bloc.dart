@@ -111,13 +111,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           ? GENESIS_PROFILE_NONCE
           : await NonceUtils(getIt()).getPrivateProfileNonce(
               did: did, privateKey: privateKey, from: iden3message.from);
-      await _polygonIdSdk.iden3comm.authenticateV2(
+
+      // Migrate to authenticateV2 when MetaKeep support is added.
+      await _polygonIdSdk.iden3comm.authenticate(
         message: iden3message,
         genesisDid: did,
         privateKey: privateKey,
         profileNonce: nonce,
-        identityEntity: identityEntity,
-        env: envEntity,
       );
 
       emit(const AuthState.authenticated());
