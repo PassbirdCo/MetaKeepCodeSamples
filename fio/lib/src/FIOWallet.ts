@@ -36,10 +36,18 @@ class FioWallet {
 
   /**
    * Constructs a new instance of FioWallet.
+   * @param fioDomain The FIO domain name.
    * @param appId The application ID.
    * @param email The user's email address.
    */
-  constructor(private appId: string, private email: string) {
+  constructor(
+    private fioDomain: string,
+    private fioBaseUrl: string,
+    private appId: string,
+    private email: string
+  ) {
+    this.fioDomain = fioDomain;
+    this.fioBaseUrl = fioBaseUrl;
     this.appId = appId;
     this.email = email;
     this.sdk = new MetaKeep({
@@ -56,7 +64,7 @@ class FioWallet {
    * @returns The generated FIO address.
    */
   private getFioAddress(email: string): string {
-    return email.replace(/[^a-zA-Z0-9]/g, "") + "@fiotestnet";
+    return `${email.replace(/[^a-zA-Z0-9]/g, "")}@${this.fioDomain}`;
   }
 
   /**
@@ -64,12 +72,13 @@ class FioWallet {
    * @param publicAddress The public address to be mapped.
    * @param chainCode The chain code.
    * @param tokenCode The token code.
+   * @param fioDomain The FIO domain name.
    */
   public async mapHandle({
     publicAddress,
     chainCode,
     tokenCode,
-  }: MapHandleParams): Promise<void> {
+  }: MapHandleParams): Promise<any> {
     try {
       const wallet = await this.sdk.getWallet();
       this.fioPubKey = EOSPubKeyToFIOPubKey(wallet.wallet.eosAddress);
@@ -93,6 +102,7 @@ class FioWallet {
         actionData: actionData,
         account: "fio.address",
         action: "addaddress",
+        fioBaseUrl: this.fioBaseUrl,
       });
 
       const rawTxCopy = JSON.parse(JSON.stringify(rawTx));
@@ -108,14 +118,9 @@ class FioWallet {
         chainId,
         account: "fio.address",
         signature: signature,
+        fioBaseUrl: this.fioBaseUrl,
       });
-
-      if (broadcastResponse.transaction_id) {
-        console.log("Map successful!");
-      } else {
-        console.error("Map failed!");
-      }
-      console.log("Transaction broadcastResponse: ", broadcastResponse);
+      return broadcastResponse;
     } catch (error) {
       console.error(error.status ?? error.message);
     }

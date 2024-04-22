@@ -89,6 +89,7 @@ describe("createRawTx", () => {
       actionData,
       account,
       action,
+      fioBaseUrl: "https://fiotestnet.blockpane.com/v1",
     });
 
     // Assert
@@ -130,12 +131,18 @@ describe("broadcastTx", () => {
     );
 
     // Run
-    const result = await broadcastTx({ rawTx, chainId, account, signature });
+    const result = await broadcastTx({
+      rawTx,
+      chainId,
+      account,
+      signature,
+      fioBaseUrl: "https://fiotestnet.blockpane.com/v1",
+    });
 
     // Assert
     expect(result.transaction_id).toEqual(expectedTransactionId);
 
-    expect(fetchMock.calls().length).toEqual(2);
+    expect(fetchMock.calls().length).toEqual(1);
     expect(fetchMock.lastCall()[0]).toEqual(
       "https://fiotestnet.blockpane.com/v1/chain/push_transaction"
     );

@@ -41,7 +41,7 @@ const AddressRegistration = () => {
 
       // We will try to register the email as a FIO address.
       // Replace all non-alphanumeric characters with empty string.
-      const fioAddress = email.replace(/[^a-zA-Z0-9]/g, "") + "@fiotestnet";
+      const fioAddress = email.replace(/[^a-zA-Z0-9]/g, "") + "@regtest";
 
       const actionData = {
         fio_address: fioAddress,

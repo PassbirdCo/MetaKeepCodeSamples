@@ -29,13 +29,17 @@ jest.mock("@fioprotocol/fiojs", () => ({
   },
 }));
 
-const logSpy = jest.spyOn(console, "log");
 const errorLogSpy = jest.spyOn(console, "error");
 
 describe("FioWallet", () => {
   describe("mapHandle", () => {
     it("should map a public address to a FIO address", async () => {
-      const wallet = new FioWallet("mockAppId", "mockEmail");
+      const wallet = new FioWallet(
+        "regtest",
+        "https://fiotestnet.blockpane.com/v1",
+        "mockAppId",
+        "mockEmail"
+      );
       await wallet.mapHandle({
         publicAddress: "mockPublicAddress",
         chainCode: "mockChainCode",
@@ -44,12 +48,12 @@ describe("FioWallet", () => {
 
       expect(wallet["sdk"]).toBeDefined();
       expect(wallet["fioPubKey"]).toBe("FIO12345");
-      expect(wallet["fioAddress"]).toBe("mockEmail@fiotestnet");
+      expect(wallet["fioAddress"]).toBe("mockEmail@regtest");
 
       expect(require("../src/utils").createRawTx).toHaveBeenCalledWith({
         publicKey: "FIO12345",
         actionData: {
-          fio_address: "mockEmail@fiotestnet",
+          fio_address: "mockEmail@regtest",
           public_addresses: [
             {
               chain_code: "mockChainCode",
@@ -63,6 +67,7 @@ describe("FioWallet", () => {
         },
         account: "fio.address",
         action: "addaddress",
+        fioBaseUrl: "https://fiotestnet.blockpane.com/v1",
       });
 
       expect(wallet["sdk"]["signTransaction"]).toHaveBeenCalledWith(
@@ -70,7 +75,7 @@ describe("FioWallet", () => {
           rawTransaction: { actions: [{ data: "mockSerializedData" }] },
           extraSigningData: { chainId: "mockChainId" },
         },
-        `register FIO Address "mockEmail@fiotestnet"`
+        `register FIO Address "mockEmail@regtest"`
       );
 
       expect(require("../src/utils").broadcastTx).toHaveBeenCalledWith({
@@ -78,15 +83,8 @@ describe("FioWallet", () => {
         chainId: "mockChainId",
         account: "fio.address",
         signature: "mockSignature",
+        fioBaseUrl: "https://fiotestnet.blockpane.com/v1",
       });
-
-      expect(logSpy).toHaveBeenCalledWith("Map successful!");
-      expect(logSpy).toHaveBeenCalledWith(
-        "Transaction broadcastResponse: ",
-        expect.objectContaining({ transaction_id: "mockTransactionId" })
-      );
-
-      logSpy.mockRestore();
     });
 
     it("should handle errors gracefully", async () => {
@@ -94,7 +92,12 @@ describe("FioWallet", () => {
         new Error("Test error")
       );
 
-      const wallet = new FioWallet("mockAppId", "mockEmail");
+      const wallet = new FioWallet(
+        "regtest",
+        "https://fiotestnet.blockpane.com/v1",
+        "mockAppId",
+        "mockEmail"
+      );
       await wallet.mapHandle({
         publicAddress: "mockPublicAddress",
         chainCode: "mockChainCode",
