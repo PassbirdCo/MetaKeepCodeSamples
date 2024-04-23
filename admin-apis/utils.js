@@ -3,15 +3,15 @@ import axios from "axios";
 import ec_pkg from "elliptic";
 const { ec } = ec_pkg;
 
-export const checkEnvVariables = (appIdRequired = true) => {
+export const checkEnvVariables = (otherRequiredEnvVariables = []) => {
   const requiredEnvVariables = [
     "ACCOUNT_KEY",
     "ACCOUNT_SECRET",
     "API_ENDPOINT",
   ];
-  if (appIdRequired) {
-    requiredEnvVariables.push("APP_ID");
-  }
+
+  requiredEnvVariables.push(...otherRequiredEnvVariables);
+
   const missingEnvVariables = requiredEnvVariables.filter(
     (envVariable) => !process.env[envVariable]
   );
@@ -127,5 +127,13 @@ export const callAdminAPI = async (path, requestBody) => {
       },
     }
   );
+
   return response.data;
+};
+
+export const fetchAppsByAccountKey = async (appId = null) => {
+  const responseData = await callAdminAPI("/v2/app/list", {
+    appIds: appId ? [appId] : [],
+  });
+  return responseData.apps || [];
 };

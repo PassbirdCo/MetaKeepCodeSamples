@@ -1,12 +1,15 @@
-import { callAdminAPI, checkEnvVariables } from "./utils.js";
+import {
+  callAdminAPI,
+  checkEnvVariables,
+  fetchAppsByAccountKey,
+} from "./utils.js";
 import { compressPublicKey } from "./utils.js";
 import * as dotenv from "dotenv";
-import fetchAppListByAccountKey from "./fetchAllApps.js";
 import { subtle } from "crypto";
 
 dotenv.config();
 
-checkEnvVariables();
+checkEnvVariables(["APP_ID"]);
 
 function bytesArrayToBase64(bytes) {
   // Convert the byte array to a Buffer
@@ -16,16 +19,9 @@ function bytesArrayToBase64(bytes) {
   return base64String;
 }
 
-const findAppById = async (appId) => {
-  const apps = await fetchAppListByAccountKey();
-  const foundApp = apps.find((app) => app.appId === appId);
-
-  return foundApp;
-};
-
 const addApiKey = async () => {
   // Find the app by ID
-  const app = await findAppById(process.env.APP_ID);
+  const app = (await fetchAppsByAccountKey(process.env.APP_ID))[0];
   if (!app) {
     throw new Error(`App with ID ${process.env.APP_ID} not found`);
   }

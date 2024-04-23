@@ -6,6 +6,7 @@ import {
 } from "../../../helpers/utils.mjs";
 import Web3 from "@solana/web3.js";
 import { getDeveloperSolAddress } from "../../../helpers/utils.mjs";
+import { ComputeBudgetProgram } from "@solana/web3.js";
 
 async function main() {
   env.config();
@@ -22,6 +23,7 @@ async function main() {
   console.log("Invoking log Memo Program on Solana...\n");
   const developerSolAddress = await getDeveloperSolAddress();
   console.log("Developer Solana Address: " + developerSolAddress);
+
   const result = await invokeSolana(
     await logMemoSerializedMessage(
       "hello world from MetaKeep",
@@ -50,6 +52,24 @@ const logMemoSerializedMessage = async (message, from) => {
   // Set any blockhash.
   // It will be overridden by MetaKeep lambda infrastructure to the most recent blockhash.
   tx.recentBlockhash = "3Epnu1Sb1bDqHwieG1o4Dj4XeFAUjHKD3reYPUFVoRaJ";
+
+  // Set the compute price.
+  // You can set this to any value. MetaKeep Solana Lambda infrastructure will reprice the transaction
+  // if needed based on the current Solana network conditions.
+  tx.add(
+    // Add compute price for the transaction.
+    ComputeBudgetProgram.setComputeUnitPrice({
+      microLamports: 30000,
+    })
+  );
+
+  // Also, set a compute budget for the transaction to avoid unnecessary fee charges.
+  tx.add(
+    ComputeBudgetProgram.setComputeUnitLimit({
+      units: 30000,
+    })
+  );
+
   tx.add(
     new Web3.TransactionInstruction({
       keys: [
@@ -65,6 +85,7 @@ const logMemoSerializedMessage = async (message, from) => {
       ),
     })
   );
+
   return "0x" + tx.serializeMessage().toString("hex");
 };
 
