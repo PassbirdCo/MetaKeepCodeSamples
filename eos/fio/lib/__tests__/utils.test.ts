@@ -29,6 +29,7 @@ jest.mock("@fioprotocol/fiosdk/lib/transactions/Transactions", () => ({
     }),
   })),
 }));
+
 Transactions.abiMap = new Map();
 
 jest.mock("@fioprotocol/fiojs/dist/chain-serialize", () => ({
@@ -93,6 +94,7 @@ describe("createRawTx", () => {
     expect(result.rawTx).toEqual(expectedRawTx);
     expect(result.serializedActionData).toEqual(expectedSerializedActionData);
     expect(result.chainId).toEqual(expectedChainId);
+    jest.clearAllMocks();
   });
 });
 

@@ -1,4 +1,4 @@
-import axios from "axios-typescript";
+import axios from "axios";
 import { Fio } from "@fioprotocol/fiojs";
 import { serializeActionData } from "@fioprotocol/fiojs/dist/chain-serialize";
 import { base64ToBinary } from "@fioprotocol/fiojs/dist/chain-numeric";
@@ -217,7 +217,7 @@ const getChainData = async (fioBaseUrl: string): Promise<ChainData> => {
   try {
     // Fetch chain info
     const chainInfoResponse = await axios.post(`${fioBaseUrl}/chain/get_info`);
-    const chainInfo = JSON.parse(chainInfoResponse.data);
+    const chainInfo = chainInfoResponse.data;
     // Fetch block data using the last irreversible block number
     const blockDataResponse = await axios.post(
       `${fioBaseUrl}/chain/get_block`,
@@ -225,7 +225,7 @@ const getChainData = async (fioBaseUrl: string): Promise<ChainData> => {
         block_num_or_id: chainInfo.last_irreversible_block_num,
       }
     );
-    const blockData = JSON.parse(blockDataResponse.data);
+    const blockData = blockDataResponse.data;
 
     const chainData: ChainData = {
       chain_id: chainInfo.chain_id,
@@ -286,9 +286,8 @@ export const broadcastTx = async ({
       pushTransactionArgs
     );
 
-    const pushTransactionJson: PushTransactionResponse = JSON.parse(
-      pushTransactionResponse.data
-    );
+    const pushTransactionJson: PushTransactionResponse =
+      pushTransactionResponse.data;
 
     return pushTransactionJson;
   } catch (error) {
