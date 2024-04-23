@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./common.css";
 import { message, Spin } from "antd";
-import { FioWallet } from "fio-wallet";
-
+import { FIOWallet } from "../dist/src";
+import axios from "axios"
 const MapHandle = () => {
   const [email, setEmail] = useState("");
   const [publicAddress, setPublicAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+   
   const handleMapHandle = async () => {
     if (!email) {
       message.error("Please enter your email!");
@@ -20,17 +20,22 @@ const MapHandle = () => {
     }
 
     setIsLoading(true);
-    const wallet = new FioWallet(
-      process.env.REACT_APP_FIO_DOMAIN,
-      process.env.REACT_APP_FIO_BASE_URL,
-      process.env.REACT_APP_APP_ID,
-      email
+    const wallet = new FIOWallet(
+      process.env.REACT_APP_APP_ID ?? "",
+      {
+        email,
+      },
+      "DEVELOPMENT"
     );
-    const broadcastResponse = await wallet.mapHandle({
-      publicAddress: publicAddress,
-      chainCode: "ETH",
-      tokenCode: "ETH",
-    });
+
+    // We will try to register the email as a FIO address.
+    // Replace all non-alphanumeric characters with empty string.
+    const fioHandle = `${email.replace(/[^a-zA-Z0-9]/g, "")}@${
+      process.env.REACT_APP_FIO_DOMAIN
+    }`;
+    const broadcastResponse = await wallet.mapHandle(fioHandle, [
+      { public_address: publicAddress, chain_code: "ETH", token_code: "ETH" },
+    ]);
     console.log("Transaction broadcastResponse: ", broadcastResponse);
 
     if (broadcastResponse?.transaction_id) {
@@ -50,19 +55,19 @@ const MapHandle = () => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter your email"
-        className="email-input"
+        className="input"
       />
       <input
         value={publicAddress}
         onChange={(e) => setPublicAddress(e.target.value)}
-        placeholder="Enter your public address"
-        className="email-input"
+        placeholder="Enter your public ETH address"
+        className="input"
       />
       {isLoading ? (
-        <Spin size="large" className="custom-spinner" />
+        <Spin size="large" className="custom_spinner" />
       ) : (
-        <button onClick={handleMapHandle} className="register-button">
-          Register
+        <button onClick={handleMapHandle} className="action_button">
+          Map
         </button>
       )}
     </div>

@@ -130,7 +130,7 @@ const TransferFIO = () => {
         value={senderEmail}
         onChange={handleSenderEmailChange}
         placeholder="Enter sender's email"
-        className="email-input"
+        className="input"
         disabled={loading}
       />
       <h3> Sender FIO public key: {senderFioPubKey}</h3>
@@ -139,7 +139,7 @@ const TransferFIO = () => {
         value={receiverEmail}
         onChange={handleReceiverEmailChange}
         placeholder="Enter receiver's email"
-        className="email-input"
+        className="input"
         disabled={loading}
       />
       <h3> Receiver FIO public key: {receiverFioPubKey}</h3>
@@ -148,11 +148,11 @@ const TransferFIO = () => {
         value={amount}
         onChange={handleAmountChange}
         placeholder="Enter amount"
-        className="email-input"
+        className="input"
         disabled={loading}
       />
       {loading ? (
-        <Spin size="large" className="custom-spinner" />
+        <Spin size="large" className="custom_spinner" />
       ) : (
         <button onClick={handleTransfer} className="register-button">
           Transfer

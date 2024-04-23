@@ -11,12 +11,8 @@ const { Fio } = require("@fioprotocol/fiojs");
 
 const AddressRegistration = () => {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [fioPubKey, setFioPubKey] = useState("unknown");
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
 
   const handleRegister = async () => {
     if (!email) {
@@ -25,7 +21,7 @@ const AddressRegistration = () => {
     }
 
     // Show the loader
-    setLoading(true);
+    setIsLoading(true);
 
     try {
       // Initialize the MetaKeep SDK
@@ -41,7 +37,9 @@ const AddressRegistration = () => {
 
       // We will try to register the email as a FIO address.
       // Replace all non-alphanumeric characters with empty string.
-      const fioAddress = email.replace(/[^a-zA-Z0-9]/g, "") + "@regtest";
+      const fioAddress = `${email.replace(/[^a-zA-Z0-9]/g, "")}@${
+        process.env.REACT_APP_FIO_DOMAIN
+      }`;
 
       const actionData = {
         fio_address: fioAddress,
@@ -87,7 +85,7 @@ const AddressRegistration = () => {
     } catch (error) {
       message.error(error.status ?? error.message);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -97,16 +95,16 @@ const AddressRegistration = () => {
       <input
         type="email"
         value={email}
-        onChange={handleEmailChange}
+        onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter your email"
-        className="email-input"
+        className="input"
       />
       {<h3>Your FIO Public Key: {fioPubKey}</h3>}
-      {loading ? (
-        <Spin size="large" className="custom-spinner" />
+      {isLoading ? (
+        <Spin size="large" className="custom_spinner" />
       ) : (
-        <button onClick={handleRegister} className="register-button">
-          {"Register"}
+        <button onClick={handleRegister} className="action_button">
+          Register
         </button>
       )}
     </div>

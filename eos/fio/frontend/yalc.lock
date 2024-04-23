@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "fio-wallet": {
+      "signature": "6dd67fd52240fcf7ee2cd5f07f4d9809",
+      "file": true
+    }
+  }
+}
