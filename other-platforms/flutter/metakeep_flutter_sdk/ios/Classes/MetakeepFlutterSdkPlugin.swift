@@ -2,11 +2,11 @@ import Flutter
 import MetaKeep
 import UIKit
 
-public class MetaKeepFlutterSdkPlugin: NSObject, FlutterPlugin {
+public class MetakeepFlutterSdkPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(
       name: "metakeep_flutter_sdk", binaryMessenger: registrar.messenger())
-    let instance = MetaKeepFlutterSdkPlugin()
+    let instance = MetakeepFlutterSdkPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
