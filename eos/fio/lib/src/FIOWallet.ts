@@ -117,7 +117,6 @@ class FIOWallet {
 
       const rawTxCopy = JSON.parse(JSON.stringify(rawTx));
       rawTx.actions[0].data = serializedActionData;
-      console.log({ rawTxCopy });
 
       // Sign the transaction using the Metakeep SDK.
       const response = await this.sdk.signTransaction(

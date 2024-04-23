@@ -1,12 +1,10 @@
-import * as axios from 'axios';
+import axios from "axios-typescript";
 import { Fio } from "@fioprotocol/fiojs";
 import { serializeActionData } from "@fioprotocol/fiojs/dist/chain-serialize";
 import { base64ToBinary } from "@fioprotocol/fiojs/dist/chain-numeric";
 import { Api } from "@fioprotocol/fiojs/dist/chain-api";
 import { Transactions } from "@fioprotocol/fiosdk/lib/transactions/Transactions";
 import { ActionData } from "./FIOWallet";
-import { url } from "inspector";
-console.log(axios);
 /**
  * Represents the parameters required for creating a raw transaction.
  */
@@ -218,21 +216,16 @@ const getABI = async (
 const getChainData = async (fioBaseUrl: string): Promise<ChainData> => {
   try {
     // Fetch chain info
-    const chainInfoResponse = await axios({
-      url: `${fioBaseUrl}/chain/get_info`,
-      method: "post",
-    });
-    const chainInfo = chainInfoResponse.data;
-
+    const chainInfoResponse = await axios.post(`${fioBaseUrl}/chain/get_info`);
+    const chainInfo = JSON.parse(chainInfoResponse.data);
     // Fetch block data using the last irreversible block number
-    const blockDataResponse = await axios({
-      url: `${fioBaseUrl}/chain/get_block`,
-      data: {
+    const blockDataResponse = await axios.post(
+      `${fioBaseUrl}/chain/get_block`,
+      {
         block_num_or_id: chainInfo.last_irreversible_block_num,
-      },
-      method: "post",
-    });
-    const blockData = blockDataResponse.data;
+      }
+    );
+    const blockData = JSON.parse(blockDataResponse.data);
 
     const chainData: ChainData = {
       chain_id: chainInfo.chain_id,
@@ -293,8 +286,9 @@ export const broadcastTx = async ({
       pushTransactionArgs
     );
 
-    const pushTransactionJson: PushTransactionResponse =
-      pushTransactionResponse.data;
+    const pushTransactionJson: PushTransactionResponse = JSON.parse(
+      pushTransactionResponse.data
+    );
 
     return pushTransactionJson;
   } catch (error) {

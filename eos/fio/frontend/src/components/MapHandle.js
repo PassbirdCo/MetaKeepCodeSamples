@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./common.css";
 import { message, Spin } from "antd";
 import { FIOWallet } from "../dist/src";
-import axios from "axios"
+
 const MapHandle = () => {
   const [email, setEmail] = useState("");
   const [publicAddress, setPublicAddress] = useState("");

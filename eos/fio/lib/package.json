@@ -18,6 +18,7 @@
     "@fioprotocol/fiojs": "^1.0.1",
     "@fioprotocol/fiosdk": "^1.8.0",
     "axios": "^1.6.8",
+    "axios-typescript": "^1.0.2",
     "metakeep": "^2.2.1"
   },
   "devDependencies": {
