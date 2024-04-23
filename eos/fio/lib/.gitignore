@@ -1,2 +1,2 @@
-/fio/lib/node_modules
-/fio/lib/dist
+./node_modules
+./dist
