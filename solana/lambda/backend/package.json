@@ -13,11 +13,11 @@
   "dependencies": {
     "@solana/spl-account-compression": "^0.1.8",
     "@solana/spl-token": "^0.3.8",
-    "@solana/web3.js": "^1.78.4",
+    "@solana/web3.js": "^1.91.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.1",
-    "express": "^4.18.1",
+    "express": "^4.19.2",
     "node-fetch": "^3.2.10",
     "prettier": "^2.7.1",
     "tweetnacl": "^1.0.3"

@@ -4,6 +4,7 @@
 /nfts/node_modules
 /solana/scripts/node_modules
 /solana/frontend/node_modules
+/admin-apis/node_modules
 
 .DS_Store
 **/.DS_Store
