@@ -73,7 +73,8 @@ interface FIOAddressAbi {
 
 /**
  * Represents the response of pushing a transaction.
- */ interface PushTransactionResponse {
+ */ 
+export interface PushTransactionResponse {
   transaction_id: string;
   processed: {
     receipt: {

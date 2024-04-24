@@ -1,7 +1,7 @@
 import { MetaKeep } from "metakeep";
 import { Fio } from "@fioprotocol/fiojs";
 
-import { EOSPubKeyToFIOPubKey, createRawTx, broadcastTx } from "./utils";
+import { EOSPubKeyToFIOPubKey, createRawTx, broadcastTx, PushTransactionResponse } from "./utils";
 
 /**
  * Interface representing a public address object.
@@ -84,7 +84,7 @@ class FIOWallet {
   public async mapHandle(
     fioHandle: string,
     publicAddresses: PublicAddress[]
-  ): Promise<any> {
+  ): Promise<PushTransactionResponse> {
     if (publicAddresses.length > 5) {
       throw new Error("Only 5 public addresses are allowed.");
     }
