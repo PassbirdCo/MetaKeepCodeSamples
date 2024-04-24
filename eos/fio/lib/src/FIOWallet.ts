@@ -3,7 +3,6 @@ import { Fio } from "@fioprotocol/fiojs";
 
 import { EOSPubKeyToFIOPubKey, createRawTx, broadcastTx } from "./utils";
 
-
 /**
  * Interface representing a public address object.
  */
@@ -72,8 +71,6 @@ class FIOWallet {
       this.env === "DEVELOPMENT"
         ? "https://fiotestnet.blockpane.com/v1"
         : "https://fio.blockpane.com/v1";
-      
-    
   }
 
   /**
