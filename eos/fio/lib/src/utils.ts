@@ -319,5 +319,6 @@ export const broadcastTx = async ({
  * @returns The FIO public key.
  */
 export const EOSPubKeyToFIOPubKey = (eosPubKey: string): string => {
+  // Remove "EOS" prefix and prepend "FIO" to convert to FIO public key
   return "FIO" + eosPubKey.slice(3);
 };
