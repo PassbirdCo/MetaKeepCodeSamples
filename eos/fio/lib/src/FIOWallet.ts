@@ -117,6 +117,8 @@ class FIOWallet {
         fioBaseUrl: this.fioBaseUrl,
       });
 
+      // Create a copy of the raw transaction to update action data
+      // with serialized action data.
       const rawTxCopy = JSON.parse(JSON.stringify(rawTx));
       rawTx.actions[0].data = serializedActionData;
 

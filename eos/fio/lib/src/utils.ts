@@ -250,7 +250,6 @@ const getChainData = async (fioBaseUrl: string): Promise<ChainData> => {
     };
     return chainData;
   } catch (error) {
-    console.log(error);
     throw new Error(error);
   }
 };
@@ -310,7 +309,6 @@ export const broadcastTx = async ({
 
     return pushTransactionJson;
   } catch (error) {
-    console.log(error);
     throw new Error(error);
   }
 };
