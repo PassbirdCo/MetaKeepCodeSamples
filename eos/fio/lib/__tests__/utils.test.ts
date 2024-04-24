@@ -1,10 +1,6 @@
-import axios from "axios";
 import { Transactions } from "@fioprotocol/fiosdk/lib/transactions/Transactions";
 
 import { createRawTx, broadcastTx, EOSPubKeyToFIOPubKey } from "../src/utils";
-
-jest.mock("axios");
-const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 jest.mock("@fioprotocol/fiojs", () => ({
   Fio: {
@@ -67,9 +63,16 @@ describe("createRawTx", () => {
       ref_block_prefix: 1234567890,
     };
 
-    const mockedPost = mockedAxios.post
-      .mockReturnValueOnce(Promise.resolve({ data: mockChainInfo }))
-      .mockReturnValueOnce(Promise.resolve({ data: mockBlockData }));
+    global.fetch = jest
+      .fn()
+      .mockResolvedValueOnce({
+        json: () => Promise.resolve(mockChainInfo),
+        ok: true,
+      })
+      .mockResolvedValueOnce({
+        json: () => Promise.resolve(mockBlockData),
+        ok: true,
+      });
     const expectedRawTx = "mockRawTx";
     const expectedSerializedActionData = "mockSerializedActionData";
     const expectedChainId = "chainId";
@@ -84,12 +87,13 @@ describe("createRawTx", () => {
     });
 
     // Assert
-    expect(mockedPost).toHaveBeenCalledWith(
-      "https://fiotestnet.blockpane.com/v1/chain/get_info"
+    expect(fetch).toHaveBeenCalledWith(
+      "https://fiotestnet.blockpane.com/v1/chain/get_info",
+      { method: "POST" }
     );
-    expect(mockedPost).toHaveBeenCalledWith(
+    expect(fetch).toHaveBeenCalledWith(
       "https://fiotestnet.blockpane.com/v1/chain/get_block",
-      { block_num_or_id: 1234 }
+      { body: JSON.stringify({ block_num_or_id: 1234 }), method: "POST" }
     );
     expect(result.rawTx).toEqual(expectedRawTx);
     expect(result.serializedActionData).toEqual(expectedSerializedActionData);
@@ -114,9 +118,10 @@ describe("broadcastTx", () => {
       abi: "dGVzdA==",
     };
 
-    const mockedPost = mockedAxios.post.mockReturnValueOnce(
-      Promise.resolve({ data: mockPushTransactionResponse })
-    );
+    global.fetch = jest.fn().mockResolvedValueOnce({
+      json: () => Promise.resolve(mockPushTransactionResponse),
+      ok: true,
+    });
 
     // Run
     const result = await broadcastTx({
@@ -128,14 +133,19 @@ describe("broadcastTx", () => {
     });
 
     // Assert
-    expect(mockedPost).toHaveBeenCalledWith(
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith(
       "https://fiotestnet.blockpane.com/v1/chain/push_transaction",
       {
-        compression: 0,
-        packed_context_free_data:
-          "6d6f636b53657269616c697a6564436f6e746578744672656544617461",
-        packed_trx: "6d6f636b53657269616c697a65645472616e73616374696f6e",
-        signatures: ["mockSignature"],
+        body: JSON.stringify({
+          signatures: [signature],
+          packed_trx: Buffer.from("mockSerializedTransaction").toString("hex"),
+          packed_context_free_data: Buffer.from(
+            "mockSerializedContextFreeData"
+          ).toString("hex"),
+          compression: 0,
+        }),
+        method: "POST",
       }
     );
     expect(result.transaction_id).toEqual(expectedTransactionId);

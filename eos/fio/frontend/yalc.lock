@@ -2,7 +2,8 @@
   "version": "v1",
   "packages": {
     "fio-wallet": {
-      "signature": "6dd67fd52240fcf7ee2cd5f07f4d9809",
+      "version": "1.0.0",
+      "signature": "37487f8eebd6a88c4ac067ab22bd1659",
       "file": true
     }
   }

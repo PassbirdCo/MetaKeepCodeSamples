@@ -1,10 +1,10 @@
-import axios from "axios";
 import { Fio } from "@fioprotocol/fiojs";
 import { serializeActionData } from "@fioprotocol/fiojs/dist/chain-serialize";
 import { base64ToBinary } from "@fioprotocol/fiojs/dist/chain-numeric";
 import { Api } from "@fioprotocol/fiojs/dist/chain-api";
 import { Transactions } from "@fioprotocol/fiosdk/lib/transactions/Transactions";
 import { ActionData } from "./FIOWallet";
+
 /**
  * Represents the parameters required for creating a raw transaction.
  */
@@ -73,8 +73,7 @@ interface FIOAddressAbi {
 
 /**
  * Represents the response of pushing a transaction.
- */
-interface PushTransactionResponse {
+ */ interface PushTransactionResponse {
   transaction_id: string;
   processed: {
     receipt: {
@@ -216,17 +215,29 @@ const getABI = async (
 const getChainData = async (fioBaseUrl: string): Promise<ChainData> => {
   try {
     // Fetch chain info
-    const chainInfoResponse = await axios.post(`${fioBaseUrl}/chain/get_info`);
-    const chainInfo = chainInfoResponse.data;
-    // Fetch block data using the last irreversible block number
-    const blockDataResponse = await axios.post(
-      `${fioBaseUrl}/chain/get_block`,
-      {
-        block_num_or_id: chainInfo.last_irreversible_block_num,
-      }
-    );
-    const blockData = blockDataResponse.data;
+    const chainInfoResponse = await fetch(`${fioBaseUrl}/chain/get_info`, {
+      method: "POST",
+    });
 
+    if (!chainInfoResponse.ok) {
+      throw new Error("Failed to fetch chain info");
+    }
+
+    const chainInfo = await chainInfoResponse.json();
+
+    // Fetch block data using the last irreversible block number
+    const blockDataResponse = await fetch(`${fioBaseUrl}/chain/get_block`, {
+      method: "POST",
+      body: JSON.stringify({
+        block_num_or_id: chainInfo.last_irreversible_block_num,
+      }),
+    });
+
+    if (!blockDataResponse.ok) {
+      throw new Error("Failed to fetch block data");
+    }
+
+    const blockData = await blockDataResponse.json();
     const chainData: ChainData = {
       chain_id: chainInfo.chain_id,
       // 2 minute expiration
@@ -238,6 +249,7 @@ const getChainData = async (fioBaseUrl: string): Promise<ChainData> => {
     };
     return chainData;
   } catch (error) {
+    console.log(error);
     throw new Error(error);
   }
 };
@@ -281,16 +293,23 @@ export const broadcastTx = async ({
 
   try {
     // Push transaction to the network
-    const pushTransactionResponse = await axios.post(
+    const pushTransactionResponse = await fetch(
       `${fioBaseUrl}/chain/push_transaction`,
-      pushTransactionArgs
+      {
+        method: "POST",
+        body: JSON.stringify(pushTransactionArgs),
+      }
     );
 
-    const pushTransactionJson: PushTransactionResponse =
-      pushTransactionResponse.data;
+    if (!pushTransactionResponse.ok) {
+      throw new Error("Failed to push transaction to the network");
+    }
+
+    const pushTransactionJson = await pushTransactionResponse.json();
 
     return pushTransactionJson;
   } catch (error) {
+    console.log(error);
     throw new Error(error);
   }
 };

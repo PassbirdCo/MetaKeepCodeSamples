@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./common.css";
 import { message, Spin } from "antd";
-import { FIOWallet } from "../dist/src";
+import { FIOWallet } from "fio-wallet";
 
 const MapHandle = () => {
   const [email, setEmail] = useState("");
   const [publicAddress, setPublicAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-   
+
   const handleMapHandle = async () => {
     if (!email) {
       message.error("Please enter your email!");
@@ -20,13 +20,9 @@ const MapHandle = () => {
     }
 
     setIsLoading(true);
-    const wallet = new FIOWallet(
-      process.env.REACT_APP_APP_ID ?? "",
-      {
-        email,
-      },
-      "DEVELOPMENT"
-    );
+    const wallet = new FIOWallet(process.env.REACT_APP_APP_ID ?? "", {
+      email,
+    });
 
     // We will try to register the email as a FIO address.
     // Replace all non-alphanumeric characters with empty string.
