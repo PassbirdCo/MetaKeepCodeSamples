@@ -18,29 +18,32 @@ const MapHandle = () => {
       message.error("Please enter your public address!");
       return;
     }
+    try {
+      setIsLoading(true);
+      const wallet = new FIOWallet(process.env.REACT_APP_APP_ID ?? "", {
+        email,
+      });
 
-    setIsLoading(true);
-    const wallet = new FIOWallet(process.env.REACT_APP_APP_ID ?? "", {
-      email,
-    });
+      // We will try to register the email as a FIO address.
+      // Replace all non-alphanumeric characters with empty string.
+      const fioHandle = `${email.replace(/[^a-zA-Z0-9]/g, "")}@${
+        process.env.REACT_APP_FIO_DOMAIN
+      }`;
+      const broadcastResponse = await wallet.mapHandle(fioHandle, [
+        { public_address: publicAddress, chain_code: "ETH", token_code: "ETH" },
+      ]);
+      console.log("Transaction broadcastResponse: ", broadcastResponse);
 
-    // We will try to register the email as a FIO address.
-    // Replace all non-alphanumeric characters with empty string.
-    const fioHandle = `${email.replace(/[^a-zA-Z0-9]/g, "")}@${
-      process.env.REACT_APP_FIO_DOMAIN
-    }`;
-    const broadcastResponse = await wallet.mapHandle(fioHandle, [
-      { public_address: publicAddress, chain_code: "ETH", token_code: "ETH" },
-    ]);
-    console.log("Transaction broadcastResponse: ", broadcastResponse);
-
-    if (broadcastResponse?.transaction_id) {
-      message.success("Map successful!");
-    } else {
-      message.error("Map failed!");
+      if (broadcastResponse?.transaction_id) {
+        message.success("Map successful!");
+      } else {
+        message.error("Map failed!");
+      }
+    } catch {
+      throw new Error("Map failed!");
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
