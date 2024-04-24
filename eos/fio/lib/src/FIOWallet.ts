@@ -1,7 +1,12 @@
 import { MetaKeep } from "metakeep";
 import { Fio } from "@fioprotocol/fiojs";
 
-import { EOSPubKeyToFIOPubKey, createRawTx, broadcastTx, PushTransactionResponse } from "./utils";
+import {
+  EOSPubKeyToFIOPubKey,
+  createRawTx,
+  broadcastTx,
+  PushTransactionResponse,
+} from "./utils";
 
 /**
  * Interface representing a public address object.
