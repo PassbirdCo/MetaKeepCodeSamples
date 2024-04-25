@@ -32,15 +32,13 @@ Now start the frontend server. Navigate to the `eos/fio/frontend` directory and 
 npm install
 ```
 
-To install the FIOWallet library, run 
+To install the FIOWallet library, run
 
 ```sh
 npm i <path_to_lib>
 ```
 
 Replace `<path_to_lib>` with the path where the library exists.
-
-
 
 ### 3. Start the backend
 

@@ -79,10 +79,10 @@ async function buyFIOAddress(requestBody) {
     );
   }
   const resultJson = await result.json();
-  
+
   console.log("FIO buy address response:");
   console.log(resultJson);
- 
+
   console.log("\n");
   return resultJson;
 }
