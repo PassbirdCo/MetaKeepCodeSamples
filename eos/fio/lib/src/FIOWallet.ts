@@ -39,6 +39,19 @@ export interface ActionData {
   actor: string;
 }
 
+// Represents the enum for environments
+enum Environment {
+  DEVELOPMENT = "DEVELOPMENT",
+  PRODUCTION = "PRODUCTION",
+}
+
+// Represents the available options to the FIOWallet constructor
+interface FIOWalletOptions {
+  appId: string;
+  user: { email: string };
+  env?: Environment;
+}
+
 const ADD_ADDRESS_ACTION = "addaddress";
 const FIO_ADDRESS_ACCOUNT = "fio.address";
 /**
@@ -50,30 +63,28 @@ class FIOWallet {
 
   /**
    * Constructs a new instance of FIOWallet.
-   * @param {String} appId The application ID.
-   * @param {Object} user The user object which includes email.
-   * @param {String} env The environment, either "DEVELOPMENT" or "PRODUCTION". Optional, defaults to "PRODUCTION".
+   * @param {Object} options The options object which includes appId, user, and environment.
    */
-  constructor(
-    private appId: string,
-    private user: { email: string },
-    private env: "PRODUCTION" | "DEVELOPMENT" = "PRODUCTION"
-  ) {
-    if (!this.appId || typeof this.appId !== "string") {
+  constructor(private options: FIOWalletOptions) {
+    if (!this.options.appId || typeof this.options.appId !== "string") {
       throw new Error("App ID must be a non-empty string.");
     }
 
-    if (!["PRODUCTION", "DEVELOPMENT"].includes(env)) {
+    if (!this.options.env) {
+      this.options.env = Environment.PRODUCTION;
+    }
+
+    if (!["PRODUCTION", "DEVELOPMENT"].includes(this.options.env)) {
       throw new Error(
         'Environment must be either "PRODUCTION" or "DEVELOPMENT".'
       );
     }
     this.sdk = new MetaKeep({
-      appId: this.appId || "",
-      user: this.user,
+      appId: this.options.appId || "",
+      user: this.options.user,
     });
     this.fioBaseUrl =
-      this.env === "DEVELOPMENT"
+      this.options.env === "DEVELOPMENT"
         ? "https://fiotestnet.blockpane.com/v1"
         : "https://fio.blockpane.com/v1";
   }

@@ -4,7 +4,7 @@ The FIOWallet library provides functionalities for interacting with the FIO bloc
 
 ## Installation
 
-To use the FIOWallet library in your project, you can install it using `yalc` to test it:
+To use the FIOWallet library in your project, you can install it using `npm` to test it:
 
 - First, build the project:
 
@@ -12,17 +12,13 @@ To use the FIOWallet library in your project, you can install it using `yalc` to
 npm run build
 ```
 
-- Publish to local store using yalc:
-
-```bash
-npx yalc publish
-```
-
 - Install the published package in your project:
 
 ```bash
-npx yalc add fio-wallet
+npm install <path_to_lib>
 ```
+
+Replace `<path_to_lib>` with the path where the library folder exists.
 
 ## Usage
 
@@ -39,13 +35,13 @@ import { FIOWallet } from "fio-wallet";
 ```js
 const appId = "your_app_id";
 const user = { email: "your_email@example.com" };
-const wallet = new FIOWallet(appId, user);
+const wallet = new FIOWallet({ appId, user });
 ```
 
 You can optionally pass the environment param. It defaults to `PRODUCTION`.
 
 ```js
-const wallet = new FIOWallet(appId, user, "DEVELOPMENT");
+const wallet = new FIOWallet({ appId, user, env: "DEVELOPMENT" });
 ```
 
 ## Mapping a Public Address to a FIO Address

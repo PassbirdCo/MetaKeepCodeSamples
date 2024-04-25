@@ -1,0 +1,21 @@
+{
+    "name": "fio-wallet-backend",
+    "version": "1.0.0",
+    "description": "Backend Server for invoking the buy address function",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "format": "prettier --write ."
+    },
+    "author": "Metakeep",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.19.2",
+        "node-fetch": "^3.2.10",
+        "prettier": "^2.7.1"
+    },
+    "type": "module"
+}

@@ -4,8 +4,6 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: white;
-  color: black;
 }
 
 h2 {
@@ -16,17 +14,4 @@ h2 {
   margin-bottom: 10px;
   padding: 10px;
   width: 300px;
-}
-
-.action_button {
-  padding: 10px 20px;
-  background-color: black;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.custom_spinner .ant-spin-dot-item {
-  background-color: black;
 }

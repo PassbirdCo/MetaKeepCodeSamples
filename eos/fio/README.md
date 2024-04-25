@@ -30,10 +30,28 @@ Now start the frontend server. Navigate to the `eos/fio/frontend` directory and 
 
 ```sh
 npm install
+```
+
+To install the FIOWallet library, run 
+
+```sh
+npm i <path_to_lib>
+```
+
+Replace `<path_to_lib>` with the path where the library exists.
+
+
+
+### 3. Start the backend
+
+Now start the backend server. Navigate to the `eos/fio/backend` directory and run the following command:
+
+```sh
+npm install
 npm run start
 ```
 
-This will open up the frontend application on the default browser of your system.
+This will start the backend server on the port 3001.
 
 ### 4. Register the user's address on the FIO Testnet Network
 
