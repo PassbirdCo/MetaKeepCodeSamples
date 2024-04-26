@@ -71,7 +71,7 @@ const App = () => (
                 style={linkStyle}
                 activeStyle={activeLinkStyle}
               >
-                Map handle
+                Map Handle
               </Link>
             </Menu.Item>
           </Menu>

@@ -27,12 +27,12 @@ const MapHandle = () => {
       console.log("Transaction broadcastResponse: ", broadcastResponse);
 
       if (broadcastResponse?.transaction_id) {
-        message.success("Map successful!");
+        message.success("Map handle successful!");
       } else {
-        message.error("Map failed!");
+        message.error("Map handle failed!");
       }
     } catch {
-      message.error("Map failed!");
+      message.error("Map handle failed!");
     } finally {
       setIsLoading(false);
     }
@@ -40,7 +40,7 @@ const MapHandle = () => {
 
   return (
     <Space direction="vertical" size={16} className="form-container">
-      <Card title="Map handle">
+      <Card title="Map Handle">
         <Form
           name="map_handle_form"
           onFinish={handleMapHandle}
@@ -49,7 +49,7 @@ const MapHandle = () => {
         >
           <Form.Item
             name="email"
-            label="Email"
+            label="Your email"
             rules={[
               { required: true, message: "Please enter your email" },
               { type: "email", message: "Please enter a valid email" },
@@ -59,7 +59,7 @@ const MapHandle = () => {
           </Form.Item>
           <Form.Item
             name="fioHandle"
-            label="FIO handle"
+            label="Your FIO handle"
             rules={[
               { required: true, message: "Please enter your FIO handle" },
             ]}
@@ -68,7 +68,7 @@ const MapHandle = () => {
           </Form.Item>
           <Form.Item
             name="publicAddress"
-            label="Public ETH address"
+            label="Your public ETH address"
             rules={[
               {
                 required: true,
@@ -83,7 +83,7 @@ const MapHandle = () => {
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={isLoading}>
-              Map
+              Map Handle
             </Button>
           </Form.Item>
         </Form>

@@ -60,6 +60,14 @@ To transfer the tokens, enter the receiver's email, and the amount to transfer, 
 
 Voila! You have successfully finished the FIO user signing demo 🎉🎉.
 
+## 7. Mapping a public address to the FIO handle
+
+We will now map a public address to the FIO handle.
+
+Navigate to the `Map Handle` tab, enter your email, FIO handle, and public ETH address, and then click on `Map Handle`.
+
+You will see a success message if the mapping is successful. You can verify the mapping on the [FIO explorer](https://fio.bloks.io/).
+
 ## Guide
 
 You can find detailed instructions on using MetaKeep's signing APIs and SDK in the [official documentation](https://docs.metakeep.xyz/).
