@@ -6,15 +6,17 @@ This directory contains a sample project that you can use as a starting point fo
 
 The project is organized as follows:
 
-- [frontend](./frontend): Contains the frontend code to register a handler for the FIO public Key and transfer tokens from the end user's wallet to a different wallet.
+- [frontend](./frontend): Contains the frontend code to register a FIO handle for the user, transfer tokens from the end user's wallet to a different wallet, and map the public address to the FIO handle.
+- [backend](./backend): Contains the backend code to buy/register FIO handles for the user.
+- [lib](./lib): Contains the FIOWallet library that provides functionalities for interacting with the FIO blockchain, including mapping a public address to a FIO handle.
 
 ## Running the Demo
 
 Please follow the steps below to run the demo:
 
-### 1. Create an EOS app
+### 1. Create an EOS/FIO app
 
-The first step is to create an EOS app on the [MetaKeep console](https://console.metakeep.xyz). Once you have created the app, you will get an `APP ID`. Copy this `APP ID` to the `.env` file in the root directory of the project.
+The first step is to create an EOS app on the [MetaKeep console](https://console.metakeep.xyz). Once you have created the app, you will get an `APP ID`. Save this `APP ID` as you will need it later.
 
 ### 2. Download the project
 
@@ -26,23 +28,16 @@ git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 
 ### 3. Start the frontend server
 
-Now start the frontend server. Navigate to the `eos/fio/frontend` directory and run the following command:
+Now start the frontend server. Navigate to the `eos/fio/frontend` directory and update the `APP_ID` in the `.env` file with the `APP ID` you got from the MetaKeep console. Then run the following command:
 
 ```sh
 npm install
+npm run start
 ```
 
-To install the FIOWallet library, run
+### 4. Start the backend
 
-```sh
-npm i <path_to_lib>
-```
-
-Replace `<path_to_lib>` with the path where the library exists.
-
-### 3. Start the backend
-
-Now start the backend server. Navigate to the `eos/fio/backend` directory and run the following command:
+Now start the backend server. Navigate to the `eos/fio/backend` directory and update the `.env` file with the `FIO_REFERRAL_CODE` and `FIO_API_TOKEN` you got from the FIO team. Then run the following command:
 
 ```sh
 npm install
@@ -51,25 +46,17 @@ npm run start
 
 This will start the backend server on the port 3001.
 
-### 4. Register the user's address on the FIO Testnet Network
+### 5. Register a handle for the user
 
-We will now register the user's address on the FIO Testnet Network. For the demo, we will try to register the user's email ID(after removing the `@` symbol) as the FIO address.
+We will now register a FIO handle for the user. Open the frontend server in your browser.
 
-![Screenshot from 2023-05-24 17-57-26](https://github.com/PassbirdCo/MetaKeepCodeSamples/assets/102578238/cfde4b56-3f0a-41bb-aaee-bf064cd6e591)
+Enter your email and the handle you want to register, and click on `Register`. After successful registration, you should be able to see the handle on the [FIO explorer](https://fio.bloks.io/).
 
-Enter your email ID and click on `Register`. You will see your FIO Public Key in the UI and the you will be prompted to sign the transaction.
-
-_Note that FIO public key for the email needs to have tokens to register the address. You can get tokens from the [FIO Faucet](https://monitor.testnet.fioprotocol.io/#faucet)._
-
-After successful registration, you will see the registered FIO address in [FIO Account Info](https://monitor.testnet.fioprotocol.io/#accountInfo).
-
-### 5. Transfer tokens from the user's wallet
+### 6. Transfer tokens from the user's wallet
 
 We will now transfer tokens from the user's wallet to a different wallet.
 
-![Screenshot from 2023-05-24 17-57-26](https://github.com/PassbirdCo/MetaKeepCodeSamples/assets/102578238/0e85dde4-9af3-46eb-9134-44ff1dd1c046)
-
-To transfer the tokens, enter the receiver's email ID, and the amount to transfer, and click on `Transfer`.
+To transfer the tokens, enter the receiver's email, and the amount to transfer, and click on `Transfer`.
 
 Voila! You have successfully finished the FIO user signing demo 🎉🎉.
 

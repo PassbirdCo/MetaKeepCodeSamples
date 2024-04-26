@@ -8,7 +8,7 @@ import {
 import { MetaKeep } from "metakeep";
 const { Fio } = require("@fioprotocol/fiojs");
 
-const TransferFIO = () => {
+const TransferFIOTokens = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleTransfer = async ({ senderEmail, receiverEmail, amount }) => {
@@ -121,4 +121,4 @@ const TransferFIO = () => {
   );
 };
 
-export default TransferFIO;
+export default TransferFIOTokens;

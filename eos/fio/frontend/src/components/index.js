@@ -1,5 +1,5 @@
-import AddressRegistration from "./AddressRegistration";
-import TransferFIO from "./TransferFIO";
+import HandleRegistration from "./HandleRegistration";
+import TransferFIOTokens from "./TransferFIOTokens";
 import MapHandle from "./MapHandle";
 
-export { AddressRegistration, TransferFIO, MapHandle };
+export { HandleRegistration, TransferFIOTokens, MapHandle };

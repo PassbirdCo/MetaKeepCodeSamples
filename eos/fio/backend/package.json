@@ -1,7 +1,7 @@
 {
-  "name": "fio-wallet-backend",
+  "name": "fio-tutorial-backend",
   "version": "1.0.0",
-  "description": "Backend Server for invoking the buy address function",
+  "description": "Backend Server for FIO Tutorial",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

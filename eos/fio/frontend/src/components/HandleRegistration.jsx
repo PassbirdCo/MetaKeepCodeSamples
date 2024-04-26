@@ -3,15 +3,15 @@ import "./common.css";
 import { message, Button, Input, Card, Space, Flex, Form } from "antd";
 import {
   EOSPubKeyToFIOPubKey,
-  buyFIOAddress,
+  buyFIOHandle,
 } from "../utils/fioTransactionUtils";
 import { MetaKeep } from "metakeep";
 
-const AddressRegistration = () => {
+const HandleRegistration = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [FIOPubKey, setFIOPubKey] = useState("unknown");
   const [publicETHAddress, setPublicETHAddress] = useState("unknown");
-  const [buyAddressResponse, setBuyAddressResponse] = useState(null);
+  const [buyHandleResponse, setBuyHandleResponse] = useState(null);
 
   const handleRegister = async ({ email, fioHandle }) => {
     // Show the loader
@@ -30,11 +30,16 @@ const AddressRegistration = () => {
 
       setFIOPubKey(fioPubKey);
 
-      const buyAddressResponse = await buyFIOAddress({ fioHandle, fioPubKey });
-      if (!buyAddressResponse.ok) {
-        message("An error occuurred");
+      const buyHandleResponse = await buyFIOHandle({ fioHandle, fioPubKey });
+
+      if (!buyHandleResponse.ok) {
+        message.error("An error occurred while buying the FIO handle");
       }
-      setBuyAddressResponse(JSON.stringify(await buyAddressResponse.json()));
+      else {
+        message.success("FIO handle registered successfully");
+      }
+
+      setBuyHandleResponse(JSON.stringify(await buyHandleResponse.json()));
     } catch (error) {
       message.error(error.status ?? error.message);
     } finally {
@@ -44,12 +49,12 @@ const AddressRegistration = () => {
 
   return (
     <Space direction="vertical" size={16} className="form-container">
-      <Card title="FIO address registration">
+      <Card title="FIO handle registration">
         <Flex gap="middle" vertical>
           <Form name="address_form" onFinish={handleRegister} layout="vertical">
             <Form.Item
               name="email"
-              label="Email"
+              label="Enter your email"
               rules={[
                 { required: true, message: "Please enter your email" },
                 { type: "email", message: "Please enter a valid email" },
@@ -59,7 +64,7 @@ const AddressRegistration = () => {
             </Form.Item>
             <Form.Item
               name="fioHandle"
-              label="FIO handle"
+              label="Enter the handle you want to buy (e.g. john-awesome@wallet)"
               rules={[
                 { required: true, message: "Please enter your FIO handle" },
               ]}
@@ -75,11 +80,11 @@ const AddressRegistration = () => {
           </Form>
         </Flex>
       </Card>
-      <span>Your FIO Public Key: {FIOPubKey}</span>
+      <span>Your Public FIO Key: {FIOPubKey}</span>
       <span>Your Public ETH Address: {publicETHAddress}</span>
-      {buyAddressResponse && <span>Response: {buyAddressResponse}</span>}
+      {buyHandleResponse && <span>Response: {buyHandleResponse}</span>}
     </Space>
   );
 };
 
-export default AddressRegistration;
+export default HandleRegistration;

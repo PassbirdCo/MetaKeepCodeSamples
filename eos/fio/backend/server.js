@@ -8,6 +8,16 @@ const app = express();
 
 env.config();
 
+if (!process.env.FIO_API_TOKEN) {
+  console.log("FIO_API_TOKEN environment variable not set.");
+  process.exit(1);
+}
+
+if (!process.env.FIO_REFERRAL_CODE) {
+  console.log("FIO_REFERRAL_CODE environment variable not set.");
+  process.exit(1);
+}
+
 const port = 3001;
 
 app.use(
@@ -36,15 +46,15 @@ app.get("/", (_, res) => {
   res.send("MetaKeep FIO Tutorial Backend Server!");
 });
 
-/* ************************************************************************* Buy address API EndPoint ************************************************************************* */
+/* ************************************************************************* Buy handle API EndPoint ************************************************************************* */
 
-app.post("/buyAddress", async (req, res) => {
-  console.log("buyAddress handler running...");
+app.post("/buyHandle", async (req, res) => {
+  console.log("buyHandle handler running...");
   let result;
   try {
-    result = await buyFIOAddress({
+    result = await buyFIOHandle({
       address: req.body.fioHandle,
-      publicKey: req.body.publicKey,
+      publicKey: req.body.fioPublicKey,
       referralCode: process.env.FIO_REFERRAL_CODE,
       apiToken: process.env.FIO_API_TOKEN,
     });
@@ -58,9 +68,9 @@ app.post("/buyAddress", async (req, res) => {
 
 /* ************************************************************************** Utility functions *************************************************************** */
 
-// Utility function to invoke buy address FIO API.
-async function buyFIOAddress(requestBody) {
-  const url = `${process.env.FIO_BASE_URL}/buy-address`;
+// Utility function to invoke buy handle FIO API.
+async function buyFIOHandle(requestBody) {
+  const url = `${process.env.FIO_REGISTRATION_API_BASE_URL}/buy-address`;
   const headers = {
     "Content-Type": "application/json",
     Accept: "*/*",
@@ -74,13 +84,24 @@ async function buyFIOAddress(requestBody) {
   const result = await fetch(url, options);
 
   if (!result.ok) {
-    console.log(
-      "Error invoking buy address. HTTP status code: " + result.status
+    console.error(
+      "Error invoking buy handle. HTTP status code: " + result.status
+    );
+
+    const resultJson = await result.json();
+
+    console.error(resultJson);
+
+    throw new Error(
+      "Error invoking buy handle. HTTP status code: " +
+        result.status +
+        ", Response: " +
+        JSON.stringify(resultJson)
     );
   }
   const resultJson = await result.json();
 
-  console.log("FIO buy address response:");
+  console.log("FIO buy handle response:");
   console.log(resultJson);
 
   console.log("\n");

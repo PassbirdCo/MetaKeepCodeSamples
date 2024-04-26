@@ -9,7 +9,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { AddressRegistration, TransferFIO, MapHandle } from "./components";
+import { HandleRegistration, TransferFIOTokens, MapHandle } from "./components";
 
 const headerStyle = { height: 70, alignItems: "center" };
 
@@ -53,7 +53,7 @@ const App = () => (
                 style={linkStyle}
                 activeStyle={activeLinkStyle}
               >
-                Address Registration
+                Handle Registration
               </Link>
             </Menu.Item>
             <Menu.Item key="/transfer" icon={<SwapOutlined />}>
@@ -77,8 +77,8 @@ const App = () => (
           </Menu>
           <Routes>
             <Route path="/" element={<Navigate to="/register" />} />
-            <Route path="/register" element={<AddressRegistration />} />
-            <Route path="/transfer" element={<TransferFIO />} />
+            <Route path="/register" element={<HandleRegistration />} />
+            <Route path="/transfer" element={<TransferFIOTokens />} />
             <Route path="/mapHandle" element={<MapHandle />} />
           </Routes>
         </Router>
