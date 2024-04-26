@@ -6,54 +6,22 @@ import {
   createRawTx,
   broadcastTx,
   PushTransactionResponse,
+  ADD_ADDRESS_ACTION,
+  FIO_ADDRESS_ACCOUNT,
+  ActionData,
+  PublicAddress,
+  Environment,
 } from "./utils";
 
 /**
- * Interface representing a public address object.
+ * Represents the available options to the FIOWallet constructor
  */
-interface PublicAddress {
-  /**
-   * The chain code.
-   */
-  chain_code: string;
-
-  /**
-   * The token code.
-   */
-  token_code: string;
-
-  /**
-   * The public address.
-   */
-  public_address: string;
-}
-
-/**
- * Represents the action data required for mapping a public address to a FIO address.
- */
-export interface ActionData {
-  fio_address: string;
-  public_addresses: PublicAddress[];
-  max_fee: number;
-  tpid: string;
-  actor: string;
-}
-
-// Represents the enum for environments
-enum Environment {
-  DEVELOPMENT = "DEVELOPMENT",
-  PRODUCTION = "PRODUCTION",
-}
-
-// Represents the available options to the FIOWallet constructor
 interface FIOWalletOptions {
   appId: string;
   user: { email: string };
   env?: Environment;
 }
 
-const ADD_ADDRESS_ACTION = "addaddress";
-const FIO_ADDRESS_ACCOUNT = "fio.address";
 /**
  * Represents a FIO Wallet.
  */
@@ -63,7 +31,7 @@ class FIOWallet {
 
   /**
    * Constructs a new instance of FIOWallet.
-   * @param {Object} options The options object which includes appId, user, and environment.
+   * @param {FIOWalletOptions} options The options object which includes appId, user, and environment.
    */
   constructor(private options: FIOWalletOptions) {
     if (!this.options.appId || typeof this.options.appId !== "string") {
@@ -74,84 +42,94 @@ class FIOWallet {
       this.options.env = Environment.PRODUCTION;
     }
 
-    if (!["PRODUCTION", "DEVELOPMENT"].includes(this.options.env)) {
+    if (
+      ![Environment.PRODUCTION, Environment.DEVELOPMENT].includes(
+        this.options.env
+      )
+    ) {
       throw new Error(
         'Environment must be either "PRODUCTION" or "DEVELOPMENT".'
       );
     }
+
+    // Initialize the Metakeep SDK
     this.sdk = new MetaKeep({
       appId: this.options.appId || "",
       user: this.options.user,
     });
+
     this.fioBaseUrl =
-      this.options.env === "DEVELOPMENT"
+      this.options.env === Environment.DEVELOPMENT
         ? "https://fiotestnet.blockpane.com/v1"
         : "https://fio.blockpane.com/v1";
   }
 
   /**
-   * Maps a public address to a FIO address.
+   * Maps a public address to a FIO handle.
    * @param {String} fioHandle The FIO handle.
    * @param {PublicAddress[]} publicAddresses An array of objects representing public addresses which should not exceed length of 5.
    *                      Each object should have the properties: chain_code, token_code, and public_address.
+   * @param {String} reason An optional reason for mapping the public address that will be displayed to the user at the time of signing.
+   * If not provided, a default message will be displayed.
    * @returns {Promise<any>} A Promise that resolves with the mapping result.
    * @throws {Error} If more than 5 public addresses are provided.
    */
   public async mapHandle(
     fioHandle: string,
-    publicAddresses: PublicAddress[]
+    publicAddresses: PublicAddress[],
+    reason?: string
   ): Promise<PushTransactionResponse> {
     if (publicAddresses.length > 5) {
-      throw new Error("Only 5 public addresses are allowed.");
-    }
-    try {
-      // Get the Metakeep wallet
-      const wallet = await this.sdk.getWallet();
-
-      // Convert the EOS public key to FIO public key
-      const fioPubKey = EOSPubKeyToFIOPubKey(wallet.wallet.eosAddress);
-
-      const actionData: ActionData = {
-        fio_address: fioHandle,
-        public_addresses: publicAddresses,
-        max_fee: 10000000000000,
-        tpid: "",
-        actor: Fio.accountHash(fioPubKey),
-      };
-
-      // Create the raw transaction
-      const { rawTx, serializedActionData, chainId } = await createRawTx({
-        publicKey: fioPubKey,
-        actionData: actionData,
-        account: FIO_ADDRESS_ACCOUNT,
-        action: ADD_ADDRESS_ACTION,
-        fioBaseUrl: this.fioBaseUrl,
-      });
-
-      // Create a copy of the raw transaction to update action data
-      // with serialized action data.
-      const rawTxCopy = JSON.parse(JSON.stringify(rawTx));
-      rawTx.actions[0].data = serializedActionData;
-
-      // Sign the transaction using the Metakeep SDK.
-      const response = await this.sdk.signTransaction(
-        { rawTransaction: rawTx, extraSigningData: { chainId: chainId } },
-        `Map FIO handle "${fioHandle}"`
+      throw new Error(
+        "Only maximum of 5 public addresses are allowed at a time."
       );
-      const signature = response.signature;
-
-      // Broadcast the transaction to the FIO chain nodes.
-      const broadcastResponse = await broadcastTx({
-        rawTx: rawTxCopy,
-        chainId,
-        account: FIO_ADDRESS_ACCOUNT,
-        signature: signature,
-        fioBaseUrl: this.fioBaseUrl,
-      });
-      return broadcastResponse;
-    } catch (error) {
-      throw new Error(error);
     }
+
+    // Get the user's wallet from the Metakeep SDK
+    const wallet = await this.sdk.getWallet();
+
+    // Convert the EOS public key to FIO public key
+    const fioPubKey = EOSPubKeyToFIOPubKey(wallet.wallet.eosAddress);
+
+    const actionData: ActionData = {
+      fio_address: fioHandle,
+      public_addresses: publicAddresses,
+      max_fee: 10000000000000,
+      tpid: "",
+      actor: Fio.accountHash(fioPubKey),
+    };
+
+    // Create the raw transaction
+    const { rawTx, serializedActionData, chainId } = await createRawTx({
+      publicKey: fioPubKey,
+      actionData: actionData,
+      account: FIO_ADDRESS_ACCOUNT,
+      action: ADD_ADDRESS_ACTION,
+      fioBaseUrl: this.fioBaseUrl,
+    });
+
+    // Create a copy of the raw transaction to update action data
+    // with serialized action data.
+    const rawTxCopy = JSON.parse(JSON.stringify(rawTx));
+    rawTx.actions[0].data = serializedActionData;
+
+    // Sign the transaction using the Metakeep SDK.
+    const response = await this.sdk.signTransaction(
+      { rawTransaction: rawTx, extraSigningData: { chainId: chainId } },
+      reason ||
+        `map your FIO handle "${fioHandle}" to ${publicAddresses.length} public address(es).`
+    );
+    const signature = response.signature;
+
+    // Broadcast the transaction to the FIO chain nodes.
+    const broadcastResponse = await broadcastTx({
+      rawTx: rawTxCopy,
+      chainId,
+      account: FIO_ADDRESS_ACCOUNT,
+      signature: signature,
+      fioBaseUrl: this.fioBaseUrl,
+    });
+    return broadcastResponse;
   }
 }
 

@@ -1,4 +1,5 @@
 import { FIOWallet } from "../src/FIOWallet";
+import { Environment } from "../src/utils";
 
 jest.mock("metakeep", () => ({
   MetaKeep: jest.fn().mockImplementation(() => ({
@@ -11,17 +12,22 @@ jest.mock("metakeep", () => ({
   })),
 }));
 
-jest.mock("../src/utils", () => ({
-  EOSPubKeyToFIOPubKey: jest.fn().mockReturnValue("FIO12345"),
-  createRawTx: jest.fn().mockResolvedValue({
-    rawTx: { actions: [{ data: "mockData" }] },
-    serializedActionData: "mockSerializedData",
-    chainId: "mockChainId",
-  }),
-  broadcastTx: jest
-    .fn()
-    .mockResolvedValue({ transaction_id: "mockTransactionId" }),
-}));
+jest.mock("../src/utils", () => {
+  const originalModule = jest.requireActual("../src/utils");
+
+  return {
+    ...originalModule,
+    EOSPubKeyToFIOPubKey: jest.fn().mockReturnValue("FIO12345"),
+    createRawTx: jest.fn().mockResolvedValue({
+      rawTx: { actions: [{ data: "mockData" }] },
+      serializedActionData: "mockSerializedData",
+      chainId: "mockChainId",
+    }),
+    broadcastTx: jest
+      .fn()
+      .mockResolvedValue({ transaction_id: "mockTransactionId" }),
+  };
+});
 
 jest.mock("@fioprotocol/fiojs", () => ({
   Fio: {
@@ -31,9 +37,12 @@ jest.mock("@fioprotocol/fiojs", () => ({
 
 describe("FIOWallet", () => {
   describe("mapHandle", () => {
-    it("should map a public address to a FIO address", async () => {
-      const wallet = new FIOWallet("mockAppId", {
-        email: "mohit@metakeep.xyz",
+    it("should map a public address to a FIO handle", async () => {
+      const wallet = new FIOWallet({
+        appId: "mockAppId",
+        user: {
+          email: "mohit@metakeep.xyz",
+        },
       });
       await wallet.mapHandle("mohitmetakeep@regtest", [
         {
@@ -70,7 +79,43 @@ describe("FIOWallet", () => {
           rawTransaction: { actions: [{ data: "mockSerializedData" }] },
           extraSigningData: { chainId: "mockChainId" },
         },
-        `Map FIO handle "mohitmetakeep@regtest"`
+        `map your FIO handle "mohitmetakeep@regtest" to 1 public address(es).`
+      );
+
+      expect(require("../src/utils").broadcastTx).toHaveBeenCalledWith({
+        rawTx: { actions: [{ data: "mockData" }] },
+        chainId: "mockChainId",
+        account: "fio.address",
+        signature: "mockSignature",
+        fioBaseUrl: "https://fio.blockpane.com/v1",
+      });
+    });
+
+    it("should show custom reason string to map a public address to a FIO handle", async () => {
+      const wallet = new FIOWallet({
+        appId: "mockAppId",
+        user: {
+          email: "mohit@metakeep.xyz",
+        },
+      });
+      await wallet.mapHandle(
+        "mohitmetakeep@regtest",
+        [
+          {
+            public_address: "mockPublicAddress",
+            chain_code: "mockChainCode",
+            token_code: "mockTokenCode",
+          },
+        ],
+        "Custom reason string"
+      );
+
+      expect(wallet["sdk"]["signTransaction"]).toHaveBeenCalledWith(
+        {
+          rawTransaction: { actions: [{ data: "mockSerializedData" }] },
+          extraSigningData: { chainId: "mockChainId" },
+        },
+        "Custom reason string"
       );
 
       expect(require("../src/utils").broadcastTx).toHaveBeenCalledWith({
@@ -83,13 +128,13 @@ describe("FIOWallet", () => {
     });
 
     it("should use development base url if env set to DEVELOPMENT", async () => {
-      const wallet = new FIOWallet(
-        "mockAppId",
-        {
+      const wallet = new FIOWallet({
+        appId: "mockAppId",
+        user: {
           email: "mohit@metakeep.xyz",
         },
-        "DEVELOPMENT"
-      );
+        env: Environment.DEVELOPMENT,
+      });
       await wallet.mapHandle("mohitmetakeep@regtest", [
         {
           public_address: "mockPublicAddress",
@@ -125,7 +170,7 @@ describe("FIOWallet", () => {
           rawTransaction: { actions: [{ data: "mockSerializedData" }] },
           extraSigningData: { chainId: "mockChainId" },
         },
-        `Map FIO handle "mohitmetakeep@regtest"`
+        `map your FIO handle "mohitmetakeep@regtest" to 1 public address(es).`
       );
 
       expect(require("../src/utils").broadcastTx).toHaveBeenCalledWith({
@@ -137,9 +182,12 @@ describe("FIOWallet", () => {
       });
     });
 
-    it("should throw error if more than 5 addressess are provided", async () => {
-      const wallet = new FIOWallet("mockAppId", {
-        email: "mohit@metakeep.xyz",
+    it("should throw error if more than 5 addresses are provided", async () => {
+      const wallet = new FIOWallet({
+        appId: "mockAppId",
+        user: {
+          email: "mohit@metakeep.xyz",
+        },
       });
       expect(
         wallet.mapHandle("mohitmetakeep@regtest", [
@@ -174,15 +222,20 @@ describe("FIOWallet", () => {
             token_code: "mockTokenCode",
           },
         ])
-      ).rejects.toThrow("Only 5 public addresses are allowed.");
+      ).rejects.toThrow(
+        "Only maximum of 5 public addresses are allowed at a time."
+      );
     });
 
-    it("should handle errors gracefully", async () => {
+    it("should throw on error", async () => {
       require("../src/utils").createRawTx.mockRejectedValueOnce(
         new Error("Test error")
       );
 
-      const wallet = new FIOWallet("mockAppId", { email: "mockEmail" });
+      const wallet = new FIOWallet({
+        appId: "mockAppId",
+        user: { email: "mockEmail" },
+      });
       expect(
         wallet.mapHandle("mohitmetakeep@regtest", [
           {

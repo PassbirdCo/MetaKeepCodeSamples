@@ -155,8 +155,8 @@ describe("broadcastTx", () => {
 describe("EOSPubKeyToFIOPubKey", () => {
   it("should convert an EOS public key to a FIO public key", () => {
     // Setup
-    const eosPubKey = "yourEOSPublicKey";
-    const expectedFIOPubKey = "FIOrEOSPublicKey";
+    const eosPubKey = "EOSPublicKey";
+    const expectedFIOPubKey = "FIOPublicKey";
 
     // Run
     const result = EOSPubKeyToFIOPubKey(eosPubKey);
