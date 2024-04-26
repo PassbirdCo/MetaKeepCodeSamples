@@ -74,7 +74,11 @@ class FIOWallet {
       this.options.env = Environment.PRODUCTION;
     }
 
-    if (!["PRODUCTION", "DEVELOPMENT"].includes(this.options.env)) {
+    if (
+      ![Environment.DEVELOPMENT, Environment.PRODUCTION].includes(
+        this.options.env
+      )
+    ) {
       throw new Error(
         'Environment must be either "PRODUCTION" or "DEVELOPMENT".'
       );
@@ -84,7 +88,7 @@ class FIOWallet {
       user: this.options.user,
     });
     this.fioBaseUrl =
-      this.options.env === "DEVELOPMENT"
+      this.options.env === Environment.DEVELOPMENT
         ? "https://fiotestnet.blockpane.com/v1"
         : "https://fio.blockpane.com/v1";
   }
