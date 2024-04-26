@@ -34,8 +34,7 @@ const HandleRegistration = () => {
 
       if (!buyHandleResponse.ok) {
         message.error("An error occurred while buying the FIO handle");
-      }
-      else {
+      } else {
         message.success("FIO handle registered successfully");
       }
 
