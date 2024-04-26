@@ -20,7 +20,7 @@ const MapHandle = () => {
         {
           chain: "ETH",
           address: publicAddress,
-        }
+        },
       ]);
 
       console.log("Transaction broadcastResponse: ", broadcastResponse);
