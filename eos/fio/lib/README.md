@@ -57,14 +57,13 @@ const publicAddress = "your_public_eth_address";
 
 wallet.mapHandle("your_fio_handle@domain", [
   {
-    public_address: publicAddress,
-    chain_code: "ETH",
-    token_code: "ETH",
+    chain: "ETH",
+    address: publicAddress,
   },
 ]);
 ```
 
-Make sure to replace `your_public_eth_address` with the actual public ETH address you want to map, provide the necessary [chain code and token code](https://github.com/fioprotocol/fips/blob/master/fip-0015.md), and replace `your_fio_handle@handle` with your FIO handle.
+Make sure to replace `your_public_eth_address` with the actual public ETH address you want to map, provide the necessary [chain](https://github.com/fioprotocol/fips/blob/master/fip-0015.md), and replace `your_fio_handle@handle` with your FIO handle.
 
 You can also provide an optional `reason` string that will be displayed to the user when they sign the transaction:
 
@@ -73,9 +72,8 @@ wallet.mapHandle(
   "your_fio_handle@domain",
   [
     {
-      public_address: publicAddress,
-      chain_code: "ETH",
-      token_code: "ETH",
+      chain: "ETH",
+      address: publicAddress,
     },
   ],
   "map your ETH address to your FIO handle"
@@ -85,9 +83,8 @@ wallet.mapHandle(
 ### Parameters
 
 - `fioHandle` (string): Your FIO handle.
-- `publicAddresses` (array of PublicAddress): An array of PublicAddress to be mapped. Each PublicAddress should have the following properties:
-  - `public_address` (string): The public address to be mapped.
-  - `chain_code` (string): The chain code.
-  - `token_code` (string): The token code.
-- `reason` (string, optional): The reason for mapping the public address to the FIO handle. This will be displayed to the user when they sign the transaction.
+- `addresses` (array of UserAddress): An array of UserAddress to be mapped. Each UserAddress should have the following properties:
+  - `chain` (string): The chain where the public address belongs.
+  - `address` (string): The user's public address on the chain to be mapped.
+- `reason` (string, optional): An optional reason for mapping the addresses to the FIO handle. This will be displayed to the user when they sign the transaction.
   If not provided, a default message will be displayed.

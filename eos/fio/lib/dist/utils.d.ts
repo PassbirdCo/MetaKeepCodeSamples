@@ -2,82 +2,82 @@
  * Represents the enum for environments
  */
 export declare enum Environment {
-  DEVELOPMENT = "DEVELOPMENT",
-  PRODUCTION = "PRODUCTION",
+    DEVELOPMENT = "DEVELOPMENT",
+    PRODUCTION = "PRODUCTION"
 }
 /**
  * Represents the parameters required for creating a raw transaction.
  */
 interface CreateRawTxParams {
-  publicKey: string;
-  actionData: ActionData;
-  account: string;
-  action: string;
-  fioBaseUrl: string;
+    publicKey: string;
+    actionData: MapHandleActionData;
+    account: string;
+    action: string;
+    fioBaseUrl: string;
 }
 /**
- * Interface representing a public address object.
+ * Interface representing a public address object used in the map handle action data.
  */
-export interface PublicAddress {
-  /**
-   * The chain code.
-   * You can find all supported chain codes at: https://github.com/fioprotocol/fips/blob/master/fip-0015.md
-   */
-  chain_code: string;
-  /**
-   * The token code.
-   * You can find all supported token codes at: https://github.com/fioprotocol/fips/blob/master/fip-0015.md
-   */
-  token_code: string;
-  /**
-   * The public address.
-   */
-  public_address: string;
+export interface MapHandleActionPublicAddress {
+    /**
+     * The chain code.
+     * You can find all supported chain codes at: https://github.com/fioprotocol/fips/blob/master/fip-0015.md
+     */
+    chain_code: string;
+    /**
+     * The token code.
+     * You can find all supported token codes at: https://github.com/fioprotocol/fips/blob/master/fip-0015.md
+     */
+    token_code: string;
+    /**
+     * The public address.
+     */
+    public_address: string;
 }
 /**
  * Represents the action data required for mapping a public address to a FIO address.
  */
-export interface ActionData {
-  fio_address: string;
-  public_addresses: PublicAddress[];
-  max_fee: number;
-  tpid: string;
-  actor: string;
+export interface MapHandleActionData {
+    fio_address: string;
+    public_addresses: MapHandleActionPublicAddress[];
+    max_fee: number;
+    tpid: string;
+    actor: string;
 }
 /**
  * Represents the parameters required for broadcasting a transaction.
  */
 interface BroadcastTransactionParams {
-  rawTx: any;
-  chainId: string;
-  account: string;
-  signature: string;
-  fioBaseUrl: string;
+    rawTx: any;
+    chainId: string;
+    account: string;
+    signature: string;
+    fioBaseUrl: string;
 }
 /** Retrieves raw ABIs for a specified accountName */
 export interface AbiProvider {
-  /** Retrieve the BinaryAbi */
-  getRawAbi: (accountName: string) => Promise<BinaryAbi>;
+    /** Retrieve the BinaryAbi */
+    getRawAbi: (accountName: string) => Promise<BinaryAbi>;
 }
 /** Structure for the raw form of ABIs */
 export interface BinaryAbi {
-  /** account which has deployed the ABI */
-  accountName: string;
-  /** abi in binary form */
-  abi: Uint8Array;
+    /** account which has deployed the ABI */
+    accountName: string;
+    /** abi in binary form */
+    abi: Uint8Array;
 }
 /**
  * Represents the response of pushing a transaction.
  */
 export interface PushTransactionResponse {
-  transaction_id: string;
-  processed: {
-    receipt: {
-      status: string;
-      cpu_usage_us: number;
-      net_usage_words: number;
+    transaction_id: string;
+    processed: {
+        receipt: {
+            status: string;
+            cpu_usage_us: number;
+            net_usage_words: number;
+        };
     };
-  };
 }
 export declare const ADD_ADDRESS_ACTION = "addaddress";
 export declare const FIO_ADDRESS_ACCOUNT = "fio.address";
@@ -91,16 +91,10 @@ export declare const FIO_ADDRESS_ACCOUNT = "fio.address";
  * @param {String} params.fioBaseUrl The base URL of the FIO blockchain API.
  * @returns The raw transaction, serialized action data, and chain ID.
  */
-export declare const createRawTx: ({
-  publicKey,
-  actionData,
-  account,
-  action,
-  fioBaseUrl,
-}: CreateRawTxParams) => Promise<{
-  rawTx: any;
-  serializedActionData: string;
-  chainId: string;
+export declare const createRawTx: ({ publicKey, actionData, account, action, fioBaseUrl, }: CreateRawTxParams) => Promise<{
+    rawTx: any;
+    serializedActionData: string;
+    chainId: string;
 }>;
 /**
  * Broadcasts a transaction to the FIO blockchain.
@@ -112,13 +106,7 @@ export declare const createRawTx: ({
  * @param {String} params.fioBaseUrl The base URL of the FIO blockchain API.
  * @returns The response of pushing the transaction.
  */
-export declare const broadcastTx: ({
-  rawTx,
-  chainId,
-  account,
-  signature,
-  fioBaseUrl,
-}: BroadcastTransactionParams) => Promise<PushTransactionResponse>;
+export declare const broadcastTx: ({ rawTx, chainId, account, signature, fioBaseUrl, }: BroadcastTransactionParams) => Promise<PushTransactionResponse>;
 /**
  * Converts an EOS public key to a FIO public key.
  * Since the FIO public key is derived from the EOS public key, we can
