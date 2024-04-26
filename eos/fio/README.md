@@ -58,7 +58,7 @@ We will now transfer tokens from the user's wallet to a different wallet.
 
 To transfer the tokens, enter the receiver's email, and the amount to transfer, and click on `Transfer`.
 
-Voila! You have successfully finished the FIO user signing demo 🎉🎉.
+You will see a success message if the transfer is successful. You can verify the transfer on the [FIO explorer](https://fio.bloks.io/).
 
 ## 7. Mapping a public address to the FIO handle
 
@@ -67,6 +67,8 @@ We will now map a public address to the FIO handle.
 Navigate to the `Map Handle` tab, enter your email, FIO handle, and public ETH address, and then click on `Map Handle`.
 
 You will see a success message if the mapping is successful. You can verify the mapping on the [FIO explorer](https://fio.bloks.io/).
+
+Voila! You have successfully finished the FIO tutorial 🎉🎉.
 
 ## Guide
 
