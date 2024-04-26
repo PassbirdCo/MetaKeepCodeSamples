@@ -88,7 +88,7 @@ const createSerializeActionData = async (
 const getAbiProvider = async (account) => {
   // Fetch the ABI for the given account from the chain.
   const fioTokenAbi = await fetch(
-    "https://fiotestnet.blockpane.com/v1/chain/get_raw_abi",
+    `${process.env.REACT_APP_FIO_CHAIN_ACTION_API_BASE_URL}/chain/get_raw_abi`,
     {
       method: "POST",
       body: JSON.stringify({
@@ -122,7 +122,7 @@ const getAbiProvider = async (account) => {
  */
 const getChainData = async () => {
   const chainInfo = await fetch(
-    "https://fiotestnet.blockpane.com/v1/chain/get_info",
+    `${process.env.REACT_APP_FIO_CHAIN_ACTION_API_BASE_URL}/chain/get_info`,
     {
       method: "POST",
     }
@@ -130,7 +130,7 @@ const getChainData = async () => {
 
   // Get the last irreversible block number
   const blockData = await fetch(
-    "https://fiotestnet.blockpane.com/v1/chain/get_block",
+    `${process.env.REACT_APP_FIO_CHAIN_ACTION_API_BASE_URL}/chain/get_block`,
     {
       method: "POST",
       body: JSON.stringify({
@@ -180,7 +180,7 @@ export const broadcastTx = async (rawTx, chain_id, account, signature) => {
 
   // Push transaction to the network
   const pushTransactionResponse = await fetch(
-    "https://fiotestnet.blockpane.com/v1/chain/push_transaction",
+    `${process.env.REACT_APP_FIO_CHAIN_ACTION_API_BASE_URL}/chain/push_transaction`,
     {
       method: "POST",
       body: JSON.stringify(pushTransactionArgs),
@@ -200,4 +200,25 @@ export const broadcastTx = async (rawTx, chain_id, account, signature) => {
  */
 export const EOSPubKeyToFIOPubKey = (eosPubKey) => {
   return "FIO" + eosPubKey.slice(3);
+};
+
+/**
+ * Executes buyHandle API to buy a FIO handle.
+ */
+export const buyFIOHandle = async ({ fioPubKey, fioHandle }) => {
+  const buyHandleResponse = await fetch(
+    `${process.env.REACT_APP_BACKEND_URL}/buyHandle`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        fioPublicKey: fioPubKey,
+        fioHandle,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return buyHandleResponse;
 };
