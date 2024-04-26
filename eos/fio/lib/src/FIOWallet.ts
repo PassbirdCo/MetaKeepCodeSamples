@@ -8,18 +8,26 @@ import {
   PushTransactionResponse,
   ADD_ADDRESS_ACTION,
   FIO_ADDRESS_ACCOUNT,
-  ActionData,
-  PublicAddress,
+  MapHandleActionData,
+  MapHandleActionPublicAddress,
   Environment,
 } from "./utils";
 
 /**
  * Represents the available options to the FIOWallet constructor
  */
-interface FIOWalletOptions {
+export interface FIOWalletOptions {
   appId: string;
   user: { email: string };
   env?: Environment;
+}
+
+/**
+ * Represents a user's address on a particular chain.
+ */
+export interface UserAddress {
+  chain: string;
+  address: string;
 }
 
 /**
@@ -67,19 +75,19 @@ class FIOWallet {
   /**
    * Maps a public address to a FIO handle.
    * @param {String} fioHandle The FIO handle.
-   * @param {PublicAddress[]} publicAddresses An array of objects representing public addresses which should not exceed length of 5.
-   *                      Each object should have the properties: chain_code, token_code, and public_address.
-   * @param {String} reason An optional reason for mapping the public address that will be displayed to the user at the time of signing.
+   * @param {UserAddress[]} addresses An array of objects representing user's addresses which should not exceed length of 5.
+   *                      Each object should have the properties: chain, and address.
+   * @param {String} reason An optional reason for mapping the addresses that will be displayed to the user at the time of signing.
    * If not provided, a default message will be displayed.
    * @returns {Promise<any>} A Promise that resolves with the mapping result.
    * @throws {Error} If more than 5 public addresses are provided.
    */
   public async mapHandle(
     fioHandle: string,
-    publicAddresses: PublicAddress[],
+    addresses: UserAddress[],
     reason?: string
   ): Promise<PushTransactionResponse> {
-    if (publicAddresses.length > 5) {
+    if (addresses.length > 5) {
       throw new Error(
         "Only maximum of 5 public addresses are allowed at a time."
       );
@@ -91,9 +99,14 @@ class FIOWallet {
     // Convert the EOS public key to FIO public key
     const fioPubKey = EOSPubKeyToFIOPubKey(wallet.wallet.eosAddress);
 
-    const actionData: ActionData = {
+    const actionData: MapHandleActionData = {
       fio_address: fioHandle,
-      public_addresses: publicAddresses,
+      public_addresses: addresses.map((address) => ({
+        chain_code: address.chain,
+        // For now, we are mapping all tokens to the same public address.
+        token_code: "*",
+        public_address: address.address,
+      })),
       max_fee: 10000000000000,
       tpid: "",
       actor: Fio.accountHash(fioPubKey),
@@ -117,7 +130,7 @@ class FIOWallet {
     const response = await this.sdk.signTransaction(
       { rawTransaction: rawTx, extraSigningData: { chainId: chainId } },
       reason ||
-        `map your FIO handle "${fioHandle}" to ${publicAddresses.length} public address(es).`
+        `map your FIO handle "${fioHandle}" to ${addresses.length} public address(es).`
     );
     const signature = response.signature;
 

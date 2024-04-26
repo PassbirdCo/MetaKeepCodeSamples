@@ -18,9 +18,8 @@ const MapHandle = () => {
 
       const broadcastResponse = await wallet.mapHandle(fioHandle, [
         {
-          public_address: publicAddress,
-          chain_code: "ETH",
-          token_code: "ETH",
+          chain: "ETH",
+          address: publicAddress,
         },
       ]);
 

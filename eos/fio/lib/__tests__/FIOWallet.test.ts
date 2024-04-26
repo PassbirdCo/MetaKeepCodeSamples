@@ -46,9 +46,8 @@ describe("FIOWallet", () => {
       });
       await wallet.mapHandle("mohitmetakeep@regtest", [
         {
-          public_address: "mockPublicAddress",
-          chain_code: "mockChainCode",
-          token_code: "mockTokenCode",
+          chain: "ETH",
+          address: "mockPublicAddress",
         },
       ]);
 
@@ -60,8 +59,8 @@ describe("FIOWallet", () => {
           fio_address: "mohitmetakeep@regtest",
           public_addresses: [
             {
-              chain_code: "mockChainCode",
-              token_code: "mockTokenCode",
+              chain_code: "ETH",
+              token_code: "*",
               public_address: "mockPublicAddress",
             },
           ],
@@ -102,9 +101,8 @@ describe("FIOWallet", () => {
         "mohitmetakeep@regtest",
         [
           {
-            public_address: "mockPublicAddress",
-            chain_code: "mockChainCode",
-            token_code: "mockTokenCode",
+            address: "mockPublicAddress",
+            chain: "ETH",
           },
         ],
         "Custom reason string"
@@ -137,9 +135,8 @@ describe("FIOWallet", () => {
       });
       await wallet.mapHandle("mohitmetakeep@regtest", [
         {
-          public_address: "mockPublicAddress",
-          chain_code: "mockChainCode",
-          token_code: "mockTokenCode",
+          address: "mockPublicAddress",
+          chain: "ETH",
         },
       ]);
 
@@ -151,8 +148,8 @@ describe("FIOWallet", () => {
           fio_address: "mohitmetakeep@regtest",
           public_addresses: [
             {
-              chain_code: "mockChainCode",
-              token_code: "mockTokenCode",
+              chain_code: "ETH",
+              token_code: "*",
               public_address: "mockPublicAddress",
             },
           ],
@@ -192,34 +189,28 @@ describe("FIOWallet", () => {
       expect(
         wallet.mapHandle("mohitmetakeep@regtest", [
           {
-            public_address: "mockPublicAddress",
-            chain_code: "mockChainCode",
-            token_code: "mockTokenCode",
+            address: "mockPublicAddress",
+            chain: "ETH",
           },
           {
-            public_address: "mockPublicAddress",
-            chain_code: "mockChainCode",
-            token_code: "mockTokenCode",
+            address: "mockPublicAddress",
+            chain: "ETH",
           },
           {
-            public_address: "mockPublicAddress",
-            chain_code: "mockChainCode",
-            token_code: "mockTokenCode",
+            address: "mockPublicAddress",
+            chain: "ETH",
           },
           {
-            public_address: "mockPublicAddress",
-            chain_code: "mockChainCode",
-            token_code: "mockTokenCode",
+            address: "mockPublicAddress",
+            chain: "ETH",
           },
           {
-            public_address: "mockPublicAddress",
-            chain_code: "mockChainCode",
-            token_code: "mockTokenCode",
+            address: "mockPublicAddress",
+            chain: "ETH",
           },
           {
-            public_address: "mockPublicAddress",
-            chain_code: "mockChainCode",
-            token_code: "mockTokenCode",
+            address: "mockPublicAddress",
+            chain: "ETH",
           },
         ])
       ).rejects.toThrow(
@@ -239,9 +230,8 @@ describe("FIOWallet", () => {
       expect(
         wallet.mapHandle("mohitmetakeep@regtest", [
           {
-            public_address: "mockPublicAddress",
-            chain_code: "mockChainCode",
-            token_code: "mockTokenCode",
+            address: "mockPublicAddress",
+            chain: "ETH",
           },
         ])
       ).rejects.toThrow("Test error");

@@ -1,1 +1,1 @@
-export { FIOWallet } from "./FIOWallet";
+export { FIOWallet, FIOWalletOptions, UserAddress } from "./FIOWallet";

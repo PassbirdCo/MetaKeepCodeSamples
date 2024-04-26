@@ -17,16 +17,16 @@ export enum Environment {
  */
 interface CreateRawTxParams {
   publicKey: string;
-  actionData: ActionData;
+  actionData: MapHandleActionData;
   account: string;
   action: string;
   fioBaseUrl: string;
 }
 
 /**
- * Interface representing a public address object.
+ * Interface representing a public address object used in the map handle action data.
  */
-export interface PublicAddress {
+export interface MapHandleActionPublicAddress {
   /**
    * The chain code.
    * You can find all supported chain codes at: https://github.com/fioprotocol/fips/blob/master/fip-0015.md
@@ -48,9 +48,9 @@ export interface PublicAddress {
 /**
  * Represents the action data required for mapping a public address to a FIO address.
  */
-export interface ActionData {
+export interface MapHandleActionData {
   fio_address: string;
-  public_addresses: PublicAddress[];
+  public_addresses: MapHandleActionPublicAddress[];
   max_fee: number;
   tpid: string;
   actor: string;
