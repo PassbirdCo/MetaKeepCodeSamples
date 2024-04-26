@@ -8,7 +8,7 @@
     "/dist"
   ],
   "scripts": {
-    "test": "yarn jest",
+    "test": "jest",
     "build": "rm -rf dist && tsc"
   },
   "author": "Metakeep",
