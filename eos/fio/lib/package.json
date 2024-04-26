@@ -8,8 +8,9 @@
     "/dist"
   ],
   "scripts": {
-    "test": "jest",
-    "build": "rm -rf dist && tsc"
+    "test": "yarn jest",
+    "build": "rm -rf dist && tsc",
+    "preinstall": "npm run build"
   },
   "author": "Metakeep",
   "license": "ISC",
