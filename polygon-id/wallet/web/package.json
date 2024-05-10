@@ -15,7 +15,7 @@
     "@yudiel/react-qr-scanner": "^1.2.4",
     "axios": "^1.6.3",
     "metakeep": "^2.2.0",
-    "next": "14.0.4",
+    "next": "14.1.1",
     "react": "^18",
     "react-dom": "^18",
     "zustand": "^4.4.7"
