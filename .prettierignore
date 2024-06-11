@@ -20,3 +20,6 @@ polygon-id/issuer/**/*.json
 polygon-id/issuer/**/*.yml
 polygon-id/issuer/**/*.yaml
 polygon-id/issuer/**/*.html
+polygon-id/issuer/README.polygonid.md
+polygon-id/issuer/tools/**/*
+polygon-id/issuer/ui/**/*
