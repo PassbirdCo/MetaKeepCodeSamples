@@ -1,7 +1,7 @@
 ## MetaKeep Polygon ID Integration Demo
 
 This directory contains sample projects that you can use as a starting point for integrating MetaKeep with Polygon ID infrastructure.
-The integration requires minimal code using the [MetaKeep JavaScript SDK](https://docs.metakeep.xyz/reference/sdk-101).
+The integration requires minimal code using the [MetaKeep JavaScript SDK](https://docs.metakeep.xyz/reference/sdk-101) and [MetaKeep APIs](https://docs.metakeep.xyz/reference/cryptography-services-introduction).
 
 ## Directory Structure
 
@@ -10,6 +10,7 @@ The project is organized as follows:
 - [wallet](./wallet): Contains the Polygon ID wallet applications with MetaKeep integration.
   - [wallet/web](./wallet/web): Sample Polygon ID web wallet application with MetaKeep integration. Please refer to the [README](./wallet/web/README.md) for more details on how to run the wallet application.
   - [wallet/flutter](./wallet/flutter): Sample Polygon ID Flutter wallet application with MetaKeep integration. Please refer to the [README](./wallet/flutter/README.md) for more details on how to run the wallet application.
+- [issuer](./issuer): Contains the Polygon ID issuer applications with MetaKeep integration. Please refer to the [README](./issuer/README.md) for more details on how to run the issuer application.
 
 ## Running the Demo
 
