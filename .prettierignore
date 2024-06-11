@@ -15,3 +15,8 @@ polygon-id/wallet/flutter/analysis_options.yaml
 polygon-id/wallet/flutter/build.yaml
 **/package.json
 eos/fio/lib/dist/**/*
+polygon-id/issuer/.github/**/*
+polygon-id/issuer/**/*.json
+polygon-id/issuer/**/*.yml
+polygon-id/issuer/**/*.yaml
+polygon-id/issuer/**/*.html
