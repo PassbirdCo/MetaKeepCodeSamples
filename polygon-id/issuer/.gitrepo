@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/0xPolygonID/issuer-node.git
+	branch = main
+	commit = 7194b75ec974ca290596b9706703242654c25b74
+	parent = edf20ffdd0a58c6646b948d36eb9f7d427b28c81
+	method = merge
+	cmdver = 0.4.6
