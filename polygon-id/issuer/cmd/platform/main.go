@@ -23,13 +23,13 @@ import (
 	"github.com/polygonid/sh-id-platform/internal/errors"
 	"github.com/polygonid/sh-id-platform/internal/gateways"
 	"github.com/polygonid/sh-id-platform/internal/health"
+	"github.com/polygonid/sh-id-platform/internal/kms"
 	"github.com/polygonid/sh-id-platform/internal/loader"
 	"github.com/polygonid/sh-id-platform/internal/log"
 	"github.com/polygonid/sh-id-platform/internal/providers"
 	"github.com/polygonid/sh-id-platform/internal/providers/blockchain"
 	"github.com/polygonid/sh-id-platform/internal/redis"
 	"github.com/polygonid/sh-id-platform/internal/repositories"
-	"github.com/polygonid/sh-id-platform/metakeep"
 	"github.com/polygonid/sh-id-platform/pkg/blockchain/eth"
 	"github.com/polygonid/sh-id-platform/pkg/cache"
 	"github.com/polygonid/sh-id-platform/pkg/credentials/revocation_status"
@@ -42,19 +42,25 @@ import (
 var build = buildinfo.Revision()
 
 func main() {
-	log.Info(context.Background(), "starting issuer node...", "revision", build)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	log.Info(ctx, "starting issuer node...", "revision", build)
 
 	cfg, err := config.Load("")
 	if err != nil {
-		log.Error(context.Background(), "cannot load config", "err", err)
+		log.Error(ctx, "cannot load config", "err", err)
 		return
 	}
-
-	ctx, cancel := context.WithCancel(log.NewContext(context.Background(), cfg.Log.Level, cfg.Log.Mode, os.Stdout))
-	defer cancel()
+	log.Config(cfg.Log.Level, cfg.Log.Mode, os.Stdout)
 
 	if err := cfg.Sanitize(ctx); err != nil {
 		log.Error(ctx, "there are errors in the configuration that prevent server to start", "err", err)
+		return
+	}
+
+	if err := services.RegisterCustomDIDMethods(ctx, cfg.CustomDIDMethods); err != nil {
+		log.Error(ctx, "cannot register custom DID methods. Server cannot start", "err", err)
 		return
 	}
 
@@ -96,7 +102,7 @@ func main() {
 		go providers.RenewToken(ctx, vaultCli, vaultCfg)
 	}
 
-	keyStore, err := metakeep.OpenKMS(metakeep.LoadMetaKeepConfigDev(), cfg.KeyStore.PluginIden3MountPath, vaultCli)
+	keyStore, err := kms.Open(cfg.KeyStore.PluginIden3MountPath, vaultCli)
 	if err != nil {
 		log.Error(ctx, "cannot initialize kms", "err", err)
 		return
