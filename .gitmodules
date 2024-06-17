@@ -1,0 +1,3 @@
+[submodule "polygon-id/issuer-node"]
+	path = polygon-id/issuer-node
+	url = https://github.com/0xPolygonID/issuer-node.git
