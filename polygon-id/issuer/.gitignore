@@ -7,9 +7,9 @@ bin/
 *.so
 *.dylib
 
-# .env-api
-# .env-issuer
-# .env-ui
+.env-api
+.env-issuer
+.env-ui
 
 infrastructure/local/.vault/data
 infrastructure/local/.vault/plugins

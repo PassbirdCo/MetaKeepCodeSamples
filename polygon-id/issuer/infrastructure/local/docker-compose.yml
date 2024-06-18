@@ -1,5 +1,6 @@
 version: "3.9"
 services:
+
   ui:
     build:
       context: ../../ui/
@@ -9,8 +10,9 @@ services:
     env_file:
       - ../../.env-api
       - ../../.env-ui
+      - ../../.env-metakeep
     healthcheck:
-      test: ["CMD", "curl", "-f", "host.docker.internal:8088/health"]
+      test: [ "CMD", "curl", "-f", "host.docker.internal:8088/health" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -26,7 +28,7 @@ services:
       - ../../.env-issuer
       - ../../.env-metakeep
     healthcheck:
-      test: ["CMD", "curl", "-f", "host.docker.internal:3001/status"]
+      test: [ "CMD", "curl", "-f", "host.docker.internal:3001/status" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -43,7 +45,7 @@ services:
       - ../../.env-issuer
       - ../../.env-metakeep
     healthcheck:
-      test: ["CMD", "curl", "-f", "host.docker.internal:3002/status"]
+      test: [ "CMD", "curl", "-f", "host.docker.internal:3002/status" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -58,6 +60,7 @@ services:
     env_file:
       - ../../.env-api
       - ../../.env-issuer
+      - ../../.env-metakeep
     command: sh -c "sleep 4s && ./notifications"
 
   pending_publisher:
@@ -69,6 +72,7 @@ services:
     env_file:
       - ../../.env-api
       - ../../.env-issuer
+      - ../../.env-metakeep
     command: sh -c "sleep 4s &&  ./pending_publisher"
 
   initializer:
@@ -79,8 +83,8 @@ services:
       - ../../.env-api
       - ../../.env-issuer
       - ../../.env-metakeep
-    command: sh -c "./migrate && ./issuer_initializer"
+    command: sh -c "sleep 4s && ./migrate && ./issuer_initializer"
 
 networks:
   default:
-    name: issuer-network
+      name: issuer-network

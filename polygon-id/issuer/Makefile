@@ -47,7 +47,7 @@ test-race:
 
 $(BIN)/oapi-codegen: tools.go go.mod go.sum ## install code generator for API files.
 	go get github.com/deepmap/oapi-codegen/cmd/oapi-codegen
-	$(GO) install github.com/deepmap/oapi-codegen/cmd/oapi-codegen
+	$(GO) install github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen
 
 .PHONY: api
 api: $(BIN)/oapi-codegen
@@ -160,9 +160,6 @@ add-vault-token:
 	@echo ISSUER_KEY_STORE_TOKEN=$(TOKEN) >> .env-issuer.tmp
 	mv .env-issuer.tmp .env-issuer
 
-.PHONY: build-initializer
-build-initializer:
-	COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_FILE="Dockerfile" $(DOCKER_COMPOSE_CMD) build initializer
 
 .PHONY: run-initializer
 run-initializer:
