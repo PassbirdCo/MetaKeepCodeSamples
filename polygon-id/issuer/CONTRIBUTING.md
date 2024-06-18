@@ -4,14 +4,14 @@ Welcome to Issuer Node! We're thrilled to have you here. Before you get started,
 
 ### Contents
 
-- [How to Contribute](#how-to-contribute)
-- [Getting Started](#getting-started)
-- [Issue Tracker Guidelines](#issue-tracker-guidelines)
-- [Code Contribution Guidelines](#code-contribution-guidelines)
-- [Testing Guidelines](#testing-guidelines)
-- [Documentation](#documentation)
-- [License Information](#license-information)
-- [Contact Information](#contact-information)
+* [How to Contribute](#how-to-contribute)
+* [Getting Started](#getting-started)
+* [Issue Tracker Guidelines](#issue-tracker-guidelines)
+* [Code Contribution Guidelines](#code-contribution-guidelines)
+* [Testing Guidelines](#testing-guidelines)
+* [Documentation](#documentation)
+* [License Information](#license-information)
+* [Contact Information](#contact-information)
 
 ## How to Contribute
 
@@ -36,7 +36,8 @@ Provide detailed information and steps to reproduce when reporting bugs.
 Follow the issue template if available.
 
 ## Code Contribution Guidelines
-Before submitting a contribution, please consider whether it will be useful to the community and try to minimise breaking changes.  In general, a Pull Request with breaking changes is unlikely to be accepted immediately.
+
+Before submitting a contribution, please consider whether it will be useful to the community and try to minimise breaking changes. In general, a Pull Request with breaking changes is unlikely to be accepted immediately.
 Submit concise and focused pull requests with clear descriptions.
 
 Follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) specification both for the commits and PR names.
@@ -47,16 +48,17 @@ Be responsive to feedback and address any review comments promptly.
 
 ## Testing Guidelines
 
-Write tests for new features or changes 
+Write tests for new features or changes
 
 Ensure all existing tests pass and the linter reports no errors before submitting your changes.
 
 Run tests and linter locally with:
-``` bash
+
+```bash
 make up-test // To start the database used by tests
 make tests // run all tests
 make lint // run linter
-``` 
+```
 
 ## Documentation
 

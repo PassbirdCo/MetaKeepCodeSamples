@@ -21,33 +21,34 @@ Streamline the **Verifiable Credentials issuance** process with the user-friendl
 
 ## Table of Contents
 
-- [Quick Start Installation](#quick-start-installation)
-    - [Prerequisites](#Prerequisites)
-    - [Issuer Node Api](#issuer-node-api)
-    - [Issuer Node UI](#issuer-node-ui)
-- [Quick Start Demo](#quick-start-demo)
-- [Documentation](#documentation)
-- [Tools](#tools)
-- [License](#license)
+* [Quick Start Installation](#quick-start-installation)
+  * [Prerequisites](#Prerequisites)
+  * [Issuer Node Api](#issuer-node-api)
+  * [Issuer Node UI](#issuer-node-ui)
+* [Quick Start Demo](#quick-start-demo)
+* [Documentation](#documentation)
+* [Tools](#tools)
+* [License](#license)
 
 ## Quick Start Installation
+
 > [!NOTE]
-> The provided installation guide is **non-production** ready. For production deployments please refer to  [Standalone Mode Guide](https://devs.polygonid.com/docs/issuer/setup-issuer-core/).
+> The provided installation guide is **non-production** ready. For production deployments please refer to [Standalone Mode Guide](https://devs.polygonid.com/docs/issuer/setup-issuer-core/).
 >
 > There is no compatibility with Windows environments at this time. While using WSL should be ok, it's not officially supported.
 
 ### Prerequisites
 
-- Unix-based operating system (e.g. Debian, Arch, Mac OS)
-- [Docker Engine](https://docs.docker.com/engine/) `1.27+`
-- Makefile toolchain `GNU Make 3.81`
-- Publicly accessible URL - The issuer node API must be publicly reachable. Please make sure you properly configure your proxy or use a tool like [Localtunnel](https://theboroer.github.io/localtunnel-www/) for testing purposes.
-- Polygon Amoy or Main RPC - You can get one in any of the providers of this list
-    - [Chainstack](https://chainstack.com/)
-    - [Ankr](https://ankr.com/)
-    - [QuickNode](https://quicknode.com/)
-    - [Alchemy](https://www.alchemy.com/)
-    - [Infura](https://www.infura.io/)
+* Unix-based operating system (e.g. Debian, Arch, Mac OS)
+* [Docker Engine](https://docs.docker.com/engine/) `1.27+`
+* Makefile toolchain `GNU Make 3.81`
+* Publicly accessible URL - The issuer node API must be publicly reachable. Please make sure you properly configure your proxy or use a tool like [Localtunnel](https://theboroer.github.io/localtunnel-www/) for testing purposes.
+* Polygon Amoy or Main RPC - You can get one in any of the providers of this list
+  * [Chainstack](https://chainstack.com/)
+  * [Ankr](https://ankr.com/)
+  * [QuickNode](https://quicknode.com/)
+  * [Alchemy](https://www.alchemy.com/)
+  * [Infura](https://www.infura.io/)
 
 ### Issuer Node API
 
@@ -56,41 +57,43 @@ In this section we will cover the installation of the Issuer Node API.
 > [!NOTE]
 > This Quick Installation Guide is prepared for Polygon Amoy (Testnet) both for the state contract and issuer dids. If you want to deploy the node with Polygon Main configuration, please visit our [advanced Issuer Node configuration guide](https://devs.polygonid.com/docs/issuer/issuer-configuration/)).
 
-
 #### Deploy Issuer Node Infrastructure
 
 1. Copy the config sample files:
 
-    ```shell
-    cp .env-issuer.sample .env-issuer
-    cp .env-api.sample .env-api
-    ```
+   ```shell
+   cp .env-issuer.sample .env-issuer
+   cp .env-api.sample .env-api
+   ```
 
 2. Fill the .env-issuer config file with the proper variables:
 
-   *.env-issuer*
-    ```bash
-    ISSUER_ETHEREUM_URL=<YOUR_RPC_PROVIDER_URI_ENDPOINT>
-    ```
+   _.env-issuer_
+
+   ```bash
+   ISSUER_ETHEREUM_URL=<YOUR_RPC_PROVIDER_URI_ENDPOINT>
+   ```
+
 3. Start the infrastructure:
 
-    ```bash
-    make up
-    ```
+   ```bash
+   make up
+   ```
 
 4. Enable vault authentication:
 
-    ```bash
-    make add-vault-token
-    ```
+   ```bash
+   make add-vault-token
+   ```
 
 5. Write the private key in the vault. This step is needed in order to be able to transit the issuer's state. To perform that action the given account has to be funded. For Amoy network you can request some testing Matic [here](https://www.alchemy.com/faucets/polygon-amoy).
 
-    ```bash
-    make private_key=<YOUR_WALLET_PRIVATE_KEY> add-private-key
-    ```
+   ```bash
+   make private_key=<YOUR_WALLET_PRIVATE_KEY> add-private-key
+   ```
 
-----
+---
+
 **Troubleshooting:**
 
 In order to **stop** and **delete** all the containers.
@@ -98,44 +101,47 @@ In order to **stop** and **delete** all the containers.
 > [!WARNING]
 > This will permanently delete all data, making it necessary to create an Issuer DID again.
 
-``` bash
+```bash
 make down
 ```
 
 If you experience **problems** with the **vault**, follow these commands:
 
-``` bash
-docker stop issuer-vault-1    // Stops the container issuer-vault-1 
+```bash
+docker stop issuer-vault-1    // Stops the container issuer-vault-1
 docker rm issuer-vault-1      // Removes container issuer-vault-1
 make clean-vault              // Removes all the data in the vault, including the token
 make up                       // Starts the database, cache and vault storage (i.e, postgres, redis and vault)
 ```
+
 Wait 20 secs so the vault can boot and generate a token.
 
-``` bash
+```bash
 make add-vault-token                                          // Adds the generated token to the ISSUER_KEY_STORE_TOKEN var in .env-issuer
 make private_key=<YOUR_WALLET_PRIVATE_KEY> add-private-key    // Stores the private key in the vault
 ```
 
-----
+---
+
 #### Run Issuer Node API
 
 The issuer node is extensively configurable, for a detailed list of the configuration, please visit our [detailed configuration guide](https://devs.polygonid.com/docs/issuer/issuer-configuration/).
 
 1. Fill the .env-issuer config file with the proper variables:
 
-   *.env-issuer*
-    ```bash
-    ISSUER_API_AUTH_USER=user-issuer
-    ISSUER_API_AUTH_PASSWORD=password-issuer
-    ISSUER_SERVER_URL=<PUBLICLY_ACCESSIBLE_URL_POINTING_TO_ISSUER_SERVER_PORT>
-    ```
+   _.env-issuer_
+
+   ```bash
+   ISSUER_API_AUTH_USER=user-issuer
+   ISSUER_API_AUTH_PASSWORD=password-issuer
+   ISSUER_SERVER_URL=<PUBLICLY_ACCESSIBLE_URL_POINTING_TO_ISSUER_SERVER_PORT>
+   ```
 
 2. Run api:
 
-    ```bash
-    make run
-    ```
+   ```bash
+   make run
+   ```
 
 > Core API specification - http://localhost:3001/
 
@@ -145,7 +151,7 @@ The issuer node is extensively configurable, for a detailed list of the configur
 
 Restart the api.
 
-```bash 
+```bash
 make restart-api
 ```
 
@@ -160,7 +166,7 @@ In order to make the UI work, we will need configure some env variables in the `
 1. Copy .env-ui sample file and fill the needed env variables:
 
 
-    ```bash 
+    ```bash
     cp .env-ui.sample .env-ui
     ```
 
@@ -169,7 +175,7 @@ In order to make the UI work, we will need configure some env variables in the `
     ISSUER_UI_AUTH_USERNAME=user-ui
     ISSUER_UI_AUTH_PASSWORD=password-ui
     ```
-    
+
     *.env-api*
     ```bash
     ISSUER_API_UI_SERVER_URL={PUBLICLY_ACCESSIBLE_URL_POINTING_TO_ISSUER_API_UI_SERVER_PORT}
@@ -183,29 +189,30 @@ In order to make the UI work, we will need configure some env variables in the `
 
 2. Generate Issuer DID:
 
-    ```bash
-    make generate-issuer-did
-    ```
+   ```bash
+   make generate-issuer-did
+   ```
 
 3. Run UI:
 
-    ```bash
-    make run-ui
-    ```
+   ```bash
+   make run-ui
+   ```
 
-
->**API UI specification** - http://localhost:3002/
-> 
->**UI** - http://localhost:8088/
+> **API UI specification** - http://localhost:3002/
+>
+> **UI** - http://localhost:8088/
 
 ---
+
 **Troubleshooting:**
 
 Restart the ui:
 
-```bash 
+```bash
 make restart-ui
 ```
+
 ---
 
 ## Quick Start Demo
@@ -218,9 +225,8 @@ This [Quick Start Demo](https://devs.polygonid.com/docs/quick-start-demo/) will 
 * [Polygon ID core concepts](https://devs.polygonid.com/docs/introduction/)
 
 ## Tools
-> [!WARNING]
-> **Demo Issuer** and **Verifier Demo** are for **testing** purposes **only**.
 
+> [!WARNING] > **Demo Issuer** and **Verifier Demo** are for **testing** purposes **only**.
 
 * [Schema Builder](https://schema-builder.polygonid.me/) - Create your custom schemas to issue VC.
 * [Demo Issuer UI](https://user-ui:password-ui@issuer-ui.polygonid.me/) - Test our Issuer Node UI.
