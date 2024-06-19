@@ -101,6 +101,10 @@ build-ui-arm:
 	@echo "WARN: Running ARM version is deprecated. 'make build-ui' will be executed instead."
 	@make build-ui
 
+.PHONY: build-initializer
+build-initializer:
+	COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_FILE="Dockerfile" $(DOCKER_COMPOSE_CMD) build initializer
+
 .PHONY: down
 down:
 	$(DOCKER_COMPOSE_INFRA_CMD) down --remove-orphans
