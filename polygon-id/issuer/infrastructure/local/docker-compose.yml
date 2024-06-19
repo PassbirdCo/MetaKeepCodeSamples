@@ -10,7 +10,6 @@ services:
     env_file:
       - ../../.env-api
       - ../../.env-ui
-      - ../../.env-metakeep
     healthcheck:
       test: [ "CMD", "curl", "-f", "host.docker.internal:8088/health" ]
       interval: 10s
@@ -60,7 +59,6 @@ services:
     env_file:
       - ../../.env-api
       - ../../.env-issuer
-      - ../../.env-metakeep
     command: sh -c "sleep 4s && ./notifications"
 
   pending_publisher:
@@ -72,7 +70,6 @@ services:
     env_file:
       - ../../.env-api
       - ../../.env-issuer
-      - ../../.env-metakeep
     command: sh -c "sleep 4s &&  ./pending_publisher"
 
   initializer:
@@ -83,7 +80,7 @@ services:
       - ../../.env-api
       - ../../.env-issuer
       - ../../.env-metakeep
-    command: sh -c "sleep 4s && ./migrate && ./issuer_initializer"
+    command: sh -c "./migrate && ./issuer_initializer"
 
 networks:
   default:
