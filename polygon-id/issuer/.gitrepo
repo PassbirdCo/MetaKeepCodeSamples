@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/0xPolygonID/issuer-node.git
 	branch = main
-	commit = 7194b75ec974ca290596b9706703242654c25b74
-	parent = edf20ffdd0a58c6646b948d36eb9f7d427b28c81
+	commit = 7e0c6612a5b29cf48b1732ac5f5a89f12085e692
+	parent = 73a01294bf1bef2e746d6c4c3054decf79dafa8f
 	method = merge
 	cmdver = 0.4.6
