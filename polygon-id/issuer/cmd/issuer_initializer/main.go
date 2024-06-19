@@ -110,6 +110,7 @@ func main() {
 		return
 	}
 
+	// MetaKeep KMS initialization
 	keyStore, err := metakeep.OpenKMS(metakeep.LoadMetaKeepConfigDev(), cfg.KeyStore.PluginIden3MountPath, vaultCli)
 	if err != nil {
 		log.Error(ctx, "cannot initialize kms", "err", err)
