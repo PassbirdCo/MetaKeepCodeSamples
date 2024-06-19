@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/alicebob/miniredis/v2 v2.31.1
 	github.com/deepmap/oapi-codegen v1.16.2
-	github.com/ethereum/go-ethereum v1.13.14
+	github.com/ethereum/go-ethereum v1.13.15
 	github.com/getkin/kin-openapi v0.123.0
 	github.com/go-chi/chi/v5 v5.0.11
 	github.com/go-chi/cors v1.2.1
@@ -34,9 +34,9 @@ require (
 	github.com/iden3/iden3comm/v2 v2.3.2
 	github.com/iden3/merkletree-proof v0.0.4
 	github.com/ipfs/go-ipfs-api v0.7.0
-	github.com/jackc/pgconn v1.14.1
+	github.com/jackc/pgconn v1.14.3
 	github.com/jackc/pgtype v1.14.0
-	github.com/jackc/pgx/v4 v4.18.1
+	github.com/jackc/pgx/v4 v4.18.2
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/gommon v0.4.2
@@ -128,7 +128,7 @@ require (
 	github.com/getsentry/sentry-go v0.25.0 // indirect
 	github.com/ghostiam/protogetter v0.3.4 // indirect
 	github.com/go-critic/go-critic v0.11.1 // indirect
-	github.com/go-jose/go-jose/v3 v3.0.1 // indirect
+	github.com/go-jose/go-jose/v3 v3.0.3 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/go-openapi/jsonpointer v0.20.2 // indirect
 	github.com/go-openapi/swag v0.22.8 // indirect
@@ -184,7 +184,7 @@ require (
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
-	github.com/jackc/pgproto3/v2 v2.3.2 // indirect
+	github.com/jackc/pgproto3/v2 v2.3.3 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20231201235250-de7065d80cb9 // indirect
 	github.com/jackc/puddle v1.3.0 // indirect
 	github.com/jgautheron/goconst v1.7.0 // indirect
