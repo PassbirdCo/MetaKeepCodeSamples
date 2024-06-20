@@ -13,7 +13,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
-    "ethers": "^5.7.1",
+    "ethers": "^6.13.1",
     "express": "^4.19.2",
     "node-fetch": "^3.2.10",
     "prettier": "^2.7.1"
