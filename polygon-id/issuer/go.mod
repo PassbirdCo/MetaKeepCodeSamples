@@ -13,7 +13,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/golangci/golangci-lint v1.56.2
 	github.com/google/uuid v1.6.0
-	github.com/hashicorp/go-retryablehttp v0.7.5
+	github.com/hashicorp/go-retryablehttp v0.7.7
 	github.com/hashicorp/vault/api v1.10.0
 	github.com/hashicorp/vault/api/auth/userpass v0.5.0
 	github.com/iden3/contracts-abi/onchain-credential-status-resolver/go/abi v0.0.0-20231116131043-966af42c9b58
@@ -326,7 +326,7 @@ require (
 	golang.org/x/mod v0.17.0 // indirect
 	golang.org/x/net v0.24.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/sys v0.19.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.20.0 // indirect
