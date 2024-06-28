@@ -178,7 +178,7 @@ export const invokeLambdaMultiple = async ({
   description,
   as,
 }) => {
-  const url = getAPIHost() + "/v2/app/lambda/invoke";
+  const url = getAPIHost() + "/v2/app/lambda/invoke/multiple";
 
   const headers = {
     Accept: "application/json",
