@@ -35,6 +35,12 @@ Then, run the following command to invoke the memo program as you(the developer)
 npm run invokeWithExternalSigners
 ```
 
+You can also run a batch of transactions in the batch mode by running the following command. This will invoke multiple memo programs in a batch parallelly.
+
+```sh
+npm run invokeBatch
+```
+
 # Invoke Solana lambda method on behalf of end-users by getting their consent.
 
 If you want to invoke the Lambda using the end user's wallet, you need their consent. To get the consent you need to use the MetaKeep SDK. Run the following commands for an end-to-end Lambda invocation demo on behalf of the end-user.

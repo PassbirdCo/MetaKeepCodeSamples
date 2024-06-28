@@ -172,6 +172,47 @@ export const invokeSolana = async (
   return resultJson;
 };
 
+// Invokes multiple lambdas.
+export const invokeLambdaMultiple = async ({
+  invocations,
+  description,
+  as,
+}) => {
+  const url = getAPIHost() + "/v2/app/lambda/invoke/multiple";
+
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "x-api-key": process.env.API_KEY,
+    "Idempotency-Key": "Idempotency-Key" + Math.floor(Math.random() * 10000),
+  };
+  const requestBody = {
+    invocations: invocations,
+    description: description,
+    as: as || null,
+  };
+
+  console.log("Lambda batch invoke request: ", requestBody);
+
+  const options = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestBody),
+  };
+
+  const result = await fetch(url, options);
+  const resultJson = await result.json();
+
+  console.log("invokeSolanaMultiple response: ", resultJson);
+
+  if (!result.ok) {
+    throw new Error(
+      "Error while invoking method. HTTP status code: " + result.status
+    );
+  }
+  return resultJson;
+};
+
 export const getLambdaSponsor = async () => {
   const url = getAPIHost() + "/v2/app/lambda/getSponsor";
 
