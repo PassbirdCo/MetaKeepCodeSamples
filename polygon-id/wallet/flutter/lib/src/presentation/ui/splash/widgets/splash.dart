@@ -59,7 +59,6 @@ class _SplashScreenState extends State<SplashScreen> {
               ImageResources.logo,
               width: 180,
             ),
-            Image.asset(ImageResources.metakeepCryptographyLogo, width: 250),
             _buildDownloadProgress(),
           ],
         ),

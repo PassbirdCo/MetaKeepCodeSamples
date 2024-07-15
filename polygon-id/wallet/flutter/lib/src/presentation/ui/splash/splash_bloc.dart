@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:polygonid_flutter_sdk/common/domain/domain_logger.dart';
 import 'package:polygonid_flutter_sdk/proof/data/dtos/circuits_to_download_param.dart';
 import 'package:polygonid_flutter_sdk/proof/domain/entities/download_info_entity.dart';
 import 'package:polygonid_flutter_sdk/sdk/polygon_id_sdk.dart';
@@ -20,9 +19,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   /// Simulation of a possible loading time
   Future<void> onStartDownloadSplashEvent(
       StartDownloadSplashEvent event, Emitter<SplashState> emit) async {
-    //https://iden3-circuits-bucket.s3.eu-west-1.amazonaws.com/tmpv3.zip
-    //"https://circuits.polygonid.me/circuits/v1.0.0/polygonid-keys.zip"
-
     Stream<DownloadInfo> stream =
         PolygonIdSdk.I.proof.initCircuitsDownloadAndGetInfoStream(
       circuitsToDownload: [
@@ -31,12 +27,11 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
           bucketUrl:
               "https://circuits.polygonid.me/circuits/v1.0.0/polygonid-keys.zip",
         ),
-        // If v3 circuits are needed, uncomment this
-        // CircuitsToDownloadParam(
-        //   circuitsName: "circuitsV3",
-        //   bucketUrl:
-        //       "https://iden3-circuits-bucket.s3.eu-west-1.amazonaws.com/circuitsv3-beta-0.zip",
-        // ),
+        CircuitsToDownloadParam(
+          circuitsName: "circuitsV3",
+          bucketUrl:
+              "https://iden3-circuits-bucket.s3.eu-west-1.amazonaws.com/circuitsv3-beta-1-1.zip",
+        ),
       ],
     );
 
@@ -58,6 +53,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       );
     } else if (event.downloadInfo is DownloadInfoOnDone) {
       _subscription?.cancel();
+
       emit(SplashState.waitingTimeEnded());
     } else if (event.downloadInfo is DownloadInfoOnError) {
       _subscription?.cancel();

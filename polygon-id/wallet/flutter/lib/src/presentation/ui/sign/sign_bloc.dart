@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:polygonid_flutter_sdk/common/domain/domain_logger.dart';
 import 'package:polygonid_flutter_sdk/identity/domain/exceptions/identity_exceptions.dart';
 import 'package:polygonid_flutter_sdk/sdk/polygon_id_sdk.dart';
 import 'package:polygonid_flutter_sdk_example/src/data/secure_storage.dart';
@@ -42,9 +41,7 @@ class SignBloc extends Bloc<SignEvent, SignState> {
       emit(SignState.error(message: identityException.error));
     } on FormatException catch (identityException) {
       emit(SignState.error(message: identityException.message));
-    } catch (_, stacktrace) {
-      logger()
-          .e("SignBloc._signMessage: error: $_", {"stacktrace": stacktrace});
+    } catch (_) {
       emit(const SignState.error(message: CustomStrings.genericError));
     }
   }
