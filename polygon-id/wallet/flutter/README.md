@@ -1,294 +1,104 @@
-# PolygonID Flutter SDK Example App
+## MetaKeep Polygon ID Demo Wallet Application
 
-Demonstrates how to use the polygonid_flutter_sdk plugin.
+This directory contains a sample Polygon ID flutter wallet application with MetaKeep integration. The code has been adapted from the sample code provided by the [Polygon ID Flutter SDK](https://github.com/0xPolygonID/polygonid-flutter-sdk/tree/main/example). Most of the MetaKeep specific code is in `lib/src/metakeep` directory.
 
-**Contents**
-1. [Setup](#setup)
-2. [Examples](#examples)
-   - [SDK initialization](#polygonid-sdk-initialization)
-   - [Configuration](#configuration)
-   - [Identity](#identity)
-   - [Authentication](#authentication)
-   - [Credential](#credential)
-## Setup
+## Running the Application
 
-### Install
-1. Clone the `polygonid-flutter-sdk` repository.
-2. Run `flutter pub get` from example directory.
-3. Configure the environment per the instructions below.
-4. Run `build_runner` to generate `.g.dart` files:
-```bash
-dart run build_runner build --delete-conflicting-outputs
-```
-5. After the previous steps, build and run the project.
+Please follow the steps below to run the demo:
 
-## Examples
+### 1. Create MetaKeep Cryptography BabyJubJub App
 
-### PolygonId SDK initialization
-Before you can start using the SDK, you need to initialise it and set the environment, otherwise a `PolygonIsSdkNotInitializedException` exception will be thrown.
+The first step is to create a `MetaKeep Cryptography BabyJubJub` app on the [MetaKeep console](https://console.metakeep.xyz). Once you have created the app, you will get an `APP_ID`. Save this `APP_ID`.
 
-See [the SDK environment](../README.md#environment) for more information.
+### 2. Download the project
 
-### Configuration
+Afterward, you need to clone this repository and download the dependencies.
 
-In this example app we are using environment variable and Envied package to initialize the SDK. You can configure the application with the following [environment variables]:
-
-- **`ENV_POLYGON_MAINNET`**: We use this to setup the sdk environment.<br/>
-  Default: `{"ipfsUrl":"https://[YOUR-IPFS-API-KEY]:[YOUR-IPFS-API-KEY-SECRET]@ipfs.infura.io:5001","pushUrl":"https://push-staging.polygonid.com/api/v1","chainConfigs":{"137":{"rpcUrl":"https://polygon-mainnet.infura.io/v3/YOUR_WEB3_API_KEY","stateContractAddr":"0x624ce98D2d27b20b8f8d521723Df8fC4db71D79D"},"80001":{"rpcUrl":"https://polygon-mumbai.infura.io/v3/YOUR_WEB3_API_KEY","stateContractAddr":"0x134B1BE34911E39A8397ec6289782989729807a4"},"80002":{"rpcUrl":"https://polygon-amoy.infura.io/v3/YOUR_WEB3_API_KEY","stateContractAddr":"0x1a4cC30f2aA0377b0c3bc9848766D90cb4404124"}},"didMethods":[],"stacktraceEncryptionKey":"ENCRYPTION_KEY"}`
-
-To be able to run the app, you will need to create a `.env` file in the root of the project and read configurations from there. You can copy the sample environment config (env.sample) as a starting point (replace with your own values).
-```bash
-make config
+```sh
+git clone https://github.com/PassbirdCo/MetaKeepCodeSamples.git
 ```
 
-Once the `.env` file is created and successfully configured, run `build_runner` to generate the `env.g.dart` file:
+Then navigate to the `polygon-id/wallet/flutter` directory.
+
+```sh
+cd polygon-id/wallet/flutter
+```
+
+### 3: Install dependencies
+
+Install the Flutter dependencies by running the following command:
+
+```sh
+flutter pub get
+```
+
+### 4. Update the `.env` file
+
+Update the `METAKEEP_APP_ID` in the `.env` file with the `APP_ID` of your MetaKeep Cryptography BabyJubJub app.
+
+Then, run `build_runner` to generate `.g.dart` files with the environment variables:
+
 ```bash
+dart run build_runner clean
 dart run build_runner build --delete-conflicting-outputs
 ```
 
-See [the SDK Usage](../README.md#usage) for more information.
+### 5. Update Android gradle file
 
-### Identity
-#### Add identity
-If not yet created, add an identity via `identity.addIdentity();`
-```dart
-Future<void> addIdentity() async {
-  PrivateIdentityEntity identity = await PolygonIdSdk.I.identity.addIdentity(
-     secret: secretKey,
-  );
-}
-```
-- `secret` param in the `addIdentity()` is optional, if not passed there will be one generated randomly.
-- it is recommended to securely save the `privateKey` generated with `addIdentity()`, this will often be used within the sdk methods as a security system, you can find the `privateKey` in the `PrivateIdentityEntity` object.
+Update the `android/app/build.gradle` file to add the `APP_ID` of your MetaKeep Cryptography BabyJubJub app.
 
-#### Get identifier
-Get the DID identifier from previously created identity via `identity.getDidIdentifier();` by passing as param the `privateKey`, `blockchain` and `network`.
-```dart
-Future<void> getDidIdentifier() async {
-  String privateKey = privateIdentityEntity.privateKey;
-  String didIdentifier = await PolygonIdSdk.I.identity.getDidIdentifier(
-     privateKey: privateKey,
-     blockchain: blockchain,
-     network: network,
-  );
-}
+```gradle
+        //---> Configure MetaKeep Domain and Scheme
+        // metakeepDomain: Replace <app_id> with your app's id which you can find in the developer console
+        // metakeepScheme: Replace com.domain.app with your app's package name
+        manifestPlaceholders += [metakeepDomain: "<app_id>.auth.metakeep.xyz", metakeepScheme: "com.domain.app"]
+        //<---
 ```
 
-#### Remove identity
-To remove an `identity` call `identity.removeIdentity()`, the `privateKey` and the `genesisDid` of the `identity` you want to remove are needed.
-```dart
-Future<void> removeIdentity({
-  required String privateKey,
-  required String genesisDid,
-}) async {
-   await PolygonIdSdk.I.identity.removeIdentity(
-      privateKey: privateKey,
-      genesisDid: genesisDid,
-   );
-}
-```
-- `genesisDid` is the unique id of the identity which profileNonce is 0.
+### 6. Run the application
 
-#### Sign a message
-To sign a message with your `privateKey` call `identity.sign()`, with the `message` and `privateKey`. (The `message` String must be an Hex or a Int otherwise an Exception will be thrown)
-A `signature` containing a `BigInt` is returned as a String.
-```dart
-Future<void> sign({
-  required String privateKey,
-  required String message,
-}) async {
-  String signature = await PolygonIdSdk.I.identity.sign(
-    privateKey: privateKey,
-    message: message,
-  );
-}
+Run the following command to start the application:
+
+```sh
+flutter run
 ```
 
-#### Backup identity
-To backup an identity call `identity.backupIdentity()`, with the `privateKey` and `genesisDid`.
-An encrypted Identity's Databases is returned.
-```dart
-Future<String> backupIdentity({
-  required String genesisDid,
-  required String privateKey,
-}){
-  return PolygonIdSdk.I.identity.backupIdentity(
-    genesisDid: genesisDid,
-    privateKey: privateKey,
-  );
-}
-```
+This will start the wallet application on the emulator or connected device. You can now use the wallet application to create a new identity, add credentials, and verify them.
 
-#### Restore identity
-To restore an identity call `identity.restoreIdentity()`, with the `privateKey`, `genesisDid` and the `encryptedDb`.
-```dart
-Future<void> restoreIdentity({
-  required String genesisDid,
-  required String privateKey,
-  String? encryptedDb,
-}) async {
-  await PolygonIdSdk.I.identity.restoreIdentity(
-    genesisDid: genesisDid,
-    privateKey: privateKey,
-    encryptedDb: encryptedDb,
-  );
-}
-```
+## Using the Application
 
-#### Check identity validity
-To check if an identity is valid call `identity.checkIdentityValidity()`, with the `secret`.
-if the identity is valid, the method will complete successfully, otherwise an Exception will be thrown.
-```dart
-Future<void> checkIdentityValidity({
-  required String secret,
-}) async {
-  return PolygonIdSdk.I.identity.checkIdentityValidity(
-    secret: secret,
-  );
-}
-```
+The wallet application allows you to create a new identity, add credentials, and verify them.
 
-### Authentication
-After the identity has been created, it can be used to perform an authentication.
+### 1. Create a new identity
 
-#### Iden3Message
-Communication between the various actors takes place through `iden3message` object, provided for example by a QR Code, in order to facilitate the translation from `String` to `Iden3message`, it is possible to use this method of the SDK `iden3comm.getIden3Message()`, providing the `String` message as param.
-```dart
-Iden3MessageEntity getIden3MessageFromString(String message){
-  return PolygonIdSdk.I.iden3comm.getIden3Message(message: message);
-}
-```
+Click on the `Create identity` button to create a new identity. You will be asked to enter your email address to create a new identity. Once the identity is created, you will see your `DID` on the screen.
 
-#### Authenticate
-In order to authenticate, you will need to pass the following parameters, `iden3message` related to the authentication request, the `genesisDid`, the `profileNonce` (optional), the `privateKey`, and the `pushToken` (optional).'
-```dart
-Future<void> authenticate({
-  required Iden3MessageEntity iden3message,
-  required String genesisDid,
-  BigInt? profileNonce,
-  required String privateKey,
-  String? pushToken
-}) async {
-  await PolygonIdSdk.I.iden3comm.authenticate(
-    iden3message: iden3message,
-    genesisDid: genesisDid,
-    profileNonce: profileNonce,
-    privateKey: privateKey,
-    pushToken: pushToken,
-  );
-}
-```
+### 2. Add KYC age credentials
 
-### Credential
-The credential consists of **claims**, to retrieve them from an **Issuer** and save them in the **wallet** is possible to use `iden3comm.fetchAndSaveClaims()` method, these **claims** will later be used to **prove** one's **Identity** in a **Verifier**. Saved **claims** can be `updated` or `removed` later.
+We will use the [PolygonID sample issuer](https://issuer-ui.polygonid.me/) to issue a `KYCAgeCredential` to your `DID`.
 
-#### Fetch and Save Claims
-From the **iden3message** obtained from **Issuer**, you can pass it as `OfferIden3MessageEntity` to the `fetchAndSaveClaims` method along with the `did` and `privateKey`.
-```dart
-Future<void> fetchAndSaveClaims({
-  required OfferIden3MessageEntity message,
-  required String did,
-  required String privateKey,
-}) async {
-  await PolygonIdSdk.I.iden3comm.fetchAndSaveClaims(
-    message: message,
-    did: did,
-    privateKey: privateKey,
-  );
-}
+1. Navigate to the [PolygonID sample issuer](https://issuer-ui.polygonid.me/).
+2. Import a new `KYCAgeCredential-v4.json` schema from https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v4.json
+3. Issue a `SIG` based `KYCAgeCredential` to your `DID` using the schema imported in the previous step and open up the QR code page of the issued credential.
+4. Click on the `Authenticate` button, followed by the `right arrow` button in the wallet application button to add credentials to your identity. It will open up a QR code scanner.
+5. Scan the QR code generated in step 3.
+6. MetaKeep will ask for your consent to sign a message to create a new credential. Click on the `Allow` button to sign the message and a new credential will be added to your identity.
 
-```
+### 4. View Credentials
 
-#### Get Claims
-It is possible to retrieve **claims** saved on the sdk through the use of the `credential.getClaims()`, with `filters` as optional param, `genesisDid` and `privateKey` are mandatory fields.
-```dart
-Future<void> getClaims({
-  List<FilterEntity>? filters,
-  required String genesisDid,
-  required String privateKey,
-}) async {
-  List<ClaimEntity> claimList = await PolygonIdSdk.I.claim.getClaims(
-    filters: filters,
-    genesisDid: genesisDid,
-    privateKey: privateKey,
-  );
-}
-```
+Navigate to the `Authenticate` button, followed by the `right arrow` button to view all the credentials stored in the application.
 
-#### Get Claims by id
-If you want to obtain specific **claims** by knowing the **ids**, you can use the sdk method `credential.getClaimsByIds()`, passing the desired `ids`, `genesisDid` and `privateKey` as parameters.
-```dart
-Future<void> getClaimsByIds({
-  required List<String> claimIds,
-  required String genesisDid,
-  required String privateKey,
-}) async {
-  List<ClaimEntity> claimList = await PolygonIdSdk.I.credential.getClaimsByIds(
-    claimIds: claimIds,
-    genesisDid: genesisDid,
-    privateKey: privateKey,
-  );
-}
-```
+### 5. Create & Verify Age Proof
 
-#### Remove single Claim
-To **remove** a **claim**, simply call the `credential.removeClaim()` with the `id` of the **claim** you want to remove, you must also pass the `genesisDid` and `privateKey`.
-```dart
-Future<void> removeClaim({
-  required String claimId,
-  required String genesisDid,
-  required String privateKey,
-}) async {
-  await PolygonIdSdk.I.credential.removeClaim(
-    claimId: claimId,
-    genesisDid: genesisDid,
-    privateKey: privateKey,
-  );
-}
-```
+We will use the [PolygonID sample verifier](https://verifier-demo.polygonid.me/) to generate a `KYCAgeProof` request for your `DID`.
 
-#### Remove multiple Claims
-If you want to **remove** a series of **claims**, you have to pass a list of `ids` and call  `credential.removeClaims()`.
-```dart
-Future<void> removeClaims({
-  required List<String> claimIds,
-  required String genesisDid,
-  required String privateKey,
-}) async {
-  await PolygonIdSdk.I.credential.removeClaims(
-    claimIds: claimIds,
-    genesisDid: genesisDid,
-    privateKey: privateKey,
-  );
-}
-```
+1. Navigate to the [PolygonID sample verifier](https://verifier-demo.polygonid.me/).
+   - If you are using a chain not supported by the PolygonID verifier or need a custom verifier, you can modify and run the sample verifier here: https://github.com/0xPolygonID/tutorial-examples/tree/main/verifier-integration/js
+2. Choose the `KYCAgeCredential` from the `Credential` dropdown.
+3. Make sure that the schema matches the one used to issue the `KYCAgeCredential` in the previous step, else the proof generation will fail.
+4. You should see a QR code on the screen.
+5. Click on the `Authenticate` button and the `Connect` button in the wallet to create and verify an age proof. It will open up a QR code scanner. Scan the QR code generated in step 4.
 
-#### Update Claim
-It is also possible to **update** a **claim** through `credential.updateClaim()`.   
-**Attention**: as stated in the documentation of this method, only the `info` field can be updated, in addition a validation is performed from the data layer:
-> Update the Claim associated to the [id] in storage  
-> Be aware only the [ClaimEntity.info] will be updated.  
-> and [data] is subject to validation by the data layer
-```dart
-Future<void> updateClaim({
-  required String claimId,
-  required String genesisDid,
-  required String privateKey,
-  String? issuer,
-  ClaimState? state,
-  String? expiration,
-  String? type,
-  Map<String, dynamic>? data,
-}) async {
-  await PolygonIdSdk.I.credential.updateClaim(
-    claimId: claimId,
-    genesisDid: genesisDid,
-    privateKey: privateKey,
-    issuer: issuer,
-    state: state,
-    expiration: expiration,
-    type: type,
-    data: data,
-  );
-}
-```
+## Issues
+
+1. The iOS simulator does not work since the Polygon ID flutter SDK does not support the iOS simulator yet. You can run the application on an Android emulator or a physical Android device.
