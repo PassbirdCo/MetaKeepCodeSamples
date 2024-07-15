@@ -23,7 +23,7 @@ dependencies:
   polygonid_flutter_sdk:
     git:
       url: https://github.com/0xPolygonID/polygonid-flutter-sdk.git
-      ref: v2.3.0
+      ref: v2.3.1
     # When depending on this package from a real application you should use:
     #   polygonid_flutter_sdk: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints
