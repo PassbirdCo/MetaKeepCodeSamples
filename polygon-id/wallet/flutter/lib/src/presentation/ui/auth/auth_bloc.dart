@@ -1,5 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:bloc/bloc.dart';
+import 'dart:math';
 import 'package:polygonid_flutter_sdk/common/domain/domain_constants.dart';
+import 'package:polygonid_flutter_sdk/common/domain/domain_logger.dart';
 import 'package:polygonid_flutter_sdk/common/domain/entities/chain_config_entity.dart';
 import 'package:polygonid_flutter_sdk/common/domain/entities/env_entity.dart';
 import 'package:polygonid_flutter_sdk/iden3comm/domain/entities/common/iden3_message_entity.dart';
@@ -107,19 +111,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           ? GENESIS_PROFILE_NONCE
           : await NonceUtils(getIt()).getPrivateProfileNonce(
               did: did, privateKey: privateKey, from: iden3message.from);
-      await _polygonIdSdk.iden3comm.authenticateV2(
+
+      // Migrate to authenticateV2 when MetaKeep support is added.
+      await _polygonIdSdk.iden3comm.authenticate(
         message: iden3message,
         genesisDid: did,
         privateKey: privateKey,
         profileNonce: nonce,
-        identityEntity: identityEntity,
-        env: envEntity,
       );
 
       emit(const AuthState.authenticated());
-    } on OperatorException catch (error) {
+    } on OperatorException catch (error, stacktrace) {
+      logger().e("Error: $error", error, stacktrace);
       emit(AuthState.error(error.errorMessage));
-    } catch (error) {
+    } catch (error, stacktrace) {
+      logger().e("Error: $error", error, stacktrace);
       emit(AuthState.error(error.toString()));
     }
   }
