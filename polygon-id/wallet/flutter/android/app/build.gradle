@@ -26,7 +26,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -59,7 +59,7 @@ android {
         //---> Configure MetaKeep Domain and Scheme
         // metakeepDomain: Replace <app_id> with your app's id which you can find in the developer console
         // metakeepScheme: Replace com.domain.app with your app's package name
-        manifestPlaceholders += [metakeepDomain: "<app_id>.auth.metakeep.xyz", metakeepScheme: "xyz.metakeep.polygonidfluttersdk.example"]
+        manifestPlaceholders += [metakeepDomain: "b2ac5205-c441-4654-bc85-8a6c6c6a7d95.auth.metakeep.xyz", metakeepScheme: "xyz.metakeep.polygonidfluttersdk.example"]
         //<---
     }
 
