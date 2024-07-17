@@ -93,7 +93,7 @@ Navigate to the `Authenticate` button, followed by the `right arrow` button to v
 We will use the [PolygonID sample verifier](https://verifier-demo.polygonid.me/) to generate a `KYCAgeProof` request for your `DID`.
 
 1. Navigate to the [PolygonID sample verifier](https://verifier-demo.polygonid.me/).
-   - If you are using a chain not supported by the PolygonID verifier or need a custom verifier, you can modify and run the sample verifier here: https://github.com/0xPolygonID/tutorial-examples/tree/main/verifier-integration/js
+   - If you are using a chain not supported by the PolygonID verifier or need a custom verifier, you can modify and run the sample verifier here: https://github.com/0xPolygonID/tutorial-examples/tree/main/verifier-integration/js. For simpler way to generate a query for verifying the credentials, you can also use this https://tools.privado.id/query-builder
 2. Choose the `KYCAgeCredential` from the `Credential` dropdown.
 3. Make sure that the schema matches the one used to issue the `KYCAgeCredential` in the previous step, else the proof generation will fail.
 4. You should see a QR code on the screen.
