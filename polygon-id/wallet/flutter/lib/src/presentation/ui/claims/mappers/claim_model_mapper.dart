@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:polygonid_flutter_sdk/common/domain/domain_logger.dart';
 import 'package:polygonid_flutter_sdk/common/mappers/from_mapper.dart';
 import 'package:polygonid_flutter_sdk/credential/domain/entities/claim_entity.dart';
 import 'package:polygonid_flutter_sdk_example/src/presentation/ui/claims/mappers/proof_model_type_mapper.dart';
@@ -41,9 +42,12 @@ class ClaimModelMapper implements FromMapper<ClaimEntity, ClaimModel> {
       for (var proof in from.info['proof']) {
         if (proof['type'] == "Iden3SparseMerkleProof" ||
             proof['type'] == "Iden3SparseMerkleTreeProof") {
-          creationDate = DateFormat("d MMM yyyy").format(
-              DateTime.fromMillisecondsSinceEpoch(
-                  (proof['issuerData']['state']['blockTimestamp']) * 1000));
+          if (proof['issuerData']['state']['blockTimestamp'] != null)
+          {
+            creationDate = DateFormat("d MMM yyyy").format(
+                DateTime.fromMillisecondsSinceEpoch(
+                    (proof['issuerData']['state']['blockTimestamp']) * 1000));
+          }
         }
         proofType += '- ${proof['type']}\n';
       }
