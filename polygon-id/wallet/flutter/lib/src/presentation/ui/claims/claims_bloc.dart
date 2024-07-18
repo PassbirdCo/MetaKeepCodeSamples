@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:polygonid_flutter_sdk/common/domain/domain_constants.dart';
+import 'package:polygonid_flutter_sdk/common/domain/domain_logger.dart';
 import 'package:polygonid_flutter_sdk/common/domain/entities/chain_config_entity.dart';
 import 'package:polygonid_flutter_sdk/common/domain/entities/filter_entity.dart';
 import 'package:polygonid_flutter_sdk/credential/domain/entities/claim_entity.dart';
@@ -127,12 +128,15 @@ class ClaimsBloc extends Bloc<ClaimsEvent, ClaimsState> {
         privateKey: privateKey,
       );
 
+      logger().i("Claims retrieved: ${claimList.length}");
+
       List<ClaimModel> claimModelList =
           claimList.map((claimEntity) => _mapper.mapFrom(claimEntity)).toList();
       emit(ClaimsState.loadedClaims(claimModelList));
     } on GetClaimsException catch (_) {
       emit(const ClaimsState.error("error while retrieving claims"));
-    } catch (_) {
+    } catch (e, stacktrace) {
+      logger().e("Error while retrieving claims $e", e, stacktrace);
       emit(const ClaimsState.error("generic error"));
     }
   }

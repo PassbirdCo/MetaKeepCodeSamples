@@ -42,6 +42,8 @@ class ClaimModelMapper implements FromMapper<ClaimEntity, ClaimModel> {
       for (var proof in from.info['proof']) {
         if (proof['type'] == "Iden3SparseMerkleProof" ||
             proof['type'] == "Iden3SparseMerkleTreeProof") {
+
+          // Add creation date if available
           if (proof['issuerData']['state']['blockTimestamp'] != null)
           {
             creationDate = DateFormat("d MMM yyyy").format(

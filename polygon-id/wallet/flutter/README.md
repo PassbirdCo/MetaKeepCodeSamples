@@ -90,14 +90,17 @@ Navigate to the `Authenticate` button, followed by the `right arrow` button to v
 
 ### 5. Create & Verify Age Proof
 
-We will use the [PolygonID sample verifier](https://verifier-demo.polygonid.me/) to generate a `KYCAgeProof` request for your `DID`.
+We will use the [PolygonID query builder](https://tools.privado.id/query-builder/) tool to generate a `KYCAgeProof` request for your `DID`.
 
-1. Navigate to the [PolygonID sample verifier](https://verifier-demo.polygonid.me/).
-   - If you are using a chain not supported by the PolygonID verifier or need a custom verifier, you can modify and run the sample verifier here: https://github.com/0xPolygonID/tutorial-examples/tree/main/verifier-integration/js. For simpler way to generate a query for verifying the credentials, you can also use this https://tools.privado.id/query-builder
-2. Choose the `KYCAgeCredential` from the `Credential` dropdown.
-3. Make sure that the schema matches the one used to issue the `KYCAgeCredential` in the previous step, else the proof generation will fail.
-4. You should see a QR code on the screen.
-5. Click on the `Authenticate` button and the `Connect` button in the wallet to create and verify an age proof. It will open up a QR code scanner. Scan the QR code generated in step 4.
+1. Navigate to [PolygonID query builder](https://tools.privado.id/query-builder/).
+2. Fill in the required fields:
+   1. Enter the URL for json-ld context: https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v4.jsonld
+   2. Select `KYCAgeCredential` from the `Schema Type` dropdown.
+   3. Select the appropriate `Proof Type` from the dropdown.
+   4. Enter the values that you want to verify.
+   5. Click on the `Create query` button.
+3. Now click on the `Test query` button to generate a QR code.
+4. In the app, click on the `Authenticate` button and the `Connect` button in the wallet to create and verify an age proof. It will open up a QR code scanner. Scan the QR code generated in the previous step.
 
 ## Issues
 
