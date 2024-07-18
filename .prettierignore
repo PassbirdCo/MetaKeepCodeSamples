@@ -13,6 +13,7 @@ other-platforms/unity/DemoApp/ProjectSettings/SceneTemplateSettings.json
 polygon-id/wallet/flutter/ios/Runner/Assets.xcassets/**/*
 polygon-id/wallet/flutter/analysis_options.yaml
 polygon-id/wallet/flutter/build.yaml
+polygon-id/wallet/flutter/env.json
 **/package.json
 eos/fio/lib/dist/**/*
 polygon-id/issuer/.github/**/*
