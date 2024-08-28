@@ -10,7 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.16.4",
     "assert": "^2.1.0",
-    "axios": "^1.6.8",
+    "axios": "^1.7.4",
     "axios-typescript": "^1.0.2",
     "buffer": "^6.0.3",
     "fio-wallet": "file:../lib",
