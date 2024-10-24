@@ -34,15 +34,17 @@ class MetaKeepFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
-        TODO("Not yet implemented")
+        // Since the activity is detached, we can't use it anymore
+        currentActivity = null
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        TODO("Not yet implemented")
+        currentActivity = binding.activity
     }
 
     override fun onDetachedFromActivity() {
-        TODO("Not yet implemented")
+        // Since the activity is detached, we can't use it anymore
+        currentActivity = null
     }
 
     override fun onMethodCall(
