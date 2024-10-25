@@ -34,15 +34,23 @@ class MetaKeepFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
-        TODO("Not yet implemented")
+        // Simply set to null, no need to check initialization
+        currentActivity = null
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        TODO("Not yet implemented")
+        // Reattach to activity after configuration changes
+        currentActivity = binding.activity
     }
 
     override fun onDetachedFromActivity() {
-        TODO("Not yet implemented")
+        // Simply set to null, no need to check initialization
+        currentActivity = null
+        
+        // Clean up SDK instance if initialized
+        if (::sdk.isInitialized) {
+            // Add any necessary SDK cleanup here
+        }
     }
 
     override fun onMethodCall(
@@ -66,8 +74,15 @@ class MetaKeepFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
         result: Result,
     ) {
         call.argument<String>(APP_ID_FIELD)?.let { appId ->
-            sdk = MetaKeep(appId, AppContext(currentActivity!!))
-            result.success(null)
+            currentActivity?.let { activity ->
+                sdk = MetaKeep(appId, AppContext(activity))
+                result.success(null)
+        } ?: run {
+            rejectWithErrorStatus(
+                ACTIVITY_NOT_AVAILABLE,
+                result
+            )
+        }
         } ?: run {
             rejectWithErrorStatus(
                 INVALID_ARGUMENTS_ERROR_STATUS,
@@ -256,7 +271,7 @@ class MetaKeepFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
     private lateinit var sdk: MetaKeep
 
     // Holds the current activity
-    private lateinit var currentActivity: Activity
+    private var currentActivity: Activity? = null
 
     companion object {
         const val NAME = "MetaKeepReactNativeSDK"
@@ -271,6 +286,7 @@ class MetaKeepFlutterSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
         const val GET_WALLET_METHOD = "getWallet"
 
         // Error status
+        const val ACTIVITY_NOT_AVAILABLE = "ACTIVITY_NOT_AVAILABLE"
         const val INVALID_ARGUMENTS_ERROR_STATUS = "INVALID_ARGUMENTS"
         const val INVALID_USER_ERROR_STATUS = "INVALID_USER"
         const val OPERATION_FAILED_ERROR_STATUS = "OPERATION_FAILED"
