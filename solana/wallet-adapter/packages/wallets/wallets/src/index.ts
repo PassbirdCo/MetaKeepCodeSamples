@@ -34,3 +34,4 @@ export * from '@solana/wallet-adapter-trust';
 export * from '@solana/wallet-adapter-unsafe-burner';
 export * from '@solana/wallet-adapter-walletconnect';
 export * from '@solana/wallet-adapter-xdefi';
+export * from '@solana/wallet-adapter-metakeep';

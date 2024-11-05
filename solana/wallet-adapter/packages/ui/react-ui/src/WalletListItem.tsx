@@ -9,14 +9,18 @@ export interface WalletListItemProps {
     handleClick: MouseEventHandler<HTMLButtonElement>;
     tabIndex?: number;
     wallet: Wallet;
+    isDefault: boolean;
 }
 
-export const WalletListItem: FC<WalletListItemProps> = ({ handleClick, tabIndex, wallet }) => {
+const isMetaKeepWallet = (wallet: Wallet) => wallet.adapter.name === 'MetaKeep';
+
+export const WalletListItem: FC<WalletListItemProps> = ({ handleClick, tabIndex, wallet, isDefault }) => {
     return (
-        <li>
+        <li className='wallet-list-item'>
             <Button onClick={handleClick} startIcon={<WalletIcon wallet={wallet} />} tabIndex={tabIndex}>
-                {wallet.adapter.name}
-                {wallet.readyState === WalletReadyState.Installed && <span>Detected</span>}
+                {isMetaKeepWallet(wallet) ? "Use Email (or Phone)": wallet.adapter.name}
+                {wallet.readyState === WalletReadyState.Installed && <div className='background-tile'><span className='detected'>Detected</span></div>}
+                {isDefault && <div className='background-tile'><span className='detected'>Recommended</span></div>}
             </Button>
         </li>
     );
