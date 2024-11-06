@@ -5,17 +5,18 @@ import {
   ConnectionProvider,
   WalletProvider,
 } from "@solana/wallet-adapter-react";
-import { WalletModalProvider } from "../ui/react-ui/src/WalletModalProvider";
+import { WalletModalProvider } from "../ui/react-ui/src";
 import dynamic from "next/dynamic";
 import { ReactNode, useCallback, useMemo } from "react";
 import { useCluster } from "../cluster/cluster-data-access";
 import { MetaKeepWalletAdapter } from "@/metakeep/adapter";
+import React from "react";
 
 require("../ui/react-ui/styles.css");
 
 export const WalletButton = dynamic(
   async () =>
-    (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton,
+    (await import("../ui/react-ui/src")).WalletMultiButton,
   {
     ssr: false,
   }
