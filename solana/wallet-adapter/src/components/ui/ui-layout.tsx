@@ -99,22 +99,8 @@ export function AppModal({
   submitDisabled?: boolean;
   submitLabel?: string;
 }) {
-  const dialogRef = useRef<HTMLDialogElement | null>(null);
-
-  useEffect(() => {
-    if (!dialogRef.current) return;
-
-    // dialogRef.current
-
-    if (show) {
-      dialogRef.current.showModal();
-    } else {
-      dialogRef.current.close();
-    }
-  }, [show, dialogRef]);
-
   return (
-    <dialog className="modal" ref={dialogRef}>
+    <div className={`modal ${show ? "modal-open" : ""}`}>
       <div className="modal-box space-y-5">
         <h3 className="font-bold text-lg">{title}</h3>
         {children}
@@ -135,7 +121,7 @@ export function AppModal({
           </div>
         </div>
       </div>
-    </dialog>
+    </div>
   );
 }
 

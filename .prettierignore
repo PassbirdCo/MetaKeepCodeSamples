@@ -24,4 +24,4 @@ polygon-id/issuer/**/*.html
 polygon-id/issuer/README.polygonid.md
 polygon-id/issuer/tools/**/*
 polygon-id/issuer/ui/**/*
-**/pnpm-lock.yaml
+**/*/pnpm-lock.yaml

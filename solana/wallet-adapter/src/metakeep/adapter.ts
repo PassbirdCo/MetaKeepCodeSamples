@@ -21,17 +21,8 @@ import {
 import { PublicKey } from "@solana/web3.js";
 import { MetaKeep } from "metakeep";
 
-interface MetaKeepWallet {
-  isMetaKeepWallet?: boolean;
-  getAccount(): Promise<String>;
-  signTransaction(transaction: Transaction): Promise<Transaction>;
-  signAllTransactions(transactions: Transaction[]): Promise<Transaction[]>;
-}
-
 export interface MetaKeepWalletAdapterConfig {
   appId?: string;
-  network?: string;
-  endpoint?: string;
   user?: {
     email: string;
   };
@@ -91,10 +82,6 @@ export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
       try {
         this._metaKeepInstance = new MetaKeep({
           appId: this.config?.appId || "",
-          chainId: 901,
-          rpcNodeUrls: {
-            901: this.config?.endpoint || "",
-          },
           user: this.config?.user || { email: "" },
         });
       } catch (error: any) {

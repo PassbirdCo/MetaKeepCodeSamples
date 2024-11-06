@@ -36,8 +36,6 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
         wallets={[
           new MetaKeepWalletAdapter({
             appId: "a12ab037-9936-4f83-ac27-8be854f25abc",
-            network: "devnet",
-            endpoint: "https://api.devnet.solana.com",
           }),
         ]}
         onError={onError}
