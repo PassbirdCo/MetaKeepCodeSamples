@@ -40,19 +40,19 @@ const MaterialUIWalletMultiButtonDynamic = dynamic(
 );
 
 const ReactUIWalletConnectButtonDynamic = dynamic(
-    async () => (await import('@solana/wallet-adapter-react-ui')).WalletConnectButton,
+    async () => (await import('@metakeep/solana-wallet-adapter-react-ui')).WalletConnectButton,
     { ssr: false }
 );
 const ReactUIWalletDisconnectButtonDynamic = dynamic(
-    async () => (await import('@solana/wallet-adapter-react-ui')).WalletDisconnectButton,
+    async () => (await import('@metakeep/solana-wallet-adapter-react-ui')).WalletDisconnectButton,
     { ssr: false }
 );
 const ReactUIWalletMultiButtonDynamic = dynamic(
-    async () => (await import('@solana/wallet-adapter-react-ui')).WalletMultiButton,
+    async () => (await import('@metakeep/solana-wallet-adapter-react-ui')).WalletMultiButton,
     { ssr: false }
 );
 const ReactUIWalletModalButtonDynamic = dynamic(
-    async () => (await import('@solana/wallet-adapter-react-ui')).WalletModalButton,
+    async () => (await import('@metakeep/solana-wallet-adapter-react-ui')).WalletModalButton,
     { ssr: false }
 );
 

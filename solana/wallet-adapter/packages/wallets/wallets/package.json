@@ -1,7 +1,7 @@
 {
-    "name": "@solana/wallet-adapter-wallets",
-    "version": "0.19.32",
-    "author": "Solana Maintainers <maintainers@solana.foundation>",
+    "name": "@metakeep/solana-wallet-adapter",
+    "version": "0.1.0",
+    "author": "MetaKeep Maintainers <maintainers@metakeep.xyz>",
     "repository": "https://github.com/anza-xyz/wallet-adapter",
     "license": "Apache-2.0",
     "publishConfig": {
