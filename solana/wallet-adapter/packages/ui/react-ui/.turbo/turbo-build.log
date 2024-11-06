@@ -1,0 +1,21 @@
+
+> @solana/wallet-adapter-react-ui@0.9.35 build /home/aditya/MetaKeepCodeSamples/solana/wallet-adapter/packages/ui/react-ui
+> tsc --build --verbose && pnpm run package
+
+[[90m2:08:17 pm[0m] Projects in this build: 
+    * tsconfig.cjs.json
+    * tsconfig.esm.json
+    * tsconfig.json
+
+[[90m2:08:17 pm[0m] Project 'tsconfig.cjs.json' is out of date because output file 'lib/cjs/BaseWalletConnectButton.js' does not exist
+
+[[90m2:08:17 pm[0m] Building project '/home/aditya/MetaKeepCodeSamples/solana/wallet-adapter/packages/ui/react-ui/tsconfig.cjs.json'...
+
+[[90m2:08:27 pm[0m] Project 'tsconfig.esm.json' is out of date because output file 'lib/esm/BaseWalletConnectButton.js' does not exist
+
+[[90m2:08:27 pm[0m] Building project '/home/aditya/MetaKeepCodeSamples/solana/wallet-adapter/packages/ui/react-ui/tsconfig.esm.json'...
+
+
+> @solana/wallet-adapter-react-ui@0.9.35 package /home/aditya/MetaKeepCodeSamples/solana/wallet-adapter/packages/ui/react-ui
+> shx mkdir -p lib/cjs && shx echo '{ "type": "commonjs" }' > lib/cjs/package.json
+
