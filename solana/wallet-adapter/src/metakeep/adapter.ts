@@ -37,7 +37,8 @@ export interface MetaKeepWalletAdapterConfig {
   };
 }
 
-export const MetaKeepWalletName = "MetaKeep" as WalletName<"MetaKeep">;
+export const MetaKeepWalletName =
+  "Use Email (or Phone)" as WalletName<"Use Email (or Phone)">;
 
 export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
   name = MetaKeepWalletName;
