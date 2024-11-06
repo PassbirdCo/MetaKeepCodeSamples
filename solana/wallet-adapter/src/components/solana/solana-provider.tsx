@@ -15,6 +15,10 @@ import React from "react";
 // Override wallet provider styles
 require("./styles.css");
 
+const MetaKeepAdapter = new MetaKeepWalletAdapter({
+  appId: "a12ab037-9936-4f83-ac27-8be854f25abc",
+});
+
 export const WalletButton = dynamic(
   async () =>
     (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton,
@@ -33,11 +37,7 @@ export function SolanaProvider({ children }: { children: ReactNode }) {
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider
-        wallets={[
-          new MetaKeepWalletAdapter({
-            appId: "a12ab037-9936-4f83-ac27-8be854f25abc",
-          }),
-        ]}
+        wallets={[MetaKeepAdapter]}
         onError={onError}
         autoConnect={true}
       >
