@@ -166,27 +166,18 @@ export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
 
     // Sign transaction using MetaKeep SDK
     try {
-      if (isVersionedTransaction(transaction)) {
-        // Handle VersionedTransaction
-        const signedTransaction = await this._metaKeepInstance?.signTransaction(
-          transaction as any,
-          "Sign Transaction"
-        );
-        const signedRawTransaction = signedTransaction.signedRawTransaction;
-        return VersionedTransaction.deserialize(
-          new Uint8Array(Buffer.from(signedRawTransaction.slice(2), "hex"))
-        ) as T;
-      } else {
-        // Handle Transaction
-        const signedTransaction = await this._metaKeepInstance?.signTransaction(
-          transaction,
-          "Sign Transaction"
-        );
-        const signedRawTransaction = signedTransaction.signedRawTransaction;
-        return Transaction.from(
-          new Uint8Array(Buffer.from(signedRawTransaction.slice(2), "hex"))
-        ) as T;
-      }
+      const signedTransaction = await this._metaKeepInstance?.signTransaction(
+        transaction,
+        "Sign Transaction"
+      );
+
+      // Add signature to transaction
+      const signature = Buffer.from(
+        signedTransaction.signature.slice(2),
+        "hex"
+      );
+      transaction.addSignature(this.publicKey!, signature);
+      return transaction;
     } catch (error: any) {
       console.error("Error signing transaction", error);
       throw new WalletSignTransactionError(error);
