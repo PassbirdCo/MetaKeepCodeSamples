@@ -10,12 +10,6 @@ import dynamic from "next/dynamic";
 import { ReactNode, useCallback, useMemo } from "react";
 import { useCluster } from "../cluster/cluster-data-access";
 import { MetaKeepWalletAdapter } from "@/metakeep/adapter";
-import {
-  createTheme,
-  StyledEngineProvider,
-  ThemeProvider,
-} from "@mui/material";
-import { deepPurple, pink } from "@mui/material/colors";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 
@@ -26,41 +20,6 @@ export const WalletButton = dynamic(
     ssr: false,
   }
 );
-
-const theme = createTheme({
-  palette: {
-    mode: "dark",
-    primary: {
-      main: deepPurple[700],
-    },
-    secondary: {
-      main: pink[700],
-    },
-  },
-  components: {
-    MuiButtonBase: {
-      styleOverrides: {
-        root: {
-          justifyContent: "flex-start",
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          textTransform: "none",
-          padding: "12px 16px",
-        },
-        startIcon: {
-          marginRight: 8,
-        },
-        endIcon: {
-          marginLeft: 8,
-        },
-      },
-    },
-  },
-});
 
 export function SolanaProvider({ children }: { children: ReactNode }) {
   const { cluster } = useCluster();
