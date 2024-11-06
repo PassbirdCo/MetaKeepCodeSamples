@@ -9,7 +9,9 @@ First, clone the repository and navigate to the project directory.
 
 Then, install the dependencies and start the web app.
 
-```shell
+```sh
 pnpm install
 pnpm dev
 ```
+
+For more information, refer to the [Solana Wallet Adapter tutorial](https://solana.com/developers/cookbook/wallets/connect-wallet-react).
