@@ -1,57 +1,15 @@
-# template-next-tailwind
+# MetaKeep Solana Wallet Adapter
 
-### Usage
+This project contains a sample web app that demonstrates how to use the MetaKeep Solana Wallet Adapter.
+The adapter is a wrapper around the Solana Wallet Adapter that provides a user-friendly interface for interacting with the MetaKeep Wallet.
 
-Use the [create-solana-dapp](https://github.com/solana-developers/create-solana-dapp) tool to start a new project based on this template (recommended).
+## Getting Started
 
-```shell
-# created an npm based project
-npx create-solana-dapp --template next-tailwind
-# created an pnpm based project
-pnpx create-solana-dapp --template next-tailwind
-# created an yarn based project
-yarn create solana-dapp --template next-tailwind
-```
+First, clone the repository and navigate to the project directory.
 
-### Prerequisites
-
--   Node v18.18.0 or higher
-
-### Manual installation
-
-#### Clone the repo
-
-```shell
-git clone https://github.com/solana-developers/template-next-tailwind.git
-cd template-next-tailwind
-```
-
-#### Install Dependencies
+Then, install the dependencies and start the web app.
 
 ```shell
 pnpm install
-```
-
-#### Start the web app
-
-```
 pnpm dev
-```
-
-## Apps
-
-### web
-
-This is a Next.js web app to get you started on interacting with the Solana network.
-
-Start the web app
-
-```shell
-pnpm dev
-```
-
-Build the web app
-
-```shell
-pnpm build
 ```
