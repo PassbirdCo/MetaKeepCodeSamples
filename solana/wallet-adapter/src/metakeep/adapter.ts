@@ -72,6 +72,8 @@ export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
   }
 
   async connect(): Promise<void> {
+    console.debug("MetaKeepWalletAdapter connecting");
+
     try {
       if (this.connected || this.connecting) return;
       if (this._readyState !== WalletReadyState.Loadable)
@@ -79,31 +81,35 @@ export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
 
       this._connecting = true;
 
+      // Initialize MetaKeep SDK
       try {
         this._metaKeepInstance = new MetaKeep({
           appId: this.config?.appId || "",
           user: this.config?.user || { email: "" },
         });
       } catch (error: any) {
+        console.error("Error initializing MetaKeep SDK", error);
         throw new WalletLoadError(error);
       }
 
+      // Get wallet account
       let account: any;
-
       try {
         account = await this._metaKeepInstance.getWallet();
-        console.log(account);
       } catch (error: any) {
-        console.log(error);
+        console.error("Error getting wallet account", error);
         throw new WalletAccountError(error);
       }
 
+      // Read public key
       let publicKey: PublicKey;
       try {
         publicKey = new PublicKey(account?.wallet.solAddress);
       } catch (error: any) {
+        console.error("Error reading public key", error);
         throw new WalletPublicKeyError(error);
       }
+
       this._publicKey = publicKey;
       this.emit("connect", publicKey);
     } catch (error: any) {
@@ -115,28 +121,34 @@ export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
   }
 
   async disconnect(): Promise<void> {
+    console.debug("MetaKeepWalletAdapter disconnecting");
+
     if (!this.connected) return;
     this._connecting = false;
     this._metaKeepInstance = null;
+    this._publicKey = null;
 
     this.emit("disconnect");
   }
 
   async signMessage(message: Uint8Array): Promise<Uint8Array> {
-    try {
-      if (!this.connected) throw new WalletNotConnectedError();
+    console.debug("MetaKeepWalletAdapter signing message");
 
+    if (!this.connected) throw new WalletNotConnectedError();
+
+    // Sign message using MetaKeep SDK
+    try {
       const signedMessage = await this._metaKeepInstance?.signMessage(
         new TextDecoder().decode(message),
         "Sign Message"
       );
-      console.log(signedMessage);
-      // convert hex to Uint8Array
+      // Convert hex to Uint8Array
       const signature = new Uint8Array(
         Buffer.from(signedMessage.signature.slice(2), "hex")
       );
       return signature;
     } catch (error: any) {
+      console.error("Error signing message", error);
       throw new WalletSignTransactionError(error);
     }
   }
@@ -148,16 +160,18 @@ export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
   async signTransaction<T extends TransactionOrVersionedTransaction<any>>(
     transaction: T
   ): Promise<T> {
-    try {
-      if (!this.connected) throw new WalletNotConnectedError();
+    console.debug("MetaKeepWalletAdapter signing transaction");
 
+    if (!this.connected) throw new WalletNotConnectedError();
+
+    // Sign transaction using MetaKeep SDK
+    try {
       if (isVersionedTransaction(transaction)) {
         // Handle VersionedTransaction
         const signedTransaction = await this._metaKeepInstance?.signTransaction(
           transaction as any,
           "Sign Transaction"
         );
-        console.log(signedTransaction);
         const signedRawTransaction = signedTransaction.signedRawTransaction;
         return VersionedTransaction.deserialize(
           new Uint8Array(Buffer.from(signedRawTransaction.slice(2), "hex"))
@@ -168,13 +182,13 @@ export class MetaKeepWalletAdapter extends BaseMessageSignerWalletAdapter {
           transaction,
           "Sign Transaction"
         );
-        console.log(signedTransaction);
         const signedRawTransaction = signedTransaction.signedRawTransaction;
         return Transaction.from(
           new Uint8Array(Buffer.from(signedRawTransaction.slice(2), "hex"))
         ) as T;
       }
     } catch (error: any) {
+      console.error("Error signing transaction", error);
       throw new WalletSignTransactionError(error);
     }
   }
