@@ -35,6 +35,7 @@
         "@solana/web3.js": "1.78.0"
     },
     "dependencies": {
+        "@solana/wallet-adapter-base": "^0.9.23",
         "metakeep": "^2.2.8"
     },
     "devDependencies": {

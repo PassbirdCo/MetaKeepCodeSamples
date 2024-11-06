@@ -260,8 +260,11 @@ importers:
   packages/ui/react-ui:
     dependencies:
       '@solana/wallet-adapter-base-ui':
-        specifier: workspace:^
-        version: link:../base-ui
+        specifier: ^0.1.2
+        version: 0.1.2(@solana/web3.js@1.78.0(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)(react-native@0.72.3(@babel/core@7.22.9)(@babel/preset-env@7.22.9(@babel/core@7.22.9))(bufferutil@4.0.7)(react@18.2.0)(utf-8-validate@5.0.10))(react@18.2.0)
+      '@solana/wallet-adapter-react':
+        specifier: ^0.15.35
+        version: 0.15.35(@solana/web3.js@1.78.0(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)(react-native@0.72.3(@babel/core@7.22.9)(@babel/preset-env@7.22.9(@babel/core@7.22.9))(bufferutil@4.0.7)(react@18.2.0)(utf-8-validate@5.0.10))(react@18.2.0)
     devDependencies:
       '@solana/web3.js':
         specifier: ^1.77.3
@@ -284,6 +287,9 @@ importers:
 
   packages/wallets/metakeep:
     dependencies:
+      '@solana/wallet-adapter-base':
+        specifier: ^0.9.23
+        version: 0.9.23(@solana/web3.js@1.78.0(bufferutil@4.0.7)(utf-8-validate@5.0.10))
       metakeep:
         specifier: ^2.2.8
         version: 2.2.8
@@ -7617,6 +7623,15 @@ snapshots:
   '@solana/wallet-adapter-base-ui@0.1.2(@solana/web3.js@1.78.0(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@4.0.1)(react@18.2.0)':
     dependencies:
       '@solana/wallet-adapter-react': 0.15.35(@solana/web3.js@1.78.0(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@4.0.1)(react@18.2.0)
+      '@solana/web3.js': 1.78.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
+      react: 18.2.0
+    transitivePeerDependencies:
+      - bs58
+      - react-native
+
+  '@solana/wallet-adapter-base-ui@0.1.2(@solana/web3.js@1.78.0(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)(react-native@0.72.3(@babel/core@7.22.9)(@babel/preset-env@7.22.9(@babel/core@7.22.9))(bufferutil@4.0.7)(react@18.2.0)(utf-8-validate@5.0.10))(react@18.2.0)':
+    dependencies:
+      '@solana/wallet-adapter-react': 0.15.35(@solana/web3.js@1.78.0(bufferutil@4.0.7)(utf-8-validate@5.0.10))(bs58@5.0.0)(react-native@0.72.3(@babel/core@7.22.9)(@babel/preset-env@7.22.9(@babel/core@7.22.9))(bufferutil@4.0.7)(react@18.2.0)(utf-8-validate@5.0.10))(react@18.2.0)
       '@solana/web3.js': 1.78.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
       react: 18.2.0
     transitivePeerDependencies:
