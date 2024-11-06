@@ -5,10 +5,10 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import type { FC, MouseEvent } from 'react';
 import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Collapse } from './Collapse.js';
-import { WalletListItem } from './WalletListItem.js';
-import { WalletSVG } from './WalletSVG.js';
-import { useWalletModal } from './useWalletModal.js';
+import { Collapse } from './Collapse';
+import { WalletListItem } from './WalletListItem';
+import { WalletSVG } from './WalletSVG';
+import { useWalletModal } from './useWalletModal';
 
 export interface WalletModalProps {
     className?: string;
@@ -70,9 +70,7 @@ export const WalletModal: FC<WalletModalProps> = ({ className = '', container = 
 
             // here we query all focusable elements
             const focusableElements = node.querySelectorAll('button');
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const firstElement = focusableElements[0]!;
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const lastElement = focusableElements[focusableElements.length - 1]!;
 
             if (event.shiftKey) {
@@ -196,7 +194,7 @@ export const WalletModal: FC<WalletModalProps> = ({ className = '', container = 
 ) : (
     <>
         <h1 className="wallet-adapter-modal-title">
-            You'll need a wallet on Solana to continue.
+            You will need a wallet on Solana to continue.
         </h1>
         <div className="wallet-adapter-modal-middle">
             <WalletSVG />
