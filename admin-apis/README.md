@@ -11,6 +11,8 @@ The project contains the following scripts:
 - `addApiKey.js`: Script to add a new API key to your app.
 - `deleteApiKeys.js`: Script to delete API Keys of your app.
 - `manageAppPolicy.js`: Script to manage the policies of your app.
+- `getLogs.js`: Script to get all the app logs.
+- `getStats.js`: Script to get app statistics (like total api calls, users, etc.) -`getTransactionHistory.js`: Script to get a list of historical transactions made.
 
 ## Running the scripts
 
