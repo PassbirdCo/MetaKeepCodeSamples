@@ -9,9 +9,9 @@
     "addApiKey": "node addApiKey.js",
     "deleteApiKeys": "node deleteApiKeys.js",
     "manageAppPolicy": "node manageAppPolicy.js",
-    "getStats": "node getStats.js",
-    "getLogs": "node getLogs.js",
-    "getTransactionHistory": "node getTransactionHistory.js",
+    "getAppStats": "node getAppStats.js",
+    "getAppLogs": "node getAppLogs.js",
+    "getAppTransactionHistory": "node getAppTransactionHistory.js",
     "format": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

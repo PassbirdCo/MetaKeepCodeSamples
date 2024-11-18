@@ -9,23 +9,20 @@ dotenv.config();
 
 checkEnvVariables(["APP_ID"]);
 
-const getLogs = async () => {
+const getAppStats = async () => {
   // Find the app by ID
   const app = (await fetchAppsByAccountKey(process.env.APP_ID))[0];
   if (!app) {
     throw new Error(`App with ID ${process.env.APP_ID} not found`);
   }
 
-  // Get logs
-  const logs = await callAdminAPI(`/v2/app/logs`, {
+  // Get app stats
+  const stats = await callAdminAPI(`/v2/app/stats`, {
     appId: app.appId,
-    pageSize: 10,
-    paginationToken: null,
+    granularity: "HOURLY", // or "DAILY" or "MONTHLY"
   });
 
-  console.log(logs);
-
-  return logs;
+  console.log("App stats:", stats);
 };
 
-getLogs();
+getAppStats();
